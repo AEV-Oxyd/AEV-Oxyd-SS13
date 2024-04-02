@@ -101,12 +101,7 @@ for reference:
 		return
 	else
 		user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
-		switch(W.damtype)
-			if("fire")
-				health -= W.force * 1
-			if("brute")
-				health -= W.force * 0.75
-			else
+		health -= dhTotalDamageDamageType(W.melleDamages, BURN) +  dhTotalDamageDamageType(W.melleDamages, BRUTE) * 0.75
 		if(health <= 0)
 			visible_message(SPAN_DANGER("The barricade is smashed apart!"))
 			dismantle()
@@ -197,6 +192,7 @@ for reference:
 	name = "deployable barrier"
 	desc = "A deployable barrier. Swipe your ID card to lock/unlock it."
 	icon = 'icons/obj/objects.dmi'
+	commonLore = "These models haven't changed a bit since 2431. The last known model used by NanoTransen before the collapse."
 	anchored = FALSE
 	density = TRUE
 	icon_state = "barrier0"
@@ -245,12 +241,7 @@ for reference:
 			return
 		return
 	else
-		switch(W.damtype)
-			if("fire")
-				health -= W.force * 0.75
-			if("brute")
-				health -= W.force * 0.5
-			else
+		health -= dhTotalDamageStrict(W.melleDamages, ALL_ARMOR,  list(BRUTE,BURN)) * 0.8
 		if(health <= 0)
 			explode()
 		..()

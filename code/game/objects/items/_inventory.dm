@@ -43,7 +43,7 @@
 	//Some inventory sounds.
 	//occurs when you equip something
 	if(item_flags & EQUIP_SOUNDS)
-		var/picked_sound = pick(w_class > ITEM_SIZE_NORMAL ? long_equipement_sound : short_equipement_sound)
+		var/picked_sound = pick(volumeClass > ITEM_SIZE_NORMAL ? long_equipement_sound : short_equipement_sound)
 		playsound(src, picked_sound, 100, 1, 1)
 	if(overslot)
 		var/obj/item/equipped = user.get_equipped_item(slot)
@@ -55,8 +55,9 @@
 
 /obj/item/proc/equipped(mob/user, slot)
 	equip_slot = slot
-	if(user.pulling == src)
-		user.stop_pulling()
+	for(var/obj/item/grab/g in user)
+		if(g.affecting == src)
+			QDEL_NULL(g)
 	if(overslot && !is_worn())
 		remove_overslot_contents(user)
 	if(user.l_hand)
@@ -171,5 +172,5 @@
 		if(H.get_holding_hand(src))
 			add_hud_actions(H)
 		return TRUE
-	
+
 

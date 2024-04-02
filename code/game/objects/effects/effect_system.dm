@@ -8,6 +8,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 /obj/effect
 	var/random_rotation = 0 //If 1, pick a random cardinal direction. if 2, pick a randomised angle
 	var/random_offset = 0
+	weight = 0
 
 /obj/effect/effect
 	name = "effect"
@@ -142,7 +143,7 @@ steam.start() -- spawns the effect
 		T.hotspot_expose(1000,100)
 	return ..()
 
-/obj/effect/sparks/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0, var/glide_size_override = 0)
+/obj/effect/sparks/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0, glide_size_override = 0, initiator = src)
 	. = ..()
 	var/turf/T = src.loc
 	if (istype(T, /turf))
@@ -231,7 +232,7 @@ steam.start() -- spawns the effect
 	if(istype(M))
 		affect(M)
 
-/obj/effect/effect/smoke/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0, var/glide_size_override = 0)
+/obj/effect/effect/smoke/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0, glide_size_override = 0, initiator = src)
 	. = ..()
 	for(var/mob/living/carbon/M in get_turf(src))
 		affect(M)

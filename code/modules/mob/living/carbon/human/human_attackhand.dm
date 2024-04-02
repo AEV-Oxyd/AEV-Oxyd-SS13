@@ -8,6 +8,15 @@
 			return u_attack
 	return null
 
+/mob/living/carbon/human/AltClickOn(atom/A)
+	. = ..()
+	if(.)
+		return
+	var/obj/item/gun/zoomies = get_active_hand()
+	if(istype(zoomies) && length(zoomies.zoom_factors))
+		zoomies.toggle_scope(src)
+		return
+
 /mob/living/carbon/human/attack_hand(mob/living/carbon/M as mob)
 
 	var/mob/living/carbon/human/H = M
@@ -43,11 +52,10 @@
 			playsound(loc, "punch", 25, 1, -1)
 
 			visible_message("\red <B>[H] has punched [src]!</B>")
-
-			damage_through_armor(damage, HALLOSS, affecting, ARMOR_MELEE)
+			damage_through_armor(list(ARMOR_BLUNT=list(DELEM(HALLOSS,damage))), affecting, src, 1, 1, FALSE)
 			if(damage >= 9)
 				visible_message("\red <B>[H] has weakened [src]!</B>")
-				apply_effect(4, WEAKEN, getarmor(affecting, ARMOR_MELEE))
+				apply_effect(4, WEAKEN, getarmor(affecting, ARMOR_BLUNT))
 
 			return
 
@@ -97,10 +105,9 @@
 		if(I_GRAB)
 			if(M == src || anchored)
 				return 0
-			for(var/obj/item/grab/G in src.grabbed_by)
-				if(G.assailant == M)
-					to_chat(M, SPAN_NOTICE("You already grabbed [src]."))
-					return
+			if(grabbedBy && grabbedBy.assailant == M)
+				to_chat(M, SPAN_NOTICE("You already grabbed [src]."))
+				return
 			if(w_uniform)
 				w_uniform.add_fingerprint(M)
 
@@ -112,7 +119,7 @@
 						var/obj/item/grab/G = new /obj/item/grab(M, src)
 						if(!G)	//the grab will delete itself in New if affecting is anchored
 							return
-						G.state = GRAB_AGGRESSIVE
+						G.state = GRAB_PASSIVE
 						G.counter_timer = 0
 						M.put_in_active_hand(G)
 						G.synch()
@@ -184,11 +191,11 @@
 				to_chat(M, SPAN_DANGER("They are missing that limb!"))
 				return 1
 
-			if (M.grabbed_by.len)
+			if (M.grabbedBy)
 				// Someone got a good grip on them, they won't be able to do much damage
 				stat_damage = max(1, stat_damage - 2)
 
-			if(src.grabbed_by.len || src.buckled || !src.canmove || src==H)
+			if(grabbedBy || src.buckled || !src.canmove || src==H)
 				stat_damage = stat_damage + 2
 
 			stat_damage *= limb_efficiency_multiplier
@@ -231,10 +238,10 @@
 						visible_message(SPAN_DANGER("The attack has been completely negated!"))
 						return
 			// Apply additional unarmed effects.
-			attack.apply_effects(H, src, getarmor(affecting, ARMOR_MELEE), stat_damage, hit_zone)
-
+			attack.apply_effects(H, src, getarmor(affecting, ARMOR_BLUNT), stat_damage, hit_zone)
+			var/damage = list(ARMOR_BLUNT = list(DELEM(attack.deal_halloss ? HALLOSS : BRUTE, real_damage)))
 			// Finally, apply damage to target
-			damage_through_armor(real_damage, (attack.deal_halloss ? HALLOSS : BRUTE), affecting, ARMOR_MELEE, sharp = attack.sharp, edge = attack.edge)
+			damage_through_armor(damage, affecting, src, 1, 1, FALSE)
 			hit_impact(real_damage, get_step(H, src))
 
 		if(I_DISARM)
@@ -311,7 +318,7 @@
 		penetration = L.armor_divisor
 	var/dam_zone = pick(organs_by_name)
 	var/obj/item/organ/external/affecting = get_organ(ran_zone(dam_zone))
-	var/dam = damage_through_armor(damage, BRUTE, affecting, ARMOR_MELEE, penetration, sharp=is_sharp, edge=is_edge, wounding_multiplier = wounding)
+	var/dam = damage_through_armor(list(ARMOR_BLUNT=list(DELEM(BRUTE,damage))), affecting, src, penetration, 1, FALSE)
 	if(dam > 0)
 		affecting.add_autopsy_data("[attack_message] by \a [user]", dam)
 	updatehealth()
@@ -343,11 +350,11 @@
 	organ.nerve_strike_add(1)
 	src.visible_message(SPAN_DANGER("[src]'s [organ.joint] [pick("jitters","convulses","stirs","shakes")] and dangles about!"), (SPAN_DANGER("As [user]'s hit connects with your [organ.joint], you feel it painfully tingle before going numb!")))
 	playsound(user, 'sound/weapons/throwtap.ogg', 50, 1)
-	src.damage_through_armor(rand(5,10), HALLOSS, target_zone, ARMOR_MELEE, wounding_multiplier = 2)
+	damage_through_armor(list(ARMOR_BLUNT=list(DELEM(HALLOSS,rand(10,15)))), target_zone, src, 1, 1, FALSE)
 
 	//kill the grab
 	user.drop_from_inventory(G)
-	G.loc = null
+	G.forceMove(NULLSPACE)
 	qdel(G)
 
 	//admin messaging
@@ -360,10 +367,6 @@
 //Breaks all grips and pulls that the mob currently has.
 /mob/living/carbon/human/proc/break_all_grabs(mob/living/carbon/user)
 	var/success = 0
-	if(pulling)
-		visible_message(SPAN_DANGER("[user] has broken [src]'s grip on [pulling]!"))
-		success = 1
-		stop_pulling()
 
 	if(istype(l_hand, /obj/item/grab))
 		var/obj/item/grab/lgrab = l_hand

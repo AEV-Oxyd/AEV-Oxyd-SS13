@@ -17,7 +17,7 @@
 	linked = GLOB.maps_data.pulsar_star
 	ship = locate(/obj/effect/pulsar_ship) in get_area(linked)
 	if(ship)
-		RegisterSignal(ship, COMSIG_MOVABLE_MOVED, .proc/onShipMoved)
+		RegisterSignal(ship, COMSIG_MOVABLE_MOVED, PROC_REF(onShipMoved))
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
@@ -152,16 +152,14 @@
 /obj/machinery/pulsar/explosion_act(severity)
 	return
 
-/obj/machinery/pulsar/proc/set_block_events(state_bool = TRUE){
-	if(state_bool){
+/obj/machinery/pulsar/proc/set_block_events(state_bool = TRUE)
+	if(state_bool)
 		ship.block_events = TRUE
 		ship.try_overcharge(FALSE)
 		ship.stop_rad_storm()
 		return
-	}
 	ship.block_events = FALSE
 	ship.try_move(0) //Recalc if the pulsar is in a beam
-}
 
 /obj/machinery/power/pulsar_power_bridge //Only holds ref to the console and its area, used to get power from it, or disconnect the ship.
 	name = "pulsar power bridge"
@@ -316,10 +314,11 @@
 	. = ..()
 
 /obj/structure/pulsar_fuel_tank/examine(mob/user, distance, infix, suffix)
-	. = ..()
-	to_chat(user, "Fuel: [round(air_contents.get_total_moles())]/100")
+	var/description = ""
+	description += "Fuel: [round(air_contents.get_total_moles())]/100 \n"
 	if(round(air_contents.get_total_moles()) >= 100)
-		to_chat(user, SPAN_DANGER("It looks like its about to burst!"))
+		description += SPAN_DANGER("It looks like its about to burst!")
+	..(user, afterDesc = description)
 
 /obj/structure/pulsar_fuel_tank/filled/Initialize()
 	. = ..()

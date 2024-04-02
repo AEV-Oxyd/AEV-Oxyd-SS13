@@ -7,7 +7,8 @@
 	icon_state = "harpoon-1"
 	item_state = "harpoon-1"
 	icon = 'icons/obj/items.dmi'
-	w_class = ITEM_SIZE_NORMAL
+	commonLore = "There were only 3 prototypes present when old Nanotransen collapsed. 2 of them were used to rob mega-banks. Since then , all vaults now have bluespace interference protection."
+	volumeClass = ITEM_SIZE_NORMAL
 	throw_speed = 4
 	throw_range = 20
 	origin_tech = list(TECH_BLUESPACE = 5)
@@ -123,8 +124,7 @@
 	icon_state = "harpoon-[mode]"
 
 /obj/item/bluespace_harpoon/examine(var/mob/user, var/dist = -1)
-	..(user, dist)
-	to_chat(user, SPAN_NOTICE("Mode set to [mode ? "transmiting" : "receiving"]."))
+	..(user, dist, afterDesc = SPAN_NOTICE("Mode set to [mode ? "transmiting" : "receiving"]."))
 
 /obj/item/bluespace_harpoon/MouseDrop(over_object)
 	if((src.loc == usr) && istype(over_object, /obj/screen/inventory/hand) && eject_item(cell, usr))

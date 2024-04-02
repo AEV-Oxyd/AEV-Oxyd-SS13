@@ -4,6 +4,7 @@
 	icon = 'icons/obj/faction_item.dmi'
 	description_info = "Has an internal radio that informs technomancers of its delay, it can be re-enabled with a screwdriver if it is not functioning. Deconstructing other departmental oddities reduces its cooldown. Deconstructing combat-oriented oddities buffs its capability to make better combat oddities."
 	description_antag = "You can disable its internal radio with a EMP."
+	commonLore = "A technology secret from the highest tribe leaders of the technomancers. Known that it contains some reverse-engineered one-star technology."
 	icon_state = "techno_tribalism"
 	item_state = "techno_tribalism"
 	origin_tech = list(TECH_MATERIAL = 8, TECH_ENGINEERING = 7, TECH_POWER = 2)
@@ -228,8 +229,10 @@
 		radio_broadcasting = FALSE
 
 /obj/item/device/techno_tribalism/examine(user)
-	..()
-	to_chat(user, SPAN_NOTICE("The [src] is fed by [items_count]/[max_count]."))
-	to_chat(user, SPAN_NOTICE("The remaining delay is [world.time > last_produce + cooldown ? "0" : round(abs(world.time - (last_produce + cooldown)) / 600)] Minutes"))
-	to_chat(user, SPAN_NOTICE("Its internal radio is currently [internal_radio.broadcasting ? "working normally" : "not functioning"]"))
-	to_chat(user, SPAN_NOTICE("The current limit for all combat-oriented skill points on oddities is [combat_cap]."))
+	var/description = ""
+	description += SPAN_NOTICE("The [src] is fed by [items_count]/[max_count]. \n")
+	description += SPAN_NOTICE("The remaining delay is [world.time > last_produce + cooldown ? "0" : round(abs(world.time - (last_produce + cooldown)) / 600)] Minutes \n")
+	description += SPAN_NOTICE("Its internal radio is currently [internal_radio.broadcasting ? "working normally" : "not functioning"] \n")
+	description += SPAN_NOTICE("The current limit for all combat-oriented skill points on oddities is [combat_cap].\n")
+	..(user, afterDesc = description)
+

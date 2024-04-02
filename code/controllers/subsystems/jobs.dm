@@ -386,21 +386,18 @@ ADMIN_VERB_ADD(/client/verb/unwhitelistPlayerForJobs, R_ADMIN, FALSE)
 				if(age < job.minimum_character_age) // Nope.
 					continue
 
-				switch(age)
-					if(job.minimum_character_age to (job.minimum_character_age+10))
-						weightedCandidates[V] = 3 // Still a bit young.
-					if((job.minimum_character_age+10) to (job.ideal_character_age-10))
-						weightedCandidates[V] = 6 // Better.
-					if((job.ideal_character_age-10) to (job.ideal_character_age+10))
-						weightedCandidates[V] = 10 // Great.
-					if((job.ideal_character_age+10) to (job.ideal_character_age+20))
-						weightedCandidates[V] = 6 // Still good.
-					if((job.ideal_character_age+20) to INFINITY)
-						weightedCandidates[V] = 3 // Geezer.
-					else
-						// If there's ABSOLUTELY NOBODY ELSE
-						if(candidates.len == 1) weightedCandidates[V] = 1
-
+				if(age > job.ideal_character_age + 20)
+					weightedCandidates[V] = 3
+				else if(age > job.ideal_character_age + 10)
+					weightedCandidates[V] = 6
+				else if(age > job.ideal_character_age - 10)
+					weightedCandidates[V] = 10
+				else if(age > job.minimum_character_age + 10)
+					weightedCandidates[V] = 6
+				else if(age > job.minimum_character_age)
+					weightedCandidates[V] = 3
+				else if(length(candidates) == 1 )
+					weightedCandidates[V] = 1
 
 			var/mob/new_player/candidate = pickweight(weightedCandidates)
 			if(AssignRole(candidate, command_position))
@@ -608,10 +605,8 @@ ADMIN_VERB_ADD(/client/verb/unwhitelistPlayerForJobs, R_ADMIN, FALSE)
 		var/obj/item/organ/external/r_leg = H.get_organ(BP_R_LEG)
 		if(!l_leg || !r_leg)
 			var/obj/structure/bed/chair/wheelchair/W = new /obj/structure/bed/chair/wheelchair(H.loc)
-			H.buckled = W
-			H.update_lying_buckled_and_verb_status()
-			W.set_dir(H.dir)
-			W.buckled_mob = H
+			var/datum/component/buckling/buckle = W.GetComponent(/datum/component/buckling)
+			buckle.buckle(H, null)
 			W.add_fingerprint(H)
 
 	to_chat(H, "<B>You are [job.total_positions == 1 ? "the" : "a"] [alt_title ? alt_title : rank].</B>")
@@ -630,10 +625,18 @@ ADMIN_VERB_ADD(/client/verb/unwhitelistPlayerForJobs, R_ADMIN, FALSE)
 			G.prescription = 1
 
 	var/obj/item/implant/core_implant/C = H.get_core_implant()
-	if(C)
+	if(istype(C, /obj/item/implant/core_implant))
 		C.install_default_modules_by_job(job)
 		C.access.Add(job.cruciform_access)
 		C.security_clearance = job.security_clearance
+
+	for(var/bodypart in BP_ALL_LIMBS)
+		if(H.has_organ(bodypart))
+			var/obj/item/organ/external/bp = H.organs_by_name[bodypart]
+			var/obj/item/implant/cyberinterface/interface = locate() in bp.implants
+			if(interface)
+				interface.installSticksForJob(job)
+				break
 
 	var/obj/item/oddity/secdocs/D
 	if(D.inv_spawn_count > 0 && prob(5) && !(locate(/obj/item/oddity/secdocs) in H.get_contents()))

@@ -4,8 +4,10 @@
 	icon = 'icons/obj/machinery_crates.dmi'
 	icon_state = "standart"
 
+	commonLore = "A IKEA Kit , the invention of these revolutioned multiple aspects of warfare and construction. "
+
 	anchored = FALSE
-	w_class = ITEM_SIZE_HUGE
+	volumeClass = ITEM_SIZE_HUGE
 	slowdown_hold = 0.5
 	throw_range = 2
 	matter = list(MATERIAL_PLASTIC = 10, MATERIAL_PLASTEEL = 5, MATERIAL_STEEL = 10)
@@ -19,8 +21,7 @@
 	var/can_place_on_table = FALSE
 
 /obj/item/machinery_crate/examine(mob/user)
-	..()
-	to_chat(user, "The piece of paper on the side reads: [machine_name]")
+	..(user, afterDesc = "The piece of paper on the side reads: [machine_name]")
 
 /obj/item/machinery_crate/attackby(obj/item/I, mob/user)
 	if(!(QUALITY_BOLT_TURNING in I.tool_qualities))

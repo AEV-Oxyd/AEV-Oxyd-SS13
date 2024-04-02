@@ -34,7 +34,8 @@
 		else
 			if(isobj(target))
 				var/obj/O = target
-				if(O.buckled_mob)
+				var/datum/component/buckling/buckle = O.GetComponent(/datum/component/buckling)
+				if(buckle && buckle.buckled)
 					return
 				if(locate(/mob/living) in O)
 					to_chat(user, SPAN_WARNING("You can't load living things into the cargo compartment."))
@@ -57,7 +58,9 @@
 				owner.visible_message(SPAN_NOTICE("\The [owner] begins loading \the [O]."))
 				playsound(src, 'sound/mechs/hydraulic.ogg', 50, 1)
 				if(do_after(owner, 20, O, 0, 1))
-					if(O in carrying || O.buckled_mob || O.anchored || (locate(/mob/living) in O)) //Repeat checks
+					if(buckle && buckle.buckled)
+						return
+					if(O in carrying  || O.anchored || (locate(/mob/living) in O)) //Repeat checks
 						return
 					if(length(carrying) >= carrying_capacity)
 						to_chat(user, SPAN_WARNING("\The [src] is fully loaded!"))
@@ -811,7 +814,6 @@
 	name = "mech toolkit"
 	desc = "A robust selection of mech-sized tools."
 	icon_state = "engimplant"
-	force = WEAPON_FORCE_DANGEROUS
 	worksound = WORKSOUND_DRIVER_TOOL
 	flags = CONDUCT
 	tool_qualities = list(
@@ -827,7 +829,7 @@
 		QUALITY_HAMMERING = 75)
 	degradation = 0
 	workspeed = 1
-	max_upgrades = 1
+	maxUpgrades = 1
 	spawn_blacklisted = TRUE
 
 /// Fancy way to move someone up a z-level if you think about it..
@@ -877,6 +879,8 @@
 		targ.client.perspective = MOB_PERSPECTIVE
 		targ.client.eye = src
 	currentlyLifting = null
+	target.atomFlags &= ~AF_LAYER_UPDATE_HANDLED
+	target.atomFlags &= ~AF_PLANE_UPDATE_HANDLED
 	update_icon()
 
 /obj/item/mech_equipment/forklifting_system/proc/startLifting(atom/movable/target)
@@ -884,6 +888,8 @@
 	// No clicking this whilst lifted
 	currentlyLifting.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	currentlyLifting.forceMove(src)
+	target.atomFlags &= AF_LAYER_UPDATE_HANDLED
+	target.atomFlags &= AF_PLANE_UPDATE_HANDLED
 	var/mob/targ = currentlyLifting
 	if(ismob(targ) && targ.client)
 		targ.client.perspective = EYE_PERSPECTIVE

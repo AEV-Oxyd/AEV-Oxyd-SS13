@@ -586,7 +586,7 @@
 				W.dropped() //use the baseline dropped()
 				continue
 			W.layer = initial(W.layer)
-			W.loc = M.loc
+			W.forceMove(M.loc)
 			W.dropped(M)
 		if(!cruciformed) //If not cruciformed, get slimed
 			var/mob/living/carbon/slime/new_mob = new /mob/living/carbon/slime(M.loc)

@@ -14,8 +14,8 @@
 	bad_type = /obj/item/clothing/suit/armor
 	spawn_tags = SPAWN_TAG_CLOTHING_ARMOR
 	slowdown = 0
-	valid_accessory_slots = list("armband","decor")
-	restricted_accessory_slots = list("armband")
+	valid_accessory_slots = list(ACS_ARMBAND,ACS_DECOR)
+	restricted_accessory_slots = list(ACS_ARMBAND)
 	maxHealth = 500
 	health = 500
 
@@ -29,16 +29,20 @@
 	item_state = "armor"
 	blood_overlay_type = "armor"
 	armor = list(
-		melee = 7,
-		bullet = 10,
-		energy = 10,
-		bomb = 25,
-		bio = 0,
-		rad = 0
+		ARMOR_BLUNT = 2,
+		ARMOR_BULLET = 2,
+		ARMOR_ENERGY = 2,
+		ARMOR_BOMB = 25,
+		ARMOR_BIO = 0,
+		ARMOR_RAD = 0
 	)
 	matter = list(
 		MATERIAL_STEEL = 8,
 		MATERIAL_PLASTEEL = 1, //Small plasteel cost since it's better than a handmade vest, which only costs steel
+	)
+	armorComps = list(
+		/obj/item/armor_component/plate/steel,
+		/obj/item/armor_component/plate/leather
 	)
 
 /obj/item/clothing/suit/armor/vest/full
@@ -54,6 +58,11 @@
 	)
 	slowdown = LIGHT_SLOWDOWN
 	style_coverage = COVERS_TORSO|COVERS_UPPER_ARMS|COVERS_UPPER_LEGS
+	armorComps = list(
+		/obj/item/armor_component/plate/steel,
+		/obj/item/armor_component/sideguards/steel,
+		/obj/item/armor_component/plate/leather
+	)
 
 
 //This has specifically been bodged so that I can give the flak vest toggle-able buttons -VaNdU Jr
@@ -130,12 +139,12 @@
 	desc = "An armored vest of dubious quality. Provides decent protection against physical damage, for a piece of crap."
 	icon_state = "armor_handmade"
 	armor = list(
-		melee = 7,
-		bullet = 7,
-		energy = 7,
-		bomb = 20,
-		bio = 0,
-		rad = 0
+		ARMOR_BLUNT = 3,
+		ARMOR_BULLET = 3,
+		ARMOR_ENERGY = 3,
+		ARMOR_BOMB = 20,
+		ARMOR_BIO = 0,
+		ARMOR_RAD = 0
 	)
 	price_tag = 100
 
@@ -163,17 +172,25 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	style_coverage = COVERS_TORSO|COVERS_UPPER_ARMS|COVERS_UPPER_LEGS
 	armor = list(
-		melee = 7,
-		bullet = 10,
-		energy = 10,
-		bomb = 35,
-		bio = 0,
-		rad = 0
+		ARMOR_BLUNT = 3,
+		ARMOR_BULLET = 3,
+		ARMOR_ENERGY = 3,
+		ARMOR_BOMB = 35,
+		ARMOR_BIO = 0,
+		ARMOR_RAD = 0
 	)
-	price_tag = 600
+	price_tag = 2500
+	rarity_value = 150
 	slowdown = LIGHT_SLOWDOWN
-	valid_accessory_slots = list("armband","decor")
-	restricted_accessory_slots = list("armband")
+	valid_accessory_slots = list(ACS_ARMBAND,ACS_DECOR)
+	restricted_accessory_slots = list(ACS_ARMBAND)
+	armorComps = list(
+		/obj/item/armor_component/plate/kevlar,
+		/obj/item/armor_component/plate/ceramic,
+		/obj/item/armor_component/plate/neojute,
+		/obj/item/armor_component/plate/neojute,
+		/obj/item/armor_component/plate/leather,
+	)
 
 /obj/item/clothing/suit/storage/greatcoat/ironhammer
 	icon_state = "greatcoat_ironhammer"
@@ -198,12 +215,17 @@
 	item_state = "armor"
 	blood_overlay_type = "armor"
 	armor = list(
-		melee = 7,
-		bullet = 13,
-		energy = 7,
-		bomb = 30,
-		bio = 0,
-		rad = 0
+		ARMOR_BLUNT = 2,
+		ARMOR_BULLET = 2,
+		ARMOR_ENERGY = 3,
+		ARMOR_BOMB = 30,
+		ARMOR_BIO = 0,
+		ARMOR_RAD = 0
+	)
+	armorComps = list(
+		/obj/item/armor_component/plate/steel,
+		/obj/item/armor_component/plate/ceramic,
+		/obj/item/armor_component/plate/leather
 	)
 
 /obj/item/clothing/suit/armor/flak/green
@@ -217,6 +239,12 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS // shoulderpads and kneepads
 	slowdown = LIGHT_SLOWDOWN
 	style_coverage = COVERS_TORSO|COVERS_UPPER_ARMS|COVERS_UPPER_LEGS
+	armorComps = list(
+		/obj/item/armor_component/plate/steel,
+		/obj/item/armor_component/plate/ceramic,
+		/obj/item/armor_component/sideguards/ceramic,
+		/obj/item/armor_component/plate/leather
+	)
 
 /obj/item/clothing/suit/armor/flak/full/green
 	name = "full green flakvest vest"
@@ -230,12 +258,12 @@
 	blood_overlay_type = "armor"
 	slowdown = 0.15
 	armor = list(
-		melee = 6,
-		bullet = 15,
-		energy = 7,
-		bomb = 20,
-		bio = 0,
-		rad = 0
+		ARMOR_BLUNT = 3,
+		ARMOR_BULLET = 3,
+		ARMOR_ENERGY = 3,
+		ARMOR_BOMB = 20,
+		ARMOR_BIO = 0,
+		ARMOR_RAD = 0
 	)
 	price_tag = 500
 	matter = list(
@@ -243,6 +271,12 @@
 		MATERIAL_PLASTEEL = 3, // costs lots more plasteel than standard vest
 	)
 	slowdown = LIGHT_SLOWDOWN
+	armorComps = list(
+		/obj/item/armor_component/plate/kevlar,
+		/obj/item/armor_component/plate/kevlar,
+		/obj/item/armor_component/plate/kevlar,
+		/obj/item/armor_component/plate/leather
+	)
 
 /obj/item/clothing/suit/armor/bulletproof/full
 	name = "full bulletproof vest"
@@ -254,6 +288,13 @@
 		MATERIAL_PLASTEEL = 3,
 	)
 	style_coverage = COVERS_TORSO|COVERS_UPPER_ARMS|COVERS_UPPER_LEGS
+	armorComps = list(
+		/obj/item/armor_component/plate/kevlar,
+		/obj/item/armor_component/plate/kevlar,
+		/obj/item/armor_component/plate/kevlar,
+		/obj/item/armor_component/sideguards/plasteel,
+		/obj/item/armor_component/plate/leather
+	)
 
 /obj/item/clothing/suit/armor/bulletproof/ironhammer
 	name = "full bulletproof suit"
@@ -265,6 +306,22 @@
 		MATERIAL_STEEL = 15, // fullbody suit, so it costs a lot of steel compared to the non-ih one
 		MATERIAL_PLASTEEL = 3,
 	)
+	armor = list(
+		ARMOR_BLUNT = 5,
+		ARMOR_BULLET = 0,
+		ARMOR_ENERGY = 5,
+		ARMOR_BOMB = 20,
+		ARMOR_BIO = 0,
+		ARMOR_RAD = 0
+	)
+	armorComps = list(
+		/obj/item/armor_component/plate/kevlar,
+		/obj/item/armor_component/plate/kevlar,
+		/obj/item/armor_component/plate/kevlar,
+		/obj/item/armor_component/sideguards/plasteel,
+		/obj/item/armor_component/sideguards/plasteel,
+		/obj/item/armor_component/plate/leather
+	)
 
 /obj/item/clothing/suit/armor/platecarrier
 	name = "black platecarrier vest"
@@ -273,12 +330,12 @@
 	item_state = "armor"
 	blood_overlay_type = "armor"
 	armor = list(
-		melee = 10,
-		bullet = 13,
-		energy = 10,
-		bomb = 20,
-		bio = 0,
-		rad = 0
+		ARMOR_BLUNT = 3,
+		ARMOR_BULLET = 5,
+		ARMOR_ENERGY = 3,
+		ARMOR_BOMB = 20,
+		ARMOR_BIO = 0,
+		ARMOR_RAD = 0
 	)
 	price_tag = 400
 	matter = list(
@@ -286,6 +343,11 @@
 		MATERIAL_PLASTEEL = 3 // costs lots more plasteel than standard vest
 	)
 	slowdown = LIGHT_SLOWDOWN
+	armorComps = list(
+		/obj/item/armor_component/plate/ceramic,
+		/obj/item/armor_component/plate/ceramic,
+		/obj/item/armor_component/plate/leather
+	)
 
 /obj/item/clothing/suit/armor/platecarrier/green
 	name = "green platecarrier vest"
@@ -301,6 +363,12 @@
 	icon_state = "platecarrier_fullbody"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	style_coverage = COVERS_TORSO|COVERS_UPPER_ARMS|COVERS_UPPER_LEGS
+	armorComps = list(
+		/obj/item/armor_component/plate/ceramic,
+		/obj/item/armor_component/plate/ceramic,
+		/obj/item/armor_component/sideguards/ceramic,
+		/obj/item/armor_component/plate/leather
+	)
 
 /obj/item/clothing/suit/armor/platecarrier/full/green
 	name = "full green platecarrier vest"
@@ -322,21 +390,28 @@
 	style_coverage = COVERS_TORSO|COVERS_UPPER_ARMS|COVERS_UPPER_LEGS
 	blood_overlay_type = "armor"
 	armor = list(
-		melee = 5,
-		bullet = 7,
-		energy = 16,
-		bomb = 20,
-		bio = 0,
-		rad = 0
+		ARMOR_BLUNT = 5,
+		ARMOR_BULLET = 4,
+		ARMOR_ENERGY = 5,
+		ARMOR_BOMB = 20,
+		ARMOR_BIO = 0,
+		ARMOR_RAD = 0
 	)
 	siemens_coefficient = 0
 	price_tag = 650
 	matter = list(
 		MATERIAL_STEEL = 6, // slightly less steel cost to make room for reflective glass
 		MATERIAL_PLASTEEL = 1,
-		MATERIAL_GLASS = 15 // reflective material, lots of it
+		MATERIAL_GLASS = 15, // reflective material, lots of it
+		MATERIAL_SILVER = 2,
+		MATERIAL_GOLD = 2
 	)
 	slowdown = LIGHT_SLOWDOWN
+	armorComps = list(
+		/obj/item/armor_component/plate/steel,
+		/obj/item/armor_component/plate/ablative,
+		/obj/item/armor_component/plate/leather
+	)
 	//spawn_blacklisted = TRUE//antag_item_targets-crafteable?
 
 /obj/item/clothing/suit/armor/laserproof/handle_shield(mob/user, damage, atom/damage_source = null, mob/attacker = null, def_zone = null, attack_text = "the attack") //TODO: Refactor this all into humandefense
@@ -365,12 +440,17 @@
 	icon_state = "germancoat"
 	item_state = "germancoat"
 	armor = list(
-		melee = 7,
-		bullet = 7,
-		energy = 10,
-		bomb = 20,
-		bio = 0,
-		rad = 0
+		ARMOR_BLUNT = 3,
+		ARMOR_BULLET = 3,
+		ARMOR_ENERGY = 3,
+		ARMOR_BOMB = 20,
+		ARMOR_BIO = 0,
+		ARMOR_RAD = 0
+	)
+	armorComps = list(
+		/obj/item/armor_component/plate/leather,
+		/obj/item/armor_component/plate/ablative,
+		/obj/item/armor_component/plate/leather
 	)
 
 /obj/item/clothing/suit/storage/greatcoat/onestar
@@ -384,16 +464,23 @@
 	spawn_blacklisted = TRUE
 	price_tag = 2000
 	armor = list(
-		melee = 3,
-		bullet = 12,
-		energy = 12,
-		bomb = 30,
-		bio = 5,
-		rad = 5
+		ARMOR_BLUNT = 3,
+		ARMOR_BULLET = 12,
+		ARMOR_ENERGY =12,
+		ARMOR_BOMB =30,
+		ARMOR_BIO = 5,
+		ARMOR_RAD = 5
 	)
 
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	siemens_coefficient = 0.7
+	armorComps = list(
+		/obj/item/armor_component/plate/nt17,
+		/obj/item/armor_component/plate/nt17,
+		/obj/item/armor_component/plate/nt17,
+		/obj/item/armor_component/plate/leather,
+		/obj/item/armor_component/plate/leather
+	)
 
 /*
  * Heavy Armor Types
@@ -403,7 +490,7 @@
 	desc = "A heavily armored suit that protects against moderate damage."
 	icon_state = "heavy"
 	item_state = "swat_suit"
-	w_class = ITEM_SIZE_BULKY
+	volumeClass = ITEM_SIZE_BULKY
 	gas_transfer_coefficient = 0.9
 	permeability_coefficient = 0.9
 	siemens_coefficient = 0.5
@@ -414,17 +501,25 @@
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	armor = list(
-		melee = 16, //massive slowdown justifies
-		bullet = 13,
-		energy = 10,
-		bomb = 75,
-		bio = 0,
-		rad = 0
+		ARMOR_BLUNT = 5, //massive slowdown justifies
+		ARMOR_BULLET = 5,
+		ARMOR_ENERGY = 5,
+		ARMOR_BOMB = 75,
+		ARMOR_BIO = 0,
+		ARMOR_RAD = 0
 	)
 	equip_delay = 2 SECONDS
 	price_tag = 500
 	style = STYLE_NEG_HIGH
 	slowdown = MEDIUM_SLOWDOWN
+	matter = list(MATERIAL_PLASTIC = 25, MATERIAL_CLOTH = 5)
+	armorComps = list(
+		/obj/item/armor_component/plate/plasteel,
+		/obj/item/armor_component/plate/kevlar,
+		/obj/item/armor_component/plate/ceramic,
+		/obj/item/armor_component/plate/leather,
+		/obj/item/armor_component/plate/leather
+	)
 
 /obj/item/clothing/suit/armor/heavy/red
 	name = "Thunderdome suit (red)"
@@ -455,14 +550,20 @@
 		MATERIAL_PLASTEEL = 3
 	)
 	armor = list(
-		melee = 20,
-		bullet = 7,
-		energy = 6,
-		bomb = 50,
-		bio = 0,
-		rad = 0
+		ARMOR_BLUNT = 10,
+		ARMOR_BULLET = 0,
+		ARMOR_ENERGY = 0,
+		ARMOR_BOMB = 50,
+		ARMOR_BIO = 0,
+		ARMOR_RAD = 0
 	)
 	slowdown = LIGHT_SLOWDOWN // Very uncomfortable, but not that particularly heavy
+	armorComps = list(
+		/obj/item/armor_component/plate/plastic,
+		/obj/item/armor_component/plate/plastic,
+		/obj/item/armor_component/plate/plasteel,
+		/obj/item/armor_component/plate/leather
+	)
 
 /obj/item/clothing/suit/armor/heavy/ironhammer
 	name = "heavy operator armor"
@@ -471,14 +572,15 @@
 	item_state = "swat_suit"
 	flags_inv = HIDEJUMPSUIT
 	armor = list(
-		melee = 16,
-		bullet = 13, //comparable to RIG
-		energy = 10,
-		bomb = 50,
-		bio = 0,
-		rad = 0
+		ARMOR_BLUNT = 4,
+		ARMOR_BULLET = 4,
+		ARMOR_ENERGY = 4,
+		ARMOR_BOMB = 50,
+		ARMOR_BIO = 0,
+		ARMOR_RAD = 0
 	)
 	price_tag = 800
+	slowdown = 0.3
 
 /*
  * Storage Types
@@ -489,12 +591,12 @@
 	icon_state = "webvest"
 	price_tag = 250 //Normal vest is worth 200, this one is worth 250 because it also has storage space
 	armor = list( //Same stats as the standard vest only difference is that this one has storage
-		melee = 7,
-		bullet = 10,
-		energy = 10,
-		bomb = 25,
-		bio = 0,
-		rad = 0
+		ARMOR_BLUNT = 3,
+		ARMOR_BULLET = 3,
+		ARMOR_ENERGY = 3,
+		ARMOR_BOMB = 25,
+		ARMOR_BIO = 0,
+		ARMOR_RAD = 0
 	)
 
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
@@ -514,8 +616,13 @@
 		MATERIAL_PLASTEEL = 1,
 		MATERIAL_PLASTIC = 3, //for webbing
 	)
-	valid_accessory_slots = list("armband","decor")
-	restricted_accessory_slots = list("armband")
+	valid_accessory_slots = list(ACS_ARMBAND,ACS_DECOR)
+	restricted_accessory_slots = list(ACS_ARMBAND)
+	armorComps = list(
+		/obj/item/armor_component/plate/steel,
+		/obj/item/armor_component/plate/leather,
+		/obj/item/armor_component/plate/cloth
+	)
 
 /obj/item/clothing/suit/storage/vest/ironhammer
 	name = "webbed operator armor"
@@ -530,12 +637,19 @@
 	icon_state = "mercwebvest"
 	item_state = "mercwebvest"
 	armor = list(
-		melee = 12,
-		bullet = 12,
-		energy = 12,
-		bomb = 75,
-		bio = 0,
-		rad = 0
+		ARMOR_BLUNT = 5,
+		ARMOR_BULLET = 5,
+		ARMOR_ENERGY = 5,
+		ARMOR_BOMB = 75,
+		ARMOR_BIO = 0,
+		ARMOR_RAD = 0
+	)
+	rarity_value = 150
+	armorComps = list(
+		/obj/item/armor_component/plate/kevlar,
+		/obj/item/armor_component/plate/kevlar,
+		/obj/item/armor_component/plate/nt17,
+		/obj/item/armor_component/plate/nt17
 	)
 
 /obj/item/clothing/suit/storage/vest/merc/full
@@ -544,6 +658,14 @@
 	icon_state = "mercwebvest_fullbody"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	slowdown = LIGHT_SLOWDOWN
+	armorComps = list(
+		/obj/item/armor_component/plate/kevlar,
+		/obj/item/armor_component/plate/kevlar,
+		/obj/item/armor_component/plate/nt17,
+		/obj/item/armor_component/plate/nt17,
+		/obj/item/armor_component/sideguards/plasteel,
+		/obj/item/armor_component/sideguards/ceramic
+	)
 
 //Technomancer armor
 /obj/item/clothing/suit/storage/vest/insulated
@@ -553,12 +675,12 @@
 	item_state = "armor_engineering"
 	blood_overlay_type = "armor"
 	armor = list(
-		melee = 7,
-		bullet = 7,
-		energy = 2,
-		bomb = 50,
-		bio = 0,
-		rad = 80
+		ARMOR_BLUNT = 2,
+		ARMOR_BULLET = 2,
+		ARMOR_ENERGY = 2,
+		ARMOR_BOMB = 50,
+		ARMOR_BIO = 0,
+		ARMOR_RAD = 80
 	)
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	item_flags = DRAG_AND_DROP_UNEQUIP
@@ -569,6 +691,11 @@
 	//Used ablative gear armor values and technomancer helmet/voidsuit values.
 	slowdown = LIGHT_SLOWDOWN
 	style = STYLE_NONE
+	armorComps = list(
+		/obj/item/armor_component/plate/steel,
+		/obj/item/armor_component/sideguards/steel,
+		/obj/item/armor_component/plate/leather
+	)
 
 /obj/item/clothing/suit/storage/vest/technomancer_old
 	name = "reinforced Technomancer armor"
@@ -577,12 +704,12 @@
 	item_state = "armor_engineering_old"
 	blood_overlay_type = "armor"
 	armor = list(
-		melee = 9,
-		bullet = 9,
-		energy = 9,
-		bomb = 75,
-		bio = 0,
-		rad = 0
+		ARMOR_BLUNT = 4,
+		ARMOR_BULLET = 4,
+		ARMOR_ENERGY = 4,
+		ARMOR_BOMB = 75,
+		ARMOR_BIO = 0,
+		ARMOR_RAD = 0
 	)
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	item_flags = DRAG_AND_DROP_UNEQUIP
@@ -590,6 +717,12 @@
 	price_tag = 600
 	slowdown = LIGHT_SLOWDOWN
 	style = STYLE_NONE
+	armorComps = list(
+		/obj/item/armor_component/plate/plasteel,
+		/obj/item/armor_component/plate/steel,
+		/obj/item/armor_component/sideguards/plasteel,
+		/obj/item/armor_component/plate/leather
+	)
 
 /*
  * Reactive Armor
@@ -602,12 +735,12 @@
 	item_state = "reactiveoff"
 	blood_overlay_type = "armor"
 	armor = list(
-		melee = 5,
-		bullet = 5,
-		energy = 5,
-		bomb = 0,
-		bio = 0,
-		rad = 0
+		ARMOR_BLUNT = 5,
+		ARMOR_BULLET = 5,
+		ARMOR_ENERGY =5,
+		ARMOR_BOMB =0,
+		ARMOR_BIO = 0,
+		ARMOR_RAD = 0
 	)
 	var/active = FALSE
 	var/entropy_value = 2
@@ -651,18 +784,23 @@
 	item_state = "crusader_suit"
 	matter = list(MATERIAL_BIOMATTER = 25, MATERIAL_PLASTEEL = 10, MATERIAL_STEEL = 15, MATERIAL_GOLD = 2)
 	armor = list(
-		melee = 13,
-		bullet = 13,
-		energy = 13,
-		bomb = 75,
-		bio = 0,
-		rad = 0
+		ARMOR_BLUNT = 5,
+		ARMOR_BULLET = 5,
+		ARMOR_ENERGY = 5,
+		ARMOR_BOMB = 75,
+		ARMOR_BIO = 0,
+		ARMOR_RAD = 0
 	)
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	style_coverage = COVERS_TORSO|COVERS_UPPER_ARMS|COVERS_UPPER_LEGS
 	unacidable = TRUE
 	spawn_blacklisted = TRUE
 	slowdown = LIGHT_SLOWDOWN
+	armorComps = list(
+		/obj/item/armor_component/plate/nt17,
+		/obj/item/armor_component/plate/nt17,
+		/obj/item/armor_component/plate/nt17
+	)
 
 /obj/item/clothing/suit/armor/paramedic
 	name = "Moebius paramedic armor"
@@ -678,12 +816,12 @@
 		MATERIAL_SILVER = 2
 		)
 	armor = list(
-		melee = 7,
-		bullet = 10,
-		energy = 10,
-		bomb = 20,
-		bio = 100,
-		rad = 50
+		ARMOR_BLUNT = 5,
+		ARMOR_BULLET = 5,
+		ARMOR_ENERGY = 5,
+		ARMOR_BOMB = 20,
+		ARMOR_BIO = 100,
+		ARMOR_RAD = 50
 	)
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	style_coverage = COVERS_TORSO|COVERS_UPPER_ARMS|COVERS_UPPER_LEGS
@@ -697,6 +835,9 @@
 	var/speed_boost_cooldown = 5 MINUTES
 	var/matching_helmet = /obj/item/clothing/head/armor/faceshield/paramedic
 	slowdown = 0 // No slowdown in exchange for worse accuracy
+	armorComps = list(
+		/obj/item/armor_component/plate/neojute
+	)
 
 
 /obj/item/clothing/suit/armor/paramedic/ui_action_click(mob/living/user, action_name)

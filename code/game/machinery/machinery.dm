@@ -87,7 +87,7 @@
 /obj/machinery
 	name = "machinery"
 	icon = 'icons/obj/stationobjs.dmi'
-	w_class = ITEM_SIZE_GARGANTUAN
+	volumeClass = ITEM_SIZE_GARGANTUAN
 
 	price_tag = 100
 
@@ -115,6 +115,9 @@
 
 	var/hacked = FALSE // If this machine has had its access requirements hacked or not
 	var/shipside_only = FALSE // Does this mechanism need to be on the ship? Used for excel
+
+	var/commonLore = ""
+	matter = list(MATERIAL_STEEL = 8)
 
 
 /obj/machinery/Initialize(mapload, d=0)
@@ -201,6 +204,18 @@
 		return src.attack_hand(user)
 
 /obj/machinery/attack_hand(mob/user as mob)
+	/*
+	if(user.a_intent == I_GRAB)
+		if(!anchored)
+			var/obj/item/grab/G = new(user, src)
+			G.state = GRAB_PASSIVE
+			G.counter_timer = 0
+			user.put_in_active_hand(G)
+			G.synch()
+			return
+		else
+			to_chat(user, SPAN_NOTICE("You can't grab \the [src], it is anchored!"))
+	*/
 	if(inoperable(MAINT))
 		return 1
 	if(user.lying || user.stat)
@@ -240,6 +255,8 @@
 		else
 			for(var/j = 1 to circuit.req_components[item])
 				component_parts += new item
+	for(var/atom/movable/thing in component_parts)
+		thing.forceMove(src)
 
 	RefreshParts()
 

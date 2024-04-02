@@ -1,6 +1,5 @@
 
-
-
+GLOBAL_VAR_INIT(Debug,0)
 /atom/movable
 	layer = OBJ_LAYER
 	var/last_move
@@ -15,7 +14,7 @@
 	var/throw_speed = 2
 	var/throw_range = 7
 	var/moved_recently = 0
-	var/mob/pulledby
+	var/obj/item/grab/grabbedBy
 	var/item_state // Used to specify the item state for the on-mob overlays.
 	var/inertia_dir = 0
 	var/can_anchor = TRUE
@@ -43,18 +42,21 @@
 
 
 /atom/movable/Destroy()
-	. = ..()
+	var/turf/T = loc
+	if(opacity && istype(T))
+		set_opacity(FALSE)
+	if(LAZYLEN(movement_handlers) && !ispath(movement_handlers[1]))
+		QDEL_LIST(movement_handlers)
+	if(grabbedBy)
+		QDEL_NULL(grabbedBy)
 	for(var/atom/movable/AM in contents)
 		qdel(AM)
 
+	. = ..()
+
 	if(loc)
 		loc.handle_atom_del(src)
-
 	forceMove(null)
-	if (pulledby)
-		if (pulledby.pulling == src)
-			pulledby.pulling = null
-		pulledby = null
 
 /atom/movable/Bump(var/atom/A, yes)
 	if(src.throwing)
@@ -71,14 +73,54 @@
 	return
 
 // Gets the top-atom that contains us, doesn't care about how deeply nested a item is
-/atom/proc/getContainingAtom()
+// If stopType is defined , it will stop at the first object that is the type of stopType
+/atom/proc/getContainingAtom(stopType = null)
 	var/atom/checking = src
 	while(!isturf(checking.loc) && !isnull(checking.loc) && !isarea(checking.loc))
+		if(stopType && istype(checking, stopType))
+			return checking
 		checking = checking.loc
 	return checking
 
+/// This proc is pasted directly into critical areas that get called very frequently to save on proc calling time
+/// Search all instances where this proc is used by searching the following text #TAG_RECALCWEIGHT
+/atom/proc/recalculateWeights(weightValue, caller)
+	var/oldWeight = weight
+	weight += weightValue
+	var/atom/location = loc
+	/// apply this to turfs too for funny sheninigans
+	while(!isarea(location) && location)
+	/// avoid a extra operation. just add the difference
+		location.weight += (weight - oldWeight)
+		//if(ishuman(caller) || ishuman(src) || ishuman(location) || istype(caller, /obj/item/organ) || istype(src, /obj/item/organ))
+		//	message_admins("Added [weight - oldWeight] to [location],LocWeight=[location.weight]|ItemWeight=[weight]|ItemOldWeight=[oldWeight]| to [src] from [caller](\ref[caller]) (call: [callcount] # [itercount])")
+		location = location.loc
 
-/atom/movable/proc/forceMove(atom/destination, var/special_event, glide_size_override=0)
+/// Recursive proc , will go down to all things it has and force them to update and then force updates to anything that contains it
+/atom/proc/updateWeights(callRecalc = TRUE)
+	var/change = initial(weight)
+	for(var/atom/thing in contents)
+		thing.updateWeights(FALSE)
+		change += thing.weight
+	if(callRecalc && change != weight)
+		recalculateWeights(change - weight)
+
+/atom/proc/updateWeightsDebug()
+	message_admins("weight before update - [weight]")
+	typeWeights()
+	message_admins("updating")
+	updateWeights(TRUE)
+	message_admins("weight after update [weight]" )
+
+/atom/proc/typeWeights(spaces = 0)
+	var/buffer = "-"
+	for(var/i = 0, i < spaces, i++)
+		buffer = buffer + "-"
+	message_admins("[buffer] Mass of [src] - [weight]")
+	for(var/atom/thing in contents)
+		thing.typeWeights(spaces + 1)
+
+/atom/movable/proc/forceMove(atom/destination, var/special_event, glide_size_override=0, initiator = null)
 	if(loc == destination)
 		return FALSE
 
@@ -93,10 +135,14 @@
 	var/is_new_area = (is_origin_turf ^ is_destination_turf) || (is_origin_turf && is_destination_turf && loc.loc != destination.loc)
 
 	var/atom/origin = loc
+
+
+
 	loc = destination
 
 	if(origin)
 		origin.Exited(src, destination)
+		origin.recalculateWeights(-weight, src)
 		if(is_origin_turf)
 			for(var/atom/movable/AM in origin)
 				AM.Uncrossed(src)
@@ -105,6 +151,7 @@
 
 	if(destination)
 		destination.Entered(src, origin, special_event)
+		destination.recalculateWeights(weight, src)
 		if(is_destination_turf) // If we're entering a turf, cross all movable atoms
 			for(var/atom/movable/AM in loc)
 				if(AM != src)
@@ -112,15 +159,13 @@
 			if(is_new_area && is_destination_turf)
 				destination.loc.Entered(src, origin)
 
-	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, origin, loc)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, origin, loc, initiator)
 	if(origin && destination)
 		if(get_z(origin) != get_z(destination))
-			SEND_SIGNAL(src, COMSIG_MOVABLE_Z_CHANGED, get_z(origin) , get_z(destination))
+			SEND_SIGNAL(src, COMSIG_MOVABLE_Z_CHANGED, get_z(origin) , get_z(destination), initiator)
 			update_plane()
 		else if(!is_origin_turf)
 			update_plane()
-			//for(var/atom/movable/thing in contents)
-			//	SEND_SIGNAL(thing, COMSIG_MOVABLE_Z_CHANGED,get_z(origin),get_z(destination))
 	else if(destination)
 		update_plane()
 
@@ -143,6 +188,9 @@
 		if(!is_origin_turf || (get_z(loc) != get_z(origin)) )
 			update_plane()
 	*/
+	if(!loc)
+		GLOB.moved_event.raise_event(src, origin, null)
+
 
 	return TRUE
 
@@ -193,12 +241,18 @@
 #define I_ERROR 9 // Calculation error accumulated so far
 #define I_TURF_CLICKED 10
 #define I_THROWFLAGS 11 // pass_flags for the thrown obj
+12 is for initial throw speed
 */
 
 
 /atom/movable/proc/throw_at(atom/target, range, speed, thrower, throwflags)
-	if(!target || range < 1 || speed < 1)
+	if(!target || range < 1 || speed < 0)
 		return FALSE
+	var/ref = SSthrowing.throwing_queue[src]
+	// remove old throwing entry
+	if(ref)
+		SSthrowing.throwing_queue.Remove(ref)
+		SSthrowing.current_throwing_queue.Remove(ref)
 	if(target.allow_spin && src.allow_spin)
 		SpinAnimation(5,1)
 	src.throwing = TRUE
@@ -208,7 +262,7 @@
 	var/dist_y = abs(target.y - src.y)
 	pass_flags += throwflags
 	/// defines for each slot are above the function def
-	var/list/tl = new /list(11)
+	var/list/tl = new /list(12)
 	tl[1] = target
 	tl[2] = speed
 	tl[3] = range
@@ -220,6 +274,7 @@
 	tl[9] = (dist_x > dist_y ? dist_x/2 - dist_y : dist_y/2 - dist_x)
 	tl[10] = get_turf(target)
 	tl[11] = throwflags
+	tl[12] = speed
 	SSthrowing.throwing_queue[src] = tl
 	return TRUE
 
@@ -301,7 +356,7 @@
 */
 //This proc should never be overridden elsewhere at /atom/movable to keep directions sane.
 // Spoiler alert: it is, in moved.dm
-/atom/movable/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0, var/glide_size_override = 0)
+/atom/movable/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0, var/glide_size_override = 0, initiator = null)
 	if (glide_size_override > 0)
 		set_glide_size(glide_size_override)
 
@@ -346,6 +401,11 @@
 
 		. = ..()
 
+		if(oldloc)
+			oldloc.recalculateWeights(-weight,src)
+		if(loc)
+			loc.recalculateWeights(weight,src)
+
 		if(Dir != olddir)
 			dir = olddir
 			set_dir(Dir)
@@ -366,11 +426,16 @@
 		if(get_z(oldloc) != get_z(loc))
 			SEND_SIGNAL(src, COMSIG_MOVABLE_Z_CHANGED, get_z(oldloc), get_z(NewLoc))
 
-		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, oldloc, loc)
+		if(oldloc != loc)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, oldloc, loc, initiator)
 		/* Inserting into contents uses only forceMove
 		if(!isturf(oldloc) || !isturf(loc))
 			SEND_SIGNAL(src, COMSIG_ATOM_CONTAINERED, getContainingAtom())
 		*/
+		// Entered() typically lifts the moved event, but in the case of null-space we'll have to handle it.
+		if(!loc)
+			GLOB.moved_event.raise_event(src, oldloc, null)
+
 
 // Wrapper of step() that also sets glide size to a specific value.
 /proc/step_glide(atom/movable/AM, newdir, glide_size_override)

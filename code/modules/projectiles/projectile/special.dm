@@ -1,9 +1,12 @@
 /obj/item/projectile/ion
 	name = "ion bolt"
 	icon_state = "ion"
-	damage_types = list(BURN = 0)
+	damage_types = list(
+		ARMOR_ENERGY = list(
+			DELEM(BURN ,5)
+		)
+	)
 	nodamage = TRUE
-	check_armour = ARMOR_ENERGY
 	recoil = 5
 
 /obj/item/projectile/ion/on_hit(atom/target)
@@ -13,8 +16,11 @@
 /obj/item/projectile/bullet/gyro
 	name = "explosive bolt"
 	icon_state = "bolter"
-	damage_types = list(BRUTE = 50)
-	check_armour = ARMOR_BULLET
+	damage_types = list(
+		ARMOR_BULLET = list(
+			DELEM(BRUTE ,50)
+		)
+	)
 	sharp = TRUE
 	edge = TRUE
 	recoil = 3
@@ -28,9 +34,11 @@
 /obj/item/projectile/bullet/rocket
 	name = "high explosive rocket"
 	icon_state = "rocket"
-	damage_types = list(BRUTE = 80)
-	armor_divisor = 3 // Everything has ridiculously high bomb armor. This makes up for it.
-	check_armour = ARMOR_BOMB
+	damage_types = list(
+		ARMOR_BULLET = list(
+			DELEM(BRUTE ,90)
+		)
+	)
 	penetrating = -5
 	recoil = 40
 	can_ricochet = FALSE
@@ -55,7 +63,12 @@
 
 /obj/item/projectile/bullet/rocket/scrap
 	name = "improvised explosive rocket"
-	damage_types = list(BRUTE = 60)
+	damage_types = list(
+		ARMOR_BULLET = list(
+			DELEM(BRUTE ,40),
+			DELEM(BRUTE ,40)
+		)
+	)
 
 	explosion_power = 200
 	explosion_falloff = 75
@@ -63,23 +76,32 @@
 
 /obj/item/projectile/bullet/rocket/hesh
 	name = "high-explosive squash head rocket"
-	damage_types = list(BRUTE = 80)
+	damage_types = list(
+		ARMOR_BULLET = list(
+			DELEM(BRUTE ,80)
+		)
+	)
 	armor_divisor = 2
-	check_armour = ARMOR_BULLET
 	sharp = TRUE
 
 	explosion_power = 200
 	explosion_falloff = 75
+	var/hasBlown = FALSE
 
 /obj/item/projectile/bullet/rocket/hesh/detonate(atom/target)
-	fragment_explosion_angled(get_turf(src), starting, /obj/item/projectile/bullet/pellet/fragment/strong, 20)
+	if(!hasBlown)
+		fragment_explosion_angled(get_turf(src), starting, /obj/item/projectile/bullet/pellet/fragment/strong, 20)
+		hasBlown = TRUE
 	..()
 
 /obj/item/projectile/bullet/rocket/heat
 	name = "high-explosive anti-tank rocket"
-	damage_types = list(BRUTE = 20)
+	damage_types = list(
+		ARMOR_BULLET = list(
+			DELEM(BRUTE ,40)
+		)
+	)
 	armor_divisor = 1
-	check_armour = ARMOR_BULLET
 	sharp = TRUE
 
 	explosion_power = 200
@@ -88,6 +110,7 @@
 /obj/item/projectile/bullet/rocket/heat/detonate(atom/target)
 	var/turf/T = get_turf_away_from_target_complex(get_turf(src), starting, 3)
 	var/obj/item/projectile/forcebolt/jet/P = new(get_turf(src))
+	P.PrepareForLaunch()
 	P.launch(T, def_zone)
 	if(target)
 		P.Bump(target, TRUE)
@@ -95,9 +118,12 @@
 
 /obj/item/projectile/bullet/rocket/thermo
 	name = "thermobaric rocket"
-	damage_types = list(BRUTE = 20)
+	damage_types = list(
+		ARMOR_BULLET = list(
+			DELEM(BRUTE ,40)
+		)
+	)
 	armor_divisor = 1
-	check_armour = ARMOR_BULLET
 
 	explosion_power = 300
 	explosion_falloff = 30 // Very large, albeit weak explosion
@@ -109,9 +135,12 @@
 /obj/item/projectile/temp
 	name = "freeze beam"
 	icon_state = "ice_2"
-	damage_types = list(BURN = 0)
+	damage_types = list(
+		ARMOR_ENERGY = list(
+			DELEM(BURN , 5)
+		)
+	)
 	nodamage = 1
-	check_armour = ARMOR_ENERGY
 	var/temperature = 300
 
 
@@ -125,13 +154,16 @@
 	name = "meteor"
 	icon = 'icons/obj/meteor.dmi'
 	icon_state = "smallf"
-	damage_types = list(BRUTE = 0)
+	damage_types = list(
+		ARMOR_BULLET = list(
+			DELEM(BRUTE ,100)
+		)
+	)
 	nodamage = TRUE
-	check_armour = ARMOR_BULLET
 
 /obj/item/projectile/meteor/Bump(atom/A as mob|obj|turf|area, forced)
 	if(A == firer)
-		loc = A.loc
+		forceMove(A.loc)
 		return
 
 
@@ -152,9 +184,13 @@
 /obj/item/projectile/energy/floramut
 	name = "alpha somatoray"
 	icon_state = "energy"
-	damage_types = list(TOX = 0)
+	damage_types = list(
+		ARMOR_ENERGY = list(
+			DELEM(CLONE, 3),
+			DELEM(TOX, 10)
+		)
+	)
 	nodamage = TRUE
-	check_armour = ARMOR_ENERGY
 
 /obj/item/projectile/energy/floramut/on_hit(atom/target)
 	var/mob/living/M = target
@@ -177,9 +213,12 @@
 /obj/item/projectile/energy/florayield
 	name = "beta somatoray"
 	icon_state = "energy2"
-	damage_types = list(TOX = 0)
+	damage_types = list(
+		ARMOR_ENERGY = list(
+			DELEM(TOX,0)
+		)
+	)
 	nodamage = TRUE
-	check_armour = ARMOR_ENERGY
 
 /obj/item/projectile/energy/florayield/on_hit(atom/target)
 	var/mob/M = target
@@ -196,7 +235,11 @@
 /obj/item/projectile/chameleon
 	name = "bullet"
 	icon_state = "bullet"
-	damage_types = list(HALLOSS = 1)
+	damage_types = list(
+		ARMOR_BULLET = list(
+			DELEM(HALLOSS, 1)
+		)
+	)
 	embed = 0 // nope
 	nodamage = TRUE
 	muzzle_type = /obj/effect/projectile/bullet/muzzle
@@ -205,15 +248,18 @@
 /obj/item/projectile/flamer_lob
 	name = "blob of fuel"
 	icon_state = "fireball"
-	damage_types = list(BURN = 20)
-	check_armour = ARMOR_MELEE
+	damage_types = list(
+		ARMOR_BLUNT = list(
+			DELEM(BURN, 30)
+		)
+	)
 	var/life = 3
 
 
 /obj/item/projectile/flamer_lob/New()
 	.=..()
 
-/obj/item/projectile/flamer_lob/Move(atom/A)
+/obj/item/projectile/flamer_lob/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0, glide_size_override = 0, initiator = src)
 	.=..()
 	life--
 	var/turf/T = get_turf(src)
@@ -227,13 +273,21 @@
 /obj/item/projectile/coin
 	name = "coin"
 	desc = "Keep the change, ya filthy animal."
-	damage_types = list(BRUTE = 5)
+	damage_types = list(
+		ARMOR_BULLET = list(
+			DELEM(BRUTE , 5)
+		)
+	)
 	embed = 0
 
 /obj/item/projectile/bullet/flare
 	name = "flare"
 	icon_state = "flare"
-	damage_types = list(BRUTE = 24)
+	damage_types = list(
+		ARMOR_ENERGY = list(
+			DELEM(BURN ,24),
+		)
+	)
 	kill_count = 16
 	armor_divisor = 1
 	step_delay = 2

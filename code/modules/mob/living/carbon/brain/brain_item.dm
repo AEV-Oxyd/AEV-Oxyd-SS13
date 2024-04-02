@@ -6,8 +6,7 @@
 	unique_tag = BP_BRAIN
 	vital = 1
 	icon_state = "brain2"
-	force = 1
-	w_class = ITEM_SIZE_SMALL
+	volumeClass = ITEM_SIZE_SMALL
 	specific_organ_size = 2
 	throwforce = 1
 	throw_speed = 3
@@ -125,11 +124,13 @@
 	callHook("debrain", list(brainmob))
 
 /obj/item/organ/internal/vital/brain/examine(mob/user) // -- TLE
-	..(user)
+	var/description = ""
 	if(brainmob && brainmob.client)//if thar be a brain inside... the brain.
-		to_chat(user, "You can feel the small spark of life still left in this one.")
+		description += "You can feel the small spark of life still left in this one."
 	else
-		to_chat(user, "This one seems particularly lifeless. Perhaps it will regain some of its luster later..")
+		description += "This one seems particularly lifeless. Perhaps it will regain some of its luster later.."
+	..(user, afterDesc = description)
+
 
 /obj/item/organ/internal/vital/brain/removed_mob(mob/living/user)
 	name = "[owner.real_name]'s brain"
@@ -149,7 +150,7 @@
 
 	..()
 
-/obj/item/organ/internal/vital/brain/replaced_mob(mob/living/carbon/target)
+/obj/item/organ/internal/vital/brain/mob_update(mob/living/carbon/target)
 	..()
 	if(owner.key && !(owner.status_flags & REBUILDING_ORGANS))
 		owner.ghostize()

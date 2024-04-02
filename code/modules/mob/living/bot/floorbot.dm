@@ -333,7 +333,7 @@
 	if(prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)
 	var/obj/item/stack/tile/floor/T = new /obj/item/stack/tile/floor(Tsec)
-	T.amount = amount
+	T.setAmount(amount)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
@@ -372,11 +372,10 @@
 	name = "tiles and toolbox"
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "toolbox_tiles"
-	force = 3
 	throwforce = 10
 	throw_speed = 2
 	throw_range = 5
-	w_class = ITEM_SIZE_NORMAL
+	volumeClass = ITEM_SIZE_NORMAL
 	var/created_name = "Floorbot"
 
 /obj/item/toolbox_tiles/attackby(var/obj/item/W, mob/user as mob)
@@ -403,11 +402,10 @@
 	name = "tiles, toolbox and sensor arrangement"
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "toolbox_tiles_sensor"
-	force = 3
 	throwforce = 10
 	throw_speed = 2
 	throw_range = 5
-	w_class = ITEM_SIZE_NORMAL
+	volumeClass = ITEM_SIZE_NORMAL
 	var/created_name = "Floorbot"
 
 /obj/item/toolbox_tiles_sensor/attackby(var/obj/item/W, mob/user as mob)

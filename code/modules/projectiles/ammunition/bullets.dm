@@ -162,6 +162,7 @@
 	projectile_type = /obj/item/projectile/bullet/clrifle
 	is_caseless = TRUE // as it is caseless, the casing costs nothing.
 	maxamount = 10
+	commonLore = "Caseless ammunitions were invented during the Syndicate-NT era.They were employed by both sides for operations requiring complete stealth."
 
 	sprite_update_spawn = TRUE
 	sprite_max_rotate = 32
@@ -455,7 +456,7 @@
 	spent_icon = "grenadeshell"
 	projectile_type = /obj/item/projectile/bullet/grenade/frag/sting
 	matter = list(MATERIAL_STEEL = 3, MATERIAL_PLASTEEL = 2)
-	w_class = ITEM_SIZE_SMALL
+	volumeClass = ITEM_SIZE_SMALL
 	caliber = CAL_GRENADE
 	is_caseless = TRUE
 	maxamount = 1
@@ -467,7 +468,7 @@
 	desc = "A riot-grade Frozen Star tear gas round, for use against unruly crowds."
 	icon_state = "teargas"
 	projectile_type = /obj/item/projectile/bullet/grenade/handgrenade/teargas
-	w_class = ITEM_SIZE_SMALL
+	volumeClass = ITEM_SIZE_SMALL
 	caliber = CAL_GRENADE
 	is_caseless = TRUE
 	maxamount = 1
@@ -528,12 +529,12 @@
 	description_info = "Relying purely on explosive power, HE shells provide the biggest boom on the best budget."
 	icon_state = "rocketshell"
 	projectile_type = /obj/item/projectile/bullet/rocket
-	
+
 	caliber = CAL_ROCKET
 	maxamount = 1
 	reload_delay = 15
-	is_caseless = TRUE // as it is caseless, the casing costs nothing.
-	w_class = ITEM_SIZE_NORMAL
+	is_caseless = TRUE
+	volumeClass = ITEM_SIZE_NORMAL
 
 /obj/item/ammo_casing/rocket/scrap
 	name = "scrap rocket"

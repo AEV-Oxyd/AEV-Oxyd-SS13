@@ -1,6 +1,6 @@
 /obj/item/mech_component
 	icon = MECH_PARTS_HELD_ICON
-	w_class = ITEM_SIZE_HUGE
+	volumeClass = ITEM_SIZE_HUGE
 	gender = PLURAL
 	color = COLOR_GUNMETAL
 	matter = list(MATERIAL_STEEL = 10)
@@ -37,22 +37,21 @@
 		thing.emp_act(severity)
 
 /obj/item/mech_component/examine(mob/user)
-	. = ..()
-
-	if(.)
-		if(ready_to_install())
-			to_chat(user, SPAN_NOTICE("It is ready for installation."))
-		else
-			show_missing_parts(usr)
+	var/description = ""
+	if(ready_to_install())
+		description += SPAN_NOTICE("It is ready for installation. \n")
+	else
+		show_missing_parts(usr)
 	/*
 	if(reinforcement)
-		to_chat(user, SPAN_NOTICE("It is reinforced with sheets of [reinforcement.material_display_name]."))
+		description += SPAN_NOTICE("It is reinforced with sheets of [reinforcement.material_display_name]."))
 	else
-		to_chat(user, SPAN_NOTICE("It can be reinforced with 5 sheets of a material for additional protection."))
+		description += SPAN_NOTICE("It can be reinforced with 5 sheets of a material for additional protection."))
 	*/
 
 	var/damage_string = src.get_damage_string()
-	to_chat(user, "The [src.name] [src.gender == PLURAL ? "are" : "is"] [damage_string].")
+	description += "The [src.name] [src.gender == PLURAL ? "are" : "is"] [damage_string]. \n"
+	..(user, afterDesc = description)
 
 /*
 
@@ -134,19 +133,17 @@
 
 /obj/item/mech_component/proc/take_brute_damage(amt)
 	brute_damage += amt
-	update_health()
 	if(total_damage >= max_damage)
 		take_component_damage(amt,0)
 		gib_hits += (total_damage / 10)
-		return
+	update_health()
 
 /obj/item/mech_component/proc/take_burn_damage(amt)
 	burn_damage += amt
-	update_health()
 	if(total_damage >= max_damage)
 		take_component_damage(0,amt)
 		gib_hits += (total_damage / 10)
-		return
+	update_health()
 
 /obj/item/mech_component/proc/take_component_damage(brute, burn)
 	var/list/damageable_components = list()

@@ -1,5 +1,6 @@
 //Dummy object for holding items in vehicles.
 //Prevents items from being interacted with.
+/*
 /datum/vehicle_dummy_load
 	var/name = "dummy load"
 	var/actual_load
@@ -48,7 +49,7 @@
 	..()
 	//spawn the cell you want in each vehicle
 
-/obj/vehicle/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0, var/glide_size_override = 0)
+/obj/vehicle/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0, glide_size_override = 0, initiator = src)
 	if(world.time > l_move_time + move_delay)
 		var/old_loc = get_turf(src)
 		if(on && powered && cell.charge < charge_use)
@@ -130,11 +131,7 @@
 		insert_cell(I, user)
 	else if(hasvar(I,"force") && hasvar(I,"damtype"))
 		user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
-		switch(I.damtype)
-			if("fire")
-				health -= I.force * fire_dam_coeff
-			if("brute")
-				health -= I.force * brute_dam_coeff
+		health -= dhTotalDamageStrict(I.melleDamages, ALL_ARMOR, list(BRUTE,BURN)) * (fire_dam_coeff+brute_dam_coeff)/2
 		..()
 		healthcheck()
 	else
@@ -302,8 +299,10 @@
 			C.pixel_y += load_offset_y
 		C.layer = layer + 0.1		//so it sits above the vehicle
 
+	/*
 	if(ismob(C))
 		buckle_mob(C)
+	*/
 
 	return 1
 
@@ -345,8 +344,10 @@
 	load.pixel_y = initial(load.pixel_y)
 	load.layer = initial(load.layer)
 
+	/*
 	if(ismob(load))
 		unbuckle_mob(load)
+	*/
 
 	load = null
 
@@ -371,3 +372,4 @@
 		new /obj/effect/decal/cleanable/blood/oil(src.loc)
 	spawn(1) healthcheck()
 	return 1
+*/

@@ -15,7 +15,7 @@
 	name = "card"
 	desc = "Does card things."
 	icon = 'icons/obj/card.dmi'
-	w_class = ITEM_SIZE_TINY
+	volumeClass = ITEM_SIZE_TINY
 	bad_type = /obj/item/card
 	spawn_blacklisted = TRUE
 	var/list/files = list()
@@ -66,7 +66,8 @@
 /obj/item/card/emag
 	desc = "A card with a magnetic strip attached to some circuitry."
 	name = "cryptographic sequencer"
-	description_antag = "This item has 10 by default. Emagging turrets turns them lethal to everyone. Emagging a door opens it and bolts it. Emagging a non-sentient robot turns them hostile. Emagging a cyborg forces them to obey you. Emagging an APC lets only you acces it."
+	description_antag = "This item has 10 uses by default. Emagging turrets turns them lethal to everyone. Emagging a door opens it and bolts it. Emagging a non-sentient robot turns them hostile. Emagging a cyborg forces them to obey you. Emagging an APC lets only you acces it."
+	commonLore = "A fascinating piece of syndicate technology, antique by now. The hacking techniques employed by these don't work on any ships employing modern airlock systems."
 	icon_state = "emag"
 	item_state = "card-id"
 	origin_tech = list(TECH_MAGNET = 2, TECH_COVERT = 2)
@@ -95,6 +96,7 @@ var/const/NO_EMAG_ACT = -50
 /obj/item/card/id
 	name = "identification card"
 	desc = "A card used to provide ID and determine access across the ship."
+	commonLore = "This card seems to be of old NanoTransen origin."
 	icon_state = "id"
 	item_state = "card-id"
 	slot_flags = SLOT_ID
@@ -120,17 +122,19 @@ var/const/NO_EMAG_ACT = -50
 	var/formal_name_prefix
 	var/formal_name_suffix
 
-/obj/item/card/id/examine(mob/user)
+/obj/item/card/id/examine(mob/user, afterDesc)
 	set src in oview(1)
-	if(in_range(usr, src))
-		show(usr)
-		to_chat(usr, desc)
-		to_chat(usr, text("\icon[] []: The current assignment on the card is [].", src, src.name, src.assignment))
-		to_chat(usr, "The blood type on the card is [blood_type].")
-		to_chat(usr, "The DNA hash on the card is [dna_hash].")
-		to_chat(usr, "The fingerprint hash on the card is [fingerprint_hash].")
+	var/description = "[afterDesc] \n"
+	if(in_range(user, src))
+		show(user)
+		description += desc
+		description += "\n\icon[src] [name]: The current assignment on the card is [assignment]."
+		description += "\nThe blood type on the card is [blood_type]."
+		description += "\nThe DNA hash on the card is [dna_hash]."
+		description += "\nThe fingerprint hash on the card is [fingerprint_hash]."
+		..(user, afterDesc = description)
 	else
-		to_chat(usr, SPAN_WARNING("It is too far away."))
+		to_chat(user, SPAN_WARNING("It is too far away."))
 
 /obj/item/card/id/proc/prevent_tracking()
 	return 0

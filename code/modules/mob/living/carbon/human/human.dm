@@ -4,6 +4,8 @@
 	voice_name = "unknown"
 	icon = 'icons/mob/human.dmi'
 	icon_state = "body_m_s"
+	/// everyone is 65 KGs
+	weight = 65000
 
 	var/list/hud_list[10]
 	var/embedded_flag	  //To check if we've need to roll for damage on movement while an item is imbedded in us.
@@ -103,9 +105,6 @@
 
 /mob/living/carbon/human/explosion_act(target_power, explosion_handler/handle)
 	var/BombDamage = target_power - (getarmor(null, ARMOR_BOMB) + mob_bomb_defense)
-	var/obj/item/rig/hardsuitChad = back
-	if(back && istype(hardsuitChad))
-		BombDamage -= hardsuitChad.block_explosion(src, target_power)
 	var/BlockCoefficient = 0.2
 	if(handle)
 		var/ThrowTurf = get_turf(src)
@@ -205,9 +204,11 @@
 		var/obj/machinery/bot/mulebot/MB = AM
 		MB.RunOver(src)
 
+	/*
 	if(istype(AM, /obj/vehicle))
 		var/obj/vehicle/V = AM
 		V.RunOver(src)
+	*/
 
 // Get rank from ID, ID inside PDA, PDA, ID in wallet, etc.
 /mob/living/carbon/human/proc/get_authentification_rank(if_no_id = "No id", if_no_job = "No job")
@@ -318,6 +319,55 @@ var/list/rank_prefix = list(\
 
 
 /mob/living/carbon/human/Topic(href, href_list)
+
+	if(href_list["contents_read_shallow"])
+		// No funny exploits
+		if(!hasCyberFlag(CSF_CONTENTS_READER))
+			return
+		var/atom/target = locate(href_list["contents_read_shallow"])
+		/// sanity , could be switched by client anyway to be something he shouldn't be able to check
+		if(isturf(target))
+			return
+		if(get_dist(target, src) > 8)
+			return
+		if(incapacitated(INCAPACITATION_UNCONSCIOUS))
+			return
+		var/returnMessage = "<div id='examine'> Contents of \icon[target] [target.name] \n"
+		var/objectsAnalyzed = 0
+		for(var/atom/object in target.contents)
+			if(istype(object, /obj/item/organ/internal) && ishuman(object.loc))
+				continue
+			if(istype(object, /obj/item/implant))
+				var/obj/item/implant/plant = object
+				if(plant.wearer)
+					continue
+			if(istype(object, /obj/item) || istype(object, /mob/living))
+				objectsAnalyzed++
+				returnMessage += "<big> \icon[object] </big>"
+				if(objectsAnalyzed % 5 == 0 && objectsAnalyzed != 0)
+					returnMessage += "\n"
+		returnMessage += "</div>"
+		to_chat(src, returnMessage)
+		return
+
+	if(href_list["read_tastes"])
+		if(!hasCyberFlag(CSF_TASTE_READER))
+			return
+		var/obj/item/reagent_containers/food/target = locate(href_list["read_tastes"])
+		if(get_dist(target,src) > 8 || incapacitated(INCAPACITATION_UNCONSCIOUS))
+			return
+		var/returnMessage = "<div id='examine'> Taste types for \icon[target] [target.name] \n"
+		var/list/taste_list = list()
+		if(istype(target, /obj/item/reagent_containers/food/snacks))
+			var/obj/item/reagent_containers/food/snacks/snack = target
+			taste_list = snack.taste_tag.Copy()
+		for(var/datum/reagent/reag in target.reagents.reagent_list)
+			taste_list |= reag.taste_tag
+		for(var/taste_tag in taste_list)
+			returnMessage += "[uppertext(taste_tag)] "
+		returnMessage += "</div>"
+		to_chat(src, returnMessage)
+		return
 
 	if(href_list["refresh"])
 		if((machine)&&(in_range(src, usr)))
@@ -622,8 +672,8 @@ var/list/rank_prefix = list(\
 	if(!parent)
 		return 0
 
-	if(parent.w_class > affecting.w_class + 1)
-		return prob(100 / 2**(parent.w_class - affecting.w_class - 1))
+	if(parent.volumeClass > affecting.volumeClass + 1)
+		return prob(100 / 2**(parent.volumeClass - affecting.volumeClass - 1))
 
 	return 1
 
@@ -881,6 +931,7 @@ var/list/rank_prefix = list(\
 			internal_organs_by_efficiency[process] = list()
 
 	rebuild_organs()
+
 	src.sync_organ_dna()
 	species.handle_post_spawn(src)
 
@@ -936,7 +987,6 @@ var/list/rank_prefix = list(\
 		checkprefcruciform = TRUE
 		qdel(CI)
 
-
 	if(from_preference)
 		for(var/obj/item/organ/organ in (organs|internal_organs))
 			qdel(organ)
@@ -956,8 +1006,8 @@ var/list/rank_prefix = list(\
 			return
 
 		var/datum/body_modification/BM
-
 		for(var/tag in species.has_limbs)
+
 			BM = Pref.get_modification(tag)
 			var/datum/organ_description/OD = species.has_limbs[tag]
 //			var/datum/body_modification/PBM = Pref.get_modification(OD.parent_organ_base)
@@ -978,13 +1028,19 @@ var/list/rank_prefix = list(\
 
 		var/datum/category_item/setup_option/core_implant/I = Pref.get_option("Core implant")
 		if(I.implant_type && (!mind || mind.assigned_role != "Robot"))
-			var/obj/item/implant/core_implant/C = new I.implant_type
-			C.install(src)
-			C.activate()
-			if(mind)
-				C.install_default_modules_by_job(mind.assigned_job)
-				C.access.Add(mind.assigned_job.cruciform_access)
-				C.security_clearance = mind.assigned_job.security_clearance
+			if(istype(I.implant_type, /obj/item/implant/core_implant))
+				var/obj/item/implant/core_implant/C = new I.implant_type
+				C.install(src)
+				C.activate()
+				if(mind)
+					C.install_default_modules_by_job(mind.assigned_job)
+					C.access.Add(mind.assigned_job.cruciform_access)
+					C.security_clearance = mind.assigned_job.security_clearance
+			else if(has_organ(I.target_organ))
+				var/obj/item/implant/impl = new I.implant_type
+				impl.install(src, I.target_organ)
+				impl.activate()
+
 
 	else
 		var/organ_type
@@ -1009,16 +1065,20 @@ var/list/rank_prefix = list(\
 
 		if(checkprefcruciform && client)
 			var/datum/category_item/setup_option/core_implant/I = client.prefs.get_option("Core implant")
-			if(I.implant_type)
+			if(istype(I.implant_type, /obj/item/implant/core_implant))
 				var/obj/item/implant/core_implant/C = new I.implant_type
 				C.install(src)
 				C.activate()
 				C.install_default_modules_by_job(mind.assigned_job)
 				C.access.Add(mind.assigned_job.cruciform_access)
 				C.security_clearance = mind.assigned_job.security_clearance
+			else if(has_organ(I.target_organ))
+				var/obj/item/implant/impl = new I.implant_type
+				impl.install(src, I.target_organ)
+				impl.activate()
 
 	for(var/obj/item/organ/internal/carrion/C in organs_to_readd)
-		C.replaced(get_organ(C.parent_organ_base))
+		C.insert(get_organ(C.parent_organ_base))
 
 	status_flags &= ~REBUILDING_ORGANS
 	species.organs_spawned(src)
@@ -1176,9 +1236,9 @@ var/list/rank_prefix = list(\
 		for(var/limbcheck in list(BP_L_LEG ,BP_R_LEG))
 			var/obj/item/organ/affecting = get_organ(limbcheck)
 			if(!affecting)
-				return 0
-		return 1
-	return 0
+				return FALSE
+		return TRUE
+	return FALSE
 
 /mob/living/carbon/human/MouseDrop(var/atom/over_object)
 	var/mob/living/carbon/human/H = over_object

@@ -35,7 +35,7 @@
 		if(istype(G.loc,/mob/living))
 			var/mob/living/L = G.loc
 			set_dir(L.dir)
-	else if(pulledby && old_loc)
+	else if(loc && old_loc)
 		var/x_diff = src.x - old_loc.x
 		var/y_diff = src.y - old_loc.y
 		if(x_diff > 0)
@@ -310,7 +310,7 @@
 	light_spot_radius = 2
 	light_spot_power = 2
 	light_spot_range = 1
-	w_class = ITEM_SIZE_TINY
+	volumeClass = ITEM_SIZE_TINY
 
 /obj/item/device/lighting/toggleable/flashlight/heavy
 	name = "heavy duty flashlight"

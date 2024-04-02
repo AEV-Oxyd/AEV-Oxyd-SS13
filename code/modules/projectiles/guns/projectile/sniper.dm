@@ -4,8 +4,7 @@
 	icon = 'icons/obj/guns/projectile/heavysniper.dmi'
 	icon_state = "heavysniper"
 	item_state = "heavysniper"
-	w_class = ITEM_SIZE_HUGE
-	force = WEAPON_FORCE_PAINFUL
+	volumeClass = ITEM_SIZE_HUGE
 	slot_flags = SLOT_BACK
 	origin_tech = list(TECH_COMBAT = 5, TECH_MATERIAL = 2, TECH_COVERT = 2)
 	caliber = CAL_ANTIM
@@ -74,9 +73,6 @@
 	gun_tags |= GUN_AMR
 
 /obj/item/gun/projectile/heavysniper/attack_self(mob/user) //Someone overrode attackself for this class, soooo.
-	if(zoom)
-		toggle_scope(user)
-		return
 	bolt_act(user)
 
 /obj/item/gun/projectile/heavysniper/proc/bolt_act(mob/living/user)

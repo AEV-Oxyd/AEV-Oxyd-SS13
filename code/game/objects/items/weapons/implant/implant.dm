@@ -6,7 +6,7 @@
 	name = "implant"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "implant_health"
-	w_class = ITEM_SIZE_TINY
+	volumeClass = ITEM_SIZE_TINY
 	matter = list(MATERIAL_STEEL = 1, MATERIAL_GLASS = 1)
 	var/implanted = FALSE
 	var/mob/living/carbon/human/wearer
@@ -36,8 +36,16 @@
 			M.update_icon()
 		return TRUE
 
+/obj/item/implant/proc/can_trigger()
+	if(!wearer)
+		return FALSE
+	if(wearer.hasCyberFlag(CSF_IMPLANT_BLOCKER))
+		return FALSE
+	return TRUE
 
 /obj/item/implant/proc/trigger(emote, mob/living/source)
+	return can_trigger()
+
 /obj/item/implant/proc/activate()
 	return TRUE
 
@@ -70,6 +78,7 @@
 			to_chat(user, SPAN_WARNING("[src] cannot be implanted in this limb."))
 			return
 
+
 	if(!can_install(target, affected))
 		to_chat(user, SPAN_WARNING("You can't install [src]."))
 		return
@@ -81,6 +90,7 @@
 		part = affected
 		SSnano.update_uis(affected) // Update surgery UI window, if any
 
+
 	on_install(target, affected)
 	wearer.update_implants()
 	for(var/mob/living/carbon/human/H in viewers(target))
@@ -91,6 +101,7 @@
 	return TRUE
 
 /obj/item/implant/proc/on_install(var/mob/living/target, var/obj/item/organ/external/E)
+	return FALSE
 
 /obj/item/implant/proc/uninstall()
 	on_uninstall()

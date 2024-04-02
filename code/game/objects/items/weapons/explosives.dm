@@ -3,10 +3,11 @@
 	desc = "Used to make holes in specific areas without too much extra hole."
 	gender = PLURAL
 	icon = 'icons/obj/assemblies.dmi'
+	commonLore = "Centuries have passed, C4 is still the king of effective and cheap explosives."
 	icon_state = "plastic-explosive0"
 	item_state = "plasticx"
 	flags = NOBLUDGEON
-	w_class = ITEM_SIZE_SMALL
+	volumeClass = ITEM_SIZE_SMALL
 	origin_tech = list(TECH_COVERT = 2)
 	var/datum/wires/explosive/c4/wires
 	var/timer = 10
@@ -52,7 +53,7 @@
 	if(do_after(user, 2 SECONDS, target) && in_range(user, target))
 		user.drop_item()
 		src.target = target
-		loc = null
+		forceMove(NULLSPACE)
 
 		if (ismob(target))
 			add_logs(user, target, "planted [name] on")
@@ -70,17 +71,7 @@
 			explode(get_turf(target))
 
 /obj/item/plastique/proc/explode(location)
-	var/cur_turf = get_turf(src)
-	if(!target)
-		target = get_atom_on_turf(src)
-	if(!target)
-		target = src
-	if(target != src)
-		target.explosion_act(1000, null)
-	else if(location)
-		target = get_turf(location)
-		target.explosion_act(1000, null)
-	explosion(cur_turf, 400, 180)
+	explosion(location, 2000, 1000)
 	/*
 	if(target)
 		if (istype(target, /turf/simulated/wall))

@@ -3,6 +3,7 @@
 #define CHUNKID(x,y) max(1,round(x/CHUNK_SIZE)+round(y/CHUNK_SIZE)*round(world.maxx / CHUNK_SIZE))
 #define CHUNKSPERLEVEL(x,y) round(world.maxx * world.maxy) / (CHUNK_SIZE ** 2) + round(world.maxx / CHUNK_SIZE)
 #define CHUNKCOORDCHECK(x,y) (x > world.maxx || y > world.maxy || x <= 0 || y <= 0)
+#define CHUNKKEY(x,y,z) (CHUNKID(x,y) * (world.maxz+z))
 /// This subsystem is meant for anything that should not be employing byond view() and is generally very constraining to keep track of
 /// For now it only has mobs and hearers, but it should also include sanity , signal receivers , and anything that is very frequently
 // searched
@@ -121,36 +122,54 @@ SUBSYSTEM_DEF(chunks)
 	SIGNAL_HANDLER
 	var/datum/chunk/chunk_reference
 	if(oldLocation?.z && newLocation?.z)
-		if(CHUNKID(oldLocation.x, oldLocation.y) == CHUNKID(newLocation.x, newLocation.y) && oldLocation.z == newLocation.z)
+		if((CHUNKID(oldLocation.x, oldLocation.y) == CHUNKID(newLocation.x, newLocation.y)) && (oldLocation.z == newLocation.z))
 			return
 		chunk_reference = SSchunks.chunk_list_by_zlevel[oldLocation.z][CHUNKID(oldLocation.x, oldLocation.y)]
 		chunk_reference.mobs -= src
 		//if(ishuman(src))
-		//	message_admins("[src] removed from chunkID : [CHUNKID(oldLocation.x, oldLocation.y)]")
+		//	message_admins("M:[src] removed from chunkID : [CHUNKID(oldLocation.x, oldLocation.y)] Z:[oldLocation.z] 1  [usr]")
 		if(CHUNKCOORDCHECK(newLocation.x, newLocation.y))
 			return
+		/// This is done because we are having cases where forceMove is being called multiple Times , causing duplicated mobs.
+		/// Wasn't able to find which part of move/forceMove causes shit to break , currently ExTools debugging don't work on the version were using
+		/// Hopefully we fix this once ExTools debugger gets updated to 515.1623 , SPCR - 2023
+		if(currentChunk == CHUNKKEY(newLocation.x, newLocation.y, newLocation.z))
+			return
+		currentChunk = CHUNKKEY(newLocation.x, newLocation.y, newLocation.z)
 		chunk_reference = SSchunks.chunk_list_by_zlevel[newLocation.z][CHUNKID(newLocation.x, newLocation.y)]
 		chunk_reference.mobs += src
 		//if(ishuman(src))
-		//	message_admins("[src] added to chunkID : [CHUNKID(newLocation.x, newLocation.y)]")
+		//	message_admins("M:[src] added to chunkID : [CHUNKID(newLocation.x, newLocation.y)] Z:[newLocation.z] 1 [usr]")
+		//if(oldLocation.z != newLocation.z)
+		//	stack_trace("Stack tracing mobs")
 	else if(newLocation?.z)
 		if(CHUNKCOORDCHECK(newLocation.x, newLocation.y))
 			return
+		/// This is done because we are having cases where forceMove is being called multiple Times , causing duplicated mobs.
+		/// Wasn't able to find which part of move/forceMove causes shit to break , currently ExTools debugging don't work on the version were using
+		/// Hopefully we fix this once ExTools debugger gets updated to 515.1623 , SPCR - 2023
+		if(currentChunk == CHUNKKEY(newLocation.x, newLocation.y, newLocation.z))
+			return
+		currentChunk = CHUNKKEY(newLocation.x, newLocation.y, newLocation.z)
 		chunk_reference = SSchunks.chunk_list_by_zlevel[newLocation.z][CHUNKID(newLocation.x, newLocation.y)]
 		chunk_reference.mobs += src
 		//if(ishuman(src))
-		//	message_admins("[src] added to chunkID : [CHUNKID(newLocation.x, newLocation.y)]")
+		//	message_admins("M:[src] added to chunkID : [CHUNKID(newLocation.x, newLocation.y)] Z:[newLocation.z] 2 [usr]")
 	else if(oldLocation?.z)
 		chunk_reference = SSchunks.chunk_list_by_zlevel[oldLocation.z][CHUNKID(oldLocation.x, oldLocation.y)]
 		chunk_reference.mobs -= src
 		//if(ishuman(src))
-		//	message_admins("[src] removed from chunkID : [CHUNKID(oldLocation.x, oldLocation.y)]")
+		//	message_admins("M:[src] removed from chunkID : [CHUNKID(oldLocation.x, oldLocation.y)] Z:[oldLocation.z] 2 [usr]")
 
 /mob/proc/chunkOnContainerization(atom/source, atom/newContainer , atom/oldContainer)
 	SIGNAL_HANDLER
 	//message_admins("[src] switched container from [oldContainer] to [newContainer]")
 	UnregisterSignal(oldContainer , COMSIG_MOVABLE_MOVED)
 	RegisterSignal(newContainer, COMSIG_MOVABLE_MOVED, PROC_REF(chunkOnMove))
+
+/mob/proc/tch()
+	for(var/mob/thng in getMobsInRangeChunked(get_turf(src), 8, FALSE, TRUE))
+		message_admins("Received [thng]")
 
 
 /mob/proc/chunkClearSelf(atom/source)
@@ -170,26 +189,26 @@ SUBSYSTEM_DEF(chunks)
 			return
 		chunk_reference = SSchunks.chunk_list_by_zlevel[oldLocation.z][CHUNKID(oldLocation.x, oldLocation.y)]
 		chunk_reference.hearers -= src
-		//if(ishuman(src))
-		//	message_admins("[src] removed from chunkID : [CHUNKID(oldLocation.x, oldLocation.y)]")
+		if(ishuman(src))
+			message_admins("H:[src] removed from chunkID : [CHUNKID(oldLocation.x, oldLocation.y)] Z:[oldLocation.z]" )
 		if(CHUNKCOORDCHECK(newLocation.x, newLocation.y))
 			return
 		chunk_reference = SSchunks.chunk_list_by_zlevel[newLocation.z][CHUNKID(newLocation.x, newLocation.y)]
 		chunk_reference.hearers += src
-		//if(ishuman(src))
-		//	message_admins("[src] added to chunkID : [CHUNKID(newLocation.x, newLocation.y)]")
+		if(ishuman(src))
+			message_admins("H:[src] added to chunkID : [CHUNKID(newLocation.x, newLocation.y)] Z:[newLocation.z]")
 	else if(newLocation?.z)
 		if(CHUNKCOORDCHECK(newLocation.x, newLocation.y))
 			return
 		chunk_reference = SSchunks.chunk_list_by_zlevel[newLocation.z][CHUNKID(newLocation.x, newLocation.y)]
 		chunk_reference.hearers += src
-		//if(ishuman(src))
-		//	message_admins("[src] added to chunkID : [CHUNKID(newLocation.x, newLocation.y)]")
+		if(ishuman(src))
+			message_admins("H:[src] added to chunkID : [CHUNKID(newLocation.x, newLocation.y)] Z:[newLocation.z]")
 	else if(oldLocation?.z)
 		chunk_reference = SSchunks.chunk_list_by_zlevel[oldLocation.z][CHUNKID(oldLocation.x, oldLocation.y)]
 		chunk_reference.hearers -= src
-		//if(ishuman(src))
-		//	message_admins("[src] removed from chunkID : [CHUNKID(oldLocation.x, oldLocation.y)]")
+		if(ishuman(src))
+			message_admins("H:[src] removed from chunkID : [CHUNKID(oldLocation.x, oldLocation.y)] Z:[oldLocation.z]")
 	/*
 	var/datum/chunk/chunk_reference
 	if(oldLocation && oldLocation.z != 0)

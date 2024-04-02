@@ -23,6 +23,16 @@
 	var/damage_multiplier = 1 //multiplies melee combat damage
 	var/icon_update = 1 //whether icon updating shall take place
 
+	/// How much energy we currently have for combat actions
+	var/energy = 100
+	/// How much energy we regenerate per human life tick
+	var/energyRegenRate = 10
+	/// Maximum permitted, can be increased with stimulants
+	var/maxEnergy = 100
+	/// Triggers a energy update on the next life tick.
+	var/needsEnergyUpdate = FALSE
+
+
 	var/lip_style	//no lipstick by default- arguably misleading, as it could be used for general makeup
 
 	var/age = 30		//Player's age (pure fluff)
@@ -108,3 +118,5 @@
 	var/momentum_speed = 0 // The amount of run-up
 	var/momentum_dir = 0 // Direction of run-up
 	var/momentum_reduction_timer
+
+	var/statusEffects = list()

@@ -1,16 +1,20 @@
 /obj/item/projectile/bullet/grenade
 	name = "grenade shell"
 	icon_state = "grenade"
-	damage_types = list(BRUTE = 5, HALLOSS = 10)
+	damage_types = list(
+		ARMOR_BULLET = list(
+			DELEM(BRUTE,10),
+			DELEM(HALLOSS, 10)
+		)
+	)
 	armor_divisor = 1
 	embed = FALSE
 	sharp = FALSE
-	check_armour = ARMOR_BULLET
 	step_delay = 1.2
 	recoil = 7 // Unlike shotgun shells, this one doesn't rely on velocity, but payload instead
 	can_ricochet = FALSE
 
-/obj/item/projectile/bullet/grenade/Move()	//Makes grenade shells cause their effect when they arrive at their target turf
+/obj/item/projectile/bullet/grenade/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0, glide_size_override = 0, initiator = src)	//Makes grenade shells cause their effect when they arrive at their target turf
 	if(get_turf(src) == get_turf(original))
 		grenade_effect(get_turf(src))
 		qdel(src)
@@ -53,6 +57,7 @@
 	var/f_damage = 12
 	var/f_step = 8 // Less amount of fragment means range will be shorter despite same step
 	var/same_turf_hit_chance = 15
+	var/hasBlown = FALSE
 
 /obj/item/projectile/bullet/grenade/frag/weak
 	name = "frag shell"
@@ -67,9 +72,10 @@
 	f_step = 8
 
 /obj/item/projectile/bullet/grenade/frag/grenade_effect(target)
-	fragment_explosion(target, range, f_type, f_amount, f_damage, f_step, same_turf_hit_chance)
-	explosion(get_turf(target), 60, 40)
-	. = ..()
+	if(!hasBlown)
+		fragment_explosion(target, range, f_type, f_amount, f_damage, f_step, same_turf_hit_chance)
+		explosion(get_turf(target), 60, 40)
+		hasBlown = TRUE
 
 /obj/item/projectile/bullet/grenade/frag/sting/weak
 	name = "sting shell"

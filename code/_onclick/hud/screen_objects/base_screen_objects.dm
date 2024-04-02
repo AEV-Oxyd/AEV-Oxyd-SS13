@@ -21,6 +21,7 @@
 	var/process_flag = FALSE
 	var/hideflag = 0
 	var/list/image/ovrls = list()
+	weight = 0
 
 /obj/screen/New(_name = "unnamed", mob/living/_parentmob, _icon, _icon_state)//(_name = "unnamed", _screen_loc = "7,7", mob/living/_parentmob, _icon, _icon_state)
 	src.parentmob = _parentmob
@@ -71,6 +72,32 @@
 			usr.unset_machine()
 
 	return TRUE
+
+// ------------energy-----------------------
+/obj/screen/energy
+	name = "energy"
+	icon_state = "energy"
+	desc = "energy, represents how tired your character is \
+	<br> the less you have , the slower you are \
+	<br> sugar, caffeine and adrenaline help with energy \
+	<br> heavy lifting and combat actions drain your energy"
+	process_flag = TRUE
+
+/obj/screen/energy/New(_name, mob/living/_parentmob, _icon, _icon_state)
+	. = ..()
+	icon_state = "energy1"
+
+/obj/screen/energy/Process()
+	update_icon()
+
+/obj/screen/energy/update_icon()
+	. = ..()
+	var/mob/living/carbon/human/man = parentmob
+	if(!istype(man))
+		return
+	var/ratio = man.getEnergyRatio()
+	ratio = clamp(round(ratio, 0.2), 0,2)
+	icon_state = "[initial(icon_state)][ratio]"
 //--------------------------------------------------close---------------------------------------------------------
 
 /obj/screen/close
@@ -329,7 +356,8 @@
 	name = "health"
 	desc = "Not your actual health, but an estimate of how much pain you feel.\
 	<br>Experience too much of it, and you will lose consciousness.\
-	<br>Pain tolerance scales with your Toughness."
+	<br>Pain tolerance scales with your Toughness.\
+	<br>Painkillers help with the pain"
 	icon = 'icons/mob/screen/ErisStyle.dmi'
 	icon_state = "health0"
 	screen_loc = "15,7"
@@ -1016,30 +1044,6 @@ obj/screen/fire/DEADelize()
 	var/mob/living/carbon/human/H = parentmob
 	H.do_wield()
 //-----------------------wield END------------------------------
-//-----------------------Pull------------------------------
-
-/obj/screen/pull
-	name = "pull"
-	icon = 'icons/mob/screen/ErisStyle.dmi'
-	icon_state = "pull0"
-	screen_loc = "14,2"
-
-/obj/screen/pull/New()
-	..()
-	update_icon()
-
-/obj/screen/pull/Click()
-	usr.stop_pulling()
-	//update_icon()
-	//icon_state = "pull0"
-
-/obj/screen/pull/update_icon()
-	if (parentmob.pulling)
-		icon_state = "pull1"
-	else
-		icon_state = "pull0"
-
-//-----------------------Pull end------------------------------
 //-----------------------throw------------------------------
 /obj/screen/HUDthrow
 	name = "throw"
@@ -1533,6 +1537,10 @@ obj/screen/fire/DEADelize()
 		if (HUDelement.hideflag & TOGGLE_INVENTORY_FLAG)
 			HUDelement.invisibility = 101
 			hidden_inventory_update(HUDelement)
+	for(var/element in parentmob.HUDneed)
+		var/obj/screen/HUDelement = parentmob.HUDneed[element]
+		if(HUDelement.hideflag & TOGGLE_CYBERDECK_FLAG || istype(HUDelement, /obj/screen/toggle_cyberdeck))
+			HUDelement.invisibility = 101
 	for (var/obj/screen/HUDelement in parentmob.HUDfrippery)
 		if (HUDelement.hideflag & TOGGLE_INVENTORY_FLAG)
 			HUDelement.invisibility = 101
@@ -1541,6 +1549,12 @@ obj/screen/fire/DEADelize()
 	for (var/obj/screen/HUDelement in parentmob.HUDinventory)
 		HUDelement.invisibility = 0
 		hidden_inventory_update(HUDelement)
+	for(var/element in parentmob.HUDneed)
+		var/obj/screen/HUDelement = parentmob.HUDneed[element]
+		if(istype(HUDelement, /obj/screen/toggle_cyberdeck))
+			var/obj/screen/toggle_cyberdeck/deck = HUDelement
+			if(deck.hasInterface)
+				HUDelement.invisibility = 0
 	for (var/obj/screen/HUDelement in parentmob.HUDfrippery)
 		HUDelement.invisibility = 0
 
@@ -1582,3 +1596,103 @@ obj/screen/fire/DEADelize()
 		if(slot_wear_mask)
 			if(H.wear_mask) H.wear_mask.screen_loc = (inv_elem.invisibility == 101) ? null : inv_elem.screen_loc
 //-----------------------toggle_invetory End------------------------------
+// ----------- cyberdeck toggle -----------------
+/obj/screen/toggle_cyberdeck
+	name = "toggle cyberdeck"
+	icon = 'icons/mob/screen/ErisStyle.dmi'
+	icon_state = "cyberdeck"
+	invisibility = 101
+	var/showing = FALSE
+	var/hasInterface = FALSE
+
+/obj/screen/toggle_cyberdeck/Initialize()
+	. = ..()
+	if(parentmob)
+		var/mob/living/carbon/human/Humie = parentmob
+		if(!istype(Humie))
+			return
+		for(var/externalBodypart in BP_ALL_LIMBS)
+			if(!Humie.has_organ(externalBodypart))
+				continue
+			var/obj/item/organ/external/bodypart = Humie.organs_by_name[externalBodypart]
+			var/obj/item/implant/cyberinterface/interface = locate() in bodypart.implants
+			if(interface)
+				hasInterface = TRUE
+				invisibility = 0
+				return
+
+
+/obj/screen/toggle_cyberdeck/Click(location, control, params)
+	if(showing)
+		for(var/element in parentmob.HUDneed)
+			var/obj/screen/HUDelement = parentmob.HUDneed[element]
+			if(HUDelement.hideflag & TOGGLE_CYBERDECK_FLAG)
+				HUDelement.invisibility = 101
+		showing = FALSE
+	else
+		for(var/element in parentmob.HUDneed)
+			var/obj/screen/HUDelement = parentmob.HUDneed[element]
+			if(HUDelement.hideflag & TOGGLE_CYBERDECK_FLAG)
+				HUDelement.update_icon()
+		showing = TRUE
+
+// ------------- cyberdeck toggle end
+// ----------------- cyberslot start------------
+#define OVKEY_CYBER_IMPLANT "cyberstick"
+/obj/screen/cyberdeck_slot
+	name = "cyberdeck slot"
+	icon = 'icons/mob/screen/ErisStyle.dmi'
+	icon_state = "cyberslot"
+	invisibility = 101
+	var/obj/item/implant/cyberinterface/interface = null
+	var/slotId = 0
+	var/mutable_appearance/cyberStickImage = null
+
+/obj/screen/cyberdeck_slot/Initialize()
+	. = ..()
+	if(parentmob)
+		var/mob/living/carbon/human/Humie = parentmob
+		if(!istype(Humie))
+			return
+		for(var/externalBodypart in BP_ALL_LIMBS)
+			if(!Humie.has_organ(externalBodypart))
+				continue
+			var/obj/item/organ/external/bodypart = Humie.organs_by_name[externalBodypart]
+			var/obj/item/implant/cyberinterface/cyberInterface = locate(/obj/item/implant/cyberinterface) in bodypart.implants
+			if(cyberInterface)
+				interface = cyberInterface
+				update_icon()
+				return
+
+/obj/screen/cyberdeck_slot/update_icon()
+	vis_contents.Cut()
+	if(interface && length(interface.slots) >= slotId && slotId != 0)
+		invisibility = 0
+		var/obj/item/cyberstick/stickRef = interface.slots[slotId]
+		if(stickRef)
+			stickRef.holdingSlot = src
+			vis_contents.Add(stickRef)
+	else
+		invisibility = 101
+
+	. = ..()
+
+/obj/screen/cyberdeck_slot/Click(location, control, params)
+	if(!interface)
+		return TRUE
+	var/mob/living/carbon/human/user = usr
+	if(!istype(user))
+		return TRUE
+	if(!user.can_click())
+		return TRUE
+	if(user.incapacitated(INCAPACITATION_CANT_ACT))
+		return TRUE
+	var/obj/item/currentlyInhand = user.get_active_hand()
+	if(!currentlyInhand)
+		interface.removeStick(slotId, user)
+		return
+	if(istype(currentlyInhand, /obj/item/cyberstick))
+		interface.installStick(currentlyInhand, user, slotId, FALSE)
+	return TRUE
+
+

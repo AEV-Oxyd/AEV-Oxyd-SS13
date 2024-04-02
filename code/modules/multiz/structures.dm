@@ -207,7 +207,7 @@
 
 	if(do_after(M, delay, src))
 		M.forceMove(T)
-		try_resolve_mob_pulling(M, src)
+		//try_resolve_mob_pulling(M, src)
 
 /obj/structure/multiz/ladder/AltClick(var/mob/living/carbon/human/user)
 	if(get_dist(src, user) <= 3)
@@ -289,7 +289,7 @@
 		return
 
 	AM.forceMove(get_turf(target))
-	try_resolve_mob_pulling(AM, ES)
+	//try_resolve_mob_pulling(AM, ES)
 
 /obj/structure/multiz/stairs/attackby(obj/item/C, mob/user)
 	. = ..()
