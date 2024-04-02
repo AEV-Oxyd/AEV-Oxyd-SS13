@@ -84,6 +84,7 @@ var/global/list/hexdigits = list("0", "1", "2", "3", "4", "5", "6", "7", "8", "9
 		if (SOUTHWEST) return "southwest"
 		if (UP) return "up"
 		if (DOWN) return "down"
+	return NONE
 
 // Turns text into proper directions
 /proc/text2dir(direction)
@@ -96,6 +97,7 @@ var/global/list/hexdigits = list("0", "1", "2", "3", "4", "5", "6", "7", "8", "9
 		if ("NORTHWEST") return 9
 		if ("SOUTHEAST") return 6
 		if ("SOUTHWEST") return 10
+	return NONE
 
 //Converts an angle (degrees) into a ss13 direction
 GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,SOUTHWEST,WEST,NORTHWEST))
