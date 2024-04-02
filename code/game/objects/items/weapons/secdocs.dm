@@ -15,8 +15,7 @@
 
 /obj/item/oddity/secdocs/Initialize()
 	icon_state = "folder-[pick("omega","psi","theta")]"
-	name = pick
-	(
+	name = pick(
 		"Attractor field theory",
 		"World lines theory",
 		"Evidence of an outside-context problem",
