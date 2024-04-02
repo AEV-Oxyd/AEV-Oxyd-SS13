@@ -133,14 +133,7 @@
 	item_state = "nt_ritualrobe_hood"
 	desc = "A hood to cover one's features while chanting hymns or holy sacrements."
 	permeability_coefficient = 0.01
-	armor = list(
-		melee = 2,
-		bullet = 2,
-		energy = 5,
-		bomb = 0,
-		bio = 100,
-		rad = 0
-	)
+	armor = list(ARMOR_BLUNT = 5, ARMOR_SLASH = 2, ARMOR_POINTY = 2, ARMOR_BULLET = 2, ARMOR_ENERGY = 5, ARMOR_BOMB = 10, ARMOR_BIO = 10, ARMOR_RAD = 10, ARMOR_CHEM = 10)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|BLOCKHAIR|HIDEFACE
 	body_parts_covered = HEAD|FACE|EYES|EARS
 	item_flags = FLEXIBLEMATERIAL
