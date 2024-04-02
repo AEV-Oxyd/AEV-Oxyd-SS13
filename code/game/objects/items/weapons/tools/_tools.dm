@@ -99,9 +99,12 @@ GLOBAL_LIST(melleExtrasCache)
 		if(!GLOB.melleExtrasCache)
 			GLOB.melleExtrasCache = list()
 		if(!GLOB.melleExtrasCache["[type]-t"])
-			GLOB.melleExtrasCache["[type]-t"] = toggleable ? switchedOn.Copy() : switchedOn
+			GLOB.melleExtrasCache["[type]-t"] = switchedOn:Copy()
 		if(!(maxUpgrades || objectFlags & OF_UNIQUEMELLEHANDLER))
+			del(switchedOn)
 			switchedOn = GLOB.melleExtrasCache["[type]-t"]
+		else
+			switchedOn = GLOB.melleExtrasCache["[type]-t"]:Copy()
 
 	if(maxHealth)
 		health = maxHealth

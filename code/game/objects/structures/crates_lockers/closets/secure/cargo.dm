@@ -83,7 +83,6 @@
 	spawnedAtoms.Add(new /obj/item/clothing/glasses/monocle(NULLSPACE))
 	spawnedAtoms.Add(new /obj/item/storage/fancy/crayons(NULLSPACE))
 	spawnedAtoms.Add(new /obj/item/reagent_containers/spray/waterflower(NULLSPACE))
-	spawnedAtoms.Add(new /obj/item/device/pda/clown(NULLSPACE))
 	spawnedAtoms.Add(new /obj/item/clothing/mask/gas/plaguedoctor(NULLSPACE))
 	spawnedAtoms.Add(new /obj/item/clothing/gloves/color/green(NULLSPACE))
 	spawnedAtoms.Add(new /obj/item/clothing/gloves/color/rainbow(NULLSPACE))

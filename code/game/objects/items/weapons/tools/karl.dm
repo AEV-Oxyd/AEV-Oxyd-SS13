@@ -47,6 +47,11 @@
 /obj/item/tool/karl/New()
 	. = ..()
 
+	if(!GLOB.melleExtrasCache)
+		GLOB.melleExtrasCache = list()
+	if(!GLOB.melleExtrasCache["[type]-t"])
+		GLOB.melleExtrasCache["[type]-t"] = list(ARMOR_BLUNT = list(DELEM(BRUTE,25)))
+
 	// Init inbuilt gun
 	if(ispath(installation))
 		installation = new installation
@@ -128,11 +133,11 @@
 
 /obj/item/tool/karl/proc/update_force()
 	if(gunmode)
-		force = WEAPON_FORCE_NORMAL
+		melleDamages = GLOB.melleDamagesCache[type]
 	else if(switched_on)
-		force = WEAPON_FORCE_ROBUST  // Increased damage when KARL is turned on
+		melleDamages = GLOB.melleExtrasCache["[type]-t"]
 	else
-		force = initial(force)  // Back to standard damage when KARL is turned off
+		melleDamages = GLOB.melleDamagesCache[type]
 
 // Same values than /obj/item/proc/use_tool
 /obj/item/tool/karl/use_tool(mob/living/user, atom/target, base_time, required_quality, fail_chance, required_stat, instant_finish_tier = 110, forced_sound = null, sound_repeat = 2.5 SECONDS)
