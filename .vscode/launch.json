@@ -8,5 +8,5 @@
 		"preLaunchTask": "TGUI Compile",
 		"dmb": "${workspaceFolder}/${command:CurrentDMB}"
 	  },
-	]
+	],
   }
