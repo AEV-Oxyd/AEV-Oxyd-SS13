@@ -35,7 +35,7 @@
 /obj/effect/decal/cleanable/solid_biomass
 	name = "solid biomass"
 	desc = "It's good to do not touch this. And better to kill it with fire. Very toxic."
-	var/commonLore = "Precursor of the blob. Was commonly found hidden in old Nanotransen ventilations, causing the feared blob infestation."
+	var/commonLore = "Precursor of the blob. Was commonly found hidden in old nanotrasen ventilations, causing the feared blob infestation."
 	icon = 'icons/obj/bioreactor_misc.dmi'
 	icon_state = "biomass-1"
 	anchored = TRUE
