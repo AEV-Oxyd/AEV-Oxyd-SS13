@@ -88,7 +88,6 @@
 		new_slime = new /mob/living/carbon/slime(loc)
 		if(adult)
 			new_slime.is_adult = 1
-		else
 	new_slime.key = key
 
 	to_chat(new_slime, "<B>You are now a slime. Skreee!</B>")

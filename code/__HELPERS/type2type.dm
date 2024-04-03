@@ -22,16 +22,15 @@
 	while (i)
 		var/char = text2ascii(hex, i)
 		switch(char)
-			if(48)                                  // 0 -- do nothing
-			if(49 to 57) num += (char - 48) * power // 1-9
-			if(97,  65)  num += power * 10          // A
-			if(98,  66)  num += power * 11          // B
-			if(99,  67)  num += power * 12          // C
-			if(100, 68)  num += power * 13          // D
-			if(101, 69)  num += power * 14          // E
-			if(102, 70)  num += power * 15          // F
-			else
-				return
+			if(48) pass()
+			if(49 to 57) num += (char - 48) * power// 1-9
+			if(97,65) num += power * 10// A
+			if(98,66) num += power * 11// B
+			if(99,67) num += power * 12// C
+			if(100,68) num += power * 13// D
+			if(101,69) num += power * 14// E
+			if(102,70) num += power * 15// F
+			else return
 		power *= 16
 		i--
 	return num
@@ -84,6 +83,7 @@ var/global/list/hexdigits = list("0", "1", "2", "3", "4", "5", "6", "7", "8", "9
 		if (SOUTHWEST) return "southwest"
 		if (UP) return "up"
 		if (DOWN) return "down"
+	return NONE
 
 // Turns text into proper directions
 /proc/text2dir(direction)
@@ -96,6 +96,7 @@ var/global/list/hexdigits = list("0", "1", "2", "3", "4", "5", "6", "7", "8", "9
 		if ("NORTHWEST") return 9
 		if ("SOUTHEAST") return 6
 		if ("SOUTHWEST") return 10
+	return NONE
 
 //Converts an angle (degrees) into a ss13 direction
 GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,SOUTHWEST,WEST,NORTHWEST))

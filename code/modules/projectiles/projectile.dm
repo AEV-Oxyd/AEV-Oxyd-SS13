@@ -281,7 +281,6 @@ GLOBAL_LIST(projectileDamageConstants)
 
 	setup_trajectory(curloc, targloc, x_offset, y_offset, angle_offset) //plot the initial trajectory
 	Process()
-	START_PROCESSING(SSprojectiles, src)
 
 	return FALSE
 
@@ -530,9 +529,13 @@ GLOBAL_LIST(projectileDamageConstants)
 	else
 		passthrough = (A.bullet_act(src, def_zone) == PROJECTILE_CONTINUE) //backwards compatibility
 		if(isturf(A))
-			for(var/obj/O in A)
+			if(QDELETED(src)) // we don't want bombs to explode once for every time bullet_act is called
+				on_impact(A)
+				invisibility = 101
+				return TRUE // see that next line? it can overload the server.
+			for(var/obj/O in A) // if src's bullet act spawns more objs, the list will increase,
 				if(O.density)
-					O.bullet_act(src)
+					O.bullet_act(src) // causing exponential growth due to the spawned obj spawning itself
 			for(var/mob/living/M in A)
 				attack_mob(M)
 
@@ -730,6 +733,17 @@ GLOBAL_LIST(projectileDamageConstants)
 		qdel(src)
 
 	return damageTotal > 0 ? (damageLeft / damageTotal) :0
+
+/obj/item/projectile/get_matter()
+	. = matter?.Copy()
+	if(isnull(.)) // empty bullets have no need for matter handling
+		return
+	if(istype(loc, /obj/item/ammo_casing)) // if this is part of a stack
+		var/obj/item/ammo_casing/case = loc
+		if(case.amount > 1) // if there is only one, there is no need to multiply
+			for(var/mattertype in .)
+				.[mattertype] *= case.amount
+
 
 //"Tracing" projectile
 /obj/item/projectile/test //Used to see if you can hit them.

@@ -641,7 +641,6 @@
 	update_icon()
 
 /obj/screen/nutrition/update_icon()
-	set src in usr.client.screen
 	var/mob/living/carbon/human/H = parentmob
 	cut_overlays()
 	switch(H.nutrition)

@@ -25,7 +25,8 @@
 	grenade_effect(target)
 
 /obj/item/projectile/bullet/grenade/proc/grenade_effect(target)
-	return
+	qdel(src) // DO NOT ALLOW SRC TO SURVIVE THIS
+	SHOULD_CALL_PARENT(TRUE)
 
 /obj/item/projectile/bullet/grenade/blast
 	name = "blast shell"
@@ -34,6 +35,7 @@
 
 /obj/item/projectile/bullet/grenade/blast/grenade_effect(target)
 	explosion(get_turf(target), explosion_power, explosion_falloff)
+	. = ..()
 
 /obj/item/projectile/bullet/grenade/heatwave
 	name = "heatwave shell"
@@ -44,7 +46,8 @@
 	var/fire_stacks = TRUE
 
 /obj/item/projectile/bullet/grenade/heatwave/grenade_effect(target)
-    heatwave(target, heavy_range, weak_range, heat_damage, fire_stacks, penetration)
+	heatwave(target, heavy_range, weak_range, heat_damage, fire_stacks, penetration)
+	. = ..()
 
 /obj/item/projectile/bullet/grenade/frag
 	name = "frag shell"
@@ -87,6 +90,7 @@
 
 /obj/item/projectile/bullet/grenade/emp/grenade_effect(target)
 	empulse(target, heavy_emp_range, light_emp_range)
+	. = ..()
 
 /obj/item/projectile/bullet/grenade/emp/low_yield
 	heavy_emp_range = 4
@@ -101,6 +105,7 @@
 /obj/item/projectile/bullet/grenade/handgrenade/grenade_effect(target)
 	var/obj/item/grenade/G = new hand_gren(src)
 	G.prime()
+	. = ..()
 
 /obj/item/projectile/bullet/grenade/handgrenade/teargas    // Because why not
 	name = "cs shell"

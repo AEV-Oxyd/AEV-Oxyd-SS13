@@ -122,8 +122,6 @@
 						dat += "<br><center>None detected</center>"
 					else
 						dat += "<br>[bdat]"
-
-				else
 		else
 			dat += text("<A href='?src=\ref[];login=1'>{Log In}</A>", src)
 	user << browse(text("<HEAD><TITLE>Medical Records</TITLE></HEAD><TT>[]</TT>", dat), "window=med_rec")
@@ -311,7 +309,6 @@
 							if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!issilicon(usr))) || src.active2 != a2))
 								return
 							src.active2.fields["b_dna"] = t1
-					else
 
 			if (href_list["p_stat"])
 				if (src.active1)
@@ -381,7 +378,6 @@
 				for(var/datum/data/record/E in data_core.medical)
 					if ((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
 						M = E
-					else
 						//Foreach continue //goto(2540)
 				src.active1 = R
 				src.active2 = M
@@ -434,16 +430,12 @@
 				for(var/datum/data/record/R in data_core.medical)
 					if ((lowertext(R.fields["name"]) == t1 || t1 == lowertext(R.fields["id"]) || t1 == lowertext(R.fields["b_dna"])))
 						src.active2 = R
-					else
-						//Foreach continue //goto(3229)
 				if (!( src.active2 ))
 					src.temp = text("Could not locate record [].", t1)
 				else
 					for(var/datum/data/record/E in data_core.general)
 						if ((E.fields["name"] == src.active2.fields["name"] || E.fields["id"] == src.active2.fields["id"]))
 							src.active1 = E
-						else
-							//Foreach continue //goto(3334)
 					src.screen = 4
 
 			if (href_list["print_p"])

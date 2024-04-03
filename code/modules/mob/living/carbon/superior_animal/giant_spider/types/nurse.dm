@@ -169,7 +169,6 @@
 			for(var/obj/O in targetTurf)
 				if (O.anchored)
 					continue
-				if (istype(O, /obj/item))
 				else if (istype(O, /obj/structure) || istype(O, /obj/machinery))
 					large_cocoon = 1
 				else

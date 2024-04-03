@@ -48,7 +48,7 @@
 /obj/item/blueprints/interact()
 	var/area/A = get_area(usr)
 	var/text = {"<HTML><head><title>[src]</title></head><BODY>
-<h2>[station_name()] blueprints</h2>
+<h2>[station_name] blueprints</h2>
 <small>Property of [company_name]. For heads of staff only. Store in high-secure storage.</small><hr>
 "}
 	switch (get_area_type())
@@ -223,6 +223,7 @@ move an amendment</a> to the drawing.</p>
 				if(BORDER_NONE)
 					pending+=NT
 				if(BORDER_BETWEEN)
+					EMPTY_BLOCK_GUARD
 					//do nothing, may be later i'll add 'rejected' list as optimization
 				if(BORDER_2NDTILE)
 					found+=NT //tile included to new area, but we dont seek more

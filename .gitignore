@@ -223,3 +223,6 @@ aux*.pdb
 # Screenshot tests
 /artifacts
 yarn.lock
+
+# Running OpenDream locally
+tgstation.json

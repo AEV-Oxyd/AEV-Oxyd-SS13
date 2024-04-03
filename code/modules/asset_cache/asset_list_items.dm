@@ -399,8 +399,8 @@
 		var/filename = sanitizeFileName("[design.build_path].png")
 
 		var/atom/item = design.build_path
-		var/icon_file = initial(item.icon)
-		var/icon_state = initial(item.icon_state)
+		var/icon_file = initial(item:icon)
+		var/icon_state = initial(item:icon_state)
 
 		// eugh
 		if (!icon_file)
@@ -424,7 +424,7 @@
 	for(var/type in subtypesof(/obj/item/stack/material) - typesof(/obj/item/stack/material/cyborg))
 		var/filename = sanitizeFileName("[type].png")
 
-		var/atom/item = initial(type)
+		var/atom/item = type
 		var/icon_file = initial(item.icon)
 		var/icon_state = initial(item.icon_state)
 		var/icon/I = icon(icon_file, icon_state, SOUTH)
@@ -440,8 +440,8 @@
 				var/filename = sanitizeFileName("[CR.result].png")
 
 				var/atom/item = initial(CR.result)
-				var/icon_file = initial(item.icon)
-				var/icon_state = initial(item.icon_state)
+				var/icon_file = initial(item:icon)
+				var/icon_state = initial(item:icon_state)
 
 				// eugh
 				if (!icon_file)
@@ -485,13 +485,13 @@
 	for(var/type in subtypesof(/obj/item/tool_upgrade))
 		var/filename = sanitizeFileName("[type].png")
 
-		var/obj/item/item = initial(type)
+		var/obj/item/item = type
 		// no.
 		if (initial(item.bad_type) == type)
 			continue
 
-		var/icon_file = initial(item.icon)
-		var/icon_state = initial(item.icon_state)
+		var/icon_file = initial(item:icon)
+		var/icon_state = initial(item:icon_state)
 
 		#ifdef UNIT_TESTS
 		if(!(icon_state in icon_states(icon_file)))
@@ -507,9 +507,9 @@
 	for(var/type in subtypesof(/datum/perk))
 		var/filename = sanitizeFileName("[type].png")
 
-		var/datum/perk/item = initial(type)
-		var/icon_file = initial(item.icon)
-		var/icon_state = initial(item.icon_state)
+		var/datum/perk/item = type
+		var/icon_file = initial(item:icon)
+		var/icon_state = initial(item:icon_state)
 		#ifdef UNIT_TESTS
 		if(!(icon_state in icon_states(icon_file)))
 			//stack_trace("perks [type] with icon '[icon_file]' missing state '[icon_state]'")

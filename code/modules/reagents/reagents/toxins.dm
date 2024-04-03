@@ -128,12 +128,25 @@
 	reagent_state = LIQUID
 	color = "#CF3600"
 	strength = 2
-	metabolism = REM * 2
+	metabolism = REM/4 //0.05 Cyanide lasts within one day but duh...
 
 /datum/reagent/toxin/cyanide/affect_blood(mob/living/carbon/M, alien, effect_multiplier)
 	..()
-	M.adjustOxyLoss(2 * effect_multiplier)
-	M.AdjustSleeping(1)
+	if(!ishuman(M))
+		return
+	var/mob/living/carbon/human/H = M
+	var/obj/item/organ/internal/vital/heart/S = H.random_organ_by_process(OP_HEART)
+	var/obj/item/organ/internal/vital/lungs/O = H.random_organ_by_process(OP_LUNGS)
+	if(prob(20))
+		M.hallucination(50 * effect_multiplier, 50 * effect_multiplier)
+		M.AdjustSleeping(20)
+	if(istype(O)) //STAGE 1: CRUSH LUNGS
+		create_overdose_wound(O, M, /datum/component/internal_wound/organic/heavy_poisoning, "accumulation")
+		M.adjustOxyLoss(5)
+	if(istype(S) && (!istype(O) || (O.status & ORGAN_DEAD))) //STAGE 2: NO LUNGS? FUCK YOUR HEART
+		create_overdose_wound(S, M, /datum/component/internal_wound/organic/heavy_poisoning, "accumulation")
+		M.adjustHalLoss(20)
+		M.vomit()
 
 /datum/reagent/toxin/potassium_chloride
 	name = "Potassium Chloride"

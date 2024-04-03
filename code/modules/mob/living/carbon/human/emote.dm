@@ -400,7 +400,6 @@
 
 				if (M)
 					message = "points to [M]."
-				else
 			m_type = 1
 
 		if ("raise")
