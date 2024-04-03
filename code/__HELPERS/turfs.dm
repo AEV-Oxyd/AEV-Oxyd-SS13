@@ -246,7 +246,7 @@
 //Used for clicks on blackspace
 /proc/screen_loc2turf(text, turf/origin)
 	if(!origin)
-		return null
+		return
 	var/tZ = splittext(text, ",")
 	var/tX = splittext(tZ[1], "-")
 	var/tY = text2num(tX[2])
@@ -255,4 +255,5 @@
 	tZ = origin.z
 	tX = max(1, min(origin.x + 7 - tX, world.maxx))
 	tY = max(1, min(origin.y + 7 - tY, world.maxy))
-	return locate(tX, tY, tZ)
+	return (locate(tX, tY, tZ))
+
