@@ -239,7 +239,6 @@ SUBSYSTEM_DEF(bullets)
 				ty_change = ((y_change + (y_change == 0))/abs(y_change + (y_change == 0))) * (y_change != 0)
 				tz_change = ((z_change + (z_change == 0))/abs(z_change + (z_change == 0))) * (z_change != 0)
 				moveTurf = locate(projectile.x + tx_change, projectile.y + ty_change, projectile.z + tz_change)
-				if(tz_change == 1)
 				/*
 				if(tz_change && !istype(moveTurf, /turf/simulated/open))
 					if(tz_change <= -1)
