@@ -33,8 +33,10 @@ SUBSYSTEM_DEF(mapping)
 			testing("Overmap already exist in GLOB.maps_data for [GLOB.maps_data.overmap_z].")
 		#endif
 
+	#ifdef TESTING
 	else
 		testing("Overmap generation disabled in config.")
+	#endif
 
 //	world.max_z_changed() // This is to set up the player z-level list, maxz hasn't actually changed (probably)
 	maploader = new()

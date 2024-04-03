@@ -75,7 +75,7 @@ dmm_suite{
 		for(var/z_pos=1;;z_pos=findtext(template_buffer,".",z_pos)+1){
 			if(z_pos>=length(template_buffer)){break}
 			if(z_level){dmm_text+={"\n"}}
-			dmm_text += {"\n(1,1,[++z_level]) = {"\n"}
+			dmm_text += {"\n(1,1,[++z_level]) = {\"\n\"}"}
 			var/z_block = copytext(template_buffer,z_pos,findtext(template_buffer,".",z_pos))
 			for(var/y_pos=1;;y_pos=findtext(z_block,";",y_pos)+1){
 				if(y_pos>=length(z_block)){break}
@@ -93,82 +93,81 @@ dmm_suite{
 				}
 			dmm_text += {"\"}"}
 			sleep(-1)
+			return dmm_text
 			}
-		return dmm_text
 		}
-	proc{
-		make_template(var/turf/model as turf, var/flags as num){
-			var/template = ""
-			var/obj_template = ""
-			var/mob_template = ""
-			var/turf_template = ""
-			if(!(flags & DMM_IGNORE_TURFS)){
-				turf_template = "[model.type][check_attributes(model)],"
-				} else{ turf_template = "[world.turf],"}
-			var/area_template = ""
-			if(!(flags & DMM_IGNORE_OBJS)){
-				for(var/obj/O in model.contents){
-					obj_template += "[O.type][check_attributes(O)],"
-					}
+	proc/make_template(var/turf/model as turf, var/flags as num){
+		var/template = ""
+		var/obj_template = ""
+		var/mob_template = ""
+		var/turf_template = ""
+		if(!(flags & DMM_IGNORE_TURFS)){
+			turf_template = "[model.type][check_attributes(model)],"
+			} else{ turf_template = "[world.turf],"}
+		var/area_template = ""
+		if(!(flags & DMM_IGNORE_OBJS)){
+			for(var/obj/O in model.contents){
+				obj_template += "[O.type][check_attributes(O)],"
 				}
-			for(var/mob/M in model.contents){
-				if(M.client){
-					if(!(flags & DMM_IGNORE_PLAYERS)){
-						mob_template += "[M.type][check_attributes(M)],"
-						}
-					}
-				else{
-					if(!(flags & DMM_IGNORE_NPCS)){
-						mob_template += "[M.type][check_attributes(M)],"
-						}
-					}
-				}
-			if(!(flags & DMM_IGNORE_AREAS)){
-				var/area/m_area = model.loc
-				area_template = "[m_area.type][check_attributes(m_area)]"
-				} else{ area_template = "[world.area]"}
-			template = "[obj_template][mob_template][turf_template][area_template]"
-			return template
 			}
-		check_attributes(var/atom/A){
-			var/attributes_text = {"{"}
-			for(var/V in A.vars){
-				sleep(-1)
-				if((!issaved(A.vars[V])) || (A.vars[V]==initial(A.vars[V]))){continue}
-				if(istext(A.vars[V])){
-					attributes_text += {"[V] = "[A.vars[V]]""}
-					}
-				else if(isnum(A.vars[V])||ispath(A.vars[V])){
-					attributes_text += {"[V] = [A.vars[V]]"}
-					}
-				else if(isicon(A.vars[V])||isfile(A.vars[V])){
-					attributes_text += {"[V] = '[A.vars[V]]'"}
-					}
-				else{
-					continue
-					}
-				if(attributes_text != {"{"}){
-					attributes_text+={"; "}
+		for(var/mob/M in model.contents){
+			if(M.client){
+				if(!(flags & DMM_IGNORE_PLAYERS)){
+					mob_template += "[M.type][check_attributes(M)],"
 					}
 				}
-			if(attributes_text=={"{"}){
-				return
+			else{
+				if(!(flags & DMM_IGNORE_NPCS)){
+					mob_template += "[M.type][check_attributes(M)],"
+					}
 				}
-			if(copytext(attributes_text, length(attributes_text)-1, 0) == {"; "}){
-				attributes_text = copytext(attributes_text, 1, length(attributes_text)-1)
-				}
-			attributes_text += {"}"}
-			return attributes_text
 			}
-		get_model_key(var/which as num, var/key_length as num){
-			var/key = ""
-			var/working_digit = which-1
-			for(var/digit_pos=key_length;digit_pos>=1;digit_pos--){
-				var/place_value = round/*floor*/(working_digit/(letter_digits.len**(digit_pos-1)))
-				working_digit-=place_value*(letter_digits.len**(digit_pos-1))
-				key = "[key][letter_digits[place_value+1]]"
+		if(!(flags & DMM_IGNORE_AREAS)){
+			var/area/m_area = model.loc
+			area_template = "[m_area.type][check_attributes(m_area)]"
+			} else{ area_template = "[world.area]"}
+		template = "[obj_template][mob_template][turf_template][area_template]"
+		return template
+		}
+	proc/check_attributes(var/atom/A){
+		var/attributes_text = {"{"}
+		for(var/V in A.vars){
+			sleep(-1)
+			if((!issaved(A.vars[V])) || (A.vars[V]==initial(A.vars[V]))){continue}
+			if(istext(A.vars[V])){
+				attributes_text += {"[V] = "[A.vars[V]]""}
 				}
-			return key
+			else if(isnum(A.vars[V])||ispath(A.vars[V])){
+				attributes_text += {"[V] = [A.vars[V]]"}
+				}
+			else if(isicon(A.vars[V])||isfile(A.vars[V])){
+				attributes_text += {"[V] = '[A.vars[V]]'"}
+				}
+			else{
+				continue
+				}
+			if(attributes_text != {"{"}){
+				attributes_text+={"; "}
+				}
 			}
+		if(attributes_text=={"{"}){
+			return
+			}
+		if(copytext(attributes_text, length(attributes_text)-1, 0) == {"; "}){
+			attributes_text = copytext(attributes_text, 1, length(attributes_text)-1)
+			}
+		attributes_text += {"}"}
+		return attributes_text
+		}
+	proc/get_model_key(var/which as num, var/key_length as num){
+		var/key = ""
+		var/working_digit = which-1
+		for(var/digit_pos=key_length;digit_pos>=1;digit_pos--){
+			var/place_value = round/*floor*/(working_digit/(letter_digits.len**(digit_pos-1)))
+			working_digit-=place_value*(letter_digits.len**(digit_pos-1))
+			key = "[key][letter_digits[place_value+1]]"
+			}
+		return key
 		}
 	}
+
