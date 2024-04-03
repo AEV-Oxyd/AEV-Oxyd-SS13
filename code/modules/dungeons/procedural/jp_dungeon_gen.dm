@@ -908,8 +908,8 @@
 
 /obj/procedural/jp_DungeonGenerator/proc/retPath(var/list/previous, var/pathWidth, var/turf/start, var/turf/end)
 	var/list/ret = list()
-	ret += GetSquare(end1, pathWidth)
-	var/turf/last = end2
+	ret += GetSquare(end, pathWidth)
+	var/turf/last = end
 	while(1)
 		if(last==start) break
 		ret+= GetSquare(previous["\ref[last]"], pathWidth)
