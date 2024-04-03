@@ -209,14 +209,16 @@ var/list/mydirs = list(NORTH, SOUTH, EAST, WEST, SOUTHWEST, NORTHWEST, NORTHEAST
 
 /// Rewrite of rapid fire to not use spawn() , meant to be temporary till we get a more generalized system coded in
 /// But this is SS13 so that probs won't happen soon unless i give enough of a fuck about it SPCR-2024
-/mob/living/simple_animal/hostile/proc/rapidLoop(mob/target,delay, repeatsLeft)
-	Shoot(target, loc , src)
+/mob/living/simple_animal/hostile/proc/rapidLoop(delay, repeatsLeft)
+	if(QDELETED(src) || QDELETED(target_mob))
+		return
+	Shoot(target_mob, loc , src)
 	if(casingtype)
 		new casingtype(get_turf(src))
 	repeatsLeft--
 	if(!repeatsLeft)
 		return
-	addtimer(CALLBACK(src, PROC_REF(rapidLoop), target, delay, repeatsLeft), delay)
+	addtimer(CALLBACK(src, PROC_REF(rapidLoop), delay, repeatsLeft), delay)
 
 
 /mob/living/simple_animal/hostile/proc/OpenFire(target_mob)
