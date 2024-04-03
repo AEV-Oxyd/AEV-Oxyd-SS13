@@ -235,9 +235,9 @@ SUBSYSTEM_DEF(bullets)
 				if(QDELETED(projectile))
 					bullet_queue -= bullet
 					break
-				tx_change = ((x_change + (x_change == 0))/abs(x_change + (x_change == 0))) * (x_change != 0)
-				ty_change = ((y_change + (y_change == 0))/abs(y_change + (y_change == 0))) * (y_change != 0)
-				tz_change = ((z_change + (z_change == 0))/abs(z_change + (z_change == 0))) * (z_change != 0)
+				tx_change = ((x_change + (x_change == 0))/(abs(x_change + (x_change == 0)))) * (x_change != 0)
+				ty_change = ((y_change + (y_change == 0))/(abs(y_change + (y_change == 0)))) * (y_change != 0)
+				tz_change = ((z_change + (z_change == 0))/(abs(z_change + (z_change == 0)))) * (z_change != 0)
 				moveTurf = locate(projectile.x + tx_change, projectile.y + ty_change, projectile.z + tz_change)
 				/*
 				if(tz_change && !istype(moveTurf, /turf/simulated/open))
