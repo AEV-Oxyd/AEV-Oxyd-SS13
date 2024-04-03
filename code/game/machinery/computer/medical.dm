@@ -309,7 +309,6 @@
 							if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!issilicon(usr))) || src.active2 != a2))
 								return
 							src.active2.fields["b_dna"] = t1
-					else
 
 			if (href_list["p_stat"])
 				if (src.active1)

@@ -44,9 +44,10 @@
 
 	else if(href_list["flavour_text_robot"])
 		switch(href_list["flavour_text_robot"])
-			if("open") EMPTY_BLOCK_GUARD
+			if("open")
+				EMPTY_BLOCK_GUARD
 			if("Default")
-				var/msg = sanitize(input(usr,"Set the default flavour text for your robot. It will be used for any module without individual setting.","Flavour Text",html_decode(pref.flavour_texts_robot["Default"]), "message"), extra = 0)
+				var/msg = sanitize(input(usr,"Set the default flavour text for your robot. It will be used for any module without individual setting.","Flavour Text",html_decode(pref.flavour_texts_robot["Default"])), extra = 0)
 				if(CanUseTopic(user))
 					pref.flavour_texts_robot[href_list["flavour_text_robot"]] = msg
 			else
