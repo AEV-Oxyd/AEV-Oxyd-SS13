@@ -36,6 +36,7 @@ armorType defines the armorType that will block all the damTypes that it has ass
 
 	var/totalDmg = 0
 	var/dealtDamage = 0
+	var/i
 
 	for(var/armorType in armorToDam)
 		for(var/list/damageElement in armorToDam[armorType])
@@ -67,7 +68,7 @@ armorType defines the armorType that will block all the damTypes that it has ass
 		)
 
 		var/list/atom/newBlockers = list()
-		for(var/i=length(blockersTemp), i > 1, i--)
+		for(i=length(blockersTemp), i > 1, i--)
 			var/path = blockersTemp[i]
 			for(var/atom/blocker in damageBlockers)
 				if(istype(blocker, path))
@@ -87,7 +88,7 @@ armorType defines the armorType that will block all the damTypes that it has ass
 				damageElement[DAMVALUE] = max(damageElement[DAMVALUE] - receivedArmor[armorType], 0)
 
 	for(var/armorType in armorToDam)
-		for(var/i=1 to length(armorToDam[armorType]))
+		for(i=1 to length(armorToDam[armorType]))
 			var/list/damageElement = armorToDam[armorType][i]
 			var/blocked = atdCopy[armorType][i][DAMVALUE] - damageElement[DAMVALUE]
 			//message_admins("BLOCKED=[blocked]")
