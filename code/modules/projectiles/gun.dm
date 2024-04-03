@@ -251,7 +251,6 @@
 		else
 			item_state_slots[slot_l_hand_str] = "lefthand"  + state
 			item_state_slots[slot_r_hand_str] = "righthand" + state
-	state = initial(state)
 
 	var/carry_state = inversed_carry
 	if(back && !carry_state)

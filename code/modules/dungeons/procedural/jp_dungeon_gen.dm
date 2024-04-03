@@ -853,7 +853,7 @@
 			out_numPaths++
 			if(long) out_numLongPaths++
 			end = start
-			return retPath(end, previous, pathWidth, start, end)
+			return retPath(previous, pathWidth, start, end)
 
 	next-=borders
 	for(var/turf/t in next)
@@ -903,12 +903,13 @@
 		if(!check_tick_in)
 			check_tick_in = 3
 			CHECK_TICK
-	return retPath(end, previous, pathWidth, start, end)
+	return retPath(previous, pathWidth, start, end)
 
-/obj/procedural/jp_DungeonGenerator/proc/retPath(var/list/end, var/list/previous, var/pathWidth, var/turf/start, var/turf/end)
+
+/obj/procedural/jp_DungeonGenerator/proc/retPath(var/list/previous, var/pathWidth, var/turf/start, var/turf/end)
 	var/list/ret = list()
-	ret += GetSquare(end, pathWidth)
-	var/turf/last = end
+	ret += GetSquare(end1, pathWidth)
+	var/turf/last = end2
 	while(1)
 		if(last==start) break
 		ret+= GetSquare(previous["\ref[last]"], pathWidth)

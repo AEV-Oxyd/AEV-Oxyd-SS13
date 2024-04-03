@@ -283,7 +283,7 @@
 		to_chat(user, SPAN_WARNING("There is no tank in \the [src]."))
 		return
 	if(is_loosen)
-		to_chat(user, SPAN_WARNING("Tighten \the nut with a wrench first."))
+		to_chat(user, SPAN_WARNING("Tighten the nut with a wrench first."))
 		return
 	if(!Adjacent(target))
 		return

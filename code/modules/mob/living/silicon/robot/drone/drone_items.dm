@@ -122,6 +122,7 @@
 			if(wood)
 				wood.add_charge(4000)
 		else if(istype(W,/obj/item/pipe))
+			EMPTY_BLOCK_GUARD
 			// This allows drones and engiborgs to clear pipe assemblies from floors.
 		else
 			continue
