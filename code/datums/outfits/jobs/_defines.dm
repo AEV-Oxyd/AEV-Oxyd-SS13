@@ -23,7 +23,3 @@ backpack_overrides[/decl/backpack_outfit/satchel] = /obj/item/storage/backpack/s
 backpack_overrides[/decl/backpack_outfit/backpack] = /obj/item/storage/backpack/neotheology; \
 backpack_overrides[/decl/backpack_outfit/backsport] = /obj/item/storage/backpack/sport/neotheology; \
 backpack_overrides[/decl/backpack_outfit/satchel] = /obj/item/storage/backpack/satchel/neotheology; \
-
-
-
-

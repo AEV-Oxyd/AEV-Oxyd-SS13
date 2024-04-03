@@ -67,7 +67,7 @@ armorType defines the armorType that will block all the damTypes that it has ass
 		)
 
 		var/list/atom/newBlockers = list()
-		for(var/i = length(blockersTemp); i > 1; i--)
+		for(var/i = length(blockersTemp), i > 1, i--)
 			var/path = blockersTemp[i]
 			for(var/atom/blocker in damageBlockers)
 				if(istype(blocker, path))

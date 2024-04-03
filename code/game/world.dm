@@ -137,8 +137,6 @@ var/game_id
 	var/datum/callback/cb
 #ifdef UNIT_TESTS
 	cb = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(RunUnitTests))
-#else
-	cb = VARSET_CALLBACK(global, universe_has_ended, TRUE)
 #endif
 	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_addtimer), cb, 10 SECONDS))
 
