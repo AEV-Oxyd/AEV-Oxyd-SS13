@@ -5,9 +5,9 @@
 #define DMM_IGNORE_PLAYERS 16
 #define DMM_IGNORE_MOBS 24
 dmm_suite{
-	var{
-		quote = "\""
-		list/letter_digits = list(
+
+	var/quote = "\""
+	var/list/letter_digits = list(
 			"a","b","c","d","e",
 			"f","g","h","i","j",
 			"k","l","m","n","o",
@@ -21,7 +21,6 @@ dmm_suite{
 			"U","V","W","X","Y",
 			"Z"
 			)
-		}
 	save_map(var/turf/t1 as turf, var/turf/t2 as turf, var/map_name as text, var/flags as num){
 		//Check for illegal characters in file name... in a cheap way.
 		if(!((ckeyEx(map_name)==map_name) && ckeyEx(map_name))){
