@@ -63,7 +63,7 @@ armorType defines the armorType that will block all the damTypes that it has ass
 			/obj/item/organ/external,
 			/obj/item/clothing,
 			/obj/item/armor_component,
-			/obj/item/robot_parts/robot_component/armour,
+			/obj/item/robot_parts/robot_component/armour
 		)
 
 		var/list/atom/newBlockers = list()
