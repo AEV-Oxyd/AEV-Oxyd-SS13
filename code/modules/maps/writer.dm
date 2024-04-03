@@ -20,7 +20,8 @@ dmm_suite
 			"U","V","W","X","Y",
 			"Z"
 			)
-	save_map(var/turf/t1 as turf, var/turf/t2 as turf, var/map_name as text, var/flags as num)
+
+dmm_suite/save_map(var/turf/t1 as turf, var/turf/t2 as turf, var/map_name as text, var/flags as num)
 		//Check for illegal characters in file name... in a cheap way.
 		if(!((ckeyEx(map_name)==map_name) && ckeyEx(map_name))){
 			CRASH("Invalid text supplied to proc save_map, invalid characters or empty string.")
@@ -36,7 +37,8 @@ dmm_suite
 		var/saved_map = file("[map_name].dmm")
 		saved_map << file_text
 		return saved_map
-	write_map(var/turf/t1 as turf, var/turf/t2 as turf, var/flags as num)
+
+dmm_suite/write_map(var/turf/t1 as turf, var/turf/t2 as turf, var/flags as num)
 		//Check for valid turfs.
 		if(!isturf(t1) || !isturf(t2)){
 			CRASH("Invalid arguments supplied to proc write_map, arguments were not turfs.")
@@ -69,7 +71,7 @@ dmm_suite
 			dmm_text += {""[keys[key_pos]]" = ([templates[key_pos]])\n"}
 			}
 		var/z_level = 0
-		for(var/z_pos=1;;z_pos=findtext(template_buffer,".",z_pos)+1){
+		for(var/z_pos=1;;z_pos=findtext(template_buffer,".",z_pos)+1)
 			if(z_pos>=length(template_buffer)){break}
 			if(z_level){dmm_text+={"\n"}}
 			dmm_text += {"\n(1,1,[++z_level]) = {\"\n\"}"}
@@ -91,8 +93,8 @@ dmm_suite
 			dmm_text += {"\"}"}
 			sleep(-1)
 			return dmm_text
-			}
-	proc/make_template(var/turf/model as turf, var/flags as num)
+
+dmm_suite/proc/make_template(var/turf/model as turf, var/flags as num)
 		var/template = ""
 		var/obj_template = ""
 		var/mob_template = ""
@@ -124,7 +126,8 @@ dmm_suite
 			} else{ area_template = "[world.area]"}
 		template = "[obj_template][mob_template][turf_template][area_template]"
 		return template
-	proc/check_attributes(var/atom/A)
+
+dmm_suite/proc/check_attributes(var/atom/A)
 		var/attributes_text = {"{"}
 		for(var/V in A.vars){
 			sleep(-1)
@@ -153,7 +156,8 @@ dmm_suite
 			}
 		attributes_text += {"}"}
 		return attributes_text
-	proc/get_model_key(var/which as num, var/key_length as num)
+
+dmm_suite/proc/get_model_key(var/which as num, var/key_length as num)
 		var/key = ""
 		var/working_digit = which-1
 		for(var/digit_pos=key_length;digit_pos>=1;digit_pos--){
