@@ -4,8 +4,7 @@
 #define DMM_IGNORE_NPCS 8
 #define DMM_IGNORE_PLAYERS 16
 #define DMM_IGNORE_MOBS 24
-dmm_suite{
-
+dmm_suite
 	var/quote = "\""
 	var/list/letter_digits = list(
 			"a","b","c","d","e",
@@ -21,7 +20,7 @@ dmm_suite{
 			"U","V","W","X","Y",
 			"Z"
 			)
-	save_map(var/turf/t1 as turf, var/turf/t2 as turf, var/map_name as text, var/flags as num){
+	save_map(var/turf/t1 as turf, var/turf/t2 as turf, var/map_name as text, var/flags as num)
 		//Check for illegal characters in file name... in a cheap way.
 		if(!((ckeyEx(map_name)==map_name) && ckeyEx(map_name))){
 			CRASH("Invalid text supplied to proc save_map, invalid characters or empty string.")
@@ -37,8 +36,7 @@ dmm_suite{
 		var/saved_map = file("[map_name].dmm")
 		saved_map << file_text
 		return saved_map
-		}
-	write_map(var/turf/t1 as turf, var/turf/t2 as turf, var/flags as num){
+	write_map(var/turf/t1 as turf, var/turf/t2 as turf, var/flags as num)
 		//Check for valid turfs.
 		if(!isturf(t1) || !isturf(t2)){
 			CRASH("Invalid arguments supplied to proc write_map, arguments were not turfs.")
@@ -94,8 +92,7 @@ dmm_suite{
 			sleep(-1)
 			return dmm_text
 			}
-		}
-	proc/make_template(var/turf/model as turf, var/flags as num){
+	proc/make_template(var/turf/model as turf, var/flags as num)
 		var/template = ""
 		var/obj_template = ""
 		var/mob_template = ""
@@ -127,8 +124,7 @@ dmm_suite{
 			} else{ area_template = "[world.area]"}
 		template = "[obj_template][mob_template][turf_template][area_template]"
 		return template
-		}
-	proc/check_attributes(var/atom/A){
+	proc/check_attributes(var/atom/A)
 		var/attributes_text = {"{"}
 		for(var/V in A.vars){
 			sleep(-1)
@@ -157,8 +153,7 @@ dmm_suite{
 			}
 		attributes_text += {"}"}
 		return attributes_text
-		}
-	proc/get_model_key(var/which as num, var/key_length as num){
+	proc/get_model_key(var/which as num, var/key_length as num)
 		var/key = ""
 		var/working_digit = which-1
 		for(var/digit_pos=key_length;digit_pos>=1;digit_pos--){
@@ -167,6 +162,4 @@ dmm_suite{
 			key = "[key][letter_digits[place_value+1]]"
 			}
 		return key
-		}
-	}
 
