@@ -298,7 +298,7 @@
 	rand_min = 3
 	rand_max = 30
 	spawn_tags = SPAWN_TAG_MATERIAL_RESOURCES_BULDING
-	rarity_value = 18
+	rarity_value = 10
 
 /obj/item/stack/material/plasteel
 	name = "plasteel"
@@ -312,7 +312,7 @@
 	rand_min = 3
 	rand_max = 20
 	spawn_tags = SPAWN_TAG_MATERIAL_BUILDING
-	rarity_value = 10
+	rarity_value = 18
 
 /obj/item/stack/material/plasteel/full
 	amount = 120
@@ -372,8 +372,8 @@
 /obj/item/stack/material/glass/random
 	rand_min = 3
 	rand_max = 30
-	spawn_tags = SPAWN_TAG_MATERIAL_RESOURCES_BULDING
-	rarity_value = 22.5
+	spawn_tags = SPAWN_TAG_MATERIAL_BUILDING
+	rarity_value = 12.5
 
 /obj/item/stack/material/glass/full
 	amount = 120

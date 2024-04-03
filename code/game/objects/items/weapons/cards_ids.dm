@@ -96,7 +96,7 @@ var/const/NO_EMAG_ACT = -50
 /obj/item/card/id
 	name = "identification card"
 	desc = "A card used to provide ID and determine access across the ship."
-	commonLore = "This card seems to be of old NanoTransen origin."
+	commonLore = "This card seems to be of old nanotrasen origin."
 	icon_state = "id"
 	item_state = "card-id"
 	slot_flags = SLOT_ID

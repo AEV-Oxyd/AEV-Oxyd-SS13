@@ -107,7 +107,7 @@
 /obj/item/melee/energy/sword
 	color
 	name = "energy sword"
-	desc = "May the Force be with you."
+	desc = "A tight and compact hilt featuring a side switch for deploying a highly precise, deadly, and concentrated beam of light. Used by assassins, honor guards, and rich men, this sword of light strikes fear into even the coldest of mercenaries."
 	icon_state = "sword0"
 	activeDamages = list(ARMOR_ENERGY = list(DELEM(BURN,30), DELEM(BRUTE,15))) // Go forth and slay, padawan
 	active_throwforce = WEAPON_FORCE_LETHAL
@@ -120,6 +120,7 @@
 	)
 
 	throwforce = WEAPON_FORCE_HARMLESS
+	armor_divisor = ARMOR_PEN_HALF
 	throw_speed = 1
 	throw_range = 5
 	volumeClass = ITEM_SIZE_SMALL
@@ -162,6 +163,8 @@
 	icon_state = "sword[blade_color]"
 	..()
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	hitsound = 'sound/weapons/blade1.ogg'
+
 	tool_qualities = list(QUALITY_CUTTING = 30,  QUALITY_WIRE_CUTTING = 20, QUALITY_LASER_CUTTING = 20, QUALITY_WELDING = 10, QUALITY_CAUTERIZING = 10)
 
 /obj/item/melee/energy/sword/deactivate(mob/living/user)
@@ -224,6 +227,7 @@
 	throw_range = 1
 	volumeClass = ITEM_SIZE_BULKY
 	flags = NOBLOODY
+	hitsound = 'sound/weapons/blade1.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/mob/living/creator
 	var/datum/effect/effect/system/spark_spread/spark_system

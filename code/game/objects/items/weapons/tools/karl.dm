@@ -42,9 +42,15 @@
 	var/projectile			// Holder for bullettype
 	var/shot_sound 			// What sound should play when the gun fires
 	var/reqpower = 10		// Power needed to shoot
+	var/isPumping = FALSE   // Whether someone is currently pumping the KARL to recharge it
 
 /obj/item/tool/karl/New()
 	. = ..()
+
+	if(!GLOB.melleExtrasCache)
+		GLOB.melleExtrasCache = list()
+	if(!GLOB.melleExtrasCache["[type]-t"])
+		GLOB.melleExtrasCache["[type]-t"] = list(ARMOR_BLUNT = list(DELEM(BRUTE,25)))
 
 	// Init inbuilt gun
 	if(ispath(installation))
@@ -93,13 +99,19 @@
 	if(gunmode)
 		if(cell)
 			if(!cell.fully_charged())
+				if(isPumping)
+					to_chat(user, SPAN_NOTICE("You are already pumping \the [src] to recharge it."))
+					return
 				var/pumping_time = wielded ? 1 SECOND : 2 SECONDS
+				isPumping = TRUE
 				if(do_after(user, pumping_time))
 					if(cell)  // Check the cell is still there in case big brain player chose to remove it during pumping
 						cell.give(use_power_cost * 1 SECOND) // Enough to use the tool during 1 second
 						to_chat(user, SPAN_NOTICE("You recharge \the [src] by pumping it, cell charge at [round(cell.percent())]%."))
 						// Continue pumping till user cancels the pumping
+						isPumping = FALSE
 						attack_self(user)
+				isPumping = FALSE
 			else
 				to_chat(user, SPAN_NOTICE("\The [src]\'cell is fully charged'."))
 		else
@@ -112,10 +124,20 @@
 	. = ..()
 	if(.)
 		to_chat(user, SPAN_NOTICE("A dangerous energy blade now covers the edges of the tool."))
+		update_force()
 
 /obj/item/tool/karl/turn_off(mob/user)
-	to_chat(user, SPAN_NOTICE("The energy blade swiftly retracts."))
 	..()
+	to_chat(user, SPAN_NOTICE("The energy blade swiftly retracts."))
+	update_force()
+
+/obj/item/tool/karl/proc/update_force()
+	if(gunmode)
+		melleDamages = GLOB.melleDamagesCache[type]
+	else if(switched_on)
+		melleDamages = GLOB.melleExtrasCache["[type]-t"]
+	else
+		melleDamages = GLOB.melleDamagesCache[type]
 
 // Same values than /obj/item/proc/use_tool
 /obj/item/tool/karl/use_tool(mob/living/user, atom/target, base_time, required_quality, fail_chance, required_stat, instant_finish_tier = 110, forced_sound = null, sound_repeat = 2.5 SECONDS)
@@ -135,6 +157,9 @@
 /obj/item/tool/karl/proc/toggle_karl_mode(mob/user)
 	gunmode = !gunmode
 	to_chat(user, SPAN_NOTICE("\The [src] switches to [gunmode ? "gun" : "tool"] mode."))
+	no_double_tact = gunmode ? TRUE : FALSE  // No double tact in gunmode
+	no_swing = gunmode ? TRUE : FALSE  // No swinging in gunmode
+	update_force()
 	update_icon()
 	update_wear_icon()
 

@@ -174,7 +174,6 @@
 			return MOVEMENT_HANDLED
 		else
 			mob.inertia_dir = 0 //If not then we can reset inertia and move
-	else
 
 /datum/movement_handler/mob/space/exosuit/MayMove(var/mob/mover, var/is_external)
 	if((mover != host) && is_external)

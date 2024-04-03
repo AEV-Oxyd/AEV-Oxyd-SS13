@@ -267,12 +267,15 @@ var/list/VVckey_edit = list("key", "ckey")
 		if("list")
 			mod_list(variable, O, original_name, objectvar)
 
+
+		/* Lists can't be restored
 		if("restore to default")
-			new_var = initial(variable)
+			new_var = initial(O.)
 			if(assoc)
 				L[assoc_key] = new_var
 			else
 				L[L.Find(variable)] = new_var
+		*/
 
 		if("edit referenced object")
 			modify_variables(variable)

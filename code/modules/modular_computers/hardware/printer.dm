@@ -61,4 +61,3 @@
 		else //if at least two items remain, just update the bundle icon
 			B.update_icon()
 		to_chat(user, "You add [num_of_pages_added] papers from \the [W] into \the [src].")
-	return

@@ -28,6 +28,7 @@ There are important things regarding this file:
 	can_ricochet = TRUE
 	penetrating = 2
 	recoil = 3
+	matter = list(MATERIAL_STEEL = 0.05)
 
 
 /obj/item/projectile/bullet/pistol/hv
@@ -45,6 +46,7 @@ There are important things regarding this file:
 	embed = FALSE
 	sharp = FALSE
 	can_ricochet = FALSE
+	matter = list(MATERIAL_STEEL = 0.01)
 
 /obj/item/projectile/bullet/pistol/rubber
 	icon_state = "rubber"
@@ -57,6 +59,7 @@ There are important things regarding this file:
 	)
 	embed = FALSE
 	sharp = FALSE
+	matter = list(MATERIAL_PLASTIC = 0.05)
 
 /obj/item/projectile/bullet/pistol/scrap
 	armor_divisor = 0.8
@@ -76,6 +79,7 @@ There are important things regarding this file:
 	armor_divisor = 1
 	penetrating = 2
 	can_ricochet = TRUE
+	matter = list(MATERIAL_STEEL = 0.1)
 	recoil = 3.6
 
 /obj/item/projectile/bullet/srifle/nomuzzle
@@ -92,6 +96,7 @@ There are important things regarding this file:
 	embed = FALSE
 	sharp = FALSE
 	can_ricochet = FALSE
+	matter = list(MATERIAL_STEEL = 0.02)
 
 /obj/item/projectile/bullet/srifle/hv
 	armor_divisor = 1.4
@@ -109,6 +114,9 @@ There are important things regarding this file:
 	embed = FALSE
 	sharp = FALSE
 
+	matter = list(MATERIAL_PLASTIC = 0.1)
+
+
 /obj/item/projectile/bullet/srifle/scrap
 	armor_divisor = 0.7
 	recoil = 5
@@ -125,6 +133,8 @@ There are important things regarding this file:
 	armor_divisor = 1
 	penetrating = 2
 	can_ricochet = FALSE //to reduce collateral damage and FF, since IH use it in their primary firearm
+
+	matter = list(MATERIAL_STEEL = 0.2) // as the casing costs nothing, the bullet costs twice as much.
 	recoil = 2.8
 	step_delay = 0.9
 
@@ -139,6 +149,7 @@ There are important things regarding this file:
 	embed = FALSE
 	sharp = FALSE
 	can_ricochet = FALSE
+	matter = list(MATERIAL_STEEL = 0.02)
 
 /obj/item/projectile/bullet/clrifle/hv
 	armor_divisor = 1.4
@@ -158,6 +169,9 @@ There are important things regarding this file:
 	sharp = FALSE
 	can_ricochet = TRUE
 
+	matter = list(MATERIAL_PLASTIC = 0.2)
+
+
 /obj/item/projectile/bullet/clrifle/scrap
 	armor_divisor = 0.8
 	recoil = 4.5
@@ -173,6 +187,8 @@ There are important things regarding this file:
 	)
 	penetrating = 2
 	can_ricochet = TRUE
+	matter = list(MATERIAL_STEEL = 0.15)
+
 	recoil = 5
 
 /obj/item/projectile/bullet/lrifle/practice
@@ -186,6 +202,7 @@ There are important things regarding this file:
 	embed = FALSE
 	sharp = FALSE
 	can_ricochet = FALSE
+	matter = list(MATERIAL_STEEL = 0.03)
 
 /obj/item/projectile/bullet/lrifle/hv
 	armor_divisor = 1.3
@@ -203,6 +220,8 @@ There are important things regarding this file:
 	embed = FALSE
 	sharp = FALSE
 
+	matter = list(MATERIAL_PLASTIC = 0.15)
+
 /obj/item/projectile/bullet/lrifle/scrap
 	armor_divisor = 0.7
 	recoil = 7
@@ -218,6 +237,9 @@ There are important things regarding this file:
 	armor_divisor = 1
 	can_ricochet = TRUE
 	penetrating = 2
+
+	wounding_mult = WOUNDING_WIDE
+	matter = list(MATERIAL_STEEL = 0.1)
 	recoil = 8
 	step_delay =  1.1
 
@@ -232,6 +254,7 @@ There are important things regarding this file:
 	embed = FALSE
 	sharp = FALSE
 	can_ricochet = FALSE
+	matter = list(MATERIAL_STEEL = 0.02)
 
 /obj/item/projectile/bullet/magnum/hv
 	armor_divisor = 1.3
@@ -249,6 +272,8 @@ There are important things regarding this file:
 	embed = FALSE
 	sharp = FALSE
 
+	matter = list(MATERIAL_PLASTIC = 0.1)
+
 /obj/item/projectile/bullet/magnum/scrap
 	armor_divisor = 0.8
 	recoil = 9
@@ -265,6 +290,12 @@ There are important things regarding this file:
 	penetrating = 2
 	step_delay = 0.8
 	recoil = 15 // Good luck shooting these from a revolver
+	matter = list(MATERIAL_PLASTEEL = 1)
+
+/obj/item/projectile/bullet/antim/emp
+	damage_types = list(BRUTE = 16)
+	armor_divisor = 2
+	matter = list(MATERIAL_STEEL = 1, MATERIAL_IRON = 1, MATERIAL_URANIUM = 1)
 
 /obj/item/projectile/bullet/antim/emp
 	damage_types = list(
@@ -277,6 +308,8 @@ There are important things regarding this file:
 /obj/item/projectile/bullet/antim/emp/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	empulse(target, 0, 0)
+	matter [MATERIAL_IRON] = 0
+	matter [MATERIAL_URANIUM] = 0
 
 /obj/item/projectile/bullet/antim/uranium
 	damage_types = list(
@@ -286,6 +319,7 @@ There are important things regarding this file:
 	)
 	armor_divisor = 5
 	irradiate = 200
+	matter = list(MATERIAL_PLASTEEL = 1, MATERIAL_URANIUM = 1)
 
 /obj/item/projectile/bullet/antim/breach
 	damage_types = list(
@@ -299,6 +333,7 @@ There are important things regarding this file:
 	nocap_structures = TRUE
 	var/hasBreached = 2
 	kill_count = 30
+	matter = list(MATERIAL_PLASTEEL = 2)
 
 /obj/item/projectile/bullet/antim/breach/proc/get_tiles_passed(var/distance)
 	var/tiles_passed = distance
@@ -320,6 +355,7 @@ There are important things regarding this file:
 
 
 /obj/item/projectile/bullet/antim/scrap
+	matter = list(MATERIAL_STEEL = 1) // cheap bullets don't contain plasteel
 	armor_divisor = 1
 	recoil = 20
 
@@ -335,6 +371,7 @@ There are important things regarding this file:
 	armor_divisor = 1
 	knockback = 1
 	step_delay = 1
+	matter = list(MATERIAL_STEEL = 0.5)
 	recoil = 9
 
 /obj/item/projectile/bullet/shotgun/scrap
@@ -387,8 +424,10 @@ There are important things regarding this file:
 	knockback = 0
 
 	var/fire_stacks = 4
+	matter = list(MATERIAL_STEEL = 0.5, MATERIAL_PLASMA = 0.5)
 
 /obj/item/projectile/bullet/shotgun/incendiary/on_hit(atom/target, blocked = FALSE)
+	matter[MATERIAL_PLASMA] = 0
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
@@ -411,6 +450,7 @@ There are important things regarding this file:
 	spread_step = 10
 	pellet_to_knockback_ratio = 2
 	recoil = 5
+	matter = list(MATERIAL_STEEL = 0.6)
 
 /obj/item/projectile/bullet/pellet/shotgun/Initialize()
 	. = ..()
@@ -453,6 +493,8 @@ There are important things regarding this file:
 	armor_divisor = 1
 	embed = FALSE
 	can_ricochet = TRUE
+
+	matter = list(MATERIAL_STEEL = 1)
 	/// extreme recoil from firing flash forged bolts
 	recoil = 25
 

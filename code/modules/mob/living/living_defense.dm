@@ -51,8 +51,6 @@ armorType defines the armorType that will block all the damTypes that it has ass
 		var/list/atom/damageBlockers = list()
 		/// Retrieve all relevanta damage blockers , its why we give them the dmgtypes list
 		damageBlockers = getDamageBlockers(armorToDam, armorDiv, woundMult, defZone)
-
-		for(var/atom in damageBlockers)
 		/// We are going to order the list to be traversed from right to left , right representing the outermost layers and left the innermost
 		/// List for insertion-sort. Upper objects are going to be last , lower ones are going to be first when blocking
 		var/list/blockersTemp = list(
@@ -63,11 +61,11 @@ armorType defines the armorType that will block all the damTypes that it has ass
 			/obj/item/organ/external,
 			/obj/item/clothing,
 			/obj/item/armor_component,
-			/obj/item/robot_parts/robot_component/armour,
+			/obj/item/robot_parts/robot_component/armour
 		)
 
 		var/list/atom/newBlockers = list()
-		for(var/i = length(blockersTemp); i > 1; i--)
+		for(var/i=length(blockersTemp), i > 1, i--)
 			var/path = blockersTemp[i]
 			for(var/atom/blocker in damageBlockers)
 				if(istype(blocker, path))

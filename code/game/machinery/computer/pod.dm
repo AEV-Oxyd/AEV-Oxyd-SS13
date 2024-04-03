@@ -19,7 +19,6 @@
 		for(var/obj/machinery/mass_driver/M in world)
 			if(M.id == id)
 				connected = M
-			else
 		return
 	return
 

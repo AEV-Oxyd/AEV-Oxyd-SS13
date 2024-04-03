@@ -497,6 +497,7 @@
 		//world << "speed: [speed]"
 		switch(speed)
 			if(0)
+				EMPTY_BLOCK_GUARD
 				// do nothing
 			if(1)
 				process_bot()

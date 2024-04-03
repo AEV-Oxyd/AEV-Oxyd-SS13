@@ -25,12 +25,18 @@ SUBSYSTEM_DEF(mapping)
 			admin_notice("<span class='danger'>Error: No asteroid z-levels defined in config!</span>")
 
 	if(config.use_overmap)
+
 		if(!GLOB.maps_data.overmap_z)
 			build_overmap()
+		#ifdef TESTING
 		else
 			testing("Overmap already exist in GLOB.maps_data for [GLOB.maps_data.overmap_z].")
+		#endif
+
+	#ifdef TESTING
 	else
 		testing("Overmap generation disabled in config.")
+	#endif
 
 //	world.max_z_changed() // This is to set up the player z-level list, maxz hasn't actually changed (probably)
 	maploader = new()

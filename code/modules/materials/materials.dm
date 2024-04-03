@@ -108,6 +108,7 @@ var/list/name_to_material
 	var/radioactivity            // Radiation var. Used in wall and object processing to irradiate surroundings.
 	var/ignition_point           // K, point at which the material catches on fire.
 	var/melting_point = 1800     // K, walls will take damage if they're next to a fire hotter than this
+	var/heat_resistance = 1 	 // divisor, walls resist thermite and welding based on this
 	var/integrity = 150          // General-use HP value for products.
 	var/opacity = 1              // Is the material transparent? 0.5< makes transparent walls/doors.
 	var/conductive = 1           // Objects with this var add CONDUCTS to flags on spawn.
