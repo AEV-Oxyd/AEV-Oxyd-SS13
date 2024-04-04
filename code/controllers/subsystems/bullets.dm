@@ -30,6 +30,7 @@ SUBSYSTEM_DEF(bullets)
 	var/ty_change
 	var/tz_change
 	var/turf/moveTurf = null
+	var/list/relevantAtoms = list()
 
 
 
@@ -76,49 +77,52 @@ SUBSYSTEM_DEF(bullets)
 	src.referencedBullet = referencedBullet
 	src.currentTurf = get_turf(referencedBullet)
 	src.currentCoords = list(referencedBullet.pixel_x, referencedBullet.pixel_y, referencedBullet.z)
-	src.aimedZone = aimedZone
-	src.firer = firer
-	src.firedTurf = get_turf(firer)
-	src.firedPos = list(firer.x , firer.y , firer.z)
-	src.target = target
-	src.targetTurf = get_turf(target)
 	src.targetCoords = targetCoords
-	src.targetPos = list(target.x, target.y , target.z)
-	//src.targetCoords = list(8,8, targetTurf.z)
+	src.aimedZone = aimedZone
 	src.pixelsPerTick = pixelsPerTick
 	src.projectileAccuracy = projectileAccuracy
 	src.lifetime = lifetime
-	if(ismob(firer))
-		if(iscarbon(firer))
-			if(firer:lying)
-				src.firedLevel = LEVEL_LYING
+	src.firedCoordinates = list(0,0, referencedBullet.z)
+	if(firer)
+		src.firer = firer
+		src.firedTurf = get_turf(firer)
+		src.firedPos = list(firer.x , firer.y , firer.z)
+		if(ismob(firer))
+			if(iscarbon(firer))
+				if(firer:lying)
+					src.firedLevel = LEVEL_LYING
+				else
+					src.firedLevel = LEVEL_STANDING
 			else
 				src.firedLevel = LEVEL_STANDING
 		else
 			src.firedLevel = LEVEL_STANDING
-	else
-		src.firedLevel = LEVEL_STANDING
-	if(ismob(target))
-		if(iscarbon(target))
-			if(target:lying)
-				src.targetLevel = LEVEL_LYING
+	if(target)
+		src.target = target
+		src.targetTurf = get_turf(target)
+		src.targetPos = list(target.x, target.y , target.z)
+		if(ismob(target))
+			if(iscarbon(target))
+				if(target:lying)
+					src.targetLevel = LEVEL_LYING
+				else
+					src.targetLevel = LEVEL_STANDING
 			else
 				src.targetLevel = LEVEL_STANDING
-		else
+		else if(istype(target, /obj/structure/low_wall))
+			src.targetLevel = LEVEL_LOWWALL
+		else if(istype(target, /obj/structure/window))
 			src.targetLevel = LEVEL_STANDING
-	else if(istype(target, /obj/structure/low_wall))
-		src.targetLevel = LEVEL_LOWWALL
-	else if(istype(target, /obj/structure/window))
-		src.targetLevel = LEVEL_STANDING
-	else if(istype(target, /obj/structure/table))
-		src.targetLevel = LEVEL_TABLE
-	else if(iswall(target))
-		src.targetLevel = LEVEL_STANDING
-	else if(isturf(target))
-		src.targetLevel = LEVEL_TURF
-	else if(isitem(target))
-		src.targetLevel = LEVEL_TURF
-	src.firedCoordinates = list(0,0, referencedBullet.z)
+		else if(istype(target, /obj/structure/table))
+			src.targetLevel = LEVEL_TABLE
+		else if(iswall(target))
+			src.targetLevel = LEVEL_STANDING
+		else if(isturf(target))
+			src.targetLevel = LEVEL_TURF
+		else if(isitem(target))
+			src.targetLevel = LEVEL_TURF
+	else
+		message_admins(("Created bullet without target , [referencedBullet], from [usr]"))
 	src.currentCoords[3] += firedLevel
 	movementRatios[4] = getAngleByPosition()
 	movementRatios[4] += angleOffset
@@ -230,6 +234,7 @@ SUBSYSTEM_DEF(bullets)
 			bulletCoords[3] += (bulletRatios[3] * pixelsThisStep/PPT)
 			x_change = round(abs(bulletCoords[1]) / HPPT) * sign(bulletCoords[1])
 			y_change = round(abs(bulletCoords[2]) / HPPT) * sign(bulletCoords[2])
+			z_change = 0
 			//z_change = round(abs(bulletCoords[3])) * sign(bulletCoords[3])
 			while(x_change || y_change)
 				if(QDELETED(projectile))
@@ -267,8 +272,13 @@ SUBSYSTEM_DEF(bullets)
 					bullet_queue -= bullet
 					break
 				bullet.updateLevel()
+				relevantAtoms = list()
 				if(moveTurf)
 					projectile.Move(moveTurf)
+					for(var/atom/gameObject as anything in moveTurf.contents)
+						if(isobj(gameObject))
+							relevantAtoms.Add(gameObject)
+
 				/*
 					bullet.coloreds |= moveTurf
 					moveTurf.color = "#2fff05ee"

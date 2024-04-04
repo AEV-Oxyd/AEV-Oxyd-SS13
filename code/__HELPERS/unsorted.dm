@@ -171,18 +171,22 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 
 /proc/DirBlocked(turf/loc, var/dir)
-	for(var/obj/structure/window/D in loc)
-		if(!D.density)			continue
-		if(D.dir == SOUTHWEST)	return 1
-		if(D.dir == dir)		return 1
-
-	for(var/obj/machinery/door/D in loc)
-		if(!D.density)			continue
-		if(istype(D, /obj/machinery/door/window))
-			if((dir & SOUTH) && (D.dir & (EAST|WEST)))		return 1
-			if((dir & EAST ) && (D.dir & (NORTH|SOUTH)))	return 1
-		else return 1	// it's a real, air blocking door
-	return 0
+	for(var/obj/gameObject in loc)
+		if(!gameObject.density)
+			continue
+		if(istype(gameObject, /obj/structure/window))
+			if(gameObject.dir == dir || gameObject.dir == SOUTHWEST)
+				return TRUE
+			/// bypass rest of the loop fast, no need to cehck the other type.(unless more are added) SPCR-2024
+			continue
+		if(istype(gameObject, /obj/machinery/door))
+			if(!istype(gameObject, /obj/machinery/door/window))
+				return TRUE
+			if((dir & SOUTH) && (gameObject.dir & (EAST|WEST)))
+				return TRUE
+			if((dir & EAST) && (gameObject.dir & (NORTH|SOUTH)))
+				return TRUE
+	return FALSE
 
 /proc/TurfBlockedNonWindow(turf/loc)
 	for(var/obj/O in loc)

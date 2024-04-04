@@ -552,21 +552,6 @@ proc/end_grab_onto(mob/living/user, mob/living/target)
 	if(!is_fulltile())
 		icon_state = "[basestate]"
 		return
-	/*
-	var/list/dirs = list()
-	if(anchored)
-		for(var/obj/structure/window/W in orange(src,1))
-			if(W.anchored && W.density && W.type == src.type && W.is_fulltile()) //Only counts anchored, not-destroyed fill-tile windows.
-				dirs += get_dir(src, W)
-
-	for(var/turf/simulated/wall/T in RANGE_TURFS(1, src) - src)
-		var/T_dir = get_dir(src, T)
-		dirs |= T_dir
-		if(propagate)
-			spawn(0)
-				T.update_connections()
-				T.update_icon()
-	*/
 	//Since fulltile windows can't exist without an underlying wall, we will just copy connections from our wall
 	var/list/connections = list("0", "0", "0", "0")
 	var/obj/structure/low_wall/LW = (locate(/obj/structure/low_wall) in loc)
