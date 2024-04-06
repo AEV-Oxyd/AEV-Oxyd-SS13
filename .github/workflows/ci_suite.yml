@@ -63,6 +63,8 @@ jobs:
           tag: "latest"
           fileName: "DMCompiler_linux-x64.tar.gz"
           extract: true
+      - name: Install Tools
+        run: tools/bootstrap/python -c ''
       - name: Run OpenDream
         run: |
           ./DMCompiler_linux-x64/DMCompiler cev_eris.dme --suppress-unimplemented --define=CIBUILDING | bash tools/ci/annotate_od.sh
