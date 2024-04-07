@@ -115,7 +115,10 @@ SUBSYSTEM_DEF(bullets)
 			src.targetLevel = LEVEL_TURF
 	else
 		message_admins(("Created bullet without target , [referencedBullet], from [usr]"))
-	src.currentCoords[3] += firedLevel
+
+	message_admins("level set to [firedLevel], towards [targetLevel]")
+	currentCoords[3] = firedLevel
+	movementRatios[3] = ((targetPos[3] - firedPos[3]) + targetLevel - firedLevel)/(distStartToFinish())
 	movementRatios[4] = getAngleByPosition()
 	movementRatios[4] += angleOffset
 	updatePathByAngle()
@@ -226,7 +229,7 @@ SUBSYSTEM_DEF(bullets)
 			bulletCoords[3] += (bulletRatios[3] * pixelsThisStep/PPT)
 			x_change = round(abs(bulletCoords[1]) / HPPT) * sign(bulletCoords[1])
 			y_change = round(abs(bulletCoords[2]) / HPPT) * sign(bulletCoords[2])
-			z_change = 0
+			z_change = round(abs(bulletCoords[3])) * sign(bulletCoords[3])
 			//z_change = round(abs(bulletCoords[3])) * sign(bulletCoords[3])
 			while(x_change || y_change)
 				if(QDELETED(projectile))
@@ -256,7 +259,7 @@ SUBSYSTEM_DEF(bullets)
 				bullet.lastChanges[3] += tz_change
 				bulletCoords[1] -= PPT * tx_change
 				bulletCoords[2] -= PPT * ty_change
-				bulletCoords[3] -= tz_change * 1.99
+				bulletCoords[3] -= tz_change
 				projectile.pixel_x -= PPT * tx_change
 				projectile.pixel_y -= PPT * ty_change
 				bullet.lifetime--

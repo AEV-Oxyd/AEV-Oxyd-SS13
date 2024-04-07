@@ -260,7 +260,7 @@ for reference:
 			willBlock = TRUE
 			break
 	else
-		willBlock = bulletHeight < GLOB.structureBlockingLevels[checkingType]
+		willBlock = bulletHeight > GLOB.structureBlockingLevels[checkingType]
 
 	if(willBlock)
 		willBlock = P.check_penetrate(src)
