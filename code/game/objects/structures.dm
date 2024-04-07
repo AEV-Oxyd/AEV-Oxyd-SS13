@@ -14,7 +14,7 @@
 */
 /// Byond doesn't like if you try to put defines inside... so just use the numbers. check the latest values at _bullet.dm in _DEFINES folder. SPCR 2024
 GLOBAL_LIST_INIT(structureBlockingLevels, list(\
-		/obj/structure = -0.7,\
+		/obj/structure = 1,\
 		/obj/structure/barricade = 0,\
 		/obj/structure/low_wall = 0,\
 		/obj/structure/table = list(list(0, 0.2)),\
@@ -71,20 +71,15 @@ GLOBAL_LIST_INIT(structureBlockingLevels, list(\
 		// we break when at the very base
 		if(checkingType == /obj/structure)
 			break
-	message_admins("Using blocking datum from GLOB.structureBlockingLevels[checkingType] , bulletLevel at [bulletHeight]")
 	if(islist(GLOB.structureBlockingLevels[checkingType]))
-		message_admins("Going for lists")
 		for(var/list/coveredSection in GLOB.structureBlockingLevels[checkingType])
-			message_admins("Checking using list , [coveredSection[1]], [coveredSection[2]]")
 			if(bulletHeight < coveredSection[2] && bulletHeight > coveredSection[1])
 				willBlock = TRUE
 				break
 	else
-		message_admins("Going for single value")
 		willBlock = bulletHeight < GLOB.structureBlockingLevels[checkingType]
 
 	if(willBlock)
-		message_admins("Checking penetrate")
 		willBlock = P.check_penetrate(src)
 		take_damage(P.get_structure_damage())
 		if (!QDELETED(src))
