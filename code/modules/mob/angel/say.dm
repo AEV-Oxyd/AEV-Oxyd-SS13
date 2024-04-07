@@ -14,10 +14,6 @@
 		if (src.client.handle_spam_prevention(message,MUTE_DEADCHAT))
 			return
 
-	if(say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, SPAN_DANGER("Speech is currently admin-disabled."))
-		return
-
 	if(!src.client.holder)
 		if(!config.dsay_allowed)
 			to_chat(src, SPAN_DANGER("Deadchat and ANGEL chat are globally muted."))
