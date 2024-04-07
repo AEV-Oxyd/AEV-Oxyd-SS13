@@ -7,7 +7,7 @@
 			return 1
 	if(air_group || (height==0)) return 1
 	if(istype(mover,/obj/item/projectile))
-		return (check_cover(mover,target))
+		return !(check_cover(mover,target))
 	if (flipped == 1)
 		if (get_dir(loc, target) == dir)
 			return !density

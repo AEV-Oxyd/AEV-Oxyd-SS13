@@ -71,19 +71,20 @@ GLOBAL_LIST_INIT(structureBlockingLevels, list(\
 		// we break when at the very base
 		if(checkingType == /obj/structure)
 			break
-	message_admins("Using blocking datum from GLOB.structureBlockingLevels[checkingType]")
+	message_admins("Using blocking datum from GLOB.structureBlockingLevels[checkingType] , bulletLevel at [bulletHeight]")
 	if(islist(GLOB.structureBlockingLevels[checkingType]))
+		message_admins("Going for lists")
 		for(var/list/coveredSection in GLOB.structureBlockingLevels[checkingType])
-			if(bulletHeight > coveredSection[2])
-				continue
-			if(bulletHeight < coveredSection[1])
-				continue
-			willBlock = TRUE
-			break
+			message_admins("Checking using list , [coveredSection[1]], [coveredSection[2]]")
+			if(bulletHeight < coveredSection[2] && bulletHeight > coveredSection[1])
+				willBlock = TRUE
+				break
 	else
-		willBlock = bulletHeight > GLOB.structureBlockingLevels[checkingType]
+		message_admins("Going for single value")
+		willBlock = bulletHeight < GLOB.structureBlockingLevels[checkingType]
 
 	if(willBlock)
+		message_admins("Checking penetrate")
 		willBlock = P.check_penetrate(src)
 		take_damage(P.get_structure_damage())
 		if (!QDELETED(src))
