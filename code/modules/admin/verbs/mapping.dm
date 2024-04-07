@@ -142,10 +142,6 @@ var/list/debug_verbs = list (
 	//,/client/proc/forceEvent //Todo: Replace
 	,/client/proc/break_all_air_groups
 	,/client/proc/regroup_all_air_groups
-	,/client/proc/kill_pipe_processing
-	,/client/proc/kill_air_processing
-	,/client/proc/disable_communication
-	,/client/proc/disable_movement
 	,/client/proc/Zone_Info
 	,/client/proc/Test_ZAS_Connection
 	,/client/proc/hide_debug_verbs
