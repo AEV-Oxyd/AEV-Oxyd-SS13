@@ -244,15 +244,15 @@ for reference:
 	var/checkingType = type
 	var/willBlock = FALSE
 	while(checkingType)
-		if(structureBlockingLevels[checkingType])
+		if(GLOB.structureBlockingLevels[checkingType])
 			break
 		checkingType = parent_type
 		// we break when at the very base
 		if(checkingType == /obj/structure)
 			break
-	message_admins("Using blocking datum from structureBlockingLevels[checkingType]")
-	if(islist(structureBlockingLevels[checkingType]))
-		for(var/list/coveredSection in structureBlockingLevels[checkingType])
+	message_admins("Using blocking datum from GLOB.structureBlockingLevels[checkingType]")
+	if(islist(GLOB.structureBlockingLevels[checkingType]))
+		for(var/list/coveredSection in GLOB.structureBlockingLevels[checkingType])
 			if(bulletHeight > coveredSection[2])
 				continue
 			if(bulletHeight < coveredSection[1])
@@ -260,7 +260,7 @@ for reference:
 			willBlock = TRUE
 			break
 	else
-		willBlock = bulletHeight < structureBlockingLevels[checkingType]
+		willBlock = bulletHeight < GLOB.structureBlockingLevels[checkingType]
 
 	if(willBlock)
 		willBlock = P.check_penetrate(src)

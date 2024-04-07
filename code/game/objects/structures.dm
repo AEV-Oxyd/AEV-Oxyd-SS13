@@ -3,13 +3,23 @@
  * format is list(type = number) or list(type = list(list(minimum,maximum), list(minimum,maximum)))
  * if its not meant to be continous
  */
-GLOBAL_LIST_INIT(structureBlockingLevels, list( \
-		/obj/structure = LEVEL_TURF, \
-		/obj/structure/barricade = LEVEL_LOWWALL, \
-		/obj/structure/low_wall = LEVEL_LOWWALL, \
-		/obj/structure/table = list(list(LEVEL_LOWWALL, LEVEL_TABLE)), \
+/*
+#define LEVEL_BELOW -1
+#define LEVEL_TURF -0.7
+#define LEVEL_LYING -0.5
+#define LEVEL_LOWWALL 0
+#define LEVEL_TABLE 0.2
+#define LEVEL_STANDING 0.7
+#define LEVEL_ABOVE 1
+*/
+/// Byond doesn't like if you try to put defines inside... so just use the numbers. check the latest values at _bullet.dm in _DEFINES folder. SPCR 2024
+GLOBAL_LIST_INIT(structureBlockingLevels, list(\
+		/obj/structure = -0.7,\
+		/obj/structure/barricade = 0,\
+		/obj/structure/low_wall = 0,\
+		/obj/structure/table = list(list(0, 0.2)),\
 		/// One day i will get around to turning every machinery into a structure. SPCR - 2024
-		/obj/machinery/deployable/barrier = LEVEL_TABLE \
+		/obj/machinery/deployable/barrier = 0.2,\
 	) \
 )
 
@@ -17,7 +27,7 @@ GLOBAL_LIST_INIT(structureBlockingLevels, list( \
  * Any projectile under this height will be blocked by this structure. Can be a list if its not meant to be continous
  * List format is list(list(minimum, maximum), list(minimum, maximum))
  * Normal format is just the number.
- * Blocking lists are stored in the global list structureBlockingLevels.
+ * Blocking lists are stored in the global list GLOB.structureBlockingLevels.
  */
 /obj/structure
 	icon = 'icons/obj/structures.dmi'
@@ -55,15 +65,15 @@ GLOBAL_LIST_INIT(structureBlockingLevels, list( \
 	var/checkingType = type
 	var/willBlock = FALSE
 	while(checkingType)
-		if(structureBlockingLevels[checkingType])
+		if(GLOB.structureBlockingLevels[checkingType])
 			break
 		checkingType = parent_type
 		// we break when at the very base
 		if(checkingType == /obj/structure)
 			break
-	message_admins("Using blocking datum from structureBlockingLevels[checkingType]")
-	if(islist(structureBlockingLevels[checkingType]))
-		for(var/list/coveredSection in structureBlockingLevels[checkingType])
+	message_admins("Using blocking datum from GLOB.structureBlockingLevels[checkingType]")
+	if(islist(GLOB.structureBlockingLevels[checkingType]))
+		for(var/list/coveredSection in GLOB.structureBlockingLevels[checkingType])
 			if(bulletHeight > coveredSection[2])
 				continue
 			if(bulletHeight < coveredSection[1])
@@ -71,7 +81,7 @@ GLOBAL_LIST_INIT(structureBlockingLevels, list( \
 			willBlock = TRUE
 			break
 	else
-		willBlock = bulletHeight < structureBlockingLevels[checkingType]
+		willBlock = bulletHeight < GLOB.structureBlockingLevels[checkingType]
 
 	if(willBlock)
 		willBlock = P.check_penetrate(src)
