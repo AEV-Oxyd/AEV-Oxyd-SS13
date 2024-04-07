@@ -660,7 +660,7 @@
 	var/pipe_dir = 0		// bitmask of pipe directions
 	dir = 0				// dir will contain dominant direction for junction pipes
 	health = 10 	// health points 0-10
-	explosion_coverage = 0
+	explosionCoverage = 0
 	layer = 2.3			// slightly lower than wires and other pipes
 	var/base_icon_state	// initial icon state on map
 	var/sortType = list()
@@ -836,7 +836,7 @@
 	// test health for brokenness
 /obj/structure/disposalpipe/take_damage(damage)
 	. = health - damage < 0 ? damage - (damage - health) : damage
-	. *= explosion_coverage
+	. *= explosionCoverage
 	health -= damage
 	if(health <= 0)
 		broken(FALSE)

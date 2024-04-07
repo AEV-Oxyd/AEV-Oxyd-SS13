@@ -1,0 +1,7 @@
+#define LEVEL_BELOW -1
+#define LEVEL_TURF -0.7
+#define LEVEL_LYING -0.5
+#define LEVEL_LOWWALL 0
+#define LEVEL_TABLE 0.2
+#define LEVEL_STANDING 0.7
+#define LEVEL_ABOVE 1

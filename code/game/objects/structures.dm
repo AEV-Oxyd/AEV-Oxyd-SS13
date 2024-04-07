@@ -1,3 +1,24 @@
+/**
+ * Global list for storing the blocking levels for all structures
+ * format is list(type = number) or list(type = list(list(minimum,maximum), list(minimum,maximum)))
+ * if its not meant to be continous
+ */
+GLOBAL_LIST_INIT(structureBlockingLevels, list( \
+		/obj/structure = LEVEL_TURF, \
+		/obj/structure/barricade = LEVEL_LOWWALL, \
+		/obj/structure/low_wall = LEVEL_LOWWALL, \
+		/obj/structure/table = list(list(LEVEL_LOWWALL, LEVEL_TABLE)), \
+		/// One day i will get around to turning every machinery into a structure. SPCR - 2024
+		/obj/machinery/deployable/barrier = LEVEL_TABLE \
+	) \
+)
+
+/**
+ * Any projectile under this height will be blocked by this structure. Can be a list if its not meant to be continous
+ * List format is list(list(minimum, maximum), list(minimum, maximum))
+ * Normal format is just the number.
+ * Blocking lists are stored in the global list structureBlockingLevels.
+ */
 /obj/structure
 	icon = 'icons/obj/structures.dmi'
 	volumeClass = ITEM_SIZE_GARGANTUAN
@@ -7,7 +28,7 @@
 	bad_type = /obj/structure
 	var/health = 100
 	var/maxHealth = 100
-	var/explosion_coverage = 0
+	var/explosionCoverage = 0
 	var/climbable
 	var/breakable
 	var/parts
@@ -23,13 +44,43 @@
 /obj/structure/proc/take_damage(damage)
 	// Blocked amount
 	. = health - damage < 0 ? damage - (damage - health) : damage
-	. *= explosion_coverage
+	. *= explosionCoverage
 	health -= damage
 	if(health < 0)
 		qdel(src)
 	return
 
+/obj/structure/proc/check_cover(obj/item/projectile/P, turf/from)
+	var/bulletHeight = P.dataRef.currentCoords[3]
+	var/checkingType = type
+	var/willBlock = FALSE
+	while(checkingType)
+		if(structureBlockingLevels[checkingType])
+			break
+		checkingType = parent_type
+		// we break when at the very base
+		if(checkingType == /obj/structure)
+			break
+	message_admins("Using blocking datum from structureBlockingLevels[checkingType]")
+	if(islist(structureBlockingLevels[checkingType]))
+		for(var/list/coveredSection in structureBlockingLevels[checkingType])
+			if(bulletHeight > coveredSection[2])
+				continue
+			if(bulletHeight < coveredSection[1])
+				continue
+			willBlock = TRUE
+			break
+	else
+		willBlock = bulletHeight < structureBlockingLevels[checkingType]
 
+	if(willBlock)
+		willBlock = P.check_penetrate(src)
+		take_damage(P.get_structure_damage())
+		if (!QDELETED(src))
+			visible_message(SPAN_WARNING("[P] hits \the [src]!"))
+		else
+			visible_message(SPAN_WARNING("[src] breaks down!"))
+	return willBlock
 
 /**
  * An overridable proc used by SSfalling to determine whether if the object deals

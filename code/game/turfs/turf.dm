@@ -92,33 +92,32 @@
 	..()
 
 	if (!mover || !isturf(mover.loc) || isobserver(mover))
-		return 1
-
+		return TRUE
 	//First, check objects to block exit that are not on the border
 	for(var/obj/obstacle in mover.loc)
 		if(!(obstacle.flags & ON_BORDER) && (mover != obstacle) && (forget != obstacle))
 			if(!obstacle.CheckExit(mover, src))
 				mover.Bump(obstacle, 1)
-				return 0
+				return FALSE
 
 	//Now, check objects to block exit that are on the border
 	for(var/obj/border_obstacle in mover.loc)
 		if((border_obstacle.flags & ON_BORDER) && (mover != border_obstacle) && (forget != border_obstacle))
 			if(!border_obstacle.CheckExit(mover, src))
 				mover.Bump(border_obstacle, 1)
-				return 0
+				return FALSE
 
 	//Next, check objects to block entry that are on the border
 	for(var/obj/border_obstacle in src)
 		if(border_obstacle.flags & ON_BORDER)
 			if(!border_obstacle.CanPass(mover, mover.loc, 1, 0) && (forget != border_obstacle))
 				mover.Bump(border_obstacle, 1)
-				return 0
+				return FALSE
 
 	//Then, check the turf itself
 	if (!src.CanPass(mover, src))
 		mover.Bump(src, 1)
-		return 0
+		return FALSE
 
 	//Finally, check objects/mobs to block entry that are not on the border
 	for(var/atom/movable/obstacle in src)
@@ -126,7 +125,7 @@
 			if(!obstacle.CanPass(mover, mover.loc, 1, 0) && (forget != obstacle))
 				mover.Bump(obstacle, 1)
 				return 0
-	return 1 //Nothing found to block so return success!
+	return TRUE //Nothing found to block so return success!
 
 var/const/enterloopsanity = 100
 /turf/Entered(atom/atom as mob|obj)
@@ -146,7 +145,7 @@ var/const/enterloopsanity = 100
 				A.HasProximity(thing, 1)
 				if ((thing && A) && (thing.flags & PROXMOVE))
 					thing.HasProximity(A, 1)
-	return
+
 
 /turf/proc/adjacent_fire_act(turf/simulated/floor/source, temperature, volume)
 	return

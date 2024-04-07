@@ -8,7 +8,7 @@
 	flags = CONDUCT
 	layer = BELOW_OBJ_LAYER
 	// Blocks very little , since its just metal rods..
-	explosion_coverage = 0.2
+	explosionCoverage = 0.2
 	health = 50
 	var/destroyed = 0
 
@@ -158,7 +158,7 @@
 
 /obj/structure/grille/take_damage(damage)
 	. = health - damage < 0 ? damage - (damage - health) : damage
-	. *= explosion_coverage
+	. *= explosionCoverage
 	if(health <= 0)
 		if(!destroyed)
 			density = FALSE
