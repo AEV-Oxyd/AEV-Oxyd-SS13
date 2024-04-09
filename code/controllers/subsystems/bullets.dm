@@ -144,6 +144,8 @@ SUBSYSTEM_DEF(bullets)
 	var/matrix/rotation = matrix()
 	movementRatios[1] = sin(movementRatios[4])
 	movementRatios[2] = cos(movementRatios[4])
+
+
 	rotation.Turn(movementRatios[4] + 180)
 	referencedBullet.transform = rotation
 
@@ -239,18 +241,6 @@ SUBSYSTEM_DEF(bullets)
 				ty_change = ((y_change + (y_change == 0))/(abs(y_change + (y_change == 0)))) * (y_change != 0)
 				tz_change = ((z_change + (z_change == 0))/(abs(z_change + (z_change == 0)))) * (z_change != 0)
 				moveTurf = locate(projectile.x + tx_change, projectile.y + ty_change, projectile.z + tz_change)
-				/*
-				if(tz_change && !istype(moveTurf, /turf/simulated/open))
-					if(tz_change <= -1)
-						if(moveTurf.bullet_act(projectile) == PROJECTILE_CONTINUE)
-							moveTurf = locate(projectile.x + tx_change, projectile.y + ty_change, projectile.z + tz_change)
-						else
-							projectile.onBlockingHit(moveTurf)
-					else
-						moveTurf = locate(projectile.x + tx_change, projectile.y + ty_change, projectile.z + tz_change)
-						if(moveTurf.bullet_act(projectile) != PROJECTILE_CONTINUE)
-							projectile.onBlockingHit(moveTurf)
-				*/
 				x_change -= tx_change
 				y_change -= ty_change
 				z_change -= tz_change
@@ -267,12 +257,8 @@ SUBSYSTEM_DEF(bullets)
 					bullet_queue -= bullet
 					break
 				bullet.updateLevel()
-				relevantAtoms = list()
 				if(moveTurf)
 					projectile.Move(moveTurf)
-					for(var/atom/gameObject as anything in moveTurf.contents)
-						if(isobj(gameObject))
-							relevantAtoms.Add(gameObject)
 
 				/*
 					bullet.coloreds |= moveTurf

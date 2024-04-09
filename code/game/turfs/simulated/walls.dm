@@ -126,30 +126,28 @@
 		var/list/lastMoves = hittingProjectile.dataRef.lastChanges
 		var/angle = hittingProjectile.dataRef.movementRatios[4]
 		var/ricochet = FALSE
-		message_admins("Bullet hit wall at [angle]")
 		switch(angle)
 			if(-180 to -155)
 				if((abs(lastMoves[2]) >= abs(lastMoves[1]))  && abs(lastMoves[1]))
-					hittingProjectile.dataRef.bounce(1)
+					hittingProjectile.dataRef.bounce(1, rand(-5,5))
 					ricochet = TRUE
 			if(-115 to -65)
 				if((abs(lastMoves[1]) >= abs(lastMoves[2]))  && abs(lastMoves[2]))
-					hittingProjectile.dataRef.bounce(2)
+					hittingProjectile.dataRef.bounce(2, rand(-5,5))
 					ricochet = TRUE
 			if(-25 to 25)
 				if((abs(lastMoves[2]) >= abs(lastMoves[1])) && abs(lastMoves[1]))
-					hittingProjectile.dataRef.bounce(1)
+					hittingProjectile.dataRef.bounce(1, rand(-5,5))
 					ricochet = TRUE
 			if(65 to 115)
 				if((abs(lastMoves[1]) >= abs(lastMoves[2]))  && abs(lastMoves[2]))
-					hittingProjectile.dataRef.bounce(2)
+					hittingProjectile.dataRef.bounce(2, rand(-5,5))
 					ricochet = TRUE
 			if(155 to 180)
 				if((abs(lastMoves[2]) >= abs(lastMoves[1]))  && abs(lastMoves[1]))
-					hittingProjectile.dataRef.bounce(1)
+					hittingProjectile.dataRef.bounce(1, rand(-5,5))
 					ricochet = TRUE
 		if(ricochet)
-			message_admins("Ricochet!")
 			take_damage(round(projectileDamage * 0.33))
 			return PROJECTILE_CONTINUE
 
@@ -297,7 +295,7 @@
 	O.anchored = TRUE
 	O.density = TRUE
 	O.layer = 5
-	
+
 	thermite = FALSE
 	take_damage((material.integrity*2.5) / material.heat_resistance) // thermite overkills steel immediately but not plasteel
 

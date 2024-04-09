@@ -554,6 +554,18 @@ GLOBAL_LIST(projectileDamageConstants)
 /obj/item/projectile/proc/onBlockingHit(atom/A)
 	on_impact(A)
 	density = FALSE
+
+	SSbullets.bullet_queue.Remove(dataRef)
+	var/list/relevantVars = list(pixel_x, pixel_y)
+	// no point in using timers for this.
+	spawn(1)
+		animate(src, 1, pixel_x = -relevantVars[1], pixel_y = -relevantVars[2])
+		spawn(1)
+			finishDeletion()
+
+
+/// Called to properly delete a bullet after a delay from its impact, ensures the animation for it travelling finishes
+/obj/item/projectile/proc/finishDeletion()
 	invisibility = 101
 	qdel(src)
 
