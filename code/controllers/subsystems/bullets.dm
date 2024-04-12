@@ -23,6 +23,8 @@ SUBSYSTEM_DEF(bullets)
 	var/tz_change
 	var/turf/moveTurf = null
 	var/list/relevantAtoms = list()
+	// 1 client tick by default , can be increased by impacts
+	var/bulletWait = 1
 
 
 
@@ -55,6 +57,8 @@ SUBSYSTEM_DEF(bullets)
 	var/lastChanges = list(0,0,0)
 	/// Used to determine wheter a projectile should be allowed to bump a turf or not.
 	var/isTraversingLevel = FALSE
+	/// Used to animate the ending pixels
+	var/hasImpacted = FALSE
 
 /datum/bullet_data/New(obj/item/projectile/referencedBullet, aimedZone, atom/firer, atom/target, list/targetCoords, pixelsPerTick, angleOffset, lifetime)
 	/*
@@ -165,7 +169,6 @@ SUBSYSTEM_DEF(bullets)
 	var/py = targetCoords[2] - firedCoordinates[2]
 	return sqrt(x**2 + y**2) + sqrt(px**2 + py**2)
 
-
 /datum/bullet_data/proc/updateLevel()
 	switch(currentCoords[3])
 		if(-INFINITY to LEVEL_BELOW)
@@ -223,6 +226,7 @@ SUBSYSTEM_DEF(bullets)
 		/// but less performant A more performant version would be to use the same algorithm as throwing for determining which turfs to "intersect"
 		/// Im using this implementation because im getting skill issued trying to implement the same one as throwing(i had to rewrite this 4 times already)
 		/// and also because it has.. much more information about the general trajectory stored  SPCR - 2024
+		var/double = 1
 		while(pixelsToTravel > 0)
 			pixelsThisStep = pixelsToTravel > 32 ? 32 : pixelsToTravel
 			pixelsToTravel -= pixelsThisStep
@@ -259,15 +263,25 @@ SUBSYSTEM_DEF(bullets)
 				bullet.updateLevel()
 				if(moveTurf)
 					projectile.Move(moveTurf)
-
-				/*
-					bullet.coloreds |= moveTurf
-					moveTurf.color = "#2fff05ee"
-				*/
+					if(projectile.loc != moveTurf && bullet.hasImpacted)
+						double = 2
+						bullet.hasImpacted = FALSE
+						pixelsToTravel = 0
+						x_change = 0
+						y_change = 0
+						projectile.loc = moveTurf
+						break
+					// one more turf for us
+					/*
+					if(bullet.hasImpacted && bullet in bullet_queue)
+						pixelsToTravel += 48
+						bullet.hasImpacted = FALSE
+						bullet_queue.Remove(bullet)
+					*/
 				moveTurf = null
 
 		bullet.updateLevel()
-		animate(projectile, 1, pixel_x =(abs(bulletCoords[1]))%HPPT * sign(bulletCoords[1]) - 1, pixel_y = (abs(bulletCoords[2]))%HPPT * sign(bulletCoords[2]) - 1, flags = ANIMATION_END_NOW)
+		animate(projectile, 1, pixel_x =((abs(bulletCoords[1]))%HPPT * sign(bulletCoords[1]) - 1) * double, pixel_y = ((abs(bulletCoords[2]))%HPPT * sign(bulletCoords[2]) - 1)*double, flags = ANIMATION_END_NOW)
 		bullet.currentCoords = bulletCoords
 
 		/*
