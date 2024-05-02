@@ -264,7 +264,7 @@ SUBSYSTEM_DEF(bullets)
 				if(moveTurf)
 					projectile.Move(moveTurf)
 					if(projectile.loc != moveTurf && bullet.hasImpacted)
-						double = 2
+						double = 2.5
 						bullet.hasImpacted = FALSE
 						pixelsToTravel = 0
 						x_change = 0
