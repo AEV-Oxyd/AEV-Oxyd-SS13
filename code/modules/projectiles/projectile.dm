@@ -479,6 +479,10 @@ GLOBAL_LIST(projectileDamageConstants)
 	else
 		return FALSE
 
+/obj/item/projectile/Move(NewLoc, Dir, step_x, step_y, glide_size_override, initiator)
+	. = ..()
+
+
 /obj/item/projectile/Bump(atom/A as mob|obj|turf|area, forced = FALSE)
 	if(!density)
 		return TRUE
@@ -555,6 +559,7 @@ GLOBAL_LIST(projectileDamageConstants)
 
 /obj/item/projectile/proc/onBlockingHit(atom/A)
 	on_impact(A)
+	message_admins("Bullet has impacted [A] , [src]")
 	atomFlags |= AF_FREE_MOVE
 	density = FALSE
 	dataRef.lifetime = 2
