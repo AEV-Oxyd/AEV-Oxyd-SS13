@@ -226,7 +226,6 @@ SUBSYSTEM_DEF(bullets)
 		/// but less performant A more performant version would be to use the same algorithm as throwing for determining which turfs to "intersect"
 		/// Im using this implementation because im getting skill issued trying to implement the same one as throwing(i had to rewrite this 4 times already)
 		/// and also because it has.. much more information about the general trajectory stored  SPCR - 2024
-		var/double = 1
 		while(pixelsToTravel > 0)
 			pixelsThisStep = pixelsToTravel > 32 ? 32 : pixelsToTravel
 			pixelsToTravel -= pixelsThisStep
@@ -256,21 +255,9 @@ SUBSYSTEM_DEF(bullets)
 				bulletCoords[3] -= tz_change
 				projectile.pixel_x -= PPT * tx_change
 				projectile.pixel_y -= PPT * ty_change
-				bullet.lifetime--
-				if(bullet.lifetime < 0)
-					bullet_queue -= bullet
-					break
 				bullet.updateLevel()
 				if(moveTurf)
 					projectile.Move(moveTurf)
-					if(projectile.loc != moveTurf && bullet.hasImpacted)
-						double = 2.5
-						bullet.hasImpacted = FALSE
-						pixelsToTravel = 0
-						x_change = 0
-						y_change = 0
-						projectile.loc = moveTurf
-						break
 					// one more turf for us
 					/*
 					if(bullet.hasImpacted && bullet in bullet_queue)
@@ -280,8 +267,14 @@ SUBSYSTEM_DEF(bullets)
 					*/
 				moveTurf = null
 
+			bullet.lifetime--
+			if(bullet.lifetime < 0)
+				bullet.referencedBullet.finishDeletion()
+				bullet_queue -= bullet
+				break
+
 		bullet.updateLevel()
-		animate(projectile, 1, pixel_x =((abs(bulletCoords[1]))%HPPT * sign(bulletCoords[1]) - 1) * double, pixel_y = ((abs(bulletCoords[2]))%HPPT * sign(bulletCoords[2]) - 1)*double, flags = ANIMATION_END_NOW)
+		animate(projectile, 1, pixel_x =((abs(bulletCoords[1]))%HPPT * sign(bulletCoords[1]) - 1), pixel_y = ((abs(bulletCoords[2]))%HPPT * sign(bulletCoords[2]) - 1), flags = ANIMATION_END_NOW)
 		bullet.currentCoords = bulletCoords
 
 		/*

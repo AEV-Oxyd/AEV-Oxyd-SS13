@@ -159,6 +159,7 @@
 		slug.throw_at(get_turf(hittingProjectile), 0, 1)
 
 	hittingProjectile.on_hit(src)
+	return PROJECTILE_STOP
 
 /turf/simulated/wall/hitby(AM as mob|obj, var/speed=THROWFORCE_SPEED_DIVISOR)
 	..()

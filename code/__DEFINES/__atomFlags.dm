@@ -4,3 +4,5 @@
 #define AF_LAYER_UPDATE_HANDLED 1<<2
 /// This atom's plane shouldn't adjust itself
 #define AF_PLANE_UPDATE_HANDLED 1<<3
+/// This atom should be able to always move however it wants with no restrictions(used for bullets after they hit.)
+#define AF_FREE_MOVE 1<<4

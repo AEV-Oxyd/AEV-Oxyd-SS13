@@ -480,6 +480,8 @@ GLOBAL_LIST(projectileDamageConstants)
 		return FALSE
 
 /obj/item/projectile/Bump(atom/A as mob|obj|turf|area, forced = FALSE)
+	if(!density)
+		return TRUE
 	if(A == src)
 		return FALSE
 	if(A == firer)
@@ -553,9 +555,9 @@ GLOBAL_LIST(projectileDamageConstants)
 
 /obj/item/projectile/proc/onBlockingHit(atom/A)
 	on_impact(A)
+	atomFlags |= AF_FREE_MOVE
 	density = FALSE
-	dataRef.hasImpacted = TRUE
-	QDEL_IN_CLIENT_TIME(src, 3)
+	dataRef.lifetime = 2
 
 /// Called to properly delete a bullet after a delay from its impact, ensures the animation for it travelling finishes
 /obj/item/projectile/proc/finishDeletion()
@@ -567,49 +569,6 @@ GLOBAL_LIST(projectileDamageConstants)
 
 /obj/item/projectile/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	return TRUE
-
-/obj/item/projectile/Process()
-	var/first_step = TRUE
-
-	spawn while(src && src.loc)
-		if(kill_count-- < 1)
-			on_impact(src.loc) //for any final impact behaviours
-			qdel(src)
-			return
-		if((!( current ) || loc == current))
-			current = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z)
-		if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
-			qdel(src)
-			return
-
-		trajectory.increment()	// increment the current location
-		location = trajectory.return_location(location)		// update the locally stored location data
-
-		if(!location)
-			qdel(src)	// if it's left the world... kill it
-			return
-
-		before_move()
-		Move(location.return_turf())
-		pixel_x = location.pixel_x
-		pixel_y = location.pixel_y
-
-		if(!bumped && !QDELETED(original) && !isturf(original))
-			// this used to be loc == get_turf(original) , but this would break incase the original was inside something and hit them without hitting the outside
-			if(loc == original.loc)
-				if(!(original in permutated))
-					if(Bump(original))
-						return
-
-		if(first_step)
-			muzzle_effect(effect_transform)
-			first_step = FALSE
-		else if(!bumped)
-			tracer_effect(effect_transform)
-			luminosity_effect()
-
-		if(!hitscan)
-			sleep(step_delay)	//add delay between movement iterations if it's not a hitscan weapon
 
 /obj/item/projectile/proc/before_move()
 	return FALSE
