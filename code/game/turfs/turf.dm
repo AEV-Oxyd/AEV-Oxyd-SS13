@@ -85,7 +85,7 @@
 	return TRUE
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
-	if(mover.atomFlags & AF_FREE_MOVE)
+	if(mover.atomFlags & AF_VISUAL_MOVE)
 		return TRUE
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
 		to_chat(usr, SPAN_WARNING("Movement is admin-disabled.")) //This is to identify lag problems
