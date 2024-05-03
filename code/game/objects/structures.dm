@@ -64,7 +64,7 @@ GLOBAL_LIST_INIT(structureBlockingLevels, list(\
 	var/bulletHeight = P.dataRef.currentCoords[3]
 	var/checkingType = type
 	var/willBlock = FALSE
-	message_admins("bullet height at [bulletHeight]")
+	//message_admins("bullet height at [bulletHeight]")
 	while(checkingType)
 		if(GLOB.structureBlockingLevels[checkingType])
 			break

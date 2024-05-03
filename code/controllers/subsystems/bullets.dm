@@ -120,7 +120,7 @@ SUBSYSTEM_DEF(bullets)
 	else
 		message_admins(("Created bullet without target , [referencedBullet], from [usr]"))
 
-	message_admins("level set to [firedLevel], towards [targetLevel]")
+	//message_admins("level set to [firedLevel], towards [targetLevel]")
 	currentCoords[3] = firedLevel
 	movementRatios[3] = ((targetPos[3] - firedPos[3]) + targetLevel - firedLevel)/(distStartToFinish())
 	movementRatios[4] = getAngleByPosition()
@@ -258,31 +258,19 @@ SUBSYSTEM_DEF(bullets)
 				bullet.updateLevel()
 				if(moveTurf)
 					projectile.Move(moveTurf)
-					// one more turf for us
-					/*
-					if(bullet.hasImpacted && bullet in bullet_queue)
-						pixelsToTravel += 48
-						bullet.hasImpacted = FALSE
-						bullet_queue.Remove(bullet)
-					*/
 				moveTurf = null
 
 			bullet.lifetime--
-			if(bullet.lifetime < 0)
-				bullet.referencedBullet.finishDeletion()
-				bullet_queue -= bullet
-				break
 
 		bullet.updateLevel()
 		animate(projectile, 1, pixel_x =((abs(bulletCoords[1]))%HPPT * sign(bulletCoords[1]) - 1), pixel_y = ((abs(bulletCoords[2]))%HPPT * sign(bulletCoords[2]) - 1), flags = ANIMATION_END_NOW)
 		bullet.currentCoords = bulletCoords
-
-		/*
-		if(QDELETED(projectile))
+		if(bullet.lifetime < 0)
+			bullet.referencedBullet.finishDeletion()
 			bullet_queue -= bullet
-			for(var/turf/thing in bullet.coloreds)
-				thing.color = initial(thing.color)
-		*/
+
+
+
 
 
 #undef LEVEL_BELOW

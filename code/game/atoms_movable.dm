@@ -399,13 +399,7 @@ GLOBAL_VAR_INIT(Debug,0)
 		var/atom/oldloc = src.loc
 		var/olddir = dir //we can't override this without sacrificing the rest of movable/New()
 
-		if(isProjectile(src) && !density)
-			message_admins("Moving [src] through [loc] ")
-
 		. = ..()
-
-		if(isProjectile(src) && !density)
-			message_admins("Moved through [loc] with return value being [.],current loc is [loc]")
 
 		if(oldloc)
 			oldloc.recalculateWeights(-weight,src)

@@ -559,32 +559,33 @@ GLOBAL_LIST(projectileDamageConstants)
 
 /obj/item/projectile/proc/onBlockingHit(atom/A)
 	on_impact(A)
-	message_admins("Bullet has impacted [A] , [src]")
 	atomFlags |= AF_VISUAL_MOVE
 	density = FALSE
-	dataRef.lifetime = 4
+	dataRef.lifetime = 1
 
 /obj/effect/bullet_sparks
 	name = "bullet hit"
 	icon = 'icons/effects/effects.dmi'
-	icon_state = "bullet_hit"
+	icon_state = "nothing"
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/effect/bullet_sparks/Initialize(mapload, ...)
 	. = ..()
+	flick("bullet_hit", src)
 	QDEL_IN(src, 3 SECONDS)
 
 
 /// Called to properly delete a bullet after a delay from its impact, ensures the animation for it travelling finishes
 /obj/item/projectile/proc/finishDeletion()
-	var/atom/visEffect = new /obj/effect/bullet_sparks(get_turf(src))
+	var/atom/visEffect = new /obj/effect/bullet_sparks(loc)
+	visEffect.layer = ABOVE_ALL_MOB_LAYER
 	visEffect.pixel_x = src.pixel_x
 	visEffect.pixel_y = src.pixel_y
 	visEffect.transform = src.transform
+	visEffect.update_plane()
 
-	invisibility = 101
-	qdel(src)
+	QDEL_IN(src, 2)
 
 /obj/item/projectile/explosion_act(target_power, explosion_handler/handler)
 	return 0
