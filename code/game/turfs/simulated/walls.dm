@@ -149,6 +149,7 @@
 					ricochet = TRUE
 		if(ricochet)
 			take_damage(round(projectileDamage * 0.33))
+			message_admins("Ricochet at [angle].")
 			return PROJECTILE_CONTINUE
 
 	take_damage(projectileDamage)
