@@ -122,7 +122,7 @@ SUBSYSTEM_DEF(bullets)
 
 	//message_admins("level set to [firedLevel], towards [targetLevel]")
 	currentCoords[3] = firedLevel
-	movementRatios[3] = ((targetPos[3] - firedPos[3]) + targetLevel - firedLevel)/(distStartToFinish())
+	movementRatios[3] = ((targetPos[3] - firedPos[3]) + targetLevel - firedLevel)
 	movementRatios[4] = getAngleByPosition()
 	movementRatios[4] += angleOffset
 	updatePathByAngle()
@@ -231,10 +231,10 @@ SUBSYSTEM_DEF(bullets)
 			pixelsToTravel -= pixelsThisStep
 			bulletCoords[1] += (bulletRatios[1] * pixelsThisStep)
 			bulletCoords[2] += (bulletRatios[2] * pixelsThisStep)
-			bulletCoords[3] += (bulletRatios[3] * pixelsThisStep/PPT)
+			bulletCoords[3] += bulletRatios[3]
 			x_change = round(abs(bulletCoords[1]) / HPPT) * sign(bulletCoords[1])
 			y_change = round(abs(bulletCoords[2]) / HPPT) * sign(bulletCoords[2])
-			z_change = round(abs(bulletCoords[3])) * sign(bulletCoords[3])
+			z_change = round(abs(bulletCoords[3])/2) * sign(bulletCoords[3]) - (bulletCoords[3] < 0)
 			//z_change = round(abs(bulletCoords[3])) * sign(bulletCoords[3])
 			while(x_change || y_change)
 				if(QDELETED(projectile))

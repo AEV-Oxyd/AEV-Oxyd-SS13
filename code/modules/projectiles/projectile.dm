@@ -481,6 +481,8 @@ GLOBAL_LIST(projectileDamageConstants)
 
 /obj/item/projectile/Move(NewLoc, Dir, step_x, step_y, glide_size_override, initiator)
 	. = ..()
+	if(NewLoc == dataRef.targetTurf)
+		message_admins("[src] reached target with a bulletLevel of [dataRef.currentCoords[3]], and a rate of [dataRef.movementRatios[3]]")
 
 
 /obj/item/projectile/Bump(atom/A as mob|obj|turf|area, forced = FALSE)
