@@ -2,6 +2,7 @@
 	//Used to store information about the contents of the object.
 	var/list/matter
 	var/list/matter_reagents
+	var/datum/hitboxDatum/hitbox =
 	var/volumeClass // Size of the object.
 	var/unacidable = 0 //universal "unacidabliness" var, here so you can use it in any obj.
 	animate_movement = 2
@@ -12,6 +13,9 @@
 	var/armor_divisor = 1
 	var/corporation
 	var/heat = 0
+
+/obj/Initialize()
+	. = ..()
 
 /// Used for calculating weight, return value will set the atom's weight
 /obj/getWeight()

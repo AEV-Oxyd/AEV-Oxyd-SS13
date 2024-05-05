@@ -259,9 +259,8 @@ SUBSYSTEM_DEF(bullets)
 				projectile.pixel_x -= PPT * tx_change
 				projectile.pixel_y -= PPT * ty_change
 				bullet.updateLevel()
-				if(moveTurf)
-					projectile.Move(moveTurf)
-					moveTurf.color = "#892381"
+				if(projectile.scanTurf(moveTurf) == PROJECTILE_CONTINUE)
+					projectile.forceMove(moveTurf)
 
 				moveTurf = null
 
