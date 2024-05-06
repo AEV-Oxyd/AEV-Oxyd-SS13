@@ -1,4 +1,8 @@
 /datum/hitboxDatum
 	var/list/boundingBoxes
 
-/datum/hitboxDatum/proc/intersects(datum/bullet_data/bulletData)
+/datum/hitboxDatum/proc/intersects(list/lineData ownerDirection)
+	for(var/list/boundingData in boundingBoxes)
+
+
+
