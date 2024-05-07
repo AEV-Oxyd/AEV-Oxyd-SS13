@@ -2412,6 +2412,7 @@
 #include "code\modules\projectiles\gun.dm"
 #include "code\modules\projectiles\gun_firemode.dm"
 #include "code\modules\projectiles\gun_hud_actions.dm"
+#include "code\modules\projectiles\hitbox_datums.dm"
 #include "code\modules\projectiles\projectile.dm"
 #include "code\modules\projectiles\ammunition\ammo_kits.dm"
 #include "code\modules\projectiles\ammunition\boxes.dm"

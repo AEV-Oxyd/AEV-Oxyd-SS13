@@ -122,6 +122,16 @@ GLOBAL_LIST(melleDamagesCache)
 
 	var/chameleon_type
 
+/obj/item/hitbox_test
+	name = "hitbox tester"
+	icon_state = "hitbox"
+
+/obj/item/hitbox_test/Initialize()
+	. = ..()
+	var/datum/hitboxDatum/Selfhitbox = new()
+	Selfhitbox.boundingBoxes += list(8,8,24,24,0,0)
+	hitbox = Selfhitbox
+
 /obj/item/blockDamages(list/armorToDam, armorDiv, woundMult, defZone)
 	for(var/armorType in armorToDam)
 		for(var/list/damageElement in armorToDam[armorType])

@@ -489,7 +489,7 @@ GLOBAL_LIST(projectileDamageConstants)
 
 
 
-/obj/item/projectile/proc/scanTurf(turf/scanning)
+/obj/item/projectile/proc/scanTurf(turf/scanning, list/trajectoryData)
 	if(atomFlags & AF_VISUAL_MOVE)
 		return PROJECTILE_CONTINUE
 	if(scanning.bullet_act(src, def_zone) & PROJECTILE_STOP)
@@ -510,7 +510,9 @@ GLOBAL_LIST(projectileDamageConstants)
 			i = max(i-2, 1)
 
 	for(var/i in 1 to length(hittingList))
-		var/atom/target = hittingList[i]
+		var/obj/target = hittingList[i]
+		if(istype(target, /obj/item/hitbox_test))
+			message_admins("INTERSECTS HITBOX , RETURNED [target.hitbox.intersects(trajectoryData, target.dir)]")
 		if(target.bullet_act(src, def_zone) & PROJECTILE_STOP)
 			onBlockingHit(target)
 			return PROJECTILE_STOP

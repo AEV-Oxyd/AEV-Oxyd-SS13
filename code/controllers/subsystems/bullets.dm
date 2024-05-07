@@ -25,6 +25,7 @@ SUBSYSTEM_DEF(bullets)
 	var/list/relevantAtoms = list()
 	// 1 client tick by default , can be increased by impacts
 	var/bulletWait = 1
+	var/list/trajectoryData = list(0,0,0,0)
 
 
 
@@ -256,10 +257,14 @@ SUBSYSTEM_DEF(bullets)
 				bulletCoords[1] -= PPT * tx_change
 				bulletCoords[2] -= PPT * ty_change
 				bulletCoords[3] -= tz_change
+				trajectoryData[1] = projectile.pixel_x
+				trajectoryData[2] = projectile.pixel_y
 				projectile.pixel_x -= PPT * tx_change
 				projectile.pixel_y -= PPT * ty_change
+				trajectoryData[3] = projectile.pixel_x
+				trajectoryData[4] = projectile.pixel_y
 				bullet.updateLevel()
-				if(projectile.scanTurf(moveTurf) == PROJECTILE_CONTINUE)
+				if(projectile.scanTurf(moveTurf, trajectoryData) == PROJECTILE_CONTINUE)
 					projectile.forceMove(moveTurf)
 
 				moveTurf = null
