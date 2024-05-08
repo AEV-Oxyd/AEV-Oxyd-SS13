@@ -581,7 +581,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		var/temp = limit2
 		limit2 = limit1
 		limit1 = temp
-	return (value<limit1 || value>limit2)
+	return !(value<limit1 || value>limit2)
 
 //returns random gauss number
 proc/GaussRand(var/sigma)

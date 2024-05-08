@@ -233,9 +233,13 @@ SUBSYSTEM_DEF(bullets)
 		while(pixelsToTravel > 0)
 			pixelsThisStep = pixelsToTravel > 32 ? 32 : pixelsToTravel
 			pixelsToTravel -= pixelsThisStep
+			trajectoryData[1] = bulletCoords[1]
+			trajectoryData[2] = bulletCoords[2]
 			bulletCoords[1] += (bulletRatios[1] * pixelsThisStep)
 			bulletCoords[2] += (bulletRatios[2] * pixelsThisStep)
 			bulletCoords[3] += (bulletRatios[3])
+			trajectoryData[3] = bulletCoords[1]
+			trajectoryData[4] = bulletCoords[2]
 			x_change = round(abs(bulletCoords[1]) / HPPT) * sign(bulletCoords[1])
 			y_change = round(abs(bulletCoords[2]) / HPPT) * sign(bulletCoords[2])
 			z_change = round(abs(bulletCoords[3])) * sign(bulletCoords[3]) - (bulletCoords[3] < 0)
@@ -257,12 +261,8 @@ SUBSYSTEM_DEF(bullets)
 				bulletCoords[1] -= PPT * tx_change
 				bulletCoords[2] -= PPT * ty_change
 				bulletCoords[3] -= tz_change
-				trajectoryData[1] = projectile.pixel_x
-				trajectoryData[2] = projectile.pixel_y
 				projectile.pixel_x -= PPT * tx_change
 				projectile.pixel_y -= PPT * ty_change
-				trajectoryData[3] = projectile.pixel_x
-				trajectoryData[4] = projectile.pixel_y
 				bullet.updateLevel()
 				if(projectile.scanTurf(moveTurf, trajectoryData) == PROJECTILE_CONTINUE)
 					projectile.forceMove(moveTurf)

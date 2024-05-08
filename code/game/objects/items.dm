@@ -129,7 +129,7 @@ GLOBAL_LIST(melleDamagesCache)
 /obj/item/hitbox_test/Initialize()
 	. = ..()
 	var/datum/hitboxDatum/Selfhitbox = new()
-	Selfhitbox.boundingBoxes += list(8,8,24,24,0,0)
+	Selfhitbox.boundingBoxes += list(list(-8,-8,8,8,0,0))
 	hitbox = Selfhitbox
 
 /obj/item/blockDamages(list/armorToDam, armorDiv, woundMult, defZone)
