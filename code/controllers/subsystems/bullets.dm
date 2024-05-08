@@ -233,13 +233,13 @@ SUBSYSTEM_DEF(bullets)
 		while(pixelsToTravel > 0)
 			pixelsThisStep = pixelsToTravel > 32 ? 32 : pixelsToTravel
 			pixelsToTravel -= pixelsThisStep
-			trajectoryData[1] = ((abs(bulletCoords[1]))%HPPT * sign(bulletCoords[1]) - 1)
-			trajectoryData[2] = ((abs(bulletCoords[2]))%HPPT * sign(bulletCoords[2]) - 1)
+			trajectoryData[1] = bulletCoords[1]
+			trajectoryData[2] = bulletCoords[2]
 			bulletCoords[1] += (bulletRatios[1] * pixelsThisStep)
 			bulletCoords[2] += (bulletRatios[2] * pixelsThisStep)
 			bulletCoords[3] += (bulletRatios[3])
-			trajectoryData[3] = ((abs(bulletCoords[1]))%HPPT * sign(bulletCoords[1]) - 1)
-			trajectoryData[4] = ((abs(bulletCoords[2]))%HPPT * sign(bulletCoords[2]) - 1)
+			trajectoryData[3] = bulletCoords[1]
+			trajectoryData[4] = bulletCoords[2]
 			x_change = round(abs(bulletCoords[1]) / HPPT) * sign(bulletCoords[1])
 			y_change = round(abs(bulletCoords[2]) / HPPT) * sign(bulletCoords[2])
 			z_change = round(abs(bulletCoords[3])) * sign(bulletCoords[3]) - (bulletCoords[3] < 0)
