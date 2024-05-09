@@ -240,6 +240,7 @@ SUBSYSTEM_DEF(bullets)
 			bulletCoords[3] += (bulletRatios[3])
 			trajectoryData[3] = bulletCoords[1]
 			trajectoryData[4] = bulletCoords[2]
+			message_admins("trajectory data for bullet : [trajectoryData[1]] , [trajectoryData[2]] ===== [trajectoryData[3]], [trajectoryData[4]]")
 			x_change = round(abs(bulletCoords[1]) / HPPT) * sign(bulletCoords[1])
 			y_change = round(abs(bulletCoords[2]) / HPPT) * sign(bulletCoords[2])
 			z_change = round(abs(bulletCoords[3])) * sign(bulletCoords[3]) - (bulletCoords[3] < 0)
