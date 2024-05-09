@@ -8,17 +8,18 @@
 	/// global offsets , applied to all bounding boxes equally
 	var/offsetX = 0
 	var/offsetY = 0
+	var/atom/owner
 
-/datum/hitboxDatum/proc/intersects(list/lineData,ownerDirection, turf/incomingFrom)
+/datum/hitboxDatum/proc/intersects(list/lineData,ownerDirection, turf/incomingFrom, atom/owner)
 	message_admins("LINEDATA: FirstPoint ([lineData[1]], [lineData[2]]) SecondPoint ([lineData[3]], [lineData[4]])]")
 	for(var/list/boundingData in boundingBoxes)
-		if(lineIntersect(lineData, list(boundingData[1], boundingData[2], boundingData[1], boundingData[4])))
+		if(lineIntersect(lineData, list(boundingData[1] + owner.x * 32, boundingData[2] + owner.y * 32, boundingData[1] + owner.x * 32, boundingData[4])))
 			return TRUE
-		if(lineIntersect(lineData, list(boundingData[1], boundingData[2], boundingData[3], boundingData[2])))
+		if(lineIntersect(lineData, list(boundingData[1] + owner.x * 32, boundingData[2], boundingData[3] + owner.x * 32, boundingData[2])))
 			return TRUE
-		if(lineIntersect(lineData, list(boundingData[1], boundingData[4], boundingData[3], boundingData[4])))
+		if(lineIntersect(lineData, list(boundingData[1] + owner.x * 32, boundingData[4], boundingData[3] + owner.x * 32, boundingData[4])))
 			return TRUE
-		if(lineIntersect(lineData, list(boundingData[3], boundingData[2], boundingData[3], boundingData[4])))
+		if(lineIntersect(lineData, list(boundingData[3] + owner.x * 32, boundingData[2], boundingData[3] + owner.x * 32, boundingData[4])))
 			return TRUE
 	return FALSE
 
