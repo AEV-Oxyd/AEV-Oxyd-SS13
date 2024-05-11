@@ -230,11 +230,13 @@ SUBSYSTEM_DEF(bullets)
 		/// but less performant A more performant version would be to use the same algorithm as throwing for determining which turfs to "intersect"
 		/// Im using this implementation because im getting skill issued trying to implement the same one as throwing(i had to rewrite this 4 times already)
 		/// and also because it has.. much more information about the general trajectory stored  SPCR - 2024
+		trajectoryData[1] = projectile.x * 32 + projectile.pixel_x + 16
+		trajectoryData[2] = projectile.y * 32 + projectile.pixel_y + 16
+		trajectoryData[3] = bulletRatios[1] * pixelsToTravel + trajectoryData[1]
+		trajectoryData[4] = bulletRatios[2] * pixelsToTravel + trajectoryData[2]
 		while(pixelsToTravel > 0)
 			pixelsThisStep = pixelsToTravel > 32 ? 32 : pixelsToTravel
 			pixelsToTravel -= pixelsThisStep
-			trajectoryData[1] = projectile.x * 32 + projectile.pixel_x + 16
-			trajectoryData[2] = projectile.y * 32 + projectile.pixel_y + 16
 			bulletCoords[1] += (bulletRatios[1] * pixelsThisStep)
 			bulletCoords[2] += (bulletRatios[2] * pixelsThisStep)
 			bulletCoords[3] += (bulletRatios[3])
@@ -243,8 +245,7 @@ SUBSYSTEM_DEF(bullets)
 			x_change = round(abs(bulletCoords[1]) / HPPT) * sign(bulletCoords[1])
 			y_change = round(abs(bulletCoords[2]) / HPPT) * sign(bulletCoords[2])
 			z_change = round(abs(bulletCoords[3])) * sign(bulletCoords[3]) - (bulletCoords[3] < 0)
-			trajectoryData[3] = projectile.x * 32 + bulletRatios[1] * pixelsThisStep
-			trajectoryData[4] = projectile.y * 32 + bulletRatios[2] * pixelsThisStep
+			//message_admins("TRAJ : [trajectoryData[3]] [trajectoryData[4]]")
 			//z_change = round(abs(bulletCoords[3])) * sign(bulletCoords[3])
 			while(x_change || y_change)
 				if(QDELETED(projectile))

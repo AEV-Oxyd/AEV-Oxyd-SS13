@@ -1,4 +1,4 @@
-#define BBOX(x1,y1,x2,y2,offsetX,offsetY) list(x1,y1,x2,y2,offsetX,offsetY)
+#define BBOX(x1,y1,x2,y2,offsetX,offsetY, minLevel, maxLevel) list(x1,y1,x2,y2,offsetX,offsetY, minLevel, maxLevel)
 #define BLINE(x1,y1,x2,y2) list(x1,y1,x2,y2)
 #define TRIGSLOPE(x1,y1,x2,y2) ((y2-y1)/(x2-x1))
 
@@ -10,23 +10,25 @@
 	var/offsetY = 0
 	var/atom/owner
 
+/// this can be optimized further by making the calculations not make a new list , and instead be added when checking line intersection - SPCR 2024
 /datum/hitboxDatum/proc/intersects(list/lineData,ownerDirection, turf/incomingFrom, atom/owner)
-	message_admins("LINEDATA: FirstPoint ([lineData[1]], [lineData[2]]) SecondPoint ([lineData[3]], [lineData[4]])]")
+	var/global/worldX
+	var/global/worldY
+	worldX = owner.x * 32
+	worldY = owner.y * 32
 	for(var/list/boundingData in boundingBoxes)
-		if(lineIntersect(lineData, list(boundingData[1] + owner.x * 32, boundingData[2] + owner.y * 32, boundingData[1] + owner.x * 32, boundingData[4] + owner.y * 32)))
-			message_admins("checking left line [boundingData[1] + owner.x * 32],  [boundingData[2] + owner.y * 32], [boundingData[1] + owner.x * 32], [boundingData[4] + owner.y * 32] ")
+		if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY)))
 			return TRUE
-		if(lineIntersect(lineData, list(boundingData[1] + owner.x * 32, boundingData[2] + owner.y * 32, boundingData[3] + owner.x * 32, boundingData[2] + owner.y * 32)))
+		if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY)))
 			return TRUE
-		if(lineIntersect(lineData, list(boundingData[1] + owner.x * 32, boundingData[4] + owner.y * 32, boundingData[3] + owner.x * 32, boundingData[4] + owner.y * 32)))
+		if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[4] + worldY, boundingData[3] + worldX, boundingData[4] + worldY)))
 			return TRUE
-		if(lineIntersect(lineData, list(boundingData[3] + owner.x * 32, boundingData[2] + owner.y * 32, boundingData[3] + owner.x * 32, boundingData[4] + owner.y * 32)))
+		if(lineIntersect(lineData, list(boundingData[3] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY)))
 			return TRUE
 	return FALSE
 
 /*
-boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4)
-				(float x3, float y3, float x4, float y4) {
+boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) {
 
 
   // calculate the distance to intersection point
