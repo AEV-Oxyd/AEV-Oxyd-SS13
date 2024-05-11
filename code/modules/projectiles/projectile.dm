@@ -512,7 +512,7 @@ GLOBAL_LIST(projectileDamageConstants)
 	for(var/i in 1 to length(hittingList))
 		var/obj/target = hittingList[i]
 		if(istype(target, /obj/item/hitbox_test))
-			message_admins("INTERSECTS HITBOX , RETURNED [target.hitbox.intersects(trajectoryData, target.dir)]")
+			message_admins("INTERSECTS HITBOX , RETURNED [target.hitbox.intersects(trajectoryData, target.dir, 0, target)]")
 		if(target.bullet_act(src, def_zone) & PROJECTILE_STOP)
 			onBlockingHit(target)
 			return PROJECTILE_STOP

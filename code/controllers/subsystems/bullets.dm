@@ -233,17 +233,18 @@ SUBSYSTEM_DEF(bullets)
 		while(pixelsToTravel > 0)
 			pixelsThisStep = pixelsToTravel > 32 ? 32 : pixelsToTravel
 			pixelsToTravel -= pixelsThisStep
-			trajectoryData[1] = bulletCoords[1] + projectile.x * 32
-			trajectoryData[2] = bulletCoords[2] + projectile.y * 32
+			trajectoryData[1] = projectile.x * 32 + projectile.pixel_x + 16
+			trajectoryData[2] = projectile.y * 32 + projectile.pixel_y + 16
 			bulletCoords[1] += (bulletRatios[1] * pixelsThisStep)
 			bulletCoords[2] += (bulletRatios[2] * pixelsThisStep)
 			bulletCoords[3] += (bulletRatios[3])
-			trajectoryData[3] = bulletCoords[1] + projectile.x * 32
-			trajectoryData[4] = bulletCoords[2] + projectile.y * 32
-			message_admins("trajectory data for bullet : [trajectoryData[1]] , [trajectoryData[2]] ===== [trajectoryData[3]], [trajectoryData[4]]")
+			//message_admins("[bulletCoords[1]], [bulletCoords[2]]")
+			//message_admins("trajectory data for bullet : [trajectoryData[1]] , [trajectoryData[2]] ===== [trajectoryData[3]], [trajectoryData[4]]")
 			x_change = round(abs(bulletCoords[1]) / HPPT) * sign(bulletCoords[1])
 			y_change = round(abs(bulletCoords[2]) / HPPT) * sign(bulletCoords[2])
 			z_change = round(abs(bulletCoords[3])) * sign(bulletCoords[3]) - (bulletCoords[3] < 0)
+			trajectoryData[3] = projectile.x * 32 + bulletRatios[1] * pixelsThisStep
+			trajectoryData[4] = projectile.y * 32 + bulletRatios[2] * pixelsThisStep
 			//z_change = round(abs(bulletCoords[3])) * sign(bulletCoords[3])
 			while(x_change || y_change)
 				if(QDELETED(projectile))
@@ -261,6 +262,8 @@ SUBSYSTEM_DEF(bullets)
 				bullet.lastChanges[3] += tz_change
 				bulletCoords[1] -= PPT * tx_change
 				bulletCoords[2] -= PPT * ty_change
+				//trajectoryData[3] += PPT * tx_change
+				//trajectoryData[4] += PPT * ty_change
 				bulletCoords[3] -= tz_change
 				projectile.pixel_x -= PPT * tx_change
 				projectile.pixel_y -= PPT * ty_change

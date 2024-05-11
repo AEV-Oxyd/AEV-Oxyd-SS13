@@ -13,18 +13,21 @@
 /datum/hitboxDatum/proc/intersects(list/lineData,ownerDirection, turf/incomingFrom, atom/owner)
 	message_admins("LINEDATA: FirstPoint ([lineData[1]], [lineData[2]]) SecondPoint ([lineData[3]], [lineData[4]])]")
 	for(var/list/boundingData in boundingBoxes)
-		if(lineIntersect(lineData, list(boundingData[1] + owner.x * 32, boundingData[2] + owner.y * 32, boundingData[1] + owner.x * 32, boundingData[4])))
+		if(lineIntersect(lineData, list(boundingData[1] + owner.x * 32, boundingData[2] + owner.y * 32, boundingData[1] + owner.x * 32, boundingData[4] + owner.y * 32)))
+			message_admins("checking left line [boundingData[1] + owner.x * 32],  [boundingData[2] + owner.y * 32], [boundingData[1] + owner.x * 32], [boundingData[4] + owner.y * 32] ")
 			return TRUE
-		if(lineIntersect(lineData, list(boundingData[1] + owner.x * 32, boundingData[2], boundingData[3] + owner.x * 32, boundingData[2])))
+		if(lineIntersect(lineData, list(boundingData[1] + owner.x * 32, boundingData[2] + owner.y * 32, boundingData[3] + owner.x * 32, boundingData[2] + owner.y * 32)))
 			return TRUE
-		if(lineIntersect(lineData, list(boundingData[1] + owner.x * 32, boundingData[4], boundingData[3] + owner.x * 32, boundingData[4])))
+		if(lineIntersect(lineData, list(boundingData[1] + owner.x * 32, boundingData[4] + owner.y * 32, boundingData[3] + owner.x * 32, boundingData[4] + owner.y * 32)))
 			return TRUE
-		if(lineIntersect(lineData, list(boundingData[3] + owner.x * 32, boundingData[2], boundingData[3] + owner.x * 32, boundingData[4])))
+		if(lineIntersect(lineData, list(boundingData[3] + owner.x * 32, boundingData[2] + owner.y * 32, boundingData[3] + owner.x * 32, boundingData[4] + owner.y * 32)))
 			return TRUE
 	return FALSE
 
 /*
-boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) {
+boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4)
+				(float x3, float y3, float x4, float y4) {
+
 
   // calculate the distance to intersection point
   float uA = ((x4-x3)*(y1-y3) - (y4-y3)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
