@@ -15,6 +15,8 @@ GLOBAL_VAR_INIT(Debug,0)
 	var/throw_range = 7
 	var/moved_recently = 0
 	var/obj/item/grab/grabbedBy
+	/// Holds the hitbox datum if theres any
+	var/datum/hitboxDatum/hitbox
 	var/item_state // Used to specify the item state for the on-mob overlays.
 	var/inertia_dir = 0
 	var/can_anchor = TRUE
@@ -71,6 +73,13 @@ GLOBAL_VAR_INIT(Debug,0)
 
 /atom/movable/proc/entered_with_container(var/atom/old_loc)
 	return
+
+/atom/movable/Initialize()
+	if(ispath(hitbox))
+		hitbox = new hitbox()
+		hitbox.owner = src
+	. = ..()
+
 
 // Gets the top-atom that contains us, doesn't care about how deeply nested a item is
 // If stopType is defined , it will stop at the first object that is the type of stopType

@@ -367,3 +367,7 @@
 #define TTS_SEED_DEFAULT_FEMALE "Female_1"
 #define TTS_SEED_DEFAULT_MALE "Male_1"
 #define TTS_SEED_ANNOUNCER "Robot_2"
+
+#define BBOX(x1,y1,x2,y2,offsetX,offsetY, minLevel, maxLevel) list(x1,y1,x2,y2,offsetX,offsetY, minLevel, maxLevel)
+#define BLINE(x1,y1,x2,y2) list(x1,y1,x2,y2)
+#define TRIGSLOPE(x1,y1,x2,y2) ((y2-y1)/(x2-x1))

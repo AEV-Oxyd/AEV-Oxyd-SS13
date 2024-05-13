@@ -6,11 +6,25 @@
 	icon_state = "body_m_s"
 	/// everyone is 65 KGs
 	weight = 65000
+	hitbox = /datum/hitboxDatum/human
 
 	var/list/hud_list[10]
 	var/embedded_flag	  //To check if we've need to roll for damage on movement while an item is imbedded in us.
 	var/obj/item/rig/wearing_rig // This is very not good, but it's much much better than calling get_rig() every update_lying_buckled_and_verb_status() call.
 	var/using_scope // This is not very good either, because I've copied it. Sorry.
+
+/datum/hitboxDatum/human
+	boundingBoxes = list(
+		BBOX(8,10,24,16,0,0,0,0), /// chest + arms
+		BBOX(9,17,23,19,0,0,0,0), /// upper chest + upper arms
+		BBOX(11,20,21,21,0,0,0,0), // neck/upper chest
+		BBOX(12,22,20,25,0,0,0,0), // head
+		BBOX(13,26,19,27,0,0,0,0), // bald ass head top
+		BBOX(12,0,15,9,0,0,0,0), // left leg
+		BBOX(10,0,11,2,0,0,0,0), // left toe
+		BBOX(17,0,20,9,0,0,0,0), // right leg
+		BBOX(21,0,21,21,0,0,0,0), // right toe
+	)
 
 /mob/living/carbon/human/Initialize(new_loc, new_species)
 	hud_list[HEALTH_HUD]      = image('icons/mob/hud.dmi', src, "hudhealth100", ON_MOB_HUD_LAYER)
@@ -1408,7 +1422,7 @@ var/list/rank_prefix = list(\
 	reset_view(A)
 
 /mob/living/carbon/human/proc/resuscitate()
-	
+
 	var/obj/item/organ/internal/vital/heart_organ = random_organ_by_process(OP_HEART)
 	var/obj/item/organ/internal/vital/brain_organ = random_organ_by_process(BP_BRAIN)
 
