@@ -396,6 +396,7 @@ var/global/use_preloader = FALSE
 			T.underlays += underlay
 			index++
 
+
 	//finally instance all remainings objects/mobs
 	for(index in 1 to first_turf_index-1)
 		instance_atom(members[index],members_attributes[index],crds,no_changeturf)

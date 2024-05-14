@@ -1,5 +1,6 @@
 /proc/create_all_lighting_overlays()
 	for(var/zlevel = 1 to world.maxz)
+		message_admins("Created lightning overlay for zlevel [zlevel]")
 		create_lighting_overlays_zlevel(zlevel)
 
 /proc/create_lighting_overlays_zlevel(var/zlevel)

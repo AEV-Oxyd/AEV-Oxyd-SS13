@@ -9,6 +9,10 @@ SUBSYSTEM_DEF(mapping)
 	var/list/ghostteleportlocs = list()
 
 /datum/controller/subsystem/mapping/Initialize(start_timeofday)
+	maploader = new()
+	load_map_templates()
+	maploader.load_map(file("maps/CEVEris/_CEV_Eris.dmm"))
+
 	if(config.generate_asteroid)
 		// These values determine the specific area that the map is applied to.
 		// Because we do not use Bay's default map, we check the config file to see if custom parameters are needed, so we need to avoid hardcoding.
@@ -39,8 +43,6 @@ SUBSYSTEM_DEF(mapping)
 	#endif
 
 //	world.max_z_changed() // This is to set up the player z-level list, maxz hasn't actually changed (probably)
-	maploader = new()
-	load_map_templates()
 	build_pulsar()
 
 	// Generate cache of all areas in world. This cache allows world areas to be looked up on a list instead of being searched for EACH time
