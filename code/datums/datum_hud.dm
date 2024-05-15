@@ -61,7 +61,7 @@
 		for(var/mytype in subtypesof(/obj/screen/plane_master))
 			var/obj/screen/plane_master/instance = new mytype()
 
-			instance.plane = calculate_plane(LD.original_level - zi,instance.plane)
+			instance.plane = calculate_plane(LD.original_level + zi,instance.plane)
 
 			plane_masters["[zi]-[mytype]"] = instance
 			mymob.client.screen += instance
@@ -72,7 +72,7 @@
 				var/zdiff = local_z-(zi-1)
 
 				var/obj/screen/openspace_overlay/oover = new
-				oover.plane = calculate_plane(zi,pl)
+				oover.plane = calculate_plane(LD.original_level -(zi - 1),pl)
 				oover.alpha = min(255,zdiff*50 + 30)
 				openspace_overlays["[zi]-[oover.plane]"] = oover
 				mymob.client.screen += oover
