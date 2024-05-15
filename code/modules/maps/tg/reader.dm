@@ -35,7 +35,7 @@ var/global/use_preloader = FALSE
  * 2) Read the map line by line, parsing the result (using parse_grid)
  *
  */
-/dmm_suite/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, orientation as num)
+/dmm_suite/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, orientation as num, obj/map_data/mapObject)
 	//How I wish for RAII
 	if(!measureOnly)
 		Master.StartLoadingMap()
@@ -43,6 +43,13 @@ var/global/use_preloader = FALSE
 	#ifdef TESTING
 	turfsSkipped = 0
 	#endif
+	/// This is a hack done to make this quickly compatible with eris lightning and map loading from old bay
+	/// A full and proper refactor would be to use something akin to TG's auto-level linking ,but that needs more work than this
+	/// This is only really done for the main map , since by the time it is initialized none of the datum/level_data are built for it , so lightning
+	/// has no plane offsets to guide by and miscalculates the plane of the PLANEMASTER (not of the lightning overlays)
+	if(mapObject)
+		new mapObject(null, world.maxz + 1)
+
 	. = load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, orientation)
 	#ifdef TESTING
 	if(turfsSkipped)

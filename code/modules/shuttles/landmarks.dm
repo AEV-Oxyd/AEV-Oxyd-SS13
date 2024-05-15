@@ -42,13 +42,12 @@
 
 /obj/effect/shuttle_landmark/Initialize()
 	. = ..()
-	spawn(10)
-		if(docking_controller)
-			var/docking_tag = docking_controller
-			docking_controller = locate(docking_tag)
-			if(!istype(docking_controller))
-				admin_notice("Could not find docking controller for shuttle waypoint '[name]', docking tag was '[docking_tag]'.")
-		SSshuttle.register_landmark(tag, src)
+	if(docking_controller)
+		var/docking_tag = docking_controller
+		docking_controller = locate(docking_tag)
+		if(!istype(docking_controller))
+			admin_notice("Could not find docking controller for shuttle waypoint '[name]', docking tag was '[docking_tag]'.")
+	SSshuttle.register_landmark(tag, src)
 
 /obj/effect/shuttle_landmark/proc/is_valid(var/datum/shuttle/shuttle)
 	if(shuttle.current_location == src)

@@ -61,7 +61,7 @@
 		for(var/mytype in subtypesof(/obj/screen/plane_master))
 			var/obj/screen/plane_master/instance = new mytype()
 
-			instance.plane = calculate_plane(zi,instance.plane)
+			instance.plane = calculate_plane(LD.original_level - zi,instance.plane)
 
 			plane_masters["[zi]-[mytype]"] = instance
 			mymob.client.screen += instance
@@ -85,6 +85,7 @@
 
 
 /datum/hud/New(mob/mymob)
+	message_admins("Created HUDdatum for [mymob]")
 	if(mymob)
 		updatePlaneMasters(mymob)
 
