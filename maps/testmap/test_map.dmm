@@ -27,13 +27,13 @@
 /turf/simulated/floor,
 /area/space)
 "af" = (
-/obj/structure/multiz/ladder{
-	icon_state = "ladderup"
-	},
+/obj/structure/multiz/ladder/up,
 /turf/simulated/floor,
 /area/testing/first)
 "ag" = (
-/obj/structure/multiz/ladder,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/testing/first)
 "ah" = (
@@ -201,8 +201,9 @@
 "bd" = (
 /obj/machinery/shieldwallgen,
 /obj/structure/cable,
+/obj/machinery/light,
 /turf/simulated/floor,
-/area/space)
+/area/testing/first)
 "bf" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	icon_state = "intact";
@@ -248,12 +249,12 @@
 /turf/space,
 /area/space)
 "bl" = (
-/obj/structure/window/reinforced/full,
+/obj/effect/window_lwall_spawn/reinforced,
 /turf/simulated/floor/plating,
 /area/space)
 "bm" = (
-/obj/structure/window/reinforced/full,
 /obj/machinery/atmospherics/pipe/simple/visible/red,
+/obj/effect/window_lwall_spawn/reinforced,
 /turf/simulated/floor/plating,
 /area/space)
 "bn" = (
@@ -261,11 +262,11 @@
 /turf/simulated/floor,
 /area/testing/second)
 "bo" = (
-/obj/structure/multiz/ladder{
-	icon_state = "ladderup"
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/simulated/floor,
-/area/testing/second)
+/area/testing/first)
 "bp" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	icon_state = "intact";
@@ -527,11 +528,11 @@
 /turf/simulated/floor,
 /area/testing/first)
 "Dt" = (
-/obj/structure/window/reinforced/full,
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
 	dir = 4;
 	icon_state = "intact"
 	},
+/obj/effect/window_lwall_spawn/reinforced,
 /turf/simulated/floor/plating,
 /area/space)
 "Gc" = (
@@ -587,9 +588,11 @@
 /turf/simulated/floor,
 /area/testing/first)
 "Vb" = (
-/obj/machinery/power/apc/super/critical,
-/turf/simulated/wall,
-/area/space)
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/testing/first)
 "Xr" = (
 /obj/structure/cable{
 	d2 = 2;
@@ -597,6 +600,7 @@
 	pixel_y = 0
 	},
 /mob/living/carbon/human/dummy,
+/obj/machinery/power/apc/super/critical,
 /turf/simulated/floor,
 /area/testing/first)
 "Ze" = (
@@ -1413,7 +1417,7 @@ aa
 aa
 aa
 ab
-ag
+an
 he
 he
 LZ
@@ -2024,7 +2028,7 @@ aa
 aa
 aa
 aa
-Vb
+ab
 Xr
 Ze
 TG
@@ -2128,9 +2132,9 @@ ab
 ab
 ab
 ab
-ac
+an
 az
-ac
+an
 ab
 ab
 ab
@@ -2224,18 +2228,18 @@ aa
 aa
 aa
 ab
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-aA
-ac
-ac
-ac
-ac
+an
+an
+Vb
+an
+an
+an
+an
+mc
+an
+Vb
+an
+an
 ab
 aa
 aa
@@ -2326,7 +2330,7 @@ aa
 aa
 aa
 ab
-ac
+an
 ac
 ac
 ac
@@ -2337,7 +2341,7 @@ aB
 ac
 ac
 ac
-ac
+an
 ab
 aa
 aa
@@ -2428,7 +2432,7 @@ aa
 aa
 aa
 ab
-ac
+an
 ac
 ac
 ac
@@ -2439,7 +2443,7 @@ aA
 ac
 ac
 ac
-ac
+an
 ab
 aa
 aa
@@ -2530,7 +2534,7 @@ aa
 aa
 aa
 ab
-ac
+an
 ac
 ac
 ac
@@ -2541,7 +2545,7 @@ aA
 ac
 ac
 ac
-ac
+an
 ab
 aa
 aa
@@ -2632,7 +2636,7 @@ aa
 aa
 aa
 ab
-ac
+ag
 ac
 ad
 ae
@@ -2734,7 +2738,7 @@ aa
 aa
 aa
 ab
-ac
+an
 ac
 ac
 ac
@@ -2745,7 +2749,7 @@ aA
 ac
 ac
 ac
-ac
+an
 ab
 aa
 aa
@@ -2836,7 +2840,7 @@ aa
 aa
 aa
 ab
-ac
+an
 ac
 ac
 ac
@@ -2847,7 +2851,7 @@ aA
 ac
 ac
 ac
-ac
+an
 ab
 aa
 aa
@@ -2938,7 +2942,7 @@ aa
 aa
 aa
 ab
-ac
+an
 ac
 ac
 ac
@@ -2949,7 +2953,7 @@ aB
 ac
 ac
 ac
-ac
+an
 ab
 aa
 aa
@@ -3040,18 +3044,18 @@ aa
 aa
 aa
 ab
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+an
+an
+bo
+an
+an
+an
+an
+an
+an
+bo
+an
+an
 ab
 aa
 aa
@@ -11614,7 +11618,7 @@ aa
 aa
 aa
 bl
-bo
+bv
 bv
 bD
 bv

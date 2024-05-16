@@ -164,8 +164,8 @@
 
 	level = BELOW_PLATING_LEVEL
 
-/obj/machinery/atmospherics/pipe/simple/New()
-	..()
+/obj/machinery/atmospherics/pipe/simple/Initialize(mapload, d)
+	. = ..()
 
 	// Pipe colors and icon states are handled by an image cache - so color and icon should
 	//  be null. For mapping purposes color is defined in the object definitions.
