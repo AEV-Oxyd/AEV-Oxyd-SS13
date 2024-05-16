@@ -56,7 +56,7 @@
 		return;
 
 	var/relativeHeight = z - LD.original_level
-	for(var/zi in 1 to LD.height)
+	for(var/zi in 0 to LD.height)
 		for(var/mytype in subtypesof(/obj/screen/plane_master))
 			var/obj/screen/plane_master/instance = new mytype()
 
@@ -82,7 +82,6 @@
 
 
 /datum/hud/New(mob/mymob)
-	message_admins("Created HUDdatum for [mymob]")
 	if(mymob)
 		updatePlaneMasters(mymob)
 

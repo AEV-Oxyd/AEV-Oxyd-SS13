@@ -362,3 +362,6 @@ ADMIN_VERB_ADD(/client/proc/test_MD, R_DEBUG, null)
 
 /obj/map_data/asteroid/custom_z_name(z_level)
 	return "Asteroid [z_level]"
+
+/obj/map_data/test_map
+	height = 3

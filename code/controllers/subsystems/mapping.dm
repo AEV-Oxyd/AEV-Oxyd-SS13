@@ -11,7 +11,11 @@ SUBSYSTEM_DEF(mapping)
 /datum/controller/subsystem/mapping/Initialize(start_timeofday)
 	maploader = new()
 	load_map_templates()
+	#ifdef LOWMEMORYMODE
+	maploader.load_map(file("maps/testmap/test_map.dmm"), mapObject = /obj/map_data/test_map)
+	#else
 	maploader.load_map(file("maps/CEVEris/_CEV_Eris.dmm"), mapObject = /obj/map_data/eris)
+	#endif
 
 	if(config.generate_asteroid)
 		// These values determine the specific area that the map is applied to.

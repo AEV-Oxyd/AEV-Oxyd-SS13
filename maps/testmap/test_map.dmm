@@ -67,10 +67,6 @@
 /obj/item/robot_parts/robot_component/actuator,
 /turf/simulated/floor,
 /area/testing/first)
-"as" = (
-/obj/item/prosthesis/l_arm,
-/turf/simulated/floor,
-/area/testing/first)
 "av" = (
 /obj/landmark/join/late,
 /turf/simulated/floor,
@@ -206,12 +202,6 @@
 /obj/machinery/shieldwallgen,
 /obj/structure/cable,
 /turf/simulated/floor,
-/area/space)
-"be" = (
-/obj/map_data/multiz/station{
-	height = 3
-	},
-/turf/space,
 /area/space)
 "bf" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -358,12 +348,6 @@
 /turf/simulated/floor/hull,
 /area/space)
 "bC" = (
-/obj/machinery/power/apc/high{
-	dir = 1;
-	name = "west bump";
-	pixel_x = -28;
-	pixel_y = 0
-	},
 /obj/structure/cable{
 	icon_state = "0-4";
 	d2 = 4
@@ -499,10 +483,6 @@
 /obj/item/implantcase/excelsior,
 /turf/simulated/floor,
 /area/testing/first)
-"hO" = (
-/obj/item/disk/autolathe_disk/basic,
-/turf/simulated/floor,
-/area/testing/first)
 "jn" = (
 /obj/item/implant/compressed,
 /turf/simulated/floor,
@@ -512,7 +492,6 @@
 /turf/simulated/floor,
 /area/testing/first)
 "ky" = (
-/obj/item/disk/autolathe_disk/security,
 /obj/item/stock_parts/micro_laser/ultra,
 /obj/item/stock_parts/micro_laser/ultra,
 /turf/simulated/floor,
@@ -524,7 +503,6 @@
 	icon_state = "4-8";
 	pixel_x = 0
 	},
-/obj/item/disk/autolathe_disk/lethal_ammo,
 /turf/simulated/floor,
 /area/testing/first)
 "pd" = (
@@ -574,7 +552,6 @@
 /turf/simulated/floor,
 /area/testing/first)
 "QJ" = (
-/obj/item/disk/autolathe_disk/security,
 /obj/item/stock_parts/scanning_module/adv,
 /obj/item/stock_parts/scanning_module/phasic,
 /turf/simulated/floor,
@@ -598,7 +575,6 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/item/disk/autolathe_disk/blank,
 /obj/structure/cable,
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -611,21 +587,15 @@
 /turf/simulated/floor,
 /area/testing/first)
 "Vb" = (
-/obj/item/implant/revolution/excelsior,
-/turf/simulated/floor,
-/area/testing/first)
+/obj/machinery/power/apc/super/critical,
+/turf/simulated/wall,
+/area/space)
 "Xr" = (
-/obj/machinery/power/apc/high{
-	dir = 1;
-	name = "north bump";
-	pixel_y = 24
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
 	pixel_y = 0
 	},
-/obj/item/disk/autolathe_disk/excelsior,
 /mob/living/carbon/human/dummy,
 /turf/simulated/floor,
 /area/testing/first)
@@ -636,7 +606,6 @@
 	icon_state = "1-2";
 	pixel_y = 0
 	},
-/obj/item/disk/autolathe_disk/blank,
 /turf/simulated/floor,
 /area/testing/first)
 
@@ -740,7 +709,7 @@ aa
 aa
 aa
 aa
-be
+aa
 "}
 (2,1,1) = {"
 aa
@@ -1448,7 +1417,7 @@ ag
 he
 he
 LZ
-Vb
+an
 Up
 Up
 ab
@@ -1551,7 +1520,7 @@ an
 QE
 aF
 bX
-hO
+an
 aZ
 ab
 aa
@@ -1955,7 +1924,7 @@ aa
 aa
 ab
 al
-as
+an
 ax
 fA
 AG
@@ -2055,7 +2024,7 @@ aa
 aa
 aa
 aa
-ab
+Vb
 Xr
 Ze
 TG
