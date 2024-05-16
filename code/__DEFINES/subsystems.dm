@@ -87,7 +87,8 @@
 // Subsystems shutdown in the reverse of the order they initialize in
 // The numbers just define the ordering, they are meaningless otherwise.
 
-#define INIT_ORDER_GARBAGE 99
+#define INIT_ORDER_GARBAGE 100
+#define INIT_ORDER_MAPPING 99
 #define INIT_ORDER_CHUNKS 98
 #define INIT_ORDER_EXPLOSIONS 97
 #define INIT_ORDER_SKYBOX 20
@@ -98,7 +99,6 @@
 #define INIT_ORDER_EVENTS 15
 #define INIT_ORDER_TICKER 14
 #define INIT_ORDER_SPAWN_DATA 13
-#define INIT_ORDER_MAPPING 12
 #define INIT_ORDER_LANGUAGE 11
 #define INIT_ORDER_INVENTORY 10
 #define INIT_ORDER_CHAR_SETUP 9
