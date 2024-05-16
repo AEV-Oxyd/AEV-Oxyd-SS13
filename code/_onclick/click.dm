@@ -300,7 +300,7 @@
 		var/obj/item/grab/G = new(user,src, force = FALSE, tryFight = TRUE)
 		if(G)
 			G.state = GRAB_PASSIVE
-			user.put_in_active_hand(G)
+			if(user.put_in_active_hand(G))
 			G.synch()
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			visible_message(SPAN_NOTICE("\The [src] has been grabbed by [user]!"), range = 7)

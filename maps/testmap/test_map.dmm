@@ -353,6 +353,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
+/obj/machinery/power/apc/critical,
 /turf/simulated/floor,
 /area/testing/second)
 "bD" = (

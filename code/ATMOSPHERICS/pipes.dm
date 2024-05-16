@@ -17,7 +17,7 @@
 /obj/machinery/atmospherics/pipe/drain_power()
 	return -1
 
-/obj/machinery/atmospherics/pipe/New()
+/obj/machinery/atmospherics/pipe/Initialize(mapload, d)
 	if(istype(get_turf(src), /turf/simulated/wall) || istype(get_turf(src), /turf/simulated/shuttle/wall) || istype(get_turf(src), /turf/unsimulated/wall))
 		level = BELOW_PLATING_LEVEL
 	..()
@@ -427,8 +427,8 @@
 	level = BELOW_PLATING_LEVEL
 	layer = GAS_PIPE_VISIBLE_LAYER
 
-/obj/machinery/atmospherics/pipe/manifold/New()
-	..()
+/obj/machinery/atmospherics/pipe/manifold/Initialize(mapload, d)
+	. = ..()
 	alpha = 255
 	icon = null
 
@@ -681,8 +681,8 @@
 	level = BELOW_PLATING_LEVEL
 	layer = GAS_PIPE_VISIBLE_LAYER
 
-/obj/machinery/atmospherics/pipe/manifold4w/New()
-	..()
+/obj/machinery/atmospherics/pipe/manifold4w/Initialize(mapload, d)
+	. = ..()
 	alpha = 255
 	icon = null
 
@@ -934,8 +934,8 @@
 
 	var/obj/machinery/atmospherics/node
 
-/obj/machinery/atmospherics/pipe/cap/New()
-	..()
+/obj/machinery/atmospherics/pipe/cap/Initialize(mapload, d)
+	. = ..()
 	initialize_directions = dir
 
 /obj/machinery/atmospherics/pipe/cap/hide(var/i)
@@ -1051,7 +1051,7 @@
 	density = TRUE
 	layer = ABOVE_WINDOW_LAYER
 
-/obj/machinery/atmospherics/pipe/tank/New()
+/obj/machinery/atmospherics/pipe/tank/Initialize(mapload, d)
 	icon_state = "air"
 	initialize_directions = dir
 	..()
@@ -1111,7 +1111,8 @@
 	name = "Pressure Tank (Air)"
 	icon_state = "air_map"
 
-/obj/machinery/atmospherics/pipe/tank/air/New()
+/obj/machinery/atmospherics/pipe/tank/air/Initialize(mapload, d)
+
 	air_temporary = new
 	air_temporary.volume = volume
 	air_temporary.temperature = T20C
@@ -1120,49 +1121,49 @@
 	                           "nitrogen",(start_pressure*N2STANDARD)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature))
 
 
-	..()
+	. = ..()
 	icon_state = "air"
 
 /obj/machinery/atmospherics/pipe/tank/oxygen
 	name = "Pressure Tank (Oxygen)"
 	icon_state = "o2_map"
 
-/obj/machinery/atmospherics/pipe/tank/oxygen/New()
+/obj/machinery/atmospherics/pipe/tank/oxygen/Initialize(mapload, d)
 	air_temporary = new
 	air_temporary.volume = volume
 	air_temporary.temperature = T20C
 
 	air_temporary.adjust_gas("oxygen", (start_pressure)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature))
 
-	..()
+	. = ..()
 	icon_state = "o2"
 
 /obj/machinery/atmospherics/pipe/tank/nitrogen
 	name = "Pressure Tank (Nitrogen)"
 	icon_state = "n2_map"
 
-/obj/machinery/atmospherics/pipe/tank/nitrogen/New()
+/obj/machinery/atmospherics/pipe/tank/nitrogen/Initialize(mapload, d)
 	air_temporary = new
 	air_temporary.volume = volume
 	air_temporary.temperature = T20C
 
 	air_temporary.adjust_gas("nitrogen", (start_pressure)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature))
 
-	..()
+	. = ..()
 	icon_state = "n2"
 
 /obj/machinery/atmospherics/pipe/tank/carbon_dioxide
 	name = "Pressure Tank (Carbon Dioxide)"
 	icon_state = "co2_map"
 
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide/New()
+/obj/machinery/atmospherics/pipe/tank/carbon_dioxide/Initialize(mapload, d)
 	air_temporary = new
 	air_temporary.volume = volume
 	air_temporary.temperature = T20C
 
 	air_temporary.adjust_gas("carbon_dioxide", (start_pressure)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature))
 
-	..()
+	. = ..()
 	icon_state = "co2"
 
 /obj/machinery/atmospherics/pipe/tank/plasma
@@ -1170,28 +1171,28 @@
 	description_antag = "Will blind people if they do not wear face-covering gear"
 	icon_state = "plasma_map"
 
-/obj/machinery/atmospherics/pipe/tank/plasma/New()
+/obj/machinery/atmospherics/pipe/tank/plasma/Initialize(mapload, d)
 	air_temporary = new
 	air_temporary.volume = volume
 	air_temporary.temperature = T20C
 
 	air_temporary.adjust_gas("plasma", (start_pressure)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature))
 
-	..()
+	. = ..()
 	icon_state = "plasma"
 
 /obj/machinery/atmospherics/pipe/tank/nitrous_oxide
 	name = "Pressure Tank (Nitrous Oxide)"
 	icon_state = "n2o_map"
 
-/obj/machinery/atmospherics/pipe/tank/nitrous_oxide/New()
+/obj/machinery/atmospherics/pipe/tank/nitrous_oxide/Initialize(mapload, d)
 	air_temporary = new
 	air_temporary.volume = volume
 	air_temporary.temperature = T0C
 
 	air_temporary.adjust_gas("sleeping_agent", (start_pressure)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature))
 
-	..()
+	. = ..()
 	icon_state = "n2o"
 
 /obj/machinery/atmospherics/pipe/vent
@@ -1211,9 +1212,9 @@
 	var/build_killswitch = 1
 
 
-/obj/machinery/atmospherics/pipe/vent/New()
+/obj/machinery/atmospherics/pipe/vent/Initialize(mapload, d)
 	initialize_directions = dir
-	..()
+	. = ..()
 
 /obj/machinery/atmospherics/pipe/vent/high_volume
 	name = "Larger vent"
