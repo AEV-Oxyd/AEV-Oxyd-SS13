@@ -107311,7 +107311,6 @@
 /turf/simulated/floor/tiled/steel,
 /area/eris/crew_quarters/toilet/medbay)
 "wCq" = (
-/turf/simulated/wall,
 /turf/simulated/wall/r_wall,
 /area/eris/maintenance/section3deck4port)
 "wEJ" = (

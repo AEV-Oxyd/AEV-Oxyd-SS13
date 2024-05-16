@@ -233,6 +233,8 @@ GLOBAL_LIST_EMPTY(storyteller_cache)
 
 	var/profiler_permission = R_DEBUG | R_SERVER
 
+	var/pulsar_enabled
+
 /datum/configuration/New()
 	fill_storyevents_list()
 
@@ -749,6 +751,8 @@ GLOBAL_LIST_EMPTY(storyteller_cache)
 
 				if("generate_loot_data")
 					config.generate_loot_data = TRUE
+				if("pulsar_enabled")
+					config.pulsar_enabled = TRUE
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
 
