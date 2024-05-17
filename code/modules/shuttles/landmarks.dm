@@ -40,7 +40,7 @@
 		base_area = locate(base_area || world.area)
 	name = name + " ([x],[y])"
 
-/obj/effect/shuttle_landmark/Initialize()
+/obj/effect/shuttle_landmark/LateInitialize()
 	. = ..()
 	if(docking_controller)
 		var/docking_tag = docking_controller

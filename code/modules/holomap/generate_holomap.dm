@@ -26,7 +26,7 @@
 /datum/controller/subsystem/holomaps/proc/generateHoloMinimaps()
 	var/start_time = world.timeofday
 	// Build the base map for each z level
-	for (var/z = 1 to GLOB.maps_data.station_levels.len)
+	for (var/z = 1 to length(GLOB.maps_data.station_levels))
 		holoMiniMaps |= z // hack, todo fix
 		holoMiniMaps[z] = generateHoloMinimap(z)
 

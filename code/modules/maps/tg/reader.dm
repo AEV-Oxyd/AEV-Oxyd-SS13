@@ -48,13 +48,17 @@ var/global/use_preloader = FALSE
 	/// This is only really done for the main map , since by the time it is initialized none of the datum/level_data are built for it , so lightning
 	/// has no plane offsets to guide by and miscalculates the plane of the PLANEMASTER (not of the lightning overlays)
 	if(mapObject)
-		new mapObject(null, world.maxz + 1)
+		mapObject = new mapObject(null, world.maxz + 1)
 
 	. = load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, orientation)
 	#ifdef TESTING
 	if(turfsSkipped)
 		testing("Skipped loading [turfsSkipped] default turfs")
 	#endif
+	if(!QDELETED(mapObject))
+		GLOB.maps_data.handle_holomap(mapObject)
+
+
 	if(!measureOnly)
 		Master.StopLoadingMap()
 

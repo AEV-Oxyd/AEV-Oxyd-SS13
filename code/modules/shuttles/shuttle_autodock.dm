@@ -20,8 +20,8 @@
 
 	category = /datum/shuttle/autodock
 
-/datum/shuttle/autodock/New(var/_name, var/obj/effect/shuttle_landmark/start_waypoint)
-	..(_name, start_waypoint)
+/datum/shuttle/autodock/Initialize(var/_name, var/obj/effect/shuttle_landmark/start_waypoint)
+	. = ..()
 
 	//Initial dock
 	if (default_docking_controller)

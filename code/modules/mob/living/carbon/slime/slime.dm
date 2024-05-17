@@ -261,7 +261,7 @@
 		if (I_GRAB)
 			if (M == src || anchored)
 				return
-			var/obj/item/grab/G = new /obj/item/grab(M, src)
+			new /obj/item/grab(M, src)
 			LAssailant = M
 
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)

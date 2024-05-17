@@ -366,8 +366,7 @@
 			if (!(status_flags & CANPUSH))
 				return
 
-			var/obj/item/grab/G = new /obj/item/grab(M, src)
-			LAssailant = M
+			new /obj/item/grab(M, src)
 
 			M.visible_message("\red [M] has grabbed [src] passively!")
 			M.do_attack_animation(src)

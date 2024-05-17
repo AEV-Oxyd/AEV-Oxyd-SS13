@@ -235,6 +235,8 @@ GLOBAL_LIST_EMPTY(storyteller_cache)
 
 	var/pulsar_enabled
 
+	var/deepmaint_enabled
+
 /datum/configuration/New()
 	fill_storyevents_list()
 

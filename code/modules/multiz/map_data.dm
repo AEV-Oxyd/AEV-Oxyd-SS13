@@ -203,7 +203,10 @@ ADMIN_VERB_ADD(/client/proc/test_MD, R_DEBUG, null)
 
 	if(MD.is_sealed)
 		sealed_levels += level
-	//holomaps
+
+
+/datum/maps_data/proc/handle_holomap(obj/map_data/MD)
+	var/level = MD.z_level
 	if(MD.holomap_smoosh)
 		holomap_smoosh = MD.holomap_smoosh
 
