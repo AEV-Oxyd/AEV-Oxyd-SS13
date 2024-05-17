@@ -237,6 +237,10 @@ GLOBAL_LIST_EMPTY(storyteller_cache)
 
 	var/deepmaint_enabled
 
+	var/build_exoplanets
+
+	var/build_junk_field
+
 /datum/configuration/New()
 	fill_storyevents_list()
 
@@ -755,6 +759,12 @@ GLOBAL_LIST_EMPTY(storyteller_cache)
 					config.generate_loot_data = TRUE
 				if("pulsar_enabled")
 					config.pulsar_enabled = TRUE
+
+				if("build_junk_field")
+					config.build_junk_field = TRUE
+
+				if("build_exoplanets")
+					config.build_exoplanets = TRUE
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
 
