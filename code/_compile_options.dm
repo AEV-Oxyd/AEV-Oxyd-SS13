@@ -48,6 +48,8 @@
 								// 2 for preloading absolutely everything;
 //#define LOWMEMORYMODE 1
 
+#define LOWMEMORYMODE 1
+
 #ifdef LOWMEMORYMODE
 #define FORCE_MAP "_maps/runtimestation.json"
 #endif
