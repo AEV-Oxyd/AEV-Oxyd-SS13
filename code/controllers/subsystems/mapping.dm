@@ -16,6 +16,7 @@ SUBSYSTEM_DEF(mapping)
 	#else
 	maploader.load_map(file("maps/CEVEris/_CEV_Eris.dmm"), mapObject = /obj/map_data/eris)
 	maploader.load_map(file("maps/CEVEris/centcomm.dmm"), mapObject = /obj/map_data/admin)
+	maploader.load_map(file("maps/encounters/spacefortress/spacefortress.dmm"), mapObject = /obj/map_data/spacefortress)
 	#endif
 
 	#ifdef LOWMEMORYMODE

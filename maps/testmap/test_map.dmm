@@ -272,6 +272,7 @@
 	icon_state = "intact";
 	dir = 5
 	},
+/obj/machinery/conveyor/northeast/ccw,
 /turf/simulated/floor,
 /area/testing/second)
 "bq" = (
@@ -282,6 +283,7 @@
 	icon_state = "intact";
 	dir = 4
 	},
+/obj/machinery/conveyor/northeast/ccw,
 /turf/simulated/floor,
 /area/testing/second)
 "br" = (
@@ -289,6 +291,7 @@
 	icon_state = "map";
 	dir = 1
 	},
+/obj/machinery/conveyor/northeast/ccw,
 /turf/simulated/floor,
 /area/testing/second)
 "bs" = (
@@ -318,6 +321,7 @@
 /area/testing/second)
 "bw" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red,
+/obj/machinery/conveyor/east,
 /turf/simulated/floor,
 /area/testing/second)
 "bx" = (
@@ -363,6 +367,7 @@
 	icon_state = "4-8";
 	pixel_x = 0
 	},
+/obj/machinery/conveyor/north,
 /turf/simulated/floor,
 /area/testing/second)
 "bE" = (
@@ -375,6 +380,7 @@
 /obj/machinery/atmospherics/binary/pump{
 	dir = 1
 	},
+/obj/machinery/conveyor/north,
 /turf/simulated/floor,
 /area/testing/second)
 "bF" = (
@@ -413,6 +419,7 @@
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1
 	},
+/obj/machinery/conveyor/west,
 /turf/simulated/floor,
 /area/testing/second)
 "bM" = (
@@ -485,10 +492,18 @@
 /obj/item/implantcase/excelsior,
 /turf/simulated/floor,
 /area/testing/first)
+"id" = (
+/obj/machinery/conveyor/northeast/ccw,
+/turf/simulated/floor,
+/area/testing/second)
 "jn" = (
 /obj/item/implant/compressed,
 /turf/simulated/floor,
 /area/testing/first)
+"jM" = (
+/obj/machinery/conveyor/west,
+/turf/simulated/floor,
+/area/testing/second)
 "jP" = (
 /obj/item/grenade/frag,
 /turf/simulated/floor,
@@ -521,6 +536,7 @@
 /area/testing/first)
 "wA" = (
 /obj/item/storage/toolbox/mechanical,
+/obj/machinery/conveyor/west,
 /turf/simulated/floor,
 /area/testing/second)
 "AG" = (
@@ -528,6 +544,10 @@
 /obj/item/stock_parts/micro_laser/high,
 /turf/simulated/floor,
 /area/testing/first)
+"BV" = (
+/obj/machinery/conveyor/east,
+/turf/simulated/floor,
+/area/testing/second)
 "Dt" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
 	dir = 4;
@@ -563,6 +583,10 @@
 /obj/landmark/join/late/cryo,
 /turf/simulated/floor,
 /area/testing/first)
+"SM" = (
+/obj/machinery/conveyor/northwest,
+/turf/simulated/floor,
+/area/testing/second)
 "Tb" = (
 /obj/item/implant/adrenalin,
 /turf/simulated/floor,
@@ -11619,11 +11643,11 @@ aa
 aa
 aa
 bl
-bv
-bv
+id
+BV
 bD
-bv
-bv
+jM
+SM
 bR
 bR
 ab
@@ -11722,10 +11746,10 @@ bh
 bi
 bm
 bp
-bv
+BV
 bD
 wA
-bv
+SM
 bR
 bR
 ab
@@ -11824,10 +11848,10 @@ bh
 bj
 bl
 bq
-bv
+BV
 bD
-bv
-bv
+jM
+SM
 bR
 bR
 ab
@@ -11929,7 +11953,7 @@ br
 bw
 bE
 bL
-bv
+SM
 bv
 bS
 ab
