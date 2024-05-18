@@ -14,7 +14,7 @@
 	var/global/worldY
 	worldX = owner.x * 32
 	worldY = owner.y * 32
-	for(var/list/boundingData in boundingBoxes)
+	for(var/list/boundingData in boundingBoxes[num2text(owner.dir)])
 		if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY)))
 			return TRUE
 		if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY)))
@@ -66,7 +66,7 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 /datum/hitboxDatum/proc/visualize()
 	var/list/availableColors = list(COLOR_RED, COLOR_AMBER, COLOR_BLUE, COLOR_ORANGE, COLOR_CYAN, COLOR_YELLOW, COLOR_BROWN, COLOR_VIOLET, COLOR_PINK, COLOR_ASSEMBLY_BEIGE, COLOR_ASSEMBLY_GREEN, COLOR_ASSEMBLY_LBLUE, COLOR_LIGHTING_BLUE_DARK)
 	var/chosenColor = pick_n_take(availableColors)
-	for(var/list/hitbox in boundingBoxes)
+	for(var/list/hitbox in boundingBoxes[num2text(owner.dir)])
 		var/icon/Icon = icon('icons/hitbox.dmi', "box")
 		var/multX = hitbox[3] - hitbox[1] + 1
 		var/multY = hitbox[4] - hitbox[2] + 1

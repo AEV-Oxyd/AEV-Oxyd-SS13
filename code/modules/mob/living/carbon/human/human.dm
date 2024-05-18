@@ -15,16 +15,45 @@
 
 /datum/hitboxDatum/human
 	boundingBoxes = list(
-		BBOX(8,10,24,16,0,0,0,0), /// chest + arms
-		BBOX(9,17,23,19,0,0,0,0), /// upper chest + upper arms
-		BBOX(11,20,21,21,0,0,0,0), // neck/upper chest
-		BBOX(12,22,20,25,0,0,0,0), // head
-		BBOX(13,26,19,27,0,0,0,0), // bald ass head top
-		BBOX(15,28,18,28,0,0,0,0), /// balder ass head top
-		BBOX(12,0,15,9,0,0,0,0), // left leg
-		BBOX(10,0,11,2,0,0,0,0), // left toe
-		BBOX(17,0,20,9,0,0,0,0), // right leg
-		BBOX(21,0,22,2,0,0,0,0), // right toe
+		LISTNORTH = list(
+			BBOX(8,10,24,16,0,0,0,0), /// chest + arms
+			BBOX(9,17,23,19,0,0,0,0), /// upper chest + upper arms
+			BBOX(11,20,21,21,0,0,0,0), // neck/upper chest
+			BBOX(12,22,20,25,0,0,0,0), // head
+			BBOX(13,26,19,27,0,0,0,0), // bald head top
+			BBOX(15,28,18,28,0,0,0,0), /// balder head top
+			BBOX(12,0,15,9,0,0,0,0), // left leg
+			BBOX(10,0,11,2,0,0,0,0), // left toe
+			BBOX(17,0,20,9,0,0,0,0), // right leg
+			BBOX(21,0,22,2,0,0,0,0) // right to
+		),
+		LISTSOUTH = list(
+			BBOX(8,10,24,16,0,0,0,0), /// chest + arms
+			BBOX(9,17,23,19,0,0,0,0), /// upper chest + upper arms
+			BBOX(11,20,21,21,0,0,0,0), // neck/upper chest
+			BBOX(12,22,20,25,0,0,0,0), // head
+			BBOX(13,26,19,27,0,0,0,0), // bald head top
+			BBOX(15,28,18,28,0,0,0,0), /// balder head top
+			BBOX(12,0,15,9,0,0,0,0), // left leg
+			BBOX(10,0,11,2,0,0,0,0), // left toe
+			BBOX(17,0,20,9,0,0,0,0), // right leg
+			BBOX(21,0,22,2,0,0,0,0) // right to
+		),
+		LISTEAST = list(
+			BBOX(14,1,18,28,0,0,0,0),
+			BBOX(13,12,13,21,0,0,0,0),
+			BBOX(12,15,12,20,0,0,0,0),
+			BBOX(19,1,20,3,0,0,0,0),
+			BBOX(19,10,20,27,0,0,0,0)
+		),
+		LISTWEST = list(
+			BBOX(15,1,19,28,0,0,0,0),
+			BBOX(13,1,14,3,0,0,0,0),
+			BBOX(20,12,20,21,0,0,0,0),
+			BBOX(21,15,21,20,0,0,0,0),
+			BBOX(14,10,14,28,0,0,0,0),
+			BBOX(13,12,13,27,0,0,0,0)
+		)
 	)
 
 /mob/living/carbon/human/Initialize(new_loc, new_species)
