@@ -50,9 +50,15 @@
 		return
 	return ..()
 
-/obj/item/grab/New(atom/movable/user, atom/movable/victim, force = FALSE, tryFight = FALSE)
+/obj/item/grab/New(atom/movable/user, atom/movable/victim, force = FALSE, tryFight = FALSE, startingState = GRAB_PASSIVE)
 	..()
 	forceMove(user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/tempUser = user
+		tempUser.put_in_active_hand(src)
+		if(tempUser.get_active_hand() != src)
+			qdel(src)
+			return
 	assailant = user
 	affecting = victim
 
@@ -97,6 +103,7 @@
 		RegisterSignal(user, COMSIG_CLICK, PROC_REF(onGrabberClick))
 	RegisterSignal(victim, COMSIG_MOVABLE_MOVED, PROC_REF(onVictimMove))
 
+	state = startingState
 	affecting.grabbedBy = src
 	// stop people space drifting if you  aren't drifting yourself.
 	if(SSthrowing.throwing_queue[affecting] && !SSthrowing.throwing_queue[assailant])
@@ -116,6 +123,8 @@
 			src.dancing = TRUE
 
 	update_slowdown_hold()
+
+	synch()
 
 /obj/item/grab/proc/onGrabberClick(atom/movable/grabber, atom/clicked)
 	SIGNAL_HANDLER

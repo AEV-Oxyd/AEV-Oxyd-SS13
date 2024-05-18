@@ -527,7 +527,7 @@
 	opacity = 0
 	visible = 0
 
-/obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/machinery/door/blast/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(istype(mover) && mover.checkpass(PASSGRILLE))
 		return !opacity
 	return ..()

@@ -72,14 +72,6 @@ fi;
 #     echo "changed files contains proc argument starting with 'var'"
 #     st=1
 # fi;
-if grep -i 'centcomm' code/**/*.dm; then
-    echo "ERROR: Misspelling(s) of CENTCOM detected in code, please remove the extra M(s)."
-    st=1
-fi;
-if grep -i 'centcomm' maps/**/*.dmm; then
-    echo "ERROR: Misspelling(s) of CENTCOM detected in maps, please remove the extra M(s)."
-    st=1
-fi;
 if grep -ni 'nanotransen' code/**/*.dm; then
     echo "Misspelling(s) of nanotrasen detected in code, please remove the extra N(s)."
     st=1

@@ -17181,10 +17181,6 @@
 	},
 /turf/simulated/floor/hull,
 /area/space)
-"aQH" = (
-/obj/map_data/eris,
-/turf/space,
-/area/space)
 "aQI" = (
 /obj/effect/overmap/ship/eris,
 /turf/space,
@@ -31999,11 +31995,12 @@
 /turf/simulated/floor/tiled/steel,
 /area/eris/hallway/side/eschangarb)
 "byr" = (
-/obj/machinery/atm{
-	pixel_x = -32
-	},
 /obj/machinery/camera/network/second_section{
 	dir = 4
+	},
+/obj/machinery/atm{
+	dir = 4;
+	pixel_x = -28
 	},
 /turf/simulated/floor/tiled/steel,
 /area/eris/hallway/main/section2)
@@ -41493,24 +41490,13 @@
 /obj/machinery/door/window/westleft,
 /turf/simulated/floor/tiled/steel/gray_platform,
 /area/eris/hallway/main/section1)
-"bUr" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atm{
-	pixel_y = -32
-	},
-/turf/simulated/floor/tiled/dark/golden,
-/area/eris/hallway/side/section3port)
 "bUs" = (
-/obj/machinery/atm{
-	pixel_x = 32
-	},
 /obj/structure/window/reinforced{
 	dir = 1
+	},
+/obj/machinery/atm{
+	dir = 8;
+	pixel_x = 28
 	},
 /turf/simulated/floor/tiled/steel/gray_platform,
 /area/eris/hallway/main/section1)
@@ -51841,9 +51827,6 @@
 /area/eris/command/meo)
 "cuF" = (
 /obj/machinery/camera/network/fourth_section,
-/obj/machinery/atm{
-	pixel_y = 24
-	},
 /turf/simulated/floor/tiled/steel/gray_platform,
 /area/eris/hallway/side/cryo)
 "cuG" = (
@@ -53395,7 +53378,8 @@
 	dir = 4
 	},
 /obj/machinery/atm{
-	pixel_x = 32
+	dir = 8;
+	pixel_x = 28
 	},
 /turf/simulated/floor/tiled/steel,
 /area/eris/quartermaster/office)
@@ -57244,9 +57228,6 @@
 /turf/simulated/open,
 /area/eris/maintenance/section2deck2port)
 "cHX" = (
-/obj/machinery/atm{
-	pixel_x = 32
-	},
 /obj/structure/window/reinforced,
 /obj/machinery/door/window/westleft,
 /turf/simulated/floor/tiled/steel/gray_platform,
@@ -84629,12 +84610,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/eris/rnd/research)
-"dXM" = (
-/obj/machinery/atm{
-	pixel_x = -32
-	},
-/turf/simulated/floor/tiled/steel/bar_dance,
-/area/holodeck/alphadeck)
 "dXN" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/black,
@@ -84838,10 +84813,11 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/eris/maintenance/section3deck3starboard)
 "dYu" = (
-/obj/machinery/atm{
-	pixel_y = -32
-	},
 /obj/machinery/door/window/northleft,
+/obj/machinery/atm{
+	dir = 1;
+	pixel_y = -28
+	},
 /turf/simulated/floor/tiled/steel/gray_platform,
 /area/eris/hallway/side/section3starboard)
 "dYv" = (
@@ -100112,6 +100088,10 @@
 /obj/machinery/camera/network/third_section{
 	dir = 4
 	},
+/obj/machinery/atm{
+	dir = 4;
+	pixel_x = -28
+	},
 /turf/simulated/floor/tiled/steel/bar_dance,
 /area/holodeck/alphadeck)
 "gDr" = (
@@ -107311,9 +107291,8 @@
 /turf/simulated/floor/tiled/steel,
 /area/eris/crew_quarters/toilet/medbay)
 "wCq" = (
-/turf/simulated/wall,
-/turf/simulated/wall/r_wall,
-/area/eris/maintenance/section3deck4port)
+/turf/space,
+/area/eris/maintenance/section3deck3starboard)
 "wEJ" = (
 /obj/structure/cable/green{
 	d1 = 2;
@@ -108243,7 +108222,7 @@ aaa
 aaa
 aaa
 aaa
-aQH
+aaa
 "}
 (2,1,1) = {"
 aaa
@@ -165127,7 +165106,7 @@ ulE
 uYj
 cPv
 cPv
-wCq
+bUG
 cBx
 bWh
 cYb
@@ -165329,7 +165308,7 @@ uYj
 uYj
 cPv
 cPv
-wCq
+bUG
 cBx
 bXQ
 dce
@@ -165531,7 +165510,7 @@ cPv
 cPv
 cPv
 cPv
-wCq
+bUG
 eat
 bWh
 doS
@@ -165733,7 +165712,7 @@ cPv
 cPv
 cPv
 cPv
-wCq
+bUG
 bWv
 bWh
 cYb
@@ -205527,7 +205506,7 @@ pfh
 xNN
 xNN
 xNN
-dXM
+xNN
 xNN
 pfh
 rPI
@@ -206729,7 +206708,7 @@ xZV
 vcS
 dFB
 eeB
-bUr
+dJu
 xIm
 etm
 oXn
@@ -210586,7 +210565,7 @@ dFG
 dvd
 dFw
 oyl
-dFw
+wCq
 dFw
 dvd
 aaa

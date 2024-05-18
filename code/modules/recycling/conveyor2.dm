@@ -27,7 +27,6 @@ GLOBAL_LIST_INIT(conveyor_switches, list())
 	var/reversed = FALSE	// set to TRUE to have the conveyor belt be reversed
 	var/id					// ID of the connected lever
 
-
 // create a conveyor
 /obj/machinery/conveyor/New(loc, new_dir, new_id)
 	..(loc)
@@ -37,6 +36,9 @@ GLOBAL_LIST_INIT(conveyor_switches, list())
 	if(new_dir)
 		dir = new_dir
 	update_move_direction()
+
+/obj/machinery/conveyor/Initialize(mapload, d, new_dir, new_id)
+	. = ..()
 	for(var/I in GLOB.conveyor_switches)
 		var/obj/machinery/conveyor_switch/S = I
 		if(id == S.id)
@@ -257,9 +259,12 @@ GLOBAL_LIST_INIT(conveyor_switches, list())
 	// DEPRECATED: remove once map is updated
 	var/convdir
 
-/obj/machinery/conveyor_switch/New(newloc, new_id)
-	..(newloc)
+/obj/machinery/conveyor_switch/New(loc, ...)
 	GLOB.conveyor_switches += src
+	. = ..()
+
+/obj/machinery/conveyor_switch/Initialize(mapload, d, new_id)
+	. = ..()
 	if(!id)
 		id = new_id
 	for(var/I in GLOB.conveyor_belts)

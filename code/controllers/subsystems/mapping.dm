@@ -9,20 +9,34 @@ SUBSYSTEM_DEF(mapping)
 	var/list/ghostteleportlocs = list()
 
 /datum/controller/subsystem/mapping/Initialize(start_timeofday)
+	maploader = new()
+	load_map_templates()
+	#ifdef LOWMEMORYMODE
+	maploader.load_map(file("maps/testmap/test_map.dmm"), mapObject = /obj/map_data/test_map)
+	#else
+	maploader.load_map(file("maps/CEVEris/_CEV_Eris.dmm"), mapObject = /obj/map_data/eris)
+	maploader.load_map(file("maps/CEVEris/centcomm.dmm"), mapObject = /obj/map_data/admin)
+	maploader.load_map(file("maps/encounters/spacefortress/spacefortress.dmm"), mapObject = /obj/map_data/spacefortress)
+	#endif
+
+	#ifdef LOWMEMORYMODE
+	config.generate_asteroid = 0
+	config.use_overmap = 0
+	config.deepmaint_enabled = 0
+	config.pulsar_enabled = 0
+	#endif
 	if(config.generate_asteroid)
 		// These values determine the specific area that the map is applied to.
 		// Because we do not use Bay's default map, we check the config file to see if custom parameters are needed, so we need to avoid hardcoding.
-		if(GLOB.maps_data.asteroid_levels)
-			for(var/z_level in GLOB.maps_data.asteroid_levels)
-				if(!isnum(z_level))
-					// If it's still not a number, we probably got fed some nonsense string.
-					admin_notice("<span class='danger'>Error: ASTEROID_Z_LEVELS config wasn't given a number.</span>")
-				// Now for the actual map generating.  This occurs for every z-level defined in the config.
-				new /datum/random_map/automata/cave_system(null, 1, 1, z_level, 300, 300)
-				// Let's add ore too.
-				new /datum/random_map/noise/ore(null, 1, 1, z_level, 64, 64)
-		else
-			admin_notice("<span class='danger'>Error: No asteroid z-levels defined in config!</span>")
+		maploader.load_map(file("maps/encounters/asteroid/asteroid.dmm"), mapObject = /obj/map_data/asteroid)
+		for(var/z_level in GLOB.maps_data.asteroid_levels)
+			if(!isnum(z_level))
+				// If it's still not a number, we probably got fed some nonsense string.
+				admin_notice("<span class='danger'>Error: ASTEROID_Z_LEVELS config wasn't given a number.</span>")
+			// Now for the actual map generating.  This occurs for every z-level defined in the config.
+			new /datum/random_map/automata/cave_system(null, 1, 1, z_level, 300, 300)
+			// Let's add ore too.
+			new /datum/random_map/noise/ore(null, 1, 1, z_level, 64, 64)
 
 	if(config.use_overmap)
 
@@ -38,10 +52,16 @@ SUBSYSTEM_DEF(mapping)
 		testing("Overmap generation disabled in config.")
 	#endif
 
+	if(config.deepmaint_enabled)
+		maploader.load_map("maps/dungeons/deepmaint/deepmaint-1.dmm", mapObject = /obj/map_data/deepmaint/lvl1)
+		maploader.load_map("maps/dungeons/deepmaint/deepmaint-2.dmm", mapObject = /obj/map_data/deepmaint/lvl2)
+		maploader.load_map("maps/dungeons/deepmaint/deepmaint-3.dmm", mapObject = /obj/map_data/deepmaint/lvl3)
+
 //	world.max_z_changed() // This is to set up the player z-level list, maxz hasn't actually changed (probably)
-	maploader = new()
-	load_map_templates()
-	build_pulsar()
+	if(config.pulsar_enabled)
+		build_pulsar()
+
+
 
 	// Generate cache of all areas in world. This cache allows world areas to be looked up on a list instead of being searched for EACH time
 	for(var/area/A in world)

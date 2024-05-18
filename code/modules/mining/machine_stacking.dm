@@ -8,15 +8,14 @@
 	anchored = TRUE
 	var/obj/machinery/mineral/stacking_machine/machine = null
 
-/obj/machinery/mineral/stacking_unit_console/New()
-	..()
+/obj/machinery/mineral/stacking_unit_console/Initialize(mapload, d)
+	. = ..()
 
-	spawn()
-		src.machine = locate(/obj/machinery/mineral/stacking_machine) in range(3, src)
-		if (machine)
-			machine.console = src
-		else
-			log_debug("[src] ([x],[y],[z]) can't find coresponding staking unit.")
+	src.machine = locate(/obj/machinery/mineral/stacking_machine) in range(3, src)
+	if (machine)
+		machine.console = src
+	else
+		log_debug("[src] ([x],[y],[z]) can't find coresponding staking unit.")
 
 /obj/machinery/mineral/stacking_unit_console/attack_hand(mob/user)
 	add_fingerprint(user)

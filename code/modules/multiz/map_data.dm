@@ -203,7 +203,10 @@ ADMIN_VERB_ADD(/client/proc/test_MD, R_DEBUG, null)
 
 	if(MD.is_sealed)
 		sealed_levels += level
-	//holomaps
+
+
+/datum/maps_data/proc/handle_holomap(obj/map_data/MD)
+	var/level = MD.z_level
 	if(MD.holomap_smoosh)
 		holomap_smoosh = MD.holomap_smoosh
 
@@ -259,6 +262,7 @@ ADMIN_VERB_ADD(/client/proc/test_MD, R_DEBUG, null)
 	var/height = -1
 
 /proc/add_z_level(level, original, height)
+	message_admins("added z_level [level] , [original], [height]")
 	var/datum/level_data/ldata = new
 	ldata.level = level
 	ldata.original_level = original
@@ -303,9 +307,12 @@ ADMIN_VERB_ADD(/client/proc/test_MD, R_DEBUG, null)
 	var/list/holomap_smoosh
 
 // If the height is more than 1, we mark all contained levels as connected.
-/obj/map_data/New(atom/nloc)
+/obj/map_data/New(atom/nloc, forceLevel)
 	..()
-	z_level = nloc.z
+	if(!forceLevel)
+		z_level = nloc.z
+	else
+		z_level = forceLevel
 
 	if(height <= 0)
 		CRASH("Map data height not set. ([name], [z_level])")
@@ -358,3 +365,6 @@ ADMIN_VERB_ADD(/client/proc/test_MD, R_DEBUG, null)
 
 /obj/map_data/asteroid/custom_z_name(z_level)
 	return "Asteroid [z_level]"
+
+/obj/map_data/test_map
+	height = 3

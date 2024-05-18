@@ -6,8 +6,8 @@
 
 	var/datum/pipe_network/network
 
-	New()
-		..()
+	Initialize(mapload, d)
+		. = ..()
 		initialize_directions = dir
 		air_contents = new
 

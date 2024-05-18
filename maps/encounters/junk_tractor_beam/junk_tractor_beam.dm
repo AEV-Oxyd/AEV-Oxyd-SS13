@@ -1,4 +1,4 @@
-#include "junk_tractor_beam.dmm"
+//#include "junk_tractor_beam.dmm"
 
 /obj/map_data/junk_tractor_beam
 	name = "Junk Field Level"

@@ -4,7 +4,7 @@
 	icon             = 'icons/effects/icon.png'
 	color            = LIGHTING_BASE_MATRIX
 
-	mouse_opacity    = 0
+	mouse_opacity    = MOUSE_OPACITY_TRANSPARENT
 	plane            = LIGHTING_PLANE
 	layer            = LIGHTING_LAYER
 	invisibility     = INVISIBILITY_LIGHTING

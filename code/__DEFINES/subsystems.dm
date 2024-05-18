@@ -87,7 +87,8 @@
 // Subsystems shutdown in the reverse of the order they initialize in
 // The numbers just define the ordering, they are meaningless otherwise.
 
-#define INIT_ORDER_GARBAGE 99
+#define INIT_ORDER_GARBAGE 100
+#define INIT_ORDER_MAPPING 99
 #define INIT_ORDER_CHUNKS 98
 #define INIT_ORDER_EXPLOSIONS 97
 #define INIT_ORDER_SKYBOX 20
@@ -98,7 +99,6 @@
 #define INIT_ORDER_EVENTS 15
 #define INIT_ORDER_TICKER 14
 #define INIT_ORDER_SPAWN_DATA 13
-#define INIT_ORDER_MAPPING 12
 #define INIT_ORDER_LANGUAGE 11
 #define INIT_ORDER_INVENTORY 10
 #define INIT_ORDER_CHAR_SETUP 9
@@ -117,15 +117,15 @@
 #define INIT_ORDER_XKEYSCORE -10
 #define INIT_ORDER_STICKY_BAN -10
 #define INIT_ORDER_TICKETS -10
-#define INIT_ORDER_LIGHTING -20
-#define INIT_ORDER_SHUTTLE -21
 #define INIT_ORDER_JAMMING -22
 #define INIT_ORDER_SQUEAK -40
 #define INIT_ORDER_XENOARCH	-50
 #define INIT_ORDER_PERSISTENCE -100
 #define INIT_OPEN_SPACE -150
+#define INIT_ORDER_LIGHTING -160
 #define INIT_ORDER_LATELOAD -180
 #define INIT_ORDER_CHAT	-185
+#define INIT_ORDER_SHUTTLE -190
 
 
 // SS runlevels
