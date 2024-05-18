@@ -16,8 +16,8 @@
 
 
 	// BubbleWrap
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/New()
-	..()
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/Initialize(mapload, d)
+	. = ..()
 	initialize_directions_he = initialize_directions	// The auto-detection from /pipe is good enough for a simple HE pipe
 	// BubbleWrap END
 	color = "#404040" //we don't make use of the fancy overlay system for colours, use this to set the default.
@@ -114,8 +114,8 @@
 	minimum_temperature_difference = 300
 
 	// BubbleWrap
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/New()
-	.. ()
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/Initialize(mapload, d)
+	. = ..()
 	switch ( dir )
 		if ( SOUTH )
 			initialize_directions = NORTH

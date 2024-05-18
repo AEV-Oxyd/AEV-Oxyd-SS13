@@ -9,6 +9,7 @@
 /obj/machinery/embedded_controller/radio/simple_docking_controller/Initialize()
 	. = ..()
 	docking_program = new progtype(src)
+	docking_program.setController(src)
 	program = docking_program
 
 /obj/machinery/embedded_controller/radio/simple_docking_controller/nano_ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = NANOUI_FOCUS)
@@ -53,8 +54,8 @@
 
 	var/undocking_attempts = 0 //Once an undocking request reaches 5 attempts, it force undocks, to prevent airlock deadlock.
 
-/datum/computer/file/embedded_program/docking/simple/New(var/obj/machinery/embedded_controller/M)
-	..(M)
+/datum/computer/file/embedded_program/docking/simple/setController(obj/machinery/embedded_controller/M)
+	. = ..()
 	memory["door_status"] = list(state = "closed", lock = "locked")		//assume closed and locked in case the doors dont report in
 
 	if (istype(M, /obj/machinery/embedded_controller/radio/simple_docking_controller))

@@ -3,10 +3,6 @@
 	set category = "Admin"
 	set name = "Adminhelp"
 
-	if(say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, "\red Speech is currently admin-disabled.")
-		return
-
 	//handle muting and automuting
 	if(prefs.muted & MUTE_ADMINHELP)
 		to_chat(src, "<font color='red'>Error: Admin-PM: You cannot send adminhelps (Muted).</font>")
@@ -39,7 +35,7 @@
 	// Send adminhelp message to Discord chat
 	send2adminchat(key_name(src), original_msg)
 
-	// Assuming it is an an admin help and not a mentor help	
+	// Assuming it is an an admin help and not a mentor help
 	SStickets.newHelpRequest(src, msg) // Ahelp
 
 	// SSmentor_tickets.newHelpRequest(src, mentormsg) // Mhelp (for mentors if they ever get implemented)

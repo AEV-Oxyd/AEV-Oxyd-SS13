@@ -366,13 +366,7 @@
 			if (!(status_flags & CANPUSH))
 				return
 
-			var/obj/item/grab/G = new /obj/item/grab(M, src)
-
-			M.put_in_active_hand(G)
-
-			G.synch()
-			G.affecting = src
-			LAssailant = M
+			new /obj/item/grab(M, src)
 
 			M.visible_message("\red [M] has grabbed [src] passively!")
 			M.do_attack_animation(src)

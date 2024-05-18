@@ -5,10 +5,6 @@
 "b" = (
 /turf/simulated/wall,
 /area/deepmaint)
-"c" = (
-/obj/map_data/deepmaint/lvl2,
-/turf/unsimulated/wall,
-/area/deepmaint)
 "d" = (
 /obj/procedural/dungenerator/deepmaint,
 /turf/simulated/wall,
@@ -193,7 +189,7 @@ a
 "}
 (2,1,1) = {"
 a
-c
+a
 a
 a
 a

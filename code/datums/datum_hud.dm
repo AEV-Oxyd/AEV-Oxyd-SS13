@@ -55,25 +55,22 @@
 	if(!LD)
 		return;
 
-
-	var/local_z = z-(LD.original_level-1)
-	for(var/zi in 1 to local_z)
+	var/relativeHeight = z - LD.original_level
+	for(var/zi in 0 to LD.height)
 		for(var/mytype in subtypesof(/obj/screen/plane_master))
 			var/obj/screen/plane_master/instance = new mytype()
 
-			instance.plane = calculate_plane(zi,instance.plane)
+			instance.plane = calculate_plane(LD.original_level + zi,instance.plane)
 
 			plane_masters["[zi]-[mytype]"] = instance
 			mymob.client.screen += instance
 			instance.backdrop(mymob)
 
 		for(var/pl in list(GAME_PLANE,FLOOR_PLANE))
-			if(zi < local_z)
-				var/zdiff = local_z-(zi-1)
-
+			if(zi < relativeHeight)
 				var/obj/screen/openspace_overlay/oover = new
-				oover.plane = calculate_plane(zi,pl)
-				oover.alpha = min(255,zdiff*50 + 30)
+				oover.plane = calculate_plane(LD.original_level + zi,pl)
+				oover.alpha = min(255,(relativeHeight - zi + 1)*50 + 30)
 				openspace_overlays["[zi]-[oover.plane]"] = oover
 				mymob.client.screen += oover
 

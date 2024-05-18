@@ -22,9 +22,6 @@
 /mob/verb/say_verb(message as text)
 	set name = "Say"
 	set hidden = TRUE
-	if(say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, "\red Speech is currently admin-disabled.")
-		return
 	set_typing_indicator(FALSE)
 	usr.say(message)
 
@@ -46,10 +43,6 @@
 	set name = "Me"
 	set hidden = TRUE
 
-	if(say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, "\red Speech is currently admin-disabled.")
-		return
-
 	message = sanitize(message)
 
 	set_typing_indicator(FALSE)
@@ -59,9 +52,6 @@
 		usr.emote(message)
 
 /mob/proc/say_dead(message)
-	if(say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, SPAN_DANGER("Speech is currently admin-disabled."))
-		return
 	if(src.client && !src.client.holder && !config.dsay_allowed)
 		to_chat(src, SPAN_DANGER("Deadchat is globally muted."))
 		return
@@ -160,7 +150,7 @@
 //returns the language object only if the code corresponds to a language that src can speak, otherwise null.
 /mob/proc/parse_language(message)
 	var/prefix = copytext(message, 1, 2)
-	
+
 	if(length(message) >= 1 && prefix == get_prefix_key(/decl/prefix/audible_emote))
 		return all_languages["Noise"]
 

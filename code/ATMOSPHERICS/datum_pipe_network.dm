@@ -11,10 +11,6 @@ datum/pipe_network
 	var/update = 1
 	//var/datum/gas_mixture/air_transient = null
 
-	New()
-		//air_transient = new()
-
-		..()
 
 	Destroy()
 		STOP_PROCESSING(SSmachines, src)

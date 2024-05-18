@@ -35,7 +35,7 @@ var/global/use_preloader = FALSE
  * 2) Read the map line by line, parsing the result (using parse_grid)
  *
  */
-/dmm_suite/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, orientation as num)
+/dmm_suite/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, orientation as num, obj/map_data/mapObject)
 	//How I wish for RAII
 	if(!measureOnly)
 		Master.StartLoadingMap()
@@ -43,11 +43,22 @@ var/global/use_preloader = FALSE
 	#ifdef TESTING
 	turfsSkipped = 0
 	#endif
+	/// This is a hack done to make this quickly compatible with eris lightning and map loading from old bay
+	/// A full and proper refactor would be to use something akin to TG's auto-level linking ,but that needs more work than this
+	/// This is only really done for the main map , since by the time it is initialized none of the datum/level_data are built for it , so lightning
+	/// has no plane offsets to guide by and miscalculates the plane of the PLANEMASTER (not of the lightning overlays)
+	if(mapObject)
+		mapObject = new mapObject(null, world.maxz + 1)
+
 	. = load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, orientation)
 	#ifdef TESTING
 	if(turfsSkipped)
 		testing("Skipped loading [turfsSkipped] default turfs")
 	#endif
+	if(!QDELETED(mapObject))
+		GLOB.maps_data.handle_holomap(mapObject)
+
+
 	if(!measureOnly)
 		Master.StopLoadingMap()
 
@@ -302,6 +313,7 @@ var/global/use_preloader = FALSE
 				old_position = dpos + length(model[dpos])
 
 			if(!atom_def) // Skip the item if the path does not exist.  Fix your crap, mappers!
+				message_admins("Attempted to instanciate path that doesn't exist whilst parsing map grid.Use strongDMM to remove all invalid pathways automatically.")
 				continue
 			members.Add(atom_def)
 
@@ -318,6 +330,11 @@ var/global/use_preloader = FALSE
 						var/value = fields[I]
 						if(istext(value))
 							fields[I] = apply_text_macros(value)
+
+			/// SPCR 2024 - TG either has fixed this in a better way or has a rewritten parser , either way this broke a lot of this
+			/// and will probably break in the future.
+			if(!fields["dir"] && initial(atom_def:dir) != SOUTH)
+				fields["dir"] = initial(atom_def:dir)
 
 			// Rotate dir if orientation isn't south (default)
 			if(fields["dir"])
@@ -395,6 +412,7 @@ var/global/use_preloader = FALSE
 			T = instance_atom(members[index],members_attributes[index],crds,no_changeturf)//instance new turf
 			T.underlays += underlay
 			index++
+
 
 	//finally instance all remainings objects/mobs
 	for(index in 1 to first_turf_index-1)

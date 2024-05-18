@@ -3,8 +3,8 @@
 	var/obj/machinery/atmospherics/mains_pipe/parent_pipe
 	var/list/obj/machinery/atmospherics/pipe/mains_component/nodes = new()
 
-	New(loc)
-		..(loc)
+	Initialize(mapload, d)
+		. = ..()
 		parent_pipe = loc
 
 	check_pressure(pressure)
@@ -54,8 +54,8 @@
 	var/fatigue_pressure = 55*ONE_ATMOSPHERE
 	alert_pressure = 55*ONE_ATMOSPHERE
 
-	New()
-		..()
+	Initialize(mapload, d)
+		. = ..()
 
 		supply = new(src)
 		supply.volume = volume
@@ -115,9 +115,9 @@
 	dir = SOUTH
 	initialize_mains_directions = SOUTH|NORTH
 
-	New()
+	Initialize(mapload, d)
 		nodes.len = 2
-		..()
+		. = ..()
 		switch(dir)
 			if(SOUTH, NORTH)
 				initialize_mains_directions = SOUTH|NORTH
@@ -199,9 +199,9 @@
 	initialize_mains_directions = EAST|NORTH|WEST
 	volume = 105
 
-	New()
+	Initialize(mapload, d)
 		nodes.len = 3
-		..()
+		. = ..()
 		initialize_mains_directions = (NORTH|SOUTH|EAST|WEST) & ~dir
 
 	atmos_init()
@@ -264,9 +264,9 @@
 	initialize_mains_directions = EAST|NORTH|WEST|SOUTH
 	volume = 105
 
-	New()
+	Initialize(mapload, d)
 		nodes.len = 4
-		..()
+		. = ..()
 
 	atmos_init()
 		for(var/obj/machinery/atmospherics/mains_pipe/target in get_step(src, NORTH))
@@ -314,9 +314,9 @@
 	var/obj/machinery/atmospherics/node3
 	var/icon_type
 
-	New()
+	Initialize(mapload, d)
 		nodes.len = 2
-		..()
+		. = ..()
 		initialize_mains_directions = turn(dir, 90) | turn(dir, -90)
 		initialize_directions = dir // actually have a normal connection too
 
@@ -365,8 +365,8 @@
 	supply
 		icon_type = "supply"
 
-		New()
-			..()
+		Initialize(mapload, d)
+			. = ..()
 			split_node = supply
 
 		hidden
@@ -380,8 +380,8 @@
 	scrubbers
 		icon_type = "scrubbers"
 
-		New()
-			..()
+		Initialize(mapload, d)
+			. = ..()
 			split_node = scrubbers
 
 		hidden
@@ -395,8 +395,8 @@
 	aux
 		icon_type = "aux"
 
-		New()
-			..()
+		Initialize(mapload, d)
+			. = ..()
 			split_node = aux
 
 		hidden
@@ -415,9 +415,9 @@
 	var/obj/machinery/atmospherics/scrubbers_node
 	var/obj/machinery/atmospherics/aux_node
 
-	New()
+	Initialize(mapload, d)
 		nodes.len = 1
-		..()
+		. = ..()
 		initialize_mains_directions = dir
 		initialize_directions = cardinal & ~dir // actually have a normal connection too
 
@@ -507,9 +507,9 @@
 	initialize_directions = SOUTH
 	volume = 35
 
-	New()
+	Initialize(mapload, d)
 		nodes.len = 1
-		..()
+		. = ..()
 		initialize_mains_directions = dir
 
 	update_icon()

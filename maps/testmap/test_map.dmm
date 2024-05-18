@@ -6,8 +6,12 @@
 /turf/simulated/wall,
 /area/space)
 "ac" = (
+/obj/machinery/door/airlock/multi_tile/glass{
+	dir = 2;
+	name = "Dormitory"
+	},
 /turf/simulated/floor,
-/area/space)
+/area/testing/first)
 "ad" = (
 /obj/machinery/shieldwallgen,
 /obj/structure/cable{
@@ -16,24 +20,18 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor,
-/area/space)
+/area/testing/first)
 "ae" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
-	},
-/turf/simulated/floor,
-/area/space)
+/turf/simulated/wall,
+/area/testing/first)
 "af" = (
-/obj/structure/multiz/ladder{
-	icon_state = "ladderup"
-	},
+/obj/structure/multiz/ladder/up,
 /turf/simulated/floor,
 /area/testing/first)
 "ag" = (
-/obj/structure/multiz/ladder,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/testing/first)
 "ah" = (
@@ -67,10 +65,6 @@
 /obj/item/robot_parts/robot_component/actuator,
 /turf/simulated/floor,
 /area/testing/first)
-"as" = (
-/obj/item/prosthesis/l_arm,
-/turf/simulated/floor,
-/area/testing/first)
 "av" = (
 /obj/landmark/join/late,
 /turf/simulated/floor,
@@ -92,17 +86,7 @@
 	},
 /turf/simulated/wall,
 /area/space)
-"aA" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
-	},
-/turf/simulated/floor,
-/area/space)
 "aB" = (
-/obj/machinery/shieldwallgen,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -114,9 +98,8 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor,
-/area/space)
+/area/testing/first)
 "aC" = (
-/obj/machinery/shieldwallgen,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -134,8 +117,12 @@
 	icon_state = "0-8"
 	},
 /obj/structure/cable,
+/obj/machinery/door/airlock/multi_tile/glass{
+	dir = 2;
+	name = "Dormitory"
+	},
 /turf/simulated/floor,
-/area/space)
+/area/testing/first)
 "aF" = (
 /mob/living/carbon/human/dummy,
 /turf/simulated/floor,
@@ -205,14 +192,9 @@
 "bd" = (
 /obj/machinery/shieldwallgen,
 /obj/structure/cable,
+/obj/machinery/light,
 /turf/simulated/floor,
-/area/space)
-"be" = (
-/obj/map_data/multiz/station{
-	height = 3
-	},
-/turf/space,
-/area/space)
+/area/testing/first)
 "bf" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	icon_state = "intact";
@@ -258,12 +240,12 @@
 /turf/space,
 /area/space)
 "bl" = (
-/obj/structure/window/reinforced/full,
+/obj/effect/window_lwall_spawn/reinforced,
 /turf/simulated/floor/plating,
 /area/space)
 "bm" = (
-/obj/structure/window/reinforced/full,
 /obj/machinery/atmospherics/pipe/simple/visible/red,
+/obj/effect/window_lwall_spawn/reinforced,
 /turf/simulated/floor/plating,
 /area/space)
 "bn" = (
@@ -271,16 +253,17 @@
 /turf/simulated/floor,
 /area/testing/second)
 "bo" = (
-/obj/structure/multiz/ladder{
-	icon_state = "ladderup"
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/simulated/floor,
-/area/testing/second)
+/area/testing/first)
 "bp" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	icon_state = "intact";
 	dir = 5
 	},
+/obj/machinery/conveyor/northeast/ccw,
 /turf/simulated/floor,
 /area/testing/second)
 "bq" = (
@@ -291,6 +274,7 @@
 	icon_state = "intact";
 	dir = 4
 	},
+/obj/machinery/conveyor/northeast/ccw,
 /turf/simulated/floor,
 /area/testing/second)
 "br" = (
@@ -298,6 +282,7 @@
 	icon_state = "map";
 	dir = 1
 	},
+/obj/machinery/conveyor/northeast/ccw,
 /turf/simulated/floor,
 /area/testing/second)
 "bs" = (
@@ -327,6 +312,7 @@
 /area/testing/second)
 "bw" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red,
+/obj/machinery/conveyor/east,
 /turf/simulated/floor,
 /area/testing/second)
 "bx" = (
@@ -358,16 +344,11 @@
 /turf/simulated/floor/hull,
 /area/space)
 "bC" = (
-/obj/machinery/power/apc/high{
-	dir = 1;
-	name = "west bump";
-	pixel_x = -28;
-	pixel_y = 0
-	},
 /obj/structure/cable{
 	icon_state = "0-4";
 	d2 = 4
 	},
+/obj/machinery/power/apc/critical,
 /turf/simulated/floor,
 /area/testing/second)
 "bD" = (
@@ -377,6 +358,7 @@
 	icon_state = "4-8";
 	pixel_x = 0
 	},
+/obj/machinery/conveyor/north,
 /turf/simulated/floor,
 /area/testing/second)
 "bE" = (
@@ -389,6 +371,7 @@
 /obj/machinery/atmospherics/binary/pump{
 	dir = 1
 	},
+/obj/machinery/conveyor/north,
 /turf/simulated/floor,
 /area/testing/second)
 "bF" = (
@@ -427,6 +410,7 @@
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1
 	},
+/obj/machinery/conveyor/west,
 /turf/simulated/floor,
 /area/testing/second)
 "bM" = (
@@ -491,30 +475,62 @@
 /mob/living/carbon/human/dummy,
 /turf/simulated/floor,
 /area/testing/first)
+"cp" = (
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "West APC";
+	pixel_x = -28
+	},
+/turf/simulated/floor,
+/area/testing/first)
 "fA" = (
 /obj/item/storage/toolbox/mechanical,
+/turf/simulated/floor,
+/area/testing/first)
+"gB" = (
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "East APC";
+	pixel_x = 28
+	},
 /turf/simulated/floor,
 /area/testing/first)
 "he" = (
 /obj/item/implantcase/excelsior,
 /turf/simulated/floor,
 /area/testing/first)
-"hO" = (
-/obj/item/disk/autolathe_disk/basic,
+"id" = (
+/obj/machinery/conveyor/northeast/ccw,
 /turf/simulated/floor,
-/area/testing/first)
+/area/testing/second)
 "jn" = (
 /obj/item/implant/compressed,
 /turf/simulated/floor,
 /area/testing/first)
+"jM" = (
+/obj/machinery/conveyor/west,
+/turf/simulated/floor,
+/area/testing/second)
 "jP" = (
 /obj/item/grenade/frag,
 /turf/simulated/floor,
 /area/testing/first)
 "ky" = (
-/obj/item/disk/autolathe_disk/security,
 /obj/item/stock_parts/micro_laser/ultra,
 /obj/item/stock_parts/micro_laser/ultra,
+/turf/simulated/floor,
+/area/testing/first)
+"lL" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/obj/machinery/power/apc{
+	name = "South APC";
+	pixel_y = -28
+	},
 /turf/simulated/floor,
 /area/testing/first)
 "mc" = (
@@ -524,7 +540,6 @@
 	icon_state = "4-8";
 	pixel_x = 0
 	},
-/obj/item/disk/autolathe_disk/lethal_ammo,
 /turf/simulated/floor,
 /area/testing/first)
 "pd" = (
@@ -539,21 +554,71 @@
 /obj/item/mine,
 /turf/simulated/floor,
 /area/testing/first)
+"qi" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/door/airlock/multi_tile/glass{
+	dir = 2
+	},
+/turf/simulated/floor,
+/area/testing/first)
+"tA" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/simulated/wall,
+/area/testing/first)
 "wA" = (
 /obj/item/storage/toolbox/mechanical,
+/obj/machinery/conveyor/west,
 /turf/simulated/floor,
 /area/testing/second)
+"xo" = (
+/obj/machinery/door/airlock/multi_tile/glass{
+	dir = 2;
+	frequency = 1380;
+	icon_state = "door_locked";
+	id_tag = "research_dock_inner";
+	locked = 1;
+	name = "Shuttle Airlock";
+	req_access = list(5)
+	},
+/turf/simulated/floor,
+/area/testing/first)
+"xv" = (
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "North APC";
+	pixel_y = 28
+	},
+/turf/simulated/floor,
+/area/testing/first)
 "AG" = (
 /obj/item/stock_parts/micro_laser/high,
 /obj/item/stock_parts/micro_laser/high,
 /turf/simulated/floor,
 /area/testing/first)
+"BV" = (
+/obj/machinery/conveyor/east,
+/turf/simulated/floor,
+/area/testing/second)
 "Dt" = (
-/obj/structure/window/reinforced/full,
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
 	dir = 4;
 	icon_state = "intact"
 	},
+/obj/effect/window_lwall_spawn/reinforced,
 /turf/simulated/floor/plating,
 /area/space)
 "Gc" = (
@@ -565,8 +630,20 @@
 /obj/item/reagent_containers/glass/beaker/water,
 /turf/simulated/floor,
 /area/testing/first)
+"Jr" = (
+/obj/machinery/door/airlock/multi_tile/glass{
+	name = "Clothing Storage"
+	},
+/turf/simulated/floor,
+/area/testing/first)
 "LZ" = (
 /obj/item/implanter,
+/turf/simulated/floor,
+/area/testing/first)
+"Pf" = (
+/obj/machinery/door/airlock/multi_tile/glass{
+	name = "Escape Pod Bay"
+	},
 /turf/simulated/floor,
 /area/testing/first)
 "QE" = (
@@ -574,7 +651,6 @@
 /turf/simulated/floor,
 /area/testing/first)
 "QJ" = (
-/obj/item/disk/autolathe_disk/security,
 /obj/item/stock_parts/scanning_module/adv,
 /obj/item/stock_parts/scanning_module/phasic,
 /turf/simulated/floor,
@@ -584,6 +660,10 @@
 /obj/landmark/join/late/cryo,
 /turf/simulated/floor,
 /area/testing/first)
+"SM" = (
+/obj/machinery/conveyor/northwest,
+/turf/simulated/floor,
+/area/testing/second)
 "Tb" = (
 /obj/item/implant/adrenalin,
 /turf/simulated/floor,
@@ -598,7 +678,6 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/item/disk/autolathe_disk/blank,
 /obj/structure/cable,
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -610,23 +689,26 @@
 /obj/item/grenade/explosive,
 /turf/simulated/floor,
 /area/testing/first)
+"UO" = (
+/obj/machinery/door/airlock/multi_tile/glass{
+	dir = 2
+	},
+/turf/simulated/floor,
+/area/testing/first)
 "Vb" = (
-/obj/item/implant/revolution/excelsior,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/testing/first)
 "Xr" = (
-/obj/machinery/power/apc/high{
-	dir = 1;
-	name = "north bump";
-	pixel_y = 24
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
 	pixel_y = 0
 	},
-/obj/item/disk/autolathe_disk/excelsior,
 /mob/living/carbon/human/dummy,
+/obj/machinery/power/apc/super/critical,
 /turf/simulated/floor,
 /area/testing/first)
 "Ze" = (
@@ -636,7 +718,6 @@
 	icon_state = "1-2";
 	pixel_y = 0
 	},
-/obj/item/disk/autolathe_disk/blank,
 /turf/simulated/floor,
 /area/testing/first)
 
@@ -740,7 +821,7 @@ aa
 aa
 aa
 aa
-be
+aa
 "}
 (2,1,1) = {"
 aa
@@ -1444,11 +1525,11 @@ aa
 aa
 aa
 ab
-ag
+an
 he
 he
 LZ
-Vb
+an
 Up
 Up
 ab
@@ -1551,7 +1632,7 @@ an
 QE
 aF
 bX
-hO
+an
 aZ
 ab
 aa
@@ -1955,7 +2036,7 @@ aa
 aa
 ab
 al
-as
+an
 ax
 fA
 AG
@@ -2157,11 +2238,11 @@ ab
 ab
 ab
 ab
+ae
 ab
-ab
-ac
+an
 az
-ac
+an
 ab
 ab
 ab
@@ -2255,18 +2336,18 @@ aa
 aa
 aa
 ab
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-aA
-ac
-ac
-ac
-ac
+an
+an
+Vb
+an
+an
+an
+an
+mc
+an
+Vb
+an
+an
 ab
 aa
 aa
@@ -2357,18 +2438,18 @@ aa
 aa
 aa
 ab
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+an
+an
+an
+an
+an
+an
+Pf
 aB
+an
+an
 ac
-ac
-ac
-ac
+an
 ab
 aa
 aa
@@ -2459,18 +2540,18 @@ aa
 aa
 aa
 ab
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-aA
-ac
-ac
-ac
-ac
+an
+an
+an
+an
+ae
+xv
+an
+mc
+an
+Jr
+an
+an
 ab
 aa
 aa
@@ -2561,18 +2642,18 @@ aa
 aa
 aa
 ab
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-aA
-ac
-ac
-ac
-ac
+an
+an
+an
+an
+an
+an
+an
+mc
+an
+an
+an
+an
 ab
 aa
 aa
@@ -2663,17 +2744,17 @@ aa
 aa
 aa
 ab
-ac
-ac
+ag
+an
 ad
-ae
-ae
-ae
-ae
+lL
+tA
+Ze
+Ze
 aC
-ae
-ae
-ae
+Ze
+Ze
+Ze
 bd
 ab
 aa
@@ -2765,18 +2846,18 @@ aa
 aa
 aa
 ab
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-aA
-ac
-ac
-ac
-ac
+an
+an
+an
+an
+gB
+an
+an
+mc
+an
+an
+UO
+an
 ab
 aa
 aa
@@ -2867,18 +2948,18 @@ aa
 aa
 aa
 ab
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-aA
-ac
-ac
-ac
-ac
+an
+an
+an
+an
+ae
+an
+an
+mc
+an
+an
+an
+an
 ab
 aa
 aa
@@ -2969,18 +3050,18 @@ aa
 aa
 aa
 ab
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-aB
-ac
-ac
-ac
-ac
+an
+an
+an
+an
+an
+an
+cp
+qi
+an
+an
+xo
+an
 ab
 aa
 aa
@@ -3071,18 +3152,18 @@ aa
 aa
 aa
 ab
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+an
+an
+bo
+an
+an
+an
+an
+an
+an
+bo
+an
+an
 ab
 aa
 aa
@@ -11645,11 +11726,11 @@ aa
 aa
 aa
 bl
-bo
-bv
+id
+BV
 bD
-bv
-bv
+jM
+SM
 bR
 bR
 ab
@@ -11748,10 +11829,10 @@ bh
 bi
 bm
 bp
-bv
+BV
 bD
 wA
-bv
+SM
 bR
 bR
 ab
@@ -11850,10 +11931,10 @@ bh
 bj
 bl
 bq
-bv
+BV
 bD
-bv
-bv
+jM
+SM
 bR
 bR
 ab
@@ -11955,7 +12036,7 @@ br
 bw
 bE
 bL
-bv
+SM
 bv
 bS
 ab

@@ -27,7 +27,7 @@ export const Processor = (props, context) => {
                   size={2}
                   minValue={5}
                   maxValue={30}
-                  value={5}
+                  value={sheet_rate}
                   unit="Sheets"
                   fillValue={sheet_rate}
                   content="Smelting rate"

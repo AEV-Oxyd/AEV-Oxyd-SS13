@@ -21,14 +21,15 @@
 	category = /datum/shuttle/autodock
 
 /datum/shuttle/autodock/New(var/_name, var/obj/effect/shuttle_landmark/start_waypoint)
-	..(_name, start_waypoint)
+	. = ..()
 
 	//Initial dock
 	if (default_docking_controller)
 		active_docking_controller = locate(default_docking_controller)
 
-	if (current_location && current_location.docking_controller)
-		active_docking_controller = current_location.docking_controller
+	if(!active_docking_controller)
+		if (current_location && current_location.docking_controller)
+			active_docking_controller = current_location.docking_controller
 	current_dock_target = get_docking_target(current_location)
 
 	if (active_docking_controller)

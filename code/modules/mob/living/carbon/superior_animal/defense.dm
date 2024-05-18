@@ -59,8 +59,6 @@
 
 			if (M in friends)
 				grabbed_by_friend = TRUE // disables AI for easier wrangling
-			M.put_in_active_hand(G)
-			G.synch()
 			LAssailant = M
 
 			M.do_attack_animation(src)

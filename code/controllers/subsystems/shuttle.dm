@@ -12,6 +12,9 @@ SUBSYSTEM_DEF(shuttle)
 	var/tmp/list/working_shuttles
 
 /datum/controller/subsystem/shuttle/Initialize()
+	// This ensures all landmarks are properly registered at round-start - SPCR 2024
+	for(var/obj/effect/shuttle_landmark/landmark as anything in GLOB.shuttle_landmarks_list)
+		landmark.registerAndLocateDocker()
 	last_landmark_registration_time = world.time
 	initialize_shuttles()
 	. = ..()
@@ -42,8 +45,6 @@ SUBSYSTEM_DEF(shuttle)
 	if (istype(shuttle_landmark))
 		registered_shuttle_landmarks[shuttle_landmark_tag] = shuttle_landmark
 		last_landmark_registration_time = world.time
-
-
 
 
 /datum/controller/subsystem/shuttle/proc/get_landmark(shuttle_landmark_tag)

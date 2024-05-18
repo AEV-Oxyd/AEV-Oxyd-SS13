@@ -9,8 +9,10 @@ SUBSYSTEM_DEF(misc)
 	if(!LAZYLEN(planet_size))
 		planet_size = list(world.maxx - 30 , world.maxy - 30)
 	initialize_cursors()
-	// build_exoplanets()  // 18/09/2022 Commented till lag gets better overhaul
-	build_junk_field()
+	if(config.build_exoplanets)
+		build_exoplanets()  // 18/09/2022 Commented till lag gets better overhaul
+	if(config.build_junk_field)
+		build_junk_field()
 	return ..()
 
 GLOBAL_LIST_INIT(cursor_icons, list()) //list of icon files, which point to lists of offsets, which point to icons

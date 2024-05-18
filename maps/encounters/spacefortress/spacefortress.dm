@@ -1,4 +1,4 @@
-#include "spacefortress.dmm"
+//#include "spacefortress.dmm"
 
 /obj/map_data/spacefortress
 	name = "Space fortress Level"

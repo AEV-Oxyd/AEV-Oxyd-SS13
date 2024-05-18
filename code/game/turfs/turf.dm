@@ -1,7 +1,6 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
 	level = BELOW_PLATING_LEVEL
-	var/holy = 0
 	var/diffused = 0 //If above zero, shields can't be on this turf. Set by floor diffusers only
 	//This is not a boolean. Multiple diffusers can stack and set it to 2, 3, etc
 
@@ -26,7 +25,6 @@
 	// General properties.
 	var/icon_old
 	var/pathweight = 1          // How much does it cost to pathfind over this turf?
-	var/blessed = 0             // Has the turf been blessed?
 
 	var/list/decals
 
@@ -39,9 +37,8 @@
 /turf/New()
 	..()
 	for(var/atom/movable/AM as mob|obj in src)
-		spawn( 0 )
-			src.Entered(AM)
-			return
+		src.Entered(AM)
+		return
 
 /turf/Initialize()
 	turfs += src
