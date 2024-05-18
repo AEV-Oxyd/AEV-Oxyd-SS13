@@ -27,7 +27,7 @@ SUBSYSTEM_DEF(mapping)
 	if(config.generate_asteroid)
 		// These values determine the specific area that the map is applied to.
 		// Because we do not use Bay's default map, we check the config file to see if custom parameters are needed, so we need to avoid hardcoding.
-		maploader.load_map(file("maps/encounters/asteroid/asteroid.dmm", mapObject = /obj/map_data/asteroid))
+		maploader.load_map(file("maps/encounters/asteroid/asteroid.dmm"), mapObject = /obj/map_data/asteroid)
 		for(var/z_level in GLOB.maps_data.asteroid_levels)
 			if(!isnum(z_level))
 				// If it's still not a number, we probably got fed some nonsense string.

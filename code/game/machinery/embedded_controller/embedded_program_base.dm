@@ -5,13 +5,20 @@
 
 	var/id_tag
 
-/datum/computer/file/embedded_program/New(var/obj/machinery/embedded_controller/M)
-	master = M
-	if (istype(M, /obj/machinery/embedded_controller/radio))
-		var/obj/machinery/embedded_controller/radio/R = M
-		id_tag = R.id_tag
+/datum/computer/file/embedded_program/proc/setController(obj/machinery/embedded_controller/dockingController)
+	master = dockingController
+	if (istype(dockingController, /obj/machinery/embedded_controller/radio))
+		var/obj/machinery/embedded_controller/radio/radioController = dockingController
+		id_tag = radioController.id_tag
+	message_admins("set id_tag to [id_tag]")
 
 	id_tag = copytext(id_tag, 1)
+	var/datum/existing = locate(id_tag) //in case a datum already exists with our tag
+	if(existing)
+		existing.tag = null //take it from them
+	tag = id_tag //Greatly simplifies shuttle initialization
+	message_admins("Created docking program with the tag [tag]")
+
 
 /datum/computer/file/embedded_program/proc/receive_user_command(command)
 	return

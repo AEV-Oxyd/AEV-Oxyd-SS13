@@ -4,7 +4,6 @@
 	var/obj/effect/statclick/statclick
 
 /datum/controller/proc/Initialize()
-
 //cleanup actions
 /datum/controller/proc/Shutdown()
 

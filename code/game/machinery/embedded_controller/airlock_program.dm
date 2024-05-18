@@ -23,9 +23,8 @@
 	var/state = STATE_IDLE
 	var/target_state = TARGET_NONE
 
-/datum/computer/file/embedded_program/airlock/New(var/obj/machinery/embedded_controller/M)
-	..(M)
-
+/datum/computer/file/embedded_program/airlock/setController(obj/machinery/embedded_controller/M)
+	. = ..()
 	memory["chamber_sensor_pressure"] = ONE_ATMOSPHERE
 	memory["external_sensor_pressure"] = 0					//assume vacuum for simple airlock controller
 	memory["internal_sensor_pressure"] = ONE_ATMOSPHERE
