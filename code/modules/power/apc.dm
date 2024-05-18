@@ -182,6 +182,7 @@
 		addtimer(CALLBACK(src, PROC_REF(update)), 5)
 		set_dir(ndir)
 
+	/*
 	switch(dir)
 		if(NORTH)
 			offset_old = pixel_y
@@ -195,6 +196,7 @@
 		if(WEST)
 			offset_old = pixel_x
 			pixel_x = -28
+	*/
 
 	tdir = dir		// to fix Vars bug
 
@@ -265,7 +267,7 @@
 	// create a terminal object at the same position as original turf loc
 	// wires will attach to this
 	terminal = new/obj/machinery/power/terminal(loc)
-	terminal.set_dir(tdir)
+	terminal.set_dir(dir)
 	terminal.master = src
 
 /obj/machinery/power/apc/examine(mob/user)
@@ -295,6 +297,10 @@
 // update the APC icon to show the three base states
 // also add overlays for indicator lights
 /obj/machinery/power/apc/update_icon()
+
+	var/matrix/trans = matrix()
+	trans.Turn(dir2angle(dir))
+	transform = trans
 	if (!status_overlays)
 		status_overlays = 1
 		status_overlays_lock = new

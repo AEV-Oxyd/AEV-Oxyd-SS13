@@ -313,6 +313,7 @@ var/global/use_preloader = FALSE
 				old_position = dpos + length(model[dpos])
 
 			if(!atom_def) // Skip the item if the path does not exist.  Fix your crap, mappers!
+				message_admins("Attempted to instanciate path that doesn't exist whilst parsing map grid.Use strongDMM to remove all invalid pathways automatically.")
 				continue
 			members.Add(atom_def)
 
@@ -329,6 +330,11 @@ var/global/use_preloader = FALSE
 						var/value = fields[I]
 						if(istext(value))
 							fields[I] = apply_text_macros(value)
+
+			/// SPCR 2024 - TG either has fixed this in a better way or has a rewritten parser , either way this broke a lot of this
+			/// and will probably break in the future.
+			if(!fields["dir"] && initial(atom_def:dir) != SOUTH)
+				fields["dir"] = initial(atom_def:dir)
 
 			// Rotate dir if orientation isn't south (default)
 			if(fields["dir"])

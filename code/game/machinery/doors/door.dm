@@ -74,7 +74,16 @@
 	else
 		layer = open_layer
 
+	health = maxHealth
 
+	update_nearby_tiles(need_rebuild=TRUE)
+	return
+
+/// modifying bounds when the map is not fully loaded causes improper detection
+/// this was apparent when done through DMMSuite loading , where left/right facing multi-tile
+/// wouldn't work , because the right turf didn't exist at the moment or was replaced, erasing its
+/// contents list - SPCR 2024
+/obj/machinery/door/Initialize(mapload, d)
 	if(width > 1)
 		if(dir in list(EAST, WEST))
 			bound_width = width * world.icon_size
@@ -83,10 +92,7 @@
 			bound_width = world.icon_size
 			bound_height = width * world.icon_size
 
-	health = maxHealth
 
-	update_nearby_tiles(need_rebuild=1)
-	return
 
 /obj/machinery/door/Destroy()
 	density = FALSE
@@ -501,11 +507,12 @@
 	return ..(M)
 
 /obj/machinery/door/update_nearby_tiles(need_rebuild)
+	. = ..()
 	for(var/turf/simulated/turf in locs)
 		update_heat_protection(turf)
 		SSair.mark_for_update(turf)
 
-	return 1
+	return TRUE
 
 /obj/machinery/door/proc/update_heat_protection(var/turf/simulated/source)
 	if(istype(source))

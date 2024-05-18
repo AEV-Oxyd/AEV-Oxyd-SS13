@@ -6,8 +6,12 @@
 /turf/simulated/wall,
 /area/space)
 "ac" = (
+/obj/machinery/door/airlock/multi_tile/glass{
+	dir = 2;
+	name = "Dormitory"
+	},
 /turf/simulated/floor,
-/area/space)
+/area/testing/first)
 "ad" = (
 /obj/machinery/shieldwallgen,
 /obj/structure/cable{
@@ -16,16 +20,10 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor,
-/area/space)
+/area/testing/first)
 "ae" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
-	},
-/turf/simulated/floor,
-/area/space)
+/turf/simulated/wall,
+/area/testing/first)
 "af" = (
 /obj/structure/multiz/ladder/up,
 /turf/simulated/floor,
@@ -88,17 +86,7 @@
 	},
 /turf/simulated/wall,
 /area/space)
-"aA" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
-	},
-/turf/simulated/floor,
-/area/space)
 "aB" = (
-/obj/machinery/shieldwallgen,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -110,9 +98,8 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor,
-/area/space)
+/area/testing/first)
 "aC" = (
-/obj/machinery/shieldwallgen,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -130,8 +117,12 @@
 	icon_state = "0-8"
 	},
 /obj/structure/cable,
+/obj/machinery/door/airlock/multi_tile/glass{
+	dir = 2;
+	name = "Dormitory"
+	},
 /turf/simulated/floor,
-/area/space)
+/area/testing/first)
 "aF" = (
 /mob/living/carbon/human/dummy,
 /turf/simulated/floor,
@@ -484,8 +475,24 @@
 /mob/living/carbon/human/dummy,
 /turf/simulated/floor,
 /area/testing/first)
+"cp" = (
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "West APC";
+	pixel_x = -28
+	},
+/turf/simulated/floor,
+/area/testing/first)
 "fA" = (
 /obj/item/storage/toolbox/mechanical,
+/turf/simulated/floor,
+/area/testing/first)
+"gB" = (
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "East APC";
+	pixel_x = 28
+	},
 /turf/simulated/floor,
 /area/testing/first)
 "he" = (
@@ -513,6 +520,19 @@
 /obj/item/stock_parts/micro_laser/ultra,
 /turf/simulated/floor,
 /area/testing/first)
+"lL" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/obj/machinery/power/apc{
+	name = "South APC";
+	pixel_y = -28
+	},
+/turf/simulated/floor,
+/area/testing/first)
 "mc" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -534,11 +554,56 @@
 /obj/item/mine,
 /turf/simulated/floor,
 /area/testing/first)
+"qi" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/door/airlock/multi_tile/glass{
+	dir = 2
+	},
+/turf/simulated/floor,
+/area/testing/first)
+"tA" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/simulated/wall,
+/area/testing/first)
 "wA" = (
 /obj/item/storage/toolbox/mechanical,
 /obj/machinery/conveyor/west,
 /turf/simulated/floor,
 /area/testing/second)
+"xo" = (
+/obj/machinery/door/airlock/multi_tile/glass{
+	dir = 2;
+	frequency = 1380;
+	icon_state = "door_locked";
+	id_tag = "research_dock_inner";
+	locked = 1;
+	name = "Shuttle Airlock";
+	req_access = list(5)
+	},
+/turf/simulated/floor,
+/area/testing/first)
+"xv" = (
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "North APC";
+	pixel_y = 28
+	},
+/turf/simulated/floor,
+/area/testing/first)
 "AG" = (
 /obj/item/stock_parts/micro_laser/high,
 /obj/item/stock_parts/micro_laser/high,
@@ -565,8 +630,20 @@
 /obj/item/reagent_containers/glass/beaker/water,
 /turf/simulated/floor,
 /area/testing/first)
+"Jr" = (
+/obj/machinery/door/airlock/multi_tile/glass{
+	name = "Clothing Storage"
+	},
+/turf/simulated/floor,
+/area/testing/first)
 "LZ" = (
 /obj/item/implanter,
+/turf/simulated/floor,
+/area/testing/first)
+"Pf" = (
+/obj/machinery/door/airlock/multi_tile/glass{
+	name = "Escape Pod Bay"
+	},
 /turf/simulated/floor,
 /area/testing/first)
 "QE" = (
@@ -610,6 +687,12 @@
 /area/testing/first)
 "Up" = (
 /obj/item/grenade/explosive,
+/turf/simulated/floor,
+/area/testing/first)
+"UO" = (
+/obj/machinery/door/airlock/multi_tile/glass{
+	dir = 2
+	},
 /turf/simulated/floor,
 /area/testing/first)
 "Vb" = (
@@ -2155,7 +2238,7 @@ ab
 ab
 ab
 ab
-ab
+ae
 ab
 an
 az
@@ -2356,15 +2439,15 @@ aa
 aa
 ab
 an
-ac
-ac
-ac
-ac
-ac
-ac
+an
+an
+an
+an
+an
+Pf
 aB
-ac
-ac
+an
+an
 ac
 an
 ab
@@ -2458,16 +2541,16 @@ aa
 aa
 ab
 an
-ac
-ac
-ac
-ac
-ac
-ac
-aA
-ac
-ac
-ac
+an
+an
+an
+ae
+xv
+an
+mc
+an
+Jr
+an
 an
 ab
 aa
@@ -2560,16 +2643,16 @@ aa
 aa
 ab
 an
-ac
-ac
-ac
-ac
-ac
-ac
-aA
-ac
-ac
-ac
+an
+an
+an
+an
+an
+an
+mc
+an
+an
+an
 an
 ab
 aa
@@ -2662,16 +2745,16 @@ aa
 aa
 ab
 ag
-ac
+an
 ad
-ae
-ae
-ae
-ae
+lL
+tA
+Ze
+Ze
 aC
-ae
-ae
-ae
+Ze
+Ze
+Ze
 bd
 ab
 aa
@@ -2764,16 +2847,16 @@ aa
 aa
 ab
 an
-ac
-ac
-ac
-ac
-ac
-ac
-aA
-ac
-ac
-ac
+an
+an
+an
+gB
+an
+an
+mc
+an
+an
+UO
 an
 ab
 aa
@@ -2866,16 +2949,16 @@ aa
 aa
 ab
 an
-ac
-ac
-ac
-ac
-ac
-ac
-aA
-ac
-ac
-ac
+an
+an
+an
+ae
+an
+an
+mc
+an
+an
+an
 an
 ab
 aa
@@ -2968,16 +3051,16 @@ aa
 aa
 ab
 an
-ac
-ac
-ac
-ac
-ac
-ac
-aB
-ac
-ac
-ac
+an
+an
+an
+an
+an
+cp
+qi
+an
+an
+xo
 an
 ab
 aa
