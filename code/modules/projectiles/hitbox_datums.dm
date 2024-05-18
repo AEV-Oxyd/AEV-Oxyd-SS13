@@ -65,18 +65,17 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 
 /datum/hitboxDatum/proc/visualize()
 	var/list/availableColors = list(COLOR_RED, COLOR_AMBER, COLOR_BLUE, COLOR_ORANGE, COLOR_CYAN, COLOR_YELLOW, COLOR_BROWN, COLOR_VIOLET, COLOR_PINK, COLOR_ASSEMBLY_BEIGE, COLOR_ASSEMBLY_GREEN, COLOR_ASSEMBLY_LBLUE, COLOR_LIGHTING_BLUE_DARK)
-	var/chosenColor = pick(availableColors)
+	var/chosenColor = pick_n_take(availableColors)
 	for(var/list/hitbox in boundingBoxes)
 		var/icon/Icon = icon('icons/hitbox.dmi', "box")
-		var/multX = hitbox[3] - hitbox[1]
-		var/multY = hitbox[4] - hitbox[2]
+		var/multX = hitbox[3] - hitbox[1] + 1
+		var/multY = hitbox[4] - hitbox[2] + 1
 		Icon.Scale(multX, multY)
 		var/mutable_appearance/newOverlay = mutable_appearance(Icon, "hitbox")
 		newOverlay.color = chosenColor
-		availableColors.Remove(chosenColor)
-		chosenColor = pick(availableColors)
-		newOverlay.pixel_x = hitbox[1]
-		newOverlay.pixel_y = hitbox[2]
+		chosenColor = pick_n_take(availableColors)
+		newOverlay.pixel_x = hitbox[1] - 1
+		newOverlay.pixel_y = hitbox[2] - 1
 		owner.overlays.Add(newOverlay)
 
 

@@ -20,10 +20,11 @@
 		BBOX(11,20,21,21,0,0,0,0), // neck/upper chest
 		BBOX(12,22,20,25,0,0,0,0), // head
 		BBOX(13,26,19,27,0,0,0,0), // bald ass head top
+		BBOX(15,28,18,28,0,0,0,0), /// balder ass head top
 		BBOX(12,0,15,9,0,0,0,0), // left leg
 		BBOX(10,0,11,2,0,0,0,0), // left toe
 		BBOX(17,0,20,9,0,0,0,0), // right leg
-		BBOX(21,0,21,21,0,0,0,0), // right toe
+		BBOX(21,0,22,2,0,0,0,0), // right toe
 	)
 
 /mob/living/carbon/human/Initialize(new_loc, new_species)
