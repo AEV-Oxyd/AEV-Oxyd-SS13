@@ -41,7 +41,7 @@
 			user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN * 1.5)
 	return TRUE
 
-/obj/structure/golem_burrow/bullet_act(obj/item/projectile/Proj)
+/obj/structure/golem_burrow/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	..()
         // Bullet not really efficient against a pile of rock
 	take_damage(Proj.get_structure_damage() * 0.25)

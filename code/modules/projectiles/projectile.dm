@@ -511,7 +511,8 @@ GLOBAL_LIST(projectileDamageConstants)
 
 	for(var/i in 1 to length(hittingList))
 		var/obj/target = hittingList[i]
-		var/list/arguments = list(src, def_zone)
+		/// third slot reversed for flags passed back by hitbox intersect
+		var/list/arguments = list(src, def_zone, null)
 		if(target.hitbox && !target.hitbox.intersects(trajectoryData, target.dir, 0, target, arguments))
 			return PROJECTILE_CONTINUE
 		if(target.bullet_act(arglist(arguments)) & PROJECTILE_STOP)

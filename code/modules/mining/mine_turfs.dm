@@ -51,7 +51,7 @@
 		mined_ore = 1
 		GetDrilled()
 
-/turf/simulated/mineral/bullet_act(var/obj/item/projectile/Proj)
+/turf/simulated/mineral/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 
 	// Emitter blasts
 	if(istype(Proj, /obj/item/projectile/beam/emitter))

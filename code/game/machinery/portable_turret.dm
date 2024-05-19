@@ -472,7 +472,7 @@ var/list/turret_icons
 	if(health <= 0)
 		die()	//the death process :(
 
-/obj/machinery/porta_turret/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/porta_turret/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	var/damage = Proj.get_structure_damage()
 
 	if(!damage)

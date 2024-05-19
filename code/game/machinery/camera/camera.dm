@@ -99,7 +99,7 @@
 			update_coverage()
 			START_PROCESSING(SSmachines, src)
 
-/obj/machinery/camera/bullet_act(var/obj/item/projectile/P)
+/obj/machinery/camera/bullet_act(obj/item/projectile/P, defZone, hitboxFlags)
 	take_damage(P.get_structure_damage())
 
 /obj/machinery/camera/explosion_act(target_power, explosion_handler/handler)

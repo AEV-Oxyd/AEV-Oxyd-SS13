@@ -203,7 +203,7 @@
 		return 0
 	return 1
 /*
-/turf/simulated/floor/bullet_act(obj/item/projectile/P, def_zone)
+/turf/simulated/floor/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
 	if(!P.dataRef)
 		return PROJECTILE_CONTINUE
 	else if(!(P.dataRef.isTraversingLevel))

@@ -44,7 +44,7 @@
 							have_glass = TRUE
 							update_icon()
 							return
-		
+
 		if(dhTotalDamageStrict(I.melleDamages, ALL_ARMOR,  list(BRUTE,BURN)))
 			hit(user, I)
 			return
@@ -57,7 +57,7 @@
 
 
 
-/obj/machinery/door/blast/shutters/glass/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/door/blast/shutters/glass/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	if(Proj.get_structure_damage())
 		take_damage(Proj.get_structure_damage())
 	..()

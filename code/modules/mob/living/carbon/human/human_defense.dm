@@ -7,7 +7,18 @@ meteor_act
 
 */
 
-/mob/living/carbon/human/bullet_act(var/obj/item/projectile/P, var/def_zone)
+/mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
+	switch(hitboxFlags)
+		if(HB_HEAD)
+			def_zone = BP_HEAD
+		if(HB_CHESTARMS)
+			if(!(def_zone in list(BP_L_ARM, BP_R_ARM, BP_CHEST)))
+				def_zone = pick(list(BP_L_ARM, BP_R_ARM, BP_CHEST))
+		if(HB_GROIN)
+			def_zone = BP_GROIN
+		if(HB_LEGS)
+			if(!(def_zone in list(BP_L_LEG, BP_R_LEG)))
+				def_zone = pick(BP_L_LEG, BP_R_LEG)
 	def_zone = check_zone(def_zone)
 	if(!has_organ(def_zone))
 		return PROJECTILE_FORCE_MISS //if they don't have the organ in question then the projectile just passes by.

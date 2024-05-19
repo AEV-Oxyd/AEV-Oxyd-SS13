@@ -385,7 +385,7 @@
 
 	return damage
 
-/obj/structure/railing/bullet_act(obj/item/projectile/P, def_zone)
+/obj/structure/railing/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
 	. = ..()
 	take_damage(P.get_structure_damage())
 

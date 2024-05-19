@@ -42,6 +42,11 @@ GLOBAL_VAR_INIT(Debug,0)
 //		testing("GC: [type] was deleted via GC with qdel()")
 	..()
 
+/atom/movable/getAimingLevel(atom/shooter, defZone)
+	if(hitbox)
+		return hitbox.getAimingLevel(shooter, defZone)
+	else
+		return ..()
 
 /atom/movable/Destroy()
 	var/turf/T = loc

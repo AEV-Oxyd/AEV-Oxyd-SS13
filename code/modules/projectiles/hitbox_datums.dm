@@ -6,7 +6,35 @@
 	/// global offsets , applied to all bounding boxes equally
 	var/offsetX = 0
 	var/offsetY = 0
+	/// stores the median levels to aim when shooting at the owner.
+	var/list/medianLevels
 	var/atom/owner
+	/// converts the defZone argument to a specific level.
+	var/list/defZoneToLevel = list(
+		BP_EYES = HBF_USEMEDIAN,
+		BP_MOUTH = HBF_USEMEDIAN,
+		BP_HEAD = HBF_USEMEDIAN,
+		BP_CHEST = HBF_USEMEDIAN,
+		BP_L_LEG = HBF_USEMEDIAN,
+		BP_R_LEG = HBF_USEMEDIAN,
+		BP_GROIN = HBF_USEMEDIAN,
+		BP_R_ARM = HBF_USEMEDIAN,
+		BP_L_ARM = HBF_USEMEDIAN
+	)
+
+/datum/hitboxDatum/New()
+	. = ..()
+	var/median
+	var/volumeSum
+	var/calculatedVolume = 0
+	for(var/direction in list(NORTH, SOUTH, EAST , WEST))
+		median = 0
+		volumeSum = 0
+		for(var/list/boundingBox in boundingBoxes["[direction]"])
+			calculatedVolume = (boundingBox[4] - boundingBox[2]) * (boundingBox[3] - boundingBox[1])
+			median += ((boundingBox[5] + boundingBox[6])/2) * calculatedVolume
+			volumeSum += calculatedVolume
+		medianLevels["[direction]"] = median / volumeSum
 
 /// this can be optimized further by making the calculations not make a new list , and instead be added when checking line intersection - SPCR 2024
 /datum/hitboxDatum/proc/intersects(list/lineData,ownerDirection, turf/incomingFrom, atom/owner, list/arguments)
@@ -19,14 +47,26 @@
 		if(boundingData[5] > max(lineData[5],lineData[6]) || boundingData[6] < min(lineData[6],lineData[5]))
 			continue
 		if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY)))
+			arguments[3] = boundingData[7]
 			return TRUE
 		if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY)))
+			arguments[3] = boundingData[7]
 			return TRUE
 		if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[4] + worldY, boundingData[3] + worldX, boundingData[4] + worldY)))
+			arguments[3] = boundingData[7]
 			return TRUE
 		if(lineIntersect(lineData, list(boundingData[3] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY)))
+			arguments[3] = boundingData[7]
 			return TRUE
 	return FALSE
+
+/datum/hitboxDatum/proc/getAimingLevel(atom/shooter, defZone)
+	if(defZone == null || !defZone in defZoneToLevel)
+		return medianLevels["[owner.dir]"]
+	if(defZoneToLevel[defZone] == HBF_USEMEDIAN)
+		return medianLevels["[owner.dir]"]
+	message_admins("Returned [defZoneToLevel[defZone]] for [defZone]")
+	return defZoneToLevel[defZone]
 
 /*
 boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) {
@@ -80,13 +120,6 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		newOverlay.pixel_x = hitbox[1] - 1
 		newOverlay.pixel_y = hitbox[2] - 1
 		owner.overlays.Add(newOverlay)
-
-
-
-
-
-
-
 
 
 

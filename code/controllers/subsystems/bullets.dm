@@ -100,26 +100,28 @@ SUBSYSTEM_DEF(bullets)
 		src.target = target
 		src.targetTurf = get_turf(target)
 		src.targetPos = list(target.x, target.y , target.z)
-		if(ismob(target))
-			if(iscarbon(target))
-				if(target:lying)
-					src.targetLevel = LEVEL_LYING
+		src.targetLevel = target.getAimingLevel(firer, aimedZone)
+		if(targetLevel == HBF_NOLEVEL)
+			if(ismob(target))
+				if(iscarbon(target))
+					if(target:lying)
+						src.targetLevel = LEVEL_LYING
+					else
+						src.targetLevel = LEVEL_STANDING
 				else
 					src.targetLevel = LEVEL_STANDING
-			else
+			else if(istype(target, /obj/structure/low_wall))
+				src.targetLevel = LEVEL_LOWWALL
+			else if(istype(target, /obj/structure/window))
 				src.targetLevel = LEVEL_STANDING
-		else if(istype(target, /obj/structure/low_wall))
-			src.targetLevel = LEVEL_LOWWALL
-		else if(istype(target, /obj/structure/window))
-			src.targetLevel = LEVEL_STANDING
-		else if(istype(target, /obj/structure/table))
-			src.targetLevel = LEVEL_TABLE
-		else if(iswall(target))
-			src.targetLevel = LEVEL_STANDING
-		else if(isturf(target))
-			src.targetLevel = LEVEL_TURF
-		else if(isitem(target))
-			src.targetLevel = LEVEL_TURF
+			else if(istype(target, /obj/structure/table))
+				src.targetLevel = LEVEL_TABLE
+			else if(iswall(target))
+				src.targetLevel = LEVEL_STANDING
+			else if(isturf(target))
+				src.targetLevel = LEVEL_TURF
+			else if(isitem(target))
+				src.targetLevel = LEVEL_TURF
 	else
 		message_admins(("Created bullet without target , [referencedBullet], from [usr]"))
 

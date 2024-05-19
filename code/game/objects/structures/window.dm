@@ -148,7 +148,7 @@
 	return
 
 
-/obj/structure/window/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/window/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 
 	if(config.z_level_shooting && Proj.height)
 		if(Proj.height == HEIGHT_LOW)// Bullet is too low

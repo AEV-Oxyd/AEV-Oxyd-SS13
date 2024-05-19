@@ -513,7 +513,7 @@
 /mob/living/silicon/robot/restrained()
 	return FALSE
 
-/mob/living/silicon/robot/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/silicon/robot/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	if(HasTrait(CYBORG_TRAIT_DEFLECTIVE_BALLISTIC_ARMOR) && istype(Proj, /obj/item/projectile/bullet))
 		var/chance = 90
 		if(ishuman(Proj.firer))
