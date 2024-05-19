@@ -14,7 +14,7 @@
 	var/global/worldY
 	worldX = owner.x * 32
 	worldY = owner.y * 32
-	for(var/list/boundingData in boundingBoxes[num2text(owner.dir)])
+	for(var/list/boundingData in boundingBoxes["[owner.dir]"])
 		if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY)))
 			return TRUE
 		if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY)))

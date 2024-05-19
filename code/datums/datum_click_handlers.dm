@@ -183,7 +183,7 @@
 	var/turf/targetTurf = get_turf(target)
 	if(!targetTurf)
 		return TRUE
-	if(DIST_EUCLIDIAN(owner.mob.x , owner.mob.y, targetTurf.x , targetTurf.y) < 24)
+	if(DIST_EUCLIDIAN_2D(owner.mob.x , owner.mob.y, targetTurf.x , targetTurf.y) < 24)
 		// Can't block at such close distance
 		signalStrength = 1000
 	else

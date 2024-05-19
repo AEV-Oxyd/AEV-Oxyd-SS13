@@ -1,6 +1,7 @@
 /// Pixels per turf
 #define PPT 32
 #define HPPT (PPT/2)
+#define MAXPIXELS 32
 SUBSYSTEM_DEF(bullets)
 	name = "Bullets"
 	wait = 1
@@ -123,7 +124,8 @@ SUBSYSTEM_DEF(bullets)
 
 	//message_admins("level set to [firedLevel], towards [targetLevel]")
 	currentCoords[3] = firedLevel
-	movementRatios[3] = ((targetPos[3] - firedPos[3]) * PPT + (targetLevel - firedLevel) * HPPT) / (PPT * distStartToFinish())
+	movementRatios[3] = ((targetPos[3] + targetLevel - firedPos[3] - firedLevel)) / (round(distStartToFinish3D()) * MAXPIXELS)
+	message_admins("calculated movementRatio , [movementRatios[3]] , with maxPixels , [movementRatios[3] * MAXPIXELS]")
 	movementRatios[4] = getAngleByPosition()
 	movementRatios[4] += angleOffset
 	updatePathByAngle()
@@ -156,15 +158,22 @@ SUBSYSTEM_DEF(bullets)
 
 /datum/bullet_data/proc/updatePathByPosition()
 	var/matrix/rotation = matrix()
-	movementRatios[3] = ((targetPos[3] - firedPos[3]) * PPT + (targetLevel - firedLevel) * HPPT) / (PPT * distStartToFinish())
+	movementRatios[3] = ((targetPos[3] + targetLevel - firedPos[3] - firedLevel)) / (round(distStartToFinish3D()) * MAXPIXELS)
 	movementRatios[4] = getAngleByPosition()
 	movementRatios[1] = sin(movementRatios[4])
 	movementRatios[2] = cos(movementRatios[4])
 	rotation.Turn(movementRatios[4] + 180)
 	referencedBullet.transform = rotation
 
-/datum/bullet_data/proc/distStartToFinish()
-	return DIST_EUCLIDIAN(targetPos[1], targetPos[2], firedPos[1], firedPos[2])
+/datum/bullet_data/proc/distStartToFinish2D()
+	return DIST_EUCLIDIAN_2D((targetPos[1]*PPT +targetCoords[1] + 16)/PPT,(targetPos[2]*PPT + targetCoords[2] + 16)/PPT, (firedPos[1]*PPT +firedCoordinates[1] + 16)/PPT, (firedPos[2]*PPT +firedCoordinates[2] + 16)/PPT)
+
+/datum/bullet_data/proc/distStartToFinish3D()
+		return DIST_EUCLIDIAN_3D((targetPos[1]*PPT)/PPT,(targetPos[2]*PPT)/PPT,targetPos[3] + targetLevel ,(firedPos[1]*PPT)/PPT, (firedPos[2]*PPT)/PPT, firedPos[3] + firedLevel)
+		//return DIST_EUCLIDIAN_3D((targetPos[1]*PPT +targetCoords[1] + 16)/PPT,(targetPos[2]*PPT + targetCoords[2] + 16)/PPT,targetPos[3] + targetLevel ,(firedPos[1]*PPT +firedCoordinates[1] + 16)/PPT, (firedPos[2]*PPT +firedCoordinates[2] + 16)/PPT, firedPos[3] + firedLevel)
+
+
+
 	/*
 	var/x = targetPos[1] - firedPos[1]
 	var/y = targetPos[2] - firedPos[2]
@@ -234,12 +243,12 @@ SUBSYSTEM_DEF(bullets)
 		trajectoryData[2] = projectile.y * 32 + projectile.pixel_y + 16
 		trajectoryData[3] = bulletRatios[1] * pixelsToTravel + trajectoryData[1]
 		trajectoryData[4] = bulletRatios[2] * pixelsToTravel + trajectoryData[2]
-		while(pixelsToTravel > 0)
-			pixelsThisStep = pixelsToTravel > 32 ? 32 : pixelsToTravel
+		while(pixelsToTravel > MAXPIXELS)
+			pixelsThisStep = pixelsToTravel > MAXPIXELS ? MAXPIXELS : pixelsToTravel
 			pixelsToTravel -= pixelsThisStep
 			bulletCoords[1] += (bulletRatios[1] * pixelsThisStep)
 			bulletCoords[2] += (bulletRatios[2] * pixelsThisStep)
-			bulletCoords[3] += (bulletRatios[3])
+			bulletCoords[3] += (bulletRatios[3] * pixelsThisStep)
 			//message_admins("[bulletCoords[1]], [bulletCoords[2]]")
 			//message_admins("trajectory data for bullet : [trajectoryData[1]] , [trajectoryData[2]] ===== [trajectoryData[3]], [trajectoryData[4]]")
 			x_change = round(abs(bulletCoords[1]) / HPPT) * sign(bulletCoords[1])
@@ -271,6 +280,8 @@ SUBSYSTEM_DEF(bullets)
 				bullet.updateLevel()
 				if(projectile.scanTurf(moveTurf, trajectoryData) == PROJECTILE_CONTINUE)
 					projectile.forceMove(moveTurf)
+					if(moveTurf == bullet.targetTurf)
+						message_admins("Reached target with level of [bulletCoords[3]]")
 
 				moveTurf = null
 
