@@ -93,7 +93,6 @@
 #include "code\__DEFINES\dcs\flags.dm"
 #include "code\__DEFINES\dcs\helpers.dm"
 #include "code\__DEFINES\dcs\signals.dm"
-#include "code\__DEFINES\spawner\___byondbase.dm"
 #include "code\__DEFINES\spawner\_spawner.dm"
 #include "code\__DEFINES\spawner\excelsior.dm"
 #include "code\__DEFINES\spawner\frozen_star.dm"

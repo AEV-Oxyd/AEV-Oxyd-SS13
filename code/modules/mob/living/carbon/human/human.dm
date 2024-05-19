@@ -16,43 +16,43 @@
 /datum/hitboxDatum/human
 	boundingBoxes = list(
 		LISTNORTH = list(
-			BBOX(8,10,24,16,0,0,0,0), /// chest + arms
-			BBOX(9,17,23,19,0,0,0,0), /// upper chest + upper arms
-			BBOX(11,20,21,21,0,0,0,0), // neck/upper chest
-			BBOX(12,22,20,25,0,0,0,0), // head
-			BBOX(13,26,19,27,0,0,0,0), // bald head top
-			BBOX(15,28,18,28,0,0,0,0), /// balder head top
-			BBOX(12,0,15,9,0,0,0,0), // left leg
-			BBOX(10,0,11,2,0,0,0,0), // left toe
-			BBOX(17,0,20,9,0,0,0,0), // right leg
-			BBOX(21,0,22,2,0,0,0,0) // right to
+			BBOX(8,10,24,16,0,0,0,0, null), /// chest + arms
+			BBOX(9,17,23,19,0,0,0,0, null), /// upper chest + upper arms
+			BBOX(11,20,21,21,0,0,0,0, null), // neck/upper chest
+			BBOX(12,22,20,25,0,0,0,0, null), // head
+			BBOX(13,26,19,27,0,0,0,0, null), // bald head top
+			BBOX(15,28,18,28,0,0,0,0, null), /// balder head top
+			BBOX(12,0,15,9,0,0,0,0, null), // left leg
+			BBOX(10,0,11,2,0,0,0,0, null), // left toe
+			BBOX(17,0,20,9,0,0,0,0, null), // right leg
+			BBOX(21,0,22,2,0,0,0,0, null) // right to
 		),
 		LISTSOUTH = list(
-			BBOX(8,10,24,16,0,0,0,0), /// chest + arms
-			BBOX(9,17,23,19,0,0,0,0), /// upper chest + upper arms
-			BBOX(11,20,21,21,0,0,0,0), // neck/upper chest
-			BBOX(12,22,20,25,0,0,0,0), // head
-			BBOX(13,26,19,27,0,0,0,0), // bald head top
-			BBOX(15,28,18,28,0,0,0,0), /// balder head top
-			BBOX(12,0,15,9,0,0,0,0), // left leg
-			BBOX(10,0,11,2,0,0,0,0), // left toe
-			BBOX(17,0,20,9,0,0,0,0), // right leg
-			BBOX(21,0,22,2,0,0,0,0) // right to
+			BBOX(8,10,24,16,0,0,0,0, null), /// chest + arms
+			BBOX(9,17,23,19,0,0,0,0, null), /// upper chest + upper arms
+			BBOX(11,20,21,21,0,0,0,0, null), // neck/upper chest
+			BBOX(12,22,20,25,0,0,0,0, null), // head
+			BBOX(13,26,19,27,0,0,0,0, null), // bald head top
+			BBOX(15,28,18,28,0,0,0,0, null), /// balder head top
+			BBOX(12,0,15,9,0,0,0,0, null), // left leg
+			BBOX(10,0,11,2,0,0,0,0, null), // left toe
+			BBOX(17,0,20,9,0,0,0,0, null), // right leg
+			BBOX(21,0,22,2,0,0,0,0, null) // right to
 		),
 		LISTEAST = list(
-			BBOX(14,1,18,28,0,0,0,0),
-			BBOX(13,12,13,21,0,0,0,0),
-			BBOX(12,15,12,20,0,0,0,0),
-			BBOX(19,1,20,3,0,0,0,0),
-			BBOX(19,10,20,27,0,0,0,0)
+			BBOX(14,1,18,28,0,0,0,0, null),
+			BBOX(13,12,13,21,0,0,0,0, null),
+			BBOX(12,15,12,20,0,0,0,0, null),
+			BBOX(19,1,20,3,0,0,0,0, null),
+			BBOX(19,10,20,27,0,0,0,0, null)
 		),
 		LISTWEST = list(
-			BBOX(15,1,19,28,0,0,0,0),
-			BBOX(13,1,14,3,0,0,0,0),
-			BBOX(20,12,20,21,0,0,0,0),
-			BBOX(21,15,21,20,0,0,0,0),
-			BBOX(14,10,14,28,0,0,0,0),
-			BBOX(13,12,13,27,0,0,0,0)
+			BBOX(15,1,19,28,0,0,0,0, null),
+			BBOX(13,1,14,3,0,0,0,0, null),
+			BBOX(20,12,20,21,0,0,0,0, null),
+			BBOX(21,15,21,20,0,0,0,0, null),
+			BBOX(14,10,14,28,0,0,0,0, null),
+			BBOX(13,12,13,27,0,0,0,0, null)
 		)
 	)
 
