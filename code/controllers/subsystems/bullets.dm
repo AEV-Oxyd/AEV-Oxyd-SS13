@@ -26,7 +26,8 @@ SUBSYSTEM_DEF(bullets)
 	var/list/relevantAtoms = list()
 	// 1 client tick by default , can be increased by impacts
 	var/bulletWait = 1
-	var/list/trajectoryData = list(0,0,0,0)
+	//// x1,y1,x2,y2,z1,z2
+	var/list/trajectoryData = list(0,0,0,0,0,0)
 
 
 
@@ -243,6 +244,8 @@ SUBSYSTEM_DEF(bullets)
 		trajectoryData[2] = projectile.y * 32 + projectile.pixel_y + 16
 		trajectoryData[3] = bulletRatios[1] * pixelsToTravel + trajectoryData[1]
 		trajectoryData[4] = bulletRatios[2] * pixelsToTravel + trajectoryData[2]
+		trajectoryData[5] = bulletCoords[3]
+		trajectoryData[6] = trajectoryData[5] + bulletRatios[3] * pixelsToTravel
 		while(pixelsToTravel > MAXPIXELS)
 			pixelsThisStep = pixelsToTravel > MAXPIXELS ? MAXPIXELS : pixelsToTravel
 			pixelsToTravel -= pixelsThisStep
@@ -294,15 +297,4 @@ SUBSYSTEM_DEF(bullets)
 			bullet.referencedBullet.finishDeletion()
 			bullet_queue -= bullet
 
-
-
-
-
-#undef LEVEL_BELOW
-#undef LEVEL_TURF
-#undef LEVEL_LYING
-#undef LEVEL_LOWWALL
-#undef LEVEL_TABLE
-#undef LEVEL_STANDING
-#undef LEVEL_ABOVE
 

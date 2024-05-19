@@ -9,12 +9,15 @@
 	var/atom/owner
 
 /// this can be optimized further by making the calculations not make a new list , and instead be added when checking line intersection - SPCR 2024
-/datum/hitboxDatum/proc/intersects(list/lineData,ownerDirection, turf/incomingFrom, atom/owner)
+/datum/hitboxDatum/proc/intersects(list/lineData,ownerDirection, turf/incomingFrom, atom/owner, list/arguments)
 	var/global/worldX
 	var/global/worldY
 	worldX = owner.x * 32
 	worldY = owner.y * 32
 	for(var/list/boundingData in boundingBoxes["[owner.dir]"])
+		/// basic AABB but only for the Z-axis.
+		if(boundingData[5] > max(lineData[5],lineData[6]) || boundingData[6] < min(lineData[6],lineData[5]))
+			continue
 		if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY)))
 			return TRUE
 		if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY)))

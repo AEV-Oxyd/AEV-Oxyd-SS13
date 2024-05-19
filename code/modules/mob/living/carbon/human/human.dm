@@ -16,43 +16,30 @@
 /datum/hitboxDatum/human
 	boundingBoxes = list(
 		LISTNORTH = list(
-			BBOX(8,10,24,16,0,0,0,0, null), /// chest + arms
-			BBOX(9,17,23,19,0,0,0,0, null), /// upper chest + upper arms
-			BBOX(11,20,21,21,0,0,0,0, null), // neck/upper chest
-			BBOX(12,22,20,25,0,0,0,0, null), // head
-			BBOX(13,26,19,27,0,0,0,0, null), // bald head top
-			BBOX(15,28,18,28,0,0,0,0, null), /// balder head top
-			BBOX(12,0,15,9,0,0,0,0, null), // left leg
-			BBOX(10,0,11,2,0,0,0,0, null), // left toe
-			BBOX(17,0,20,9,0,0,0,0, null), // right leg
-			BBOX(21,0,22,2,0,0,0,0, null) // right to
+			BBOX(11,1,21,8,LEVEL_TURF, LEVEL_TABLE, null), // LEGS
+			BBOX(11,9,21,11,LEVEL_TABLE, LEVEL_GROIN, null), // GROIN
+			BBOX(9,12,23,20, LEVEL_GROIN, LEVEL_CHEST, null), // CHEST + ARMS
+			BBOX(11,12,21,22, LEVEL_GROIN, LEVEL_CHEST, null), // CHEST + ARMS
+			BBOX(13,23,19,28, LEVEL_CHEST, LEVEL_STANDING, null) // HEAD
 		),
 		LISTSOUTH = list(
-			BBOX(8,10,24,16,0,0,0,0, null), /// chest + arms
-			BBOX(9,17,23,19,0,0,0,0, null), /// upper chest + upper arms
-			BBOX(11,20,21,21,0,0,0,0, null), // neck/upper chest
-			BBOX(12,22,20,25,0,0,0,0, null), // head
-			BBOX(13,26,19,27,0,0,0,0, null), // bald head top
-			BBOX(15,28,18,28,0,0,0,0, null), /// balder head top
-			BBOX(12,0,15,9,0,0,0,0, null), // left leg
-			BBOX(10,0,11,2,0,0,0,0, null), // left toe
-			BBOX(17,0,20,9,0,0,0,0, null), // right leg
-			BBOX(21,0,22,2,0,0,0,0, null) // right to
+			BBOX(11,1,21,8,LEVEL_TURF, LEVEL_TABLE, null), // LEGS
+			BBOX(11,9,21,11,LEVEL_TABLE, LEVEL_GROIN, null), // GROIN
+			BBOX(9,12,23,20, LEVEL_GROIN, LEVEL_CHEST, null), // CHEST + ARMS
+			BBOX(11,12,21,22, LEVEL_GROIN, LEVEL_CHEST, null), // CHEST + ARMS
+			BBOX(13,23,19,28, LEVEL_CHEST, LEVEL_STANDING, null) // HEAD
 		),
 		LISTEAST = list(
-			BBOX(14,1,18,28,0,0,0,0, null),
-			BBOX(13,12,13,21,0,0,0,0, null),
-			BBOX(12,15,12,20,0,0,0,0, null),
-			BBOX(19,1,20,3,0,0,0,0, null),
-			BBOX(19,10,20,27,0,0,0,0, null)
+			BBOX(14,1,19,9, LEVEL_TURF, LEVEL_TABLE, null), // LEGS
+			BBOX(14,10,21,12, LEVEL_TABLE,  LEVEL_GROIN, null), // GROIN
+			BBOX(13,12,21,22, LEVEL_GROIN , LEVEL_CHEST, null), // ARMS AND CHEST
+			BBOX(13,12,20,28, LEVEL_CHEST, LEVEL_STANDING, null) // HEAD
 		),
 		LISTWEST = list(
-			BBOX(15,1,19,28,0,0,0,0, null),
-			BBOX(13,1,14,3,0,0,0,0, null),
-			BBOX(20,12,20,21,0,0,0,0, null),
-			BBOX(21,15,21,20,0,0,0,0, null),
-			BBOX(14,10,14,28,0,0,0,0, null),
-			BBOX(13,12,13,27,0,0,0,0, null)
+			BBOX(14,1,19,9, LEVEL_TURF, LEVEL_TABLE, null), // LEGS
+			BBOX(14,10,21,12, LEVEL_TABLE,  LEVEL_GROIN, null), // GROIN
+			BBOX(13,12,21,22, LEVEL_GROIN , LEVEL_CHEST, null), // ARMS AND CHEST
+			BBOX(13,12,20,28, LEVEL_CHEST, LEVEL_STANDING, null) // HEAD
 		)
 	)
 

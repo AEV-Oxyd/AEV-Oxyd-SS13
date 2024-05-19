@@ -511,9 +511,10 @@ GLOBAL_LIST(projectileDamageConstants)
 
 	for(var/i in 1 to length(hittingList))
 		var/obj/target = hittingList[i]
-		if(target.hitbox)
-			message_admins("hitbox intersection returns [target.hitbox.intersects(trajectoryData, target.dir, 0, target)]")
-		if(target.bullet_act(src, def_zone) & PROJECTILE_STOP)
+		var/list/arguments = list(src, def_zone)
+		if(target.hitbox && !target.hitbox.intersects(trajectoryData, target.dir, 0, target, arguments))
+			return PROJECTILE_CONTINUE
+		if(target.bullet_act(arglist(arguments)) & PROJECTILE_STOP)
 			onBlockingHit(target)
 			return PROJECTILE_STOP
 
