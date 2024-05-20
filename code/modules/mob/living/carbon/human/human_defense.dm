@@ -8,6 +8,7 @@ meteor_act
 */
 
 /mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
+	// HB_AIMED is not accounted for since that just means not modifying def zone
 	switch(hitboxFlags)
 		if(HB_HEAD)
 			def_zone = BP_HEAD
