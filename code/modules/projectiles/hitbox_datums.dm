@@ -108,7 +108,7 @@
 			return medianLevels["[perceivedOwner.lying]"]["[owner.dir]"]
 		if(defZoneToLevel[defZone] == HBF_USEMEDIAN)
 			return medianLevels["[perceivedOwner.lying]"]["[owner.dir]"]
-		message_admins("Returned [defZoneToLevel[perceivedOwner.lying][defZone]] for [defZone]")
+		message_admins("Returned [defZoneToLevel["[perceivedOwner.lying]"][defZone]] for [defZone]")
 		return defZoneToLevel["[perceivedOwner.lying]"][defZone]
 
 /*
