@@ -1,7 +1,12 @@
 /// Pixels per turf
 #define PPT 32
 #define HPPT (PPT/2)
-#define MAXPIXELS 32
+/// the higher you go the higher you risk trajectories becoming wobbly and inaccurate.
+/// 16 is the absolute lowest which guarantees maximum accuracy.
+/// 20 is a safe bet between 24 and 16
+/// the higher this is ,the more performant the system is , since more of the math is done at once instead of in stages
+/// it is also more inaccurate the higher you go..
+#define MAXPIXELS 20
 SUBSYSTEM_DEF(bullets)
 	name = "Bullets"
 	wait = 1
@@ -62,8 +67,9 @@ SUBSYSTEM_DEF(bullets)
 	var/isTraversingLevel = FALSE
 	/// Used to animate the ending pixels
 	var/hasImpacted = FALSE
+	//var/list/painted = list()
 
-/datum/bullet_data/New(obj/item/projectile/referencedBullet, aimedZone, atom/firer, atom/target, list/targetCoords, pixelsPerTick, angleOffset, lifetime)
+/datum/bullet_data/New(obj/item/projectile/referencedBullet, aimedZone, atom/firer, atom/target, list/targetCoords, pixelsPerTick,zOffset, angleOffset, lifetime)
 	/*
 	if(!target)
 		message_admins("Created bullet without target , [referencedBullet]")
@@ -128,7 +134,8 @@ SUBSYSTEM_DEF(bullets)
 	//message_admins("level set to [firedLevel], towards [targetLevel]")
 	currentCoords[3] = firedLevel
 	movementRatios[3] = ((targetPos[3] + targetLevel - firedPos[3] - firedLevel)) / (round(distStartToFinish3D()) * MAXPIXELS)
-	message_admins("calculated movementRatio , [movementRatios[3]] , with maxPixels , [movementRatios[3] * MAXPIXELS]")
+	movementRatios[3] += zOffset / MAXPIXELS
+	message_admins("calculated movementRatio , [movementRatios[3]] , with maxPixels , [movementRatios[3] * MAXPIXELS] - offset [zOffset/MAXPIXELS]")
 	movementRatios[4] = getAngleByPosition()
 	movementRatios[4] += angleOffset
 	updatePathByAngle()
@@ -284,6 +291,8 @@ SUBSYSTEM_DEF(bullets)
 				projectile.pixel_y -= PPT * ty_change
 				bullet.updateLevel()
 				if(projectile.scanTurf(moveTurf, trajectoryData) == PROJECTILE_CONTINUE)
+					//bullet.painted.Add(moveTurf)
+					moveTurf.color = COLOR_RED
 					projectile.forceMove(moveTurf)
 					if(moveTurf == bullet.targetTurf)
 						message_admins("Reached target with level of [bulletCoords[3]]")
@@ -298,5 +307,7 @@ SUBSYSTEM_DEF(bullets)
 		if(bullet.lifetime < 0)
 			bullet.referencedBullet.finishDeletion()
 			bullet_queue -= bullet
+			//for(var/turf/painted in bullet.painted)
+			//	painted.color = initial(painted.color)
 
 

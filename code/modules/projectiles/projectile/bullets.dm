@@ -125,8 +125,8 @@
 	wounding_mult = WOUNDING_SMALL
 	matter = list(MATERIAL_STEEL = 0.4)
 
-/obj/item/projectile/bullet/pellet/launch_from_gun(atom/target, mob/user, obj/item/gun/launcher, target_zone, x_offset=0, y_offset=0, angle_offset)
-	for(var/entry in matter) // this allows for the projectile in the casing having the correct matter 
+/obj/item/projectile/bullet/pellet/launch_from_gun(atom/target, mob/user, obj/item/gun/launcher, target_zone, x_offset=0, y_offset=0,zOffset, angle_offset)
+	for(var/entry in matter) // this allows for the projectile in the casing having the correct matter
 		matter[entry] /= pellets // yet disallows for pellet shrapnel created on impact multiplying the matter count
 	. = ..()
 

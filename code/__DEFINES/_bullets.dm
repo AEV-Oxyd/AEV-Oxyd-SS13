@@ -13,39 +13,17 @@
 #define HBF_NOLEVEL -99999
 #define HBF_USEMEDIAN -100000
 
-// hitbox datum flags
-/* List format is expected to be
-list(
-	"[dir1]" = list(boundingBox1, boundingBox2...),
-	"[dir2]" = list(boundingBox1, boundingBox2...)
-	...
-	)
-
-*/
-#define HB_ATOMFORMAT 1<<1
-/* List format is expected to be
-*	list(
-		"lying(TRUE)" = list(
-			"[dir1]" = list(boundingBox1, boundingBox2...),
-			"[dir2]" = list(boundingBox1, boundingBox2...)
-			...
-			),
-		"lying(FALSE)" = list(
-			"[dir1]" = list(boundingBox1, boundingBox2...),
-			"[dir2]" = list(boundingBox1, boundingBox2...)
-			...
-			),
-		)
-*/
-#define HB_MOBFORMAT 1<<2
-
 
 //  return flags for the hitboxDatum , with functionality implemented in bullet_act. passed under hitboxFlags
 // these have no excuse to be general , add them for any object you want to add special functonality to with regards to where it is hit.
-
+/// GENERAL
+#define HB_AIMED 1<<1
 /// mob/living/carbon/human and any subtypes
-#define HB_HEAD 1<<1
-#define HB_CHESTARMS 1<<2
-#define HB_GROIN 1<<3
-#define HB_LEGS 1<<4
-#define HB_AIMED 1<<5
+#define HB_HEAD 1<<2
+#define HB_CHESTARMS 1<<3
+#define HB_GROIN 1<<4
+#define HB_LEGS 1<<5
+// barricades and whatever object implements this
+#define HB_WEAKPOINT 1<<6
+
+

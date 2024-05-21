@@ -21,95 +21,12 @@
 		BP_R_ARM = HBF_USEMEDIAN,
 		BP_L_ARM = HBF_USEMEDIAN
 	)
-	var/hbFlags = HB_ATOMFORMAT
-
-/datum/hitboxDatum/New()
-	. = ..()
-	var/median
-	var/volumeSum
-	var/calculatedVolume = 0
-	if(hbFlags & HB_ATOMFORMAT)
-		for(var/direction in list(NORTH, SOUTH, EAST , WEST))
-			median = 0
-			volumeSum = 0
-			for(var/list/boundingBox in boundingBoxes["[direction]"])
-				calculatedVolume = (boundingBox[4] - boundingBox[2]) * (boundingBox[3] - boundingBox[1])
-				median += ((boundingBox[5] + boundingBox[6])/2) * calculatedVolume
-				volumeSum += calculatedVolume
-			medianLevels["[direction]"] = median / volumeSum
-	else
-		for(var/state in boundingBoxes)
-			for(var/direction in list(NORTH, SOUTH, EAST , WEST))
-				median = 0
-				volumeSum = 0
-				for(var/list/boundingBox in boundingBoxes[state]["[direction]"])
-					calculatedVolume = (boundingBox[4] - boundingBox[2]) * (boundingBox[3] - boundingBox[1])
-					median += ((boundingBox[5] + boundingBox[6])/2) * calculatedVolume
-					volumeSum += calculatedVolume
-				medianLevels[state]["[direction]"] = median / volumeSum
-
 
 /// this can be optimized further by making the calculations not make a new list , and instead be added when checking line intersection - SPCR 2024
 /datum/hitboxDatum/proc/intersects(list/lineData,ownerDirection, turf/incomingFrom, atom/owner, list/arguments)
-	var/global/worldX
-	var/global/worldY
-	worldX = owner.x * 32
-	worldY = owner.y * 32
-	if(hbFlags & HB_ATOMFORMAT)
-		for(var/list/boundingData in boundingBoxes["[owner.dir]"])
-			/// basic AABB but only for the Z-axis.
-			if(boundingData[5] > max(lineData[5],lineData[6]) || boundingData[6] < min(lineData[6],lineData[5]))
-				continue
-			if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY)))
-				arguments[3] = boundingData[7]
-				return TRUE
-			if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY)))
-				arguments[3] = boundingData[7]
-				return TRUE
-			if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[4] + worldY, boundingData[3] + worldX, boundingData[4] + worldY)))
-				arguments[3] = boundingData[7]
-				return TRUE
-			if(lineIntersect(lineData, list(boundingData[3] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY)))
-				arguments[3] = boundingData[7]
-				return TRUE
-		return FALSE
-	else
-		var/mob/living/perceivedOwner = src.owner
-		for(var/list/boundingData in boundingBoxes["[perceivedOwner.lying]"]["[owner.dir]"])
-			/// basic AABB but only for the Z-axis.
-			if(boundingData[5] > max(lineData[5],lineData[6]) || boundingData[6] < min(lineData[6],lineData[5]))
-				continue
-			if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY)))
-				arguments[3] = boundingData[7]
-				return TRUE
-			if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY)))
-				arguments[3] = boundingData[7]
-				return TRUE
-			if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[4] + worldY, boundingData[3] + worldX, boundingData[4] + worldY)))
-				arguments[3] = boundingData[7]
-				return TRUE
-			if(lineIntersect(lineData, list(boundingData[3] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY)))
-				arguments[3] = boundingData[7]
-				return TRUE
-		return FALSE
-
 
 /datum/hitboxDatum/proc/getAimingLevel(atom/shooter, defZone)
-	if(hbFlags & HB_ATOMFORMAT)
-		if(defZone == null || (!defZone in defZoneToLevel))
-			return medianLevels["[owner.dir]"]
-		if(defZoneToLevel[defZone] == HBF_USEMEDIAN)
-			return medianLevels["[owner.dir]"]
-		message_admins("Returned [defZoneToLevel[defZone]] for [defZone]")
-		return defZoneToLevel[defZone]
-	else
-		var/mob/living/perceivedOwner = src.owner
-		if(defZone == null || (!defZone in defZoneToLevel["[perceivedOwner.lying]"]))
-			return medianLevels["[perceivedOwner.lying]"]["[owner.dir]"]
-		if(defZoneToLevel[defZone] == HBF_USEMEDIAN)
-			return medianLevels["[perceivedOwner.lying]"]["[owner.dir]"]
-		message_admins("Returned [defZoneToLevel["[perceivedOwner.lying]"][defZone]] for [defZone]")
-		return defZoneToLevel["[perceivedOwner.lying]"][defZone]
+
 
 /*
 boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) {
@@ -163,6 +80,108 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		newOverlay.pixel_x = hitbox[1] - 1
 		newOverlay.pixel_y = hitbox[2] - 1
 		owner.overlays.Add(newOverlay)
+
+/datum/hitboxDatum/atom
+
+/datum/hitboxDatum/atom/New()
+	. = ..()
+	var/median
+	var/volumeSum
+	var/calculatedVolume = 0
+	for(var/direction in list(NORTH, SOUTH, EAST , WEST))
+		median = 0
+		volumeSum = 0
+		for(var/list/boundingBox in boundingBoxes["[direction]"])
+			calculatedVolume = (boundingBox[4] - boundingBox[2]) * (boundingBox[3] - boundingBox[1])
+			median += ((boundingBox[5] + boundingBox[6])/2) * calculatedVolume
+			volumeSum += calculatedVolume
+		medianLevels["[direction]"] = median / volumeSum
+
+/datum/hitboxDatum/atom/getAimingLevel(atom/shooter, defZone)
+	if(defZone == null || (!defZone in defZoneToLevel))
+		return medianLevels["[owner.dir]"]
+	if(defZoneToLevel[defZone] == HBF_USEMEDIAN)
+		return medianLevels["[owner.dir]"]
+	message_admins("Returned [defZoneToLevel[defZone]] for [defZone]")
+	return defZoneToLevel[defZone]
+
+	/// this can be optimized further by making the calculations not make a new list , and instead be added when checking line intersection - SPCR 2024
+/datum/hitboxDatum/atom/intersects(list/lineData,ownerDirection, turf/incomingFrom, atom/owner, list/arguments)
+	var/global/worldX
+	var/global/worldY
+	worldX = owner.x * 32
+	worldY = owner.y * 32
+	for(var/list/boundingData in boundingBoxes["[owner.dir]"])
+		/// basic AABB but only for the Z-axis.
+		if(boundingData[5] > max(lineData[5],lineData[6]) || boundingData[6] < min(lineData[6],lineData[5]))
+			continue
+		if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY)))
+			arguments[3] = boundingData[7]
+			return TRUE
+		if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY)))
+			arguments[3] = boundingData[7]
+			return TRUE
+		if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[4] + worldY, boundingData[3] + worldX, boundingData[4] + worldY)))
+			arguments[3] = boundingData[7]
+			return TRUE
+		if(lineIntersect(lineData, list(boundingData[3] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY)))
+			arguments[3] = boundingData[7]
+			return TRUE
+	return FALSE
+
+/datum/hitboxDatum/mob
+
+/datum/hitboxDatum/mob/New()
+	. = ..()
+	var/median
+	var/volumeSum
+	var/calculatedVolume = 0
+	for(var/state in boundingBoxes)
+		for(var/direction in list(NORTH, SOUTH, EAST , WEST))
+			median = 0
+			volumeSum = 0
+			for(var/list/boundingBox in boundingBoxes[state]["[direction]"])
+				calculatedVolume = (boundingBox[4] - boundingBox[2]) * (boundingBox[3] - boundingBox[1])
+				median += ((boundingBox[5] + boundingBox[6])/2) * calculatedVolume
+				volumeSum += calculatedVolume
+			medianLevels[state]["[direction]"] = median / volumeSum
+
+/datum/hitboxDatum/mob/getAimingLevel(atom/shooter, defZone)
+	var/mob/living/perceivedOwner = src.owner
+	if(defZone == null || (!defZone in defZoneToLevel["[perceivedOwner.lying]"]))
+		return medianLevels["[perceivedOwner.lying]"]["[owner.dir]"]
+	if(defZoneToLevel[defZone] == HBF_USEMEDIAN)
+		return medianLevels["[perceivedOwner.lying]"]["[owner.dir]"]
+	message_admins("Returned [defZoneToLevel["[perceivedOwner.lying]"][defZone]] for [defZone]")
+	return defZoneToLevel["[perceivedOwner.lying]"][defZone]
+
+/datum/hitboxDatum/mob/intersects(list/lineData, ownerDirection, turf/incomingFrom, atom/owner, list/arguments)
+	. = ..()
+	var/global/worldX
+	var/global/worldY
+	worldX = owner.x * 32
+	worldY = owner.y * 32
+	var/mob/living/perceivedOwner = src.owner
+	for(var/list/boundingData in boundingBoxes["[perceivedOwner.lying]"]["[owner.dir]"])
+		/// basic AABB but only for the Z-axis.
+		if(boundingData[5] > max(lineData[5],lineData[6]) || boundingData[6] < min(lineData[6],lineData[5]))
+			continue
+		if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY)))
+			arguments[3] = boundingData[7]
+			return TRUE
+		if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY)))
+			arguments[3] = boundingData[7]
+			return TRUE
+		if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[4] + worldY, boundingData[3] + worldX, boundingData[4] + worldY)))
+			arguments[3] = boundingData[7]
+			return TRUE
+		if(lineIntersect(lineData, list(boundingData[3] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY)))
+			arguments[3] = boundingData[7]
+			return TRUE
+	return FALSE
+
+
+
 
 
 

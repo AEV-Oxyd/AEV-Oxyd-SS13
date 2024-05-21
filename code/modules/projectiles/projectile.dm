@@ -262,7 +262,7 @@ GLOBAL_LIST(projectileDamageConstants)
 		p_y = text2num(mouse_control["icon-y"])
 
 //called to launch a projectile
-/obj/item/projectile/proc/launch(atom/target, target_zone, x_offset = 0, y_offset = 0, angle_offset = 0, proj_sound, user_recoil = 0)
+/obj/item/projectile/proc/launch(atom/target, target_zone, x_offset = 0, y_offset = 0,zOffset = 0, angle_offset = 0, proj_sound, user_recoil = 0)
 	var/turf/curloc = get_turf(src)
 	var/turf/targloc = get_turf(target)
 	if (!istype(targloc) || !istype(curloc))
@@ -284,13 +284,13 @@ GLOBAL_LIST(projectileDamageConstants)
 	check_hit_zone(distance, user_recoil)
 
 	muzzle_effect(effect_transform)
-	new /datum/bullet_data(src, target_zone, usr, target, list(x_offset, y_offset, target.z), 48, angle_offset, 50)
+	new /datum/bullet_data(src, target_zone, usr, target, list(x_offset, y_offset, target.z), 48,zOffset, angle_offset, 50)
 	//Process()
 
 	return FALSE
 
 //called to launch a projectile from a gun
-/obj/item/projectile/proc/launch_from_gun(atom/target, mob/user, obj/item/gun/launcher, target_zone, x_offset=0, y_offset=0, angle_offset)
+/obj/item/projectile/proc/launch_from_gun(atom/target, mob/user, obj/item/gun/launcher, target_zone, x_offset=0, y_offset=0, zOffset=0, angle_offset)
 	if(user == target) //Shooting yourself
 		user.bullet_act(src, target_zone)
 		qdel(src)
@@ -323,7 +323,7 @@ GLOBAL_LIST(projectileDamageConstants)
 		firer = user
 	shot_from = launcher.name
 	silenced = launcher.item_flags & SILENT
-	return launch(target, target_zone, x_offset, y_offset, angle_offset, user_recoil = recoil)
+	return launch(target, target_zone, x_offset, y_offset,zOffset, angle_offset, user_recoil = recoil)
 
 /obj/item/projectile/proc/istargetloc(mob/living/target_mob)
 	if(target_mob && original)

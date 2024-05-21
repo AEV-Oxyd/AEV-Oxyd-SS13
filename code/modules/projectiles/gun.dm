@@ -619,6 +619,7 @@
 
 	var/list/paramList = params2list(params)
 	var/offset = user.calculate_offset(init_offset_with_brace(user))
+	var/zOffset = offset/300 * sign(rand(-1,1))
 	var/remainder = offset % 4
 	offset /= 4
 	offset = round(offset)
@@ -635,7 +636,7 @@
 
 	offset = roll(2, offset) - (offset + 1)
 
-	return !P.launch_from_gun(target, user, src, target_zone, text2num(paramList["icon-x"]), text2num(paramList["icon-y"]), offset)
+	return !P.launch_from_gun(target, user, src, target_zone, text2num(paramList["icon-x"]), text2num(paramList["icon-y"]), zOffset,offset)
 
 //Support proc for calculate_offset
 /obj/item/gun/proc/init_offset_with_brace(mob/living/user)
