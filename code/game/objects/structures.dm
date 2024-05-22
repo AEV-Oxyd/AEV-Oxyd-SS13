@@ -9,7 +9,7 @@
 #define LEVEL_LYING -0.5
 #define LEVEL_LOWWALL 0
 #define LEVEL_TABLE 0.2
-#define LEVEL_STANDING 0.7
+#define LEVEL_HEAD 0.7
 #define LEVEL_ABOVE 1
 */
 /// Byond doesn't like if you try to put defines inside... so just use the numbers. check the latest values at _bullet.dm in _DEFINES folder. SPCR 2024

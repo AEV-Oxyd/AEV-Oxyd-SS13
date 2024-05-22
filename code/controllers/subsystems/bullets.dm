@@ -97,11 +97,11 @@ SUBSYSTEM_DEF(bullets)
 				if(firer:lying)
 					src.firedLevel = LEVEL_LYING
 				else
-					src.firedLevel = LEVEL_STANDING
+					src.firedLevel = LEVEL_HEAD
 			else
-				src.firedLevel = LEVEL_STANDING
+				src.firedLevel = LEVEL_HEAD
 		else
-			src.firedLevel = LEVEL_STANDING
+			src.firedLevel = LEVEL_HEAD
 	if(target)
 		src.target = target
 		src.targetTurf = get_turf(target)
@@ -113,17 +113,17 @@ SUBSYSTEM_DEF(bullets)
 					if(target:lying)
 						src.targetLevel = LEVEL_LYING
 					else
-						src.targetLevel = LEVEL_STANDING
+						src.targetLevel = LEVEL_HEAD
 				else
-					src.targetLevel = LEVEL_STANDING
+					src.targetLevel = LEVEL_HEAD
 			else if(istype(target, /obj/structure/low_wall))
 				src.targetLevel = LEVEL_LOWWALL
 			else if(istype(target, /obj/structure/window))
-				src.targetLevel = LEVEL_STANDING
+				src.targetLevel = LEVEL_HEAD
 			else if(istype(target, /obj/structure/table))
 				src.targetLevel = LEVEL_TABLE
 			else if(iswall(target))
-				src.targetLevel = LEVEL_STANDING
+				src.targetLevel = LEVEL_HEAD
 			else if(isturf(target))
 				src.targetLevel = LEVEL_TURF
 			else if(isitem(target))
@@ -204,9 +204,9 @@ SUBSYSTEM_DEF(bullets)
 			currentLevel = LEVEL_LOWWALL
 		if(LEVEL_LOWWALL to LEVEL_TABLE)
 			currentLevel = LEVEL_TABLE
-		if(LEVEL_TABLE to LEVEL_STANDING)
-			currentLevel = LEVEL_STANDING
-		if(LEVEL_STANDING to INFINITY)
+		if(LEVEL_TABLE to LEVEL_HEAD)
+			currentLevel = LEVEL_HEAD
+		if(LEVEL_HEAD to INFINITY)
 			currentLevel = LEVEL_ABOVE
 
 /datum/bullet_data/proc/getLevel(height)
@@ -221,9 +221,9 @@ SUBSYSTEM_DEF(bullets)
 			return LEVEL_LOWWALL
 		if(LEVEL_LOWWALL to LEVEL_TABLE)
 			return LEVEL_TABLE
-		if(LEVEL_TABLE to LEVEL_STANDING)
-			return LEVEL_STANDING
-		if(LEVEL_STANDING to INFINITY)
+		if(LEVEL_TABLE to LEVEL_HEAD)
+			return LEVEL_HEAD
+		if(LEVEL_HEAD to INFINITY)
 			return LEVEL_ABOVE
 
 /datum/controller/subsystem/bullets/proc/reset()
