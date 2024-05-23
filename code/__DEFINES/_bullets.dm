@@ -18,6 +18,13 @@
 #define HBF_NOLEVEL -99999
 #define HBF_USEMEDIAN -100000
 
+#define PIXEL_FUDGE (1/1024)
+
+proc/snapNum(n)
+	. = n
+	n = round(n,1)
+	if(abs(.-n) < PIXEL_FUDGE) . = n
+
 
 //  return flags for the hitboxDatum , with functionality implemented in bullet_act. passed under hitboxFlags
 // these have no excuse to be general , add them for any object you want to add special functonality to with regards to where it is hit.

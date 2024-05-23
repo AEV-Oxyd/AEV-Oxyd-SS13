@@ -67,7 +67,8 @@ SUBSYSTEM_DEF(bullets)
 	var/isTraversingLevel = FALSE
 	/// Used to animate the ending pixels
 	var/hasImpacted = FALSE
-	//var/list/painted = list()
+	var/list/painted = list()
+	var/traveled
 
 /datum/bullet_data/New(obj/item/projectile/referencedBullet, aimedZone, atom/firer, atom/target, list/targetCoords, pixelsPerTick,zOffset, angleOffset, lifetime)
 	/*
@@ -97,9 +98,9 @@ SUBSYSTEM_DEF(bullets)
 				if(firer:lying)
 					src.firedLevel = LEVEL_LYING
 				else
-					src.firedLevel = LEVEL_HEAD
+					src.firedLevel = LEVEL_CHEST
 			else
-				src.firedLevel = LEVEL_HEAD
+				src.firedLevel = LEVEL_CHEST
 		else
 			src.firedLevel = LEVEL_HEAD
 	if(target)
@@ -133,9 +134,10 @@ SUBSYSTEM_DEF(bullets)
 
 	//message_admins("level set to [firedLevel], towards [targetLevel]")
 	currentCoords[3] = firedLevel
-	movementRatios[3] = ((targetPos[3] + targetLevel - firedPos[3] - firedLevel)) / (round(distStartToFinish3D()) * MAXPIXELS)
-	movementRatios[3] += zOffset / MAXPIXELS
-	message_admins("calculated movementRatio , [movementRatios[3]] , with maxPixels , [movementRatios[3] * MAXPIXELS] - offset [zOffset/MAXPIXELS]")
+	message_admins("Distance to target is [distStartToFinish2D()] , startingLevel [firedLevel] , targetLevel [targetLevel]")
+	movementRatios[3] = (targetLevel - firedLevel) / distStartToFinish2D()
+	//movementRatios[3] += zOffset / MAXPIXELS
+	message_admins("calculated movementRatio , [movementRatios[3]]")
 	movementRatios[4] = getAngleByPosition()
 	movementRatios[4] += angleOffset
 	updatePathByAngle()
@@ -153,8 +155,8 @@ SUBSYSTEM_DEF(bullets)
 	updatePathByAngle()
 
 /datum/bullet_data/proc/getAngleByPosition()
-	var/x = ((targetPos[1] - firedPos[1]) * PPT + targetCoords[1] - firedCoordinates[1] - HPPT)
-	var/y = ((targetPos[2] - firedPos[2]) * PPT + targetCoords[2] - firedCoordinates[2] - HPPT)
+	var/x = ((targetPos[1] - firedPos[1]) * PPT + targetCoords[1] - firedCoordinates[1])
+	var/y = ((targetPos[2] - firedPos[2]) * PPT + targetCoords[2] - firedCoordinates[2])
 	return ATAN2(y, x)
 
 /datum/bullet_data/proc/updatePathByAngle()
@@ -168,7 +170,7 @@ SUBSYSTEM_DEF(bullets)
 
 /datum/bullet_data/proc/updatePathByPosition()
 	var/matrix/rotation = matrix()
-	movementRatios[3] = ((targetPos[3] + targetLevel - firedPos[3] - firedLevel)) / (round(distStartToFinish3D()) * MAXPIXELS)
+	movementRatios[3] = ((targetPos[3] + targetLevel - firedPos[3] - firedLevel)) / (round(distStartToFinish3D()) * PPT)
 	movementRatios[4] = getAngleByPosition()
 	movementRatios[1] = sin(movementRatios[4])
 	movementRatios[2] = cos(movementRatios[4])
@@ -176,11 +178,15 @@ SUBSYSTEM_DEF(bullets)
 	referencedBullet.transform = rotation
 
 /datum/bullet_data/proc/distStartToFinish2D()
-	return DIST_EUCLIDIAN_2D((targetPos[1]*PPT +targetCoords[1] + 16)/PPT,(targetPos[2]*PPT + targetCoords[2] + 16)/PPT, (firedPos[1]*PPT +firedCoordinates[1] + 16)/PPT, (firedPos[2]*PPT +firedCoordinates[2] + 16)/PPT)
+	var/x1 = ((targetPos[1])*PPT + targetCoords[1] + 16)
+	var/y1 = ((targetPos[2])*PPT + targetCoords[2] + 16)
+	var/x2 = ((firedPos[1])*PPT + firedCoordinates[1] + 16)
+	var/y2 = ((firedPos[2])*PPT + firedCoordinates[2] + 16)
+	return DIST_EUCLIDIAN_2D(x1,y1,x2,y2)
 
 /datum/bullet_data/proc/distStartToFinish3D()
-		return DIST_EUCLIDIAN_3D((targetPos[1]*PPT)/PPT,(targetPos[2]*PPT)/PPT,targetPos[3] + targetLevel ,(firedPos[1]*PPT)/PPT, (firedPos[2]*PPT)/PPT, firedPos[3] + firedLevel)
-		//return DIST_EUCLIDIAN_3D((targetPos[1]*PPT +targetCoords[1] + 16)/PPT,(targetPos[2]*PPT + targetCoords[2] + 16)/PPT,targetPos[3] + targetLevel ,(firedPos[1]*PPT +firedCoordinates[1] + 16)/PPT, (firedPos[2]*PPT +firedCoordinates[2] + 16)/PPT, firedPos[3] + firedLevel)
+	return DIST_EUCLIDIAN_3D((targetPos[1]-1)*PPT + 16 + targetCoords[1],(targetPos[2]-1)*PPT + 16 + targetCoords[2],targetPos[3] + targetLevel ,(firedPos[1]*PPT)/PPT, (firedPos[2]*PPT)/PPT, firedPos[3] + firedLevel)
+	//return DIST_EUCLIDIAN_3D((targetPos[1]*PPT +targetCoords[1] + 16)/PPT,(targetPos[2]*PPT + targetCoords[2] + 16)/PPT,targetPos[3] + targetLevel ,(firedPos[1]*PPT +firedCoordinates[1] + 16)/PPT, (firedPos[2]*PPT +firedCoordinates[2] + 16)/PPT, firedPos[3] + firedLevel)
 
 
 
@@ -255,19 +261,17 @@ SUBSYSTEM_DEF(bullets)
 		trajectoryData[4] = bulletRatios[2] * pixelsToTravel + trajectoryData[2]
 		trajectoryData[5] = bulletCoords[3]
 		trajectoryData[6] = trajectoryData[5] + bulletRatios[3] * pixelsToTravel
-		while(pixelsToTravel > MAXPIXELS)
+		while(pixelsToTravel > 0)
 			pixelsThisStep = pixelsToTravel > MAXPIXELS ? MAXPIXELS : pixelsToTravel
 			pixelsToTravel -= pixelsThisStep
+			bullet.traveled += pixelsThisStep
 			bulletCoords[1] += (bulletRatios[1] * pixelsThisStep)
 			bulletCoords[2] += (bulletRatios[2] * pixelsThisStep)
 			bulletCoords[3] += (bulletRatios[3] * pixelsThisStep)
-			//message_admins("[bulletCoords[1]], [bulletCoords[2]]")
-			//message_admins("trajectory data for bullet : [trajectoryData[1]] , [trajectoryData[2]] ===== [trajectoryData[3]], [trajectoryData[4]]")
-			x_change = round(abs(bulletCoords[1]) / HPPT) * sign(bulletCoords[1])
-			y_change = round(abs(bulletCoords[2]) / HPPT) * sign(bulletCoords[2])
+			//message_admins("added [(bulletRatios[3] * pixelsThisStep)]  , pixels [pixelsThisStep] , curSum [bulletCoords[3]]")
+			x_change = trunc(bulletCoords[1] / HPPT)
+			y_change = trunc(bulletCoords[2] / HPPT)
 			z_change = round(abs(bulletCoords[3])) * sign(bulletCoords[3]) - (bulletCoords[3] < 0)
-			//message_admins("TRAJ : [trajectoryData[3]] [trajectoryData[4]]")
-			//z_change = round(abs(bulletCoords[3])) * sign(bulletCoords[3])
 			while(x_change || y_change)
 				if(QDELETED(projectile))
 					bullet_queue -= bullet
@@ -284,18 +288,18 @@ SUBSYSTEM_DEF(bullets)
 				bullet.lastChanges[3] += tz_change
 				bulletCoords[1] -= PPT * tx_change
 				bulletCoords[2] -= PPT * ty_change
-				//trajectoryData[3] += PPT * tx_change
-				//trajectoryData[4] += PPT * ty_change
 				bulletCoords[3] -= tz_change
 				projectile.pixel_x -= PPT * tx_change
 				projectile.pixel_y -= PPT * ty_change
 				bullet.updateLevel()
 				if(projectile.scanTurf(moveTurf, trajectoryData) == PROJECTILE_CONTINUE)
-					//bullet.painted.Add(moveTurf)
+					bullet.painted.Add(moveTurf)
 					moveTurf.color = COLOR_RED
 					projectile.forceMove(moveTurf)
-					if(moveTurf == bullet.targetTurf)
-						message_admins("Reached target with level of [bulletCoords[3]]")
+					if(moveTurf != bullet.targetTurf)
+						message_admins("level of [bulletCoords[3]], [trajectoryData[6]], pixels : [bullet.traveled],")
+					else
+						message_admins("reached target with level of [bulletCoords[3]] , pixels : [bullet.traveled], diff : [bullet.distStartToFinish2D() - bullet.traveled]")
 
 				moveTurf = null
 
@@ -307,7 +311,7 @@ SUBSYSTEM_DEF(bullets)
 		if(bullet.lifetime < 0)
 			bullet.referencedBullet.finishDeletion()
 			bullet_queue -= bullet
-			//for(var/turf/painted in bullet.painted)
-			//	painted.color = initial(painted.color)
+			for(var/turf/painted in bullet.painted)
+				painted.color = initial(painted.color)
 
 
