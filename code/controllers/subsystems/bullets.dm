@@ -6,7 +6,7 @@
 /// 20 is a safe bet between 24 and 16
 /// the higher this is ,the more performant the system is , since more of the math is done at once instead of in stages
 /// it is also more inaccurate the higher you go..
-#define MAXPIXELS 20
+#define MAXPIXELS 16
 SUBSYSTEM_DEF(bullets)
 	name = "Bullets"
 	wait = 1
@@ -272,7 +272,7 @@ SUBSYSTEM_DEF(bullets)
 			x_change = trunc(bulletCoords[1] / HPPT)
 			y_change = trunc(bulletCoords[2] / HPPT)
 			z_change = round(abs(bulletCoords[3])) * sign(bulletCoords[3]) - (bulletCoords[3] < 0)
-			while(x_change || y_change)
+			if(x_change || y_change)
 				if(QDELETED(projectile))
 					bullet_queue -= bullet
 					break
@@ -299,9 +299,14 @@ SUBSYSTEM_DEF(bullets)
 					if(moveTurf != bullet.targetTurf)
 						message_admins("level of [bulletCoords[3]], [trajectoryData[6]], pixels : [bullet.traveled],")
 					else
-						message_admins("reached target with level of [bulletCoords[3]] , pixels : [bullet.traveled], diff : [bullet.distStartToFinish2D() - bullet.traveled]")
+						message_admins("reached target with level of [bulletCoords[3]] , pixels : [bullet.traveled], diff : [bullet.distStartToFinish2D() - bullet.traveled] , traj [trajectoryData[6]]")
 
 				moveTurf = null
+			else
+				if(get_turf(projectile) == bullet.targetTurf)
+					message_admins("reached target with level of [bulletCoords[3]] , pixels : [bullet.traveled], diff : [bullet.distStartToFinish2D() - bullet.traveled] , traj [trajectoryData[6]]")
+				else
+					message_admins("level of [bulletCoords[3]], [trajectoryData[6]], pixels : [bullet.traveled],")
 
 			bullet.lifetime--
 
