@@ -12,16 +12,6 @@
 #define LEVEL_HEAD 0.7
 #define LEVEL_ABOVE 1
 */
-/// Byond doesn't like if you try to put defines inside... so just use the numbers. check the latest values at _bullet.dm in _DEFINES folder. SPCR 2024
-GLOBAL_LIST_INIT(structureBlockingLevels, list(\
-		/obj/structure = 1,\
-		/obj/structure/barricade = 0,\
-		/obj/structure/low_wall = 0,\
-		/obj/structure/table = list(list(0, 0.2)),\
-		/// One day i will get around to turning every machinery into a structure. SPCR - 2024
-		/obj/machinery/deployable/barrier = 0.2,\
-	) \
-)
 
 /**
  * Any projectile under this height will be blocked by this structure. Can be a list if its not meant to be continous
@@ -61,33 +51,7 @@ GLOBAL_LIST_INIT(structureBlockingLevels, list(\
 	return
 
 /obj/structure/proc/check_cover(obj/item/projectile/P, turf/from)
-	var/bulletHeight = P.dataRef.currentCoords[3]
-	var/checkingType = type
-	var/willBlock = FALSE
-	//message_admins("bullet height at [bulletHeight]")
-	while(checkingType)
-		if(GLOB.structureBlockingLevels[checkingType])
-			break
-		checkingType = parent_type
-		// we break when at the very base
-		if(checkingType == /obj/structure)
-			break
-	if(islist(GLOB.structureBlockingLevels[checkingType]))
-		for(var/list/coveredSection in GLOB.structureBlockingLevels[checkingType])
-			if(bulletHeight < coveredSection[2] && bulletHeight > coveredSection[1])
-				willBlock = TRUE
-				break
-	else
-		willBlock = bulletHeight < GLOB.structureBlockingLevels[checkingType]
-
-	if(willBlock)
-		willBlock = P.check_penetrate(src)
-		take_damage(P.get_structure_damage())
-		if (!QDELETED(src))
-			visible_message(SPAN_WARNING("[P] hits \the [src]!"))
-		else
-			visible_message(SPAN_WARNING("[src] breaks down!"))
-	return willBlock
+	return TRUE
 
 /**
  * An overridable proc used by SSfalling to determine whether if the object deals

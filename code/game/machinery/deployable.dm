@@ -240,36 +240,7 @@ for reference:
 			return TRUE
 
 /obj/machinery/deployable/barrier/proc/check_cover(obj/item/projectile/P, turf/from)
-	var/bulletHeight = P.dataRef.currentCoords[3]
-	var/checkingType = type
-	var/willBlock = FALSE
-	while(checkingType)
-		if(GLOB.structureBlockingLevels[checkingType])
-			break
-		checkingType = parent_type
-		// we break when at the very base
-		if(checkingType == /obj/structure)
-			break
-	message_admins("Using blocking datum from GLOB.structureBlockingLevels[checkingType]")
-	if(islist(GLOB.structureBlockingLevels[checkingType]))
-		for(var/list/coveredSection in GLOB.structureBlockingLevels[checkingType])
-			if(bulletHeight > coveredSection[2])
-				continue
-			if(bulletHeight < coveredSection[1])
-				continue
-			willBlock = TRUE
-			break
-	else
-		willBlock = bulletHeight > GLOB.structureBlockingLevels[checkingType]
-
-	if(willBlock)
-		willBlock = P.check_penetrate(src)
-		take_damage(P.get_structure_damage())
-		if (!QDELETED(src))
-			visible_message(SPAN_WARNING("[P] hits \the [src]!"))
-		else
-			visible_message(SPAN_WARNING("[src] breaks down!"))
-	return willBlock
+	return TRUE
 
 /obj/machinery/deployable/barrier/proc/explode()
 
