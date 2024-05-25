@@ -39,7 +39,6 @@ GLOBAL_LIST(projectileDamageConstants)
 	var/atom/original = null // the target clicked (not necessarily where the projectile is headed). Should probably be renamed to 'target' or something.
 	var/turf/starting = null // the projectile's starting turf
 	var/list/permutated = list() // we've passed through these atoms, don't try to hit them again
-	var/height // starts undefined, used for Zlevel shooting
 
 	var/p_x = 16
 	var/p_y = 16 // the pixel location of the tile that the player clicked. Default is the center
@@ -309,12 +308,6 @@ GLOBAL_LIST(projectileDamageConstants)
 				forceMove(get_turf(H.client.eye))
 				if(!(loc.Adjacent(target)))
 					forceMove(get_turf(H))
-			if(config.z_level_shooting && H.client.eye == H.shadow && !height) // Player is watching a higher zlevel
-				var/newTurf = get_turf(H.shadow)
-				if(!(locate(/obj/structure/catwalk) in newTurf)) // Can't shoot through catwalks
-					forceMove(newTurf)
-					height = HEIGHT_HIGH // We are shooting from below, this protects resting players at the expense of windows
-					original = get_turf(original) // Aim at turfs instead of mobs, to ensure we don't hit players
 
 	// Special case for mechs, in a ideal world this should always go for the top-most atom.
 	if(istype(launcher.loc, /obj/item/mech_equipment))
@@ -383,10 +376,6 @@ GLOBAL_LIST(projectileDamageConstants)
 	miss_modifier = 0
 
 	var/result = PROJECTILE_CONTINUE
-
-	if(config.z_level_shooting && height == HEIGHT_HIGH)
-		if(target_mob.resting == TRUE || target_mob.stat == TRUE)
-			return FALSE // Bullet flies overhead
 
 	if(target_mob != original) // If mob was not clicked on / is not an NPC's target, checks if the mob is concealed by cover
 		var/turf/cover_loc = get_step(get_turf(target_mob), get_dir(get_turf(target_mob), starting))

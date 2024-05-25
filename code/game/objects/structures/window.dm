@@ -150,16 +150,6 @@
 
 /obj/structure/window/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 
-	if(config.z_level_shooting && Proj.height)
-		if(Proj.height == HEIGHT_LOW)// Bullet is too low
-			return PROJECTILE_STOP
-		else if(Proj.height == HEIGHT_HIGH) // Guaranteed hit
-			var/proj_damage = Proj.get_structure_damage()
-			if(proj_damage)
-				hit(proj_damage)
-			..()
-			return PROJECTILE_STOP
-
 	. = PROJECTILE_CONTINUE
 	var/targetzone = check_zone(Proj.def_zone)
 	if(targetzone in list(BP_CHEST, BP_HEAD, BP_L_ARM, BP_R_ARM))
