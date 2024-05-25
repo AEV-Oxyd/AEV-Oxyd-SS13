@@ -50,6 +50,9 @@ see multiz/movement.dm for some info.
 
 	var/tmp/list/climbers = list()
 
+/turf/simulated/open/take_damage(target_power, damage_type)
+	return TRUE
+
 /turf/simulated/open/New()
 	icon_state = "transparentclickable"
 	..()

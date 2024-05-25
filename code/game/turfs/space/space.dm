@@ -18,6 +18,9 @@
 	update_starlight()
 	..()
 
+/turf/space/take_damage(target_power, damage_type)
+	return TRUE
+
 /turf/space/update_plane()
 	return
 

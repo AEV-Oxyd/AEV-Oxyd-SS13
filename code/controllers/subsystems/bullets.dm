@@ -138,8 +138,7 @@ SUBSYSTEM_DEF(bullets)
 
 	//message_admins("level set to [firedLevel], towards [targetLevel]")
 	currentCoords[3] = firedLevel
-	firedLevel += firedPos[3] * LEVEL_MAX
-	targetLevel += targetCoords[3] * LEVEL_MAX
+	targetLevel += (targetCoords[3] - firedPos[3])* LEVEL_MAX
 	/// These use LERP until a way can be figured out to calculate a level for amount of pixels traversed
 	//message_admins("Distance to target is [distStartToFinish2D()] , startingLevel [firedLevel] , targetLevel [targetLevel]")
 	//movementRatios[3] = (targetLevel - firedLevel) / (distStartToFinish2D() * PPT)
@@ -270,7 +269,8 @@ SUBSYSTEM_DEF(bullets)
 		trajectoryData[3] = bulletRatios[1] * pixelsToTravel + trajectoryData[1]
 		trajectoryData[4] = bulletRatios[2] * pixelsToTravel + trajectoryData[2]
 		trajectoryData[5] = bulletCoords[3]
-		trajectoryData[6] = trajectoryData[5] + LERP(bullet.firedLevel, bullet.targetLevel,(bullet.traveled + pixelsToTravel)/bullet.distStartToFinish2D()) - projectile.z * LEVEL_MAX
+		/// Yes this is inaccurate for multi-Z  transitions somewhat , if someone wants to create a proper equation for pseudo 3D they're welcome to.
+		trajectoryData[6] = trajectoryData[5] + LERP(bullet.firedLevel, bullet.targetLevel,(bullet.traveled + pixelsToTravel)/bullet.distStartToFinish2D()) - (projectile.z - bullet.firedPos[3] * LEVEL_MAX)
 		bullet.trajSum += bulletRatios[3] * pixelsToTravel
 		while(pixelsToTravel > 0)
 			pixelsThisStep = pixelsToTravel > MAXPIXELS ? MAXPIXELS : pixelsToTravel
@@ -278,8 +278,8 @@ SUBSYSTEM_DEF(bullets)
 			bullet.traveled += pixelsThisStep
 			bulletCoords[1] += (bulletRatios[1] * pixelsThisStep)
 			bulletCoords[2] += (bulletRatios[2] * pixelsThisStep)
-			bulletCoords[3] = LERP(bullet.firedLevel, bullet.targetLevel, bullet.traveled/bullet.distStartToFinish2D()) - projectile.z * LEVEL_MAX
-			message_admins(bulletCoords[3])
+			bulletCoords[3] = LERP(bullet.firedLevel, bullet.targetLevel, bullet.traveled/bullet.distStartToFinish2D()) - (projectile.z - bullet.firedPos[3]) * LEVEL_MAX
+			//message_admins(bulletCoords[3])
 			//message_admins("added [(bulletRatios[3] * pixelsThisStep)]  , pixels [pixelsThisStep] , curSum [bulletCoords[3]]")
 			x_change = trunc(bulletCoords[1] / HPPT)
 			y_change = trunc(bulletCoords[2] / HPPT)
@@ -294,8 +294,8 @@ SUBSYSTEM_DEF(bullets)
 				tx_change = ((x_change + (x_change == 0))/(abs(x_change + (x_change == 0)))) * (x_change != 0)
 				ty_change = ((y_change + (y_change == 0))/(abs(y_change + (y_change == 0)))) * (y_change != 0)
 				tz_change = ((z_change + (z_change == 0))/(abs(z_change + (z_change == 0)))) * (z_change != 0)
-				if(tz_change)
-					message_admins("tz change [tz_change]")
+				//if(tz_change)
+				//	message_admins("tz change [tz_change]")
 				moveTurf = locate(projectile.x + tx_change, projectile.y + ty_change, projectile.z + tz_change)
 				x_change -= tx_change
 				y_change -= ty_change
@@ -310,6 +310,7 @@ SUBSYSTEM_DEF(bullets)
 				projectile.pixel_y -= PPT * ty_change
 				bullet.updateLevel()
 				if(projectile.scanTurf(moveTurf, trajectoryData) == PROJECTILE_CONTINUE)
+					message_admins("[bulletCoords[3]],  [trajectoryData[6]]" )
 					bullet.painted.Add(moveTurf)
 					//moveTurf.color = COLOR_RED
 					projectile.forceMove(moveTurf)

@@ -130,7 +130,6 @@ GLOBAL_LIST(melleDamagesCache)
 	. = ..()
 	var/datum/hitboxDatum/Selfhitbox = new()
 	Selfhitbox.boundingBoxes += list(list(8,8,24,24,0,0))
-	Selfhitbox.owner = src
 	Selfhitbox.visualize()
 	hitbox = Selfhitbox
 

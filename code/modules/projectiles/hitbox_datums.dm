@@ -1,5 +1,13 @@
+GLOBAL_LIST_EMPTY(hitboxPrototypes)
 
+/hook/startup/proc/initializeHitboxes()
+	for(var/type in subtypesof(/datum/hitboxDatum))
+		GLOB.hitboxPrototypes[type] = new type()
 
+/proc/getHitbox(path)
+	if(!GLOB.hitboxPrototypes[path])
+		return null
+	return GLOB.hitboxPrototypes[path]
 
 /datum/hitboxDatum
 	var/list/boundingBoxes = list()
@@ -8,7 +16,6 @@
 	var/offsetY = 0
 	/// stores the median levels to aim when shooting at the owner.
 	var/list/medianLevels
-	var/atom/owner
 	/// converts the defZone argument to a specific level.
 	var/list/defZoneToLevel = list(
 		BP_EYES = HBF_USEMEDIAN,
@@ -25,7 +32,7 @@
 /// this can be optimized further by making the calculations not make a new list , and instead be added when checking line intersection - SPCR 2024
 /datum/hitboxDatum/proc/intersects(list/lineData,ownerDirection, turf/incomingFrom, atom/owner, list/arguments)
 
-/datum/hitboxDatum/proc/getAimingLevel(atom/shooter, defZone)
+/datum/hitboxDatum/proc/getAimingLevel(atom/shooter, defZone, atom/owner)
 
 
 /*
@@ -66,7 +73,7 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		return FALSE
 
 
-/datum/hitboxDatum/proc/visualize()
+/datum/hitboxDatum/proc/visualize(atom/owner)
 	var/list/availableColors = list(COLOR_RED, COLOR_AMBER, COLOR_BLUE, COLOR_ORANGE, COLOR_CYAN, COLOR_YELLOW, COLOR_BROWN, COLOR_VIOLET, COLOR_PINK, COLOR_ASSEMBLY_BEIGE, COLOR_ASSEMBLY_GREEN, COLOR_ASSEMBLY_LBLUE, COLOR_LIGHTING_BLUE_DARK)
 	var/chosenColor = pick_n_take(availableColors)
 	for(var/list/hitbox in boundingBoxes[num2text(owner.dir)])
@@ -97,8 +104,8 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 			volumeSum += calculatedVolume
 		medianLevels["[direction]"] = median / volumeSum
 
-/datum/hitboxDatum/atom/getAimingLevel(atom/shooter, defZone)
-	if(defZone == null || (!defZone in defZoneToLevel))
+/datum/hitboxDatum/atom/getAimingLevel(atom/shooter, defZone, atom/owner)
+	if(defZone == null || (!(defZone in defZoneToLevel)))
 		return medianLevels["[owner.dir]"]
 	if(defZoneToLevel[defZone] == HBF_USEMEDIAN)
 		return medianLevels["[owner.dir]"]
@@ -146,9 +153,9 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 				volumeSum += calculatedVolume
 			medianLevels[state]["[direction]"] = median / volumeSum
 
-/datum/hitboxDatum/mob/getAimingLevel(atom/shooter, defZone)
-	var/mob/living/perceivedOwner = src.owner
-	if(defZone == null || (!defZone in defZoneToLevel["[perceivedOwner.lying]"]))
+/datum/hitboxDatum/mob/getAimingLevel(atom/shooter, defZone, atom/owner)
+	var/mob/living/perceivedOwner = owner
+	if(defZone == null || (!(defZone in defZoneToLevel["[perceivedOwner.lying]"])))
 		return medianLevels["[perceivedOwner.lying]"]["[owner.dir]"]
 	if(defZoneToLevel[defZone] == HBF_USEMEDIAN)
 		return medianLevels["[perceivedOwner.lying]"]["[owner.dir]"]
@@ -161,7 +168,7 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	var/global/worldY
 	worldX = owner.x * 32
 	worldY = owner.y * 32
-	var/mob/living/perceivedOwner = src.owner
+	var/mob/living/perceivedOwner = owner
 	for(var/list/boundingData in boundingBoxes["[perceivedOwner.lying]"]["[owner.dir]"])
 		/// basic AABB but only for the Z-axis.
 		if(boundingData[5] > max(lineData[5],lineData[6]) || boundingData[6] < min(lineData[6],lineData[5]))

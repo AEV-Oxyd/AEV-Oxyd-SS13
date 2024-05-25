@@ -44,7 +44,7 @@ GLOBAL_VAR_INIT(Debug,0)
 
 /atom/movable/getAimingLevel(atom/shooter, defZone)
 	if(hitbox)
-		return hitbox.getAimingLevel(shooter, defZone)
+		return hitbox.getAimingLevel(shooter, defZone, src)
 	else
 		return ..()
 
@@ -80,9 +80,7 @@ GLOBAL_VAR_INIT(Debug,0)
 	return
 
 /atom/movable/Initialize()
-	if(ispath(hitbox))
-		hitbox = new hitbox()
-		hitbox.owner = src
+	hitbox = getHitbox(hitbox)
 	. = ..()
 
 
