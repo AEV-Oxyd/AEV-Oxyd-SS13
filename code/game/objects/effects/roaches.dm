@@ -28,7 +28,7 @@
 	health -= (dhTotalDamageStrict(I.melleDamages, ALL_ARMOR,  list(BRUTE,BURN)) / 2)
 	healthcheck()
 
-/obj/item/roach_egg/bullet_act(var/obj/item/projectile/Proj)
+/obj/item/roach_egg/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	..()
 	health -= Proj.get_structure_damage()
 	healthcheck()
@@ -61,7 +61,7 @@
 
 	. = ..()
 
-/obj/item/roach_egg/Process()	
+/obj/item/roach_egg/Process()
 	if (isturf(src.loc) || istype(src.loc, /obj/structure/closet) || istype(src.loc, /obj/item/organ/external)) // suppresses hatching when not in a suitable loc
 		if(amount_grown >= 100)
 			var/obj/item/organ/external/O

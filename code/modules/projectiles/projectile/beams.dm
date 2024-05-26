@@ -116,7 +116,7 @@
 	tracer_type = /obj/effect/projectile/psychic_laser_heavy/tracer
 	impact_type = /obj/effect/projectile/psychic_laser_heavy/impact
 
-/obj/item/projectile/beam/psychic/launch_from_gun(atom/target, mob/user, obj/item/gun/launcher, target_zone, x_offset=0, y_offset=0, angle_offset)
+/obj/item/projectile/beam/psychic/launch_from_gun(atom/target, mob/user, obj/item/gun/launcher, target_zone, x_offset=0, y_offset=0,zOffset, angle_offset)
 	holder = launcher
 	if(holder && holder.contractor)
 		contractor = holder.contractor

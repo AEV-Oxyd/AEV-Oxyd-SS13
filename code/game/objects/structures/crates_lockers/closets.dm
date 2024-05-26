@@ -330,7 +330,7 @@
 	if(health <= 0)
 		qdel(src)
 
-/obj/structure/closet/bullet_act(obj/item/projectile/Proj)
+/obj/structure/closet/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	var/proj_damage = Proj.get_structure_damage()
 	if(!proj_damage)
 		return

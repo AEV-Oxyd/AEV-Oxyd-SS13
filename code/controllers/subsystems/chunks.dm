@@ -74,7 +74,7 @@ SUBSYSTEM_DEF(chunks)
 				var/turf/mobTurf = get_turf(mobToCheck)
 				if(!mobTurf)
 					continue
-				if(DIST_EUCLIDIAN(containerTurf.x, containerTurf.y, mobTurf.x, mobTurf.y) < range)
+				if(DIST_EUCLIDIAN_2D(containerTurf.x, containerTurf.y, mobTurf.x, mobTurf.y) < range)
 					if(aliveonly && mobToCheck.stat == DEAD)
 						continue
 					if(canseeonly && !can_see(containerTurf, get_turf(mobToCheck), range * 2))
@@ -111,7 +111,7 @@ SUBSYSTEM_DEF(chunks)
 				var/turf/hearerTurf = get_turf(hearerToCheck)
 				if(!hearerTurf)
 					continue
-				if(DIST_EUCLIDIAN(containerTurf.x, containerTurf.y, hearerTurf.x, hearerTurf.y) < range)
+				if(DIST_EUCLIDIAN_2D(containerTurf.x, containerTurf.y, hearerTurf.x, hearerTurf.y) < range)
 					if(!can_see(source, get_turf(hearerToCheck), range * 2))
 						continue
 					returnValue += hearerToCheck

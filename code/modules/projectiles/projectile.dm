@@ -22,6 +22,8 @@ GLOBAL_LIST(projectileDamageConstants)
 	spawn_blacklisted = TRUE
 	spawn_frequency = 0
 	spawn_tags = null
+	animate_movement = NO_STEPS
+	glide_size = 8
 	/// Ammo is heavy
 	weight = 10
 	var/bumped = FALSE		//Prevents it from hitting more than one guy at once
@@ -37,7 +39,6 @@ GLOBAL_LIST(projectileDamageConstants)
 	var/atom/original = null // the target clicked (not necessarily where the projectile is headed). Should probably be renamed to 'target' or something.
 	var/turf/starting = null // the projectile's starting turf
 	var/list/permutated = list() // we've passed through these atoms, don't try to hit them again
-	var/height // starts undefined, used for Zlevel shooting
 
 	var/p_x = 16
 	var/p_y = 16 // the pixel location of the tile that the player clicked. Default is the center
@@ -100,6 +101,8 @@ GLOBAL_LIST(projectileDamageConstants)
 	var/datum/vector_loc/location		// current location of the projectile in pixel space
 	var/matrix/effect_transform			// matrix to rotate and scale projectile effects - putting it here so it doesn't
 										//  have to be recreated multiple times
+
+	var/datum/bullet_data/dataRef = null
 
 /// This is done to save a lot of memory from duplicated damage lists.
 /// The list is also copied whenever PrepareForLaunch is called and modified as needs to be
@@ -212,8 +215,8 @@ GLOBAL_LIST(projectileDamageConstants)
 		return
 
 /obj/item/projectile/proc/on_hit(atom/target, def_zone = null)
-	if(!isliving(target))	return 0
-	if(isanimal(target))	return 0
+	if(!isliving(target))	return FALSE
+	if(isanimal(target))	return FALSE
 	var/mob/living/L = target
 	L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy)
 	return TRUE
@@ -247,7 +250,7 @@ GLOBAL_LIST(projectileDamageConstants)
 	return TRUE
 
 /obj/item/projectile/proc/check_fire(atom/target as mob, mob/living/user as mob)  //Checks if you can hit them or not.
-	check_trajectory(target, user, pass_flags, flags)
+	check_trajectory(list(user.x,user.y,user.z), list(target.x, target.y, target.z),null,null, target)
 
 //sets the click point of the projectile using mouse input params
 /obj/item/projectile/proc/set_clickpoint(params)
@@ -258,7 +261,7 @@ GLOBAL_LIST(projectileDamageConstants)
 		p_y = text2num(mouse_control["icon-y"])
 
 //called to launch a projectile
-/obj/item/projectile/proc/launch(atom/target, target_zone, x_offset = 0, y_offset = 0, angle_offset = 0, proj_sound, user_recoil = 0)
+/obj/item/projectile/proc/launch(atom/target, target_zone, x_offset = 0, y_offset = 0,zOffset = 0, angle_offset = 0, proj_sound, user_recoil = 0)
 	var/turf/curloc = get_turf(src)
 	var/turf/targloc = get_turf(target)
 	if (!istype(targloc) || !istype(curloc))
@@ -279,18 +282,18 @@ GLOBAL_LIST(projectileDamageConstants)
 	var/distance = get_dist(curloc, original)
 	check_hit_zone(distance, user_recoil)
 
-	setup_trajectory(curloc, targloc, x_offset, y_offset, angle_offset) //plot the initial trajectory
-	Process()
+	muzzle_effect(effect_transform)
+	new /datum/bullet_data(src, target_zone, usr, target, list(x_offset, y_offset, target.z), 48,zOffset, angle_offset, 50)
+	//Process()
 
 	return FALSE
 
 //called to launch a projectile from a gun
-/obj/item/projectile/proc/launch_from_gun(atom/target, mob/user, obj/item/gun/launcher, target_zone, x_offset=0, y_offset=0, angle_offset)
+/obj/item/projectile/proc/launch_from_gun(atom/target, mob/user, obj/item/gun/launcher, target_zone, x_offset=0, y_offset=0, zOffset=0, angle_offset)
 	if(user == target) //Shooting yourself
 		user.bullet_act(src, target_zone)
 		qdel(src)
 		return FALSE
-
 	forceMove(get_turf(user))
 
 	var/recoil = 0
@@ -305,12 +308,6 @@ GLOBAL_LIST(projectileDamageConstants)
 				forceMove(get_turf(H.client.eye))
 				if(!(loc.Adjacent(target)))
 					forceMove(get_turf(H))
-			if(config.z_level_shooting && H.client.eye == H.shadow && !height) // Player is watching a higher zlevel
-				var/newTurf = get_turf(H.shadow)
-				if(!(locate(/obj/structure/catwalk) in newTurf)) // Can't shoot through catwalks
-					forceMove(newTurf)
-					height = HEIGHT_HIGH // We are shooting from below, this protects resting players at the expense of windows
-					original = get_turf(original) // Aim at turfs instead of mobs, to ensure we don't hit players
 
 	// Special case for mechs, in a ideal world this should always go for the top-most atom.
 	if(istype(launcher.loc, /obj/item/mech_equipment))
@@ -319,18 +316,7 @@ GLOBAL_LIST(projectileDamageConstants)
 		firer = user
 	shot_from = launcher.name
 	silenced = launcher.item_flags & SILENT
-
-	return launch(target, target_zone, x_offset, y_offset, angle_offset, user_recoil = recoil)
-
-//Used to change the direction of the projectile in flight.
-/obj/item/projectile/proc/redirect(new_x, new_y, atom/starting_loc, mob/new_firer)
-	var/turf/new_target = locate(new_x, new_y, src.z)
-
-	original = new_target
-	if(new_firer)
-		firer = src
-
-	setup_trajectory(starting_loc, new_target)
+	return launch(target, target_zone, x_offset, y_offset,zOffset, angle_offset, user_recoil = recoil)
 
 /obj/item/projectile/proc/istargetloc(mob/living/target_mob)
 	if(target_mob && original)
@@ -390,10 +376,6 @@ GLOBAL_LIST(projectileDamageConstants)
 	miss_modifier = 0
 
 	var/result = PROJECTILE_CONTINUE
-
-	if(config.z_level_shooting && height == HEIGHT_HIGH)
-		if(target_mob.resting == TRUE || target_mob.stat == TRUE)
-			return FALSE // Bullet flies overhead
 
 	if(target_mob != original) // If mob was not clicked on / is not an NPC's target, checks if the mob is concealed by cover
 		var/turf/cover_loc = get_step(get_turf(target_mob), get_dir(get_turf(target_mob), starting))
@@ -486,7 +468,55 @@ GLOBAL_LIST(projectileDamageConstants)
 	else
 		return FALSE
 
+/obj/item/projectile/Move(NewLoc, Dir, step_x, step_y, glide_size_override, initiator)
+	. = ..()
+	if(NewLoc == dataRef.targetTurf)
+		message_admins("[src] reached target with a bulletLevel of [dataRef.currentCoords[3]], and a rate of [dataRef.movementRatios[3]]")
+
+/// Has to be ordered with highest-leading typepaths to the left(aka don't put the stairs after obj/structure , since any check on obj/structure will also include the stairs as a subtype)
+#define HittingPrioritiesList list(/mob/living = 5,/obj/structure/multiz/stairs/active = 3,/obj/structure = 4, /atom = 2)
+
+
+
+/obj/item/projectile/proc/scanTurf(turf/scanning, list/trajectoryData)
+	if(atomFlags & AF_VISUAL_MOVE)
+		return PROJECTILE_CONTINUE
+	if(scanning.bullet_act(src, def_zone) & PROJECTILE_STOP)
+		onBlockingHit(scanning)
+		return PROJECTILE_STOP
+	var/list/hittingList = list()
+	for(var/atom/thing in scanning.contents)
+		for(var/i in 1 to length(HittingPrioritiesList))
+			if(istype(thing, HittingPrioritiesList[i]))
+				hittingList[thing] = HittingPrioritiesList[HittingPrioritiesList[i]]
+				break
+
+	for(var/i in 1 to (length(hittingList) - 1))
+		if(hittingList[hittingList[i]] < hittingList[hittingList[i+1]])
+			var/temp = hittingList[hittingList[i]]
+			hittingList[hittingList[i]] = hittingList[hittingList[i+1]]
+			hittingList[hittingList[i+1]] = temp
+			i = max(i-2, 1)
+
+	for(var/i in 1 to length(hittingList))
+		var/obj/target = hittingList[i]
+		if(target == firer)
+			continue
+		/// third slot reversed for flags passed back by hitbox intersect
+		var/list/arguments = list(src, def_zone, null)
+		if(target.hitbox && !target.hitbox.intersects(trajectoryData, target.dir, 0, target, arguments))
+			return PROJECTILE_CONTINUE
+		if(target.bullet_act(arglist(arguments)) & PROJECTILE_STOP)
+			onBlockingHit(target)
+			return PROJECTILE_STOP
+
+	return PROJECTILE_CONTINUE
+
+
+/*
 /obj/item/projectile/Bump(atom/A as mob|obj|turf|area, forced = FALSE)
+	if(!density)
+		return TRUE
 	if(A == src)
 		return FALSE
 	if(A == firer)
@@ -529,10 +559,6 @@ GLOBAL_LIST(projectileDamageConstants)
 	else
 		passthrough = (A.bullet_act(src, def_zone) == PROJECTILE_CONTINUE) //backwards compatibility
 		if(isturf(A))
-			if(QDELETED(src)) // we don't want bombs to explode once for every time bullet_act is called
-				on_impact(A)
-				invisibility = 101
-				return TRUE // see that next line? it can overload the server.
 			for(var/obj/O in A) // if src's bullet act spawns more objs, the list will increase,
 				if(O.density)
 					O.bullet_act(src) // causing exponential growth due to the spawned obj spawning itself
@@ -559,15 +585,39 @@ GLOBAL_LIST(projectileDamageConstants)
 		return FALSE
 
 	//stop flying
-	on_impact(A)
-
-	density = FALSE
-	invisibility = 101
-
-
-	qdel(src)
+	onBlockingHit(A)
 	return TRUE
+*/
 
+/obj/item/projectile/proc/onBlockingHit(atom/A)
+	on_impact(A)
+	atomFlags |= AF_VISUAL_MOVE
+	density = FALSE
+	dataRef.lifetime = 1
+
+/obj/effect/bullet_sparks
+	name = "bullet hit"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "nothing"
+	anchored = TRUE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/obj/effect/bullet_sparks/Initialize(mapload, ...)
+	. = ..()
+	flick("bullet_hit", src)
+	QDEL_IN(src, 3 SECONDS)
+
+
+/// Called to properly delete a bullet after a delay from its impact, ensures the animation for it travelling finishes
+/obj/item/projectile/proc/finishDeletion()
+	var/atom/visEffect = new /obj/effect/bullet_sparks(loc)
+	visEffect.layer = ABOVE_ALL_MOB_LAYER
+	visEffect.pixel_x = src.pixel_x
+	visEffect.pixel_y = src.pixel_y
+	visEffect.transform = src.transform
+	visEffect.update_plane()
+
+	QDEL_IN(src, 2)
 
 /obj/item/projectile/explosion_act(target_power, explosion_handler/handler)
 	return 0
@@ -575,69 +625,8 @@ GLOBAL_LIST(projectileDamageConstants)
 /obj/item/projectile/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	return TRUE
 
-/obj/item/projectile/Process()
-	var/first_step = TRUE
-
-	spawn while(src && src.loc)
-		if(kill_count-- < 1)
-			on_impact(src.loc) //for any final impact behaviours
-			qdel(src)
-			return
-		if((!( current ) || loc == current))
-			current = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z)
-		if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
-			qdel(src)
-			return
-
-		trajectory.increment()	// increment the current location
-		location = trajectory.return_location(location)		// update the locally stored location data
-
-		if(!location)
-			qdel(src)	// if it's left the world... kill it
-			return
-
-		before_move()
-		Move(location.return_turf())
-		pixel_x = location.pixel_x
-		pixel_y = location.pixel_y
-
-		if(!bumped && !QDELETED(original) && !isturf(original))
-			// this used to be loc == get_turf(original) , but this would break incase the original was inside something and hit them without hitting the outside
-			if(loc == original.loc)
-				if(!(original in permutated))
-					if(Bump(original))
-						return
-
-		if(first_step)
-			muzzle_effect(effect_transform)
-			first_step = FALSE
-		else if(!bumped)
-			tracer_effect(effect_transform)
-			luminosity_effect()
-
-		if(!hitscan)
-			sleep(step_delay)	//add delay between movement iterations if it's not a hitscan weapon
-
 /obj/item/projectile/proc/before_move()
 	return FALSE
-
-/obj/item/projectile/proc/setup_trajectory(turf/startloc, turf/targloc, x_offset = 0, y_offset = 0, angle_offset)
-	// setup projectile state
-	starting = startloc
-	current = startloc
-	yo = targloc.y - startloc.y + y_offset
-	xo = targloc.x - startloc.x + x_offset
-
-	// plot the initial trajectory
-	trajectory = new()
-	trajectory.setup(starting, original, pixel_x, pixel_y, angle_offset)
-
-	// generate this now since all visual effects the projectile makes can use it
-	effect_transform = new()
-	effect_transform.Scale(trajectory.return_hypotenuse(), 1)
-	effect_transform.Turn(-trajectory.return_angle())		//no idea why this has to be inverted, but it works
-
-	transform = turn(transform, -(trajectory.return_angle() + 90)) //no idea why 90 needs to be added, but it works
 
 /obj/item/projectile/proc/muzzle_effect(var/matrix/T)
 	//This can happen when firing inside a wall, safety check
@@ -734,86 +723,62 @@ GLOBAL_LIST(projectileDamageConstants)
 
 	return damageTotal > 0 ? (damageLeft / damageTotal) :0
 
-/obj/item/projectile/get_matter()
-	. = matter?.Copy()
-	if(isnull(.)) // empty bullets have no need for matter handling
-		return
-	if(istype(loc, /obj/item/ammo_casing)) // if this is part of a stack
-		var/obj/item/ammo_casing/case = loc
-		if(case.amount > 1) // if there is only one, there is no need to multiply
-			for(var/mattertype in .)
-				.[mattertype] *= case.amount
-
-
-//"Tracing" projectile
-/obj/item/projectile/test //Used to see if you can hit them.
-	invisibility = 101 //Nope!  Can't see me!
-	yo = null
-	xo = null
-	var/result = 0 //To pass the message back to the gun.
-
-/obj/item/projectile/test/Bump(atom/A as mob|obj|turf|area, forced)
-	if(A == firer)
-		forceMove(A.loc)
-		return //cannot shoot yourself
-	if(istype(A, /obj/item/projectile))
-		return
-	if(isliving(A) || istype(A, /mob/living/exosuit))
-		result = 2 //We hit someone, return 1!
-		return
-	result = 1
-	return
-
-/obj/item/projectile/test/launch(atom/target, target_zone, x_offset, y_offset, angle_offset, proj_sound, user_recoil)
-	var/turf/curloc = get_turf(src)
-	var/turf/targloc = get_turf(target)
-	if(!curloc || !targloc)
-		return 0
-
-	original = target
-
-	//plot the initial trajectory
-	setup_trajectory(curloc, targloc)
-	return Process(targloc)
-
-/obj/item/projectile/test/Process(turf/targloc)
-	while(src) //Loop on through!
-		if(result)
-			return (result - 1)
-		if((!( targloc ) || loc == targloc))
-			targloc = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z) //Finding the target turf at map edge
-
-		trajectory.increment()	// increment the current location
-		location = trajectory.return_location(location)		// update the locally stored location data
-
-		Move(location.return_turf())
-
-		var/mob/living/M = locate() in get_turf(src)
-		if(istype(M)) //If there is someting living...
-			return 1 //Return 1
-		else
-			M = locate() in get_step(src,targloc)
-			if(istype(M))
-				return 1
-
-//Helper proc to check if you can hit them or not.
-/proc/check_trajectory(atom/target as mob|obj, atom/firer as mob|obj, var/pass_flags=PASSTABLE|PASSGLASS|PASSGRILLE, flags=null)
-	if(!istype(target) || !istype(firer))
-		return 0
-
-	var/obj/item/projectile/test/trace = new /obj/item/projectile/test(get_turf(firer)) //Making the test....
-
-	//Set the flags and pass flags to that of the real projectile...
-	if(!isnull(flags))
-		trace.flags = flags
-	trace.pass_flags = pass_flags
-
-	var/output = trace.launch(target) //Test it!
-	qdel(trace) //No need for it anymore
-	return output //Send it back to the gun!
-
 /proc/get_proj_icon_by_color(var/obj/item/projectile/P, var/color)
 	var/icon/I = new(P.icon, P.icon_state)
 	I.Blend(color)
 	return I
+
+/proc/check_trajectory(list/startingCoordinates, list/targetCoordinates, pass_flags=PASSTABLE|PASSGLASS|PASSGRILLE, flags=null, mob/targetMob)
+	var/angle = ATAN2(targetCoordinates[2] - startingCoordinates[2], targetCoordinates[1] - startingCoordinates[1])
+	message_admins("CT angle : [angle]")
+	var/xRatio = sin(angle)
+	var/yRatio = cos(angle)
+	var/xChange = 0
+	var/yChange = 0
+	var/tX = 0
+	var/tY = 0
+	var/turf/check = locate(round(startingCoordinates[1]/32), round(startingCoordinates[2]/32), round(startingCoordinates[3]))
+	var/turf/targetTurf = locate(round(targetCoordinates[1]/32), round(targetCoordinates[2]/32), round(targetCoordinates[3]))
+	var/simCoords = list(0,0,0)
+	while(check != targetTurf)
+		simCoords[1] += xRatio * 32
+		simCoords[2] += yRatio * 32
+		xChange = round(abs(simCoords[1])/16) * sign(simCoords[1])
+		yChange = round(abs(simCoords[2])/16) * sign(simCoords[2])
+		while((xChange || yChange) && (check != targetTurf))
+			if(xChange)
+				tX = abs(xChange)/xChange
+			if(yChange)
+				tY = abs(yChange)/yChange
+			check = locate(check.x + tX, check.y + tY, check.z)
+			// collision checks
+			if(!check)
+				return FALSE
+			if(check.density)
+				return FALSE
+			for(var/atom/movable/object in check.contents)
+				if(object == targetMob)
+					return TRUE
+				if(object.density)
+					if(istype(object, /obj/structure/window))
+						if(!(pass_flags & PASSGLASS))
+							return FALSE
+					else if(istype(object, /obj/structure/table))
+						if(!(pass_flags & PASSTABLE))
+							return FALSE
+					else if(istype(object, /obj/structure/grille))
+						if(!(pass_flags & PASSGRILLE))
+							return FALSE
+					else if(!istype(object, /obj/structure/railing))
+						return FALSE
+			xChange -= tX
+			yChange -= tY
+			simCoords[1] -= 32 * tX
+			simCoords[2] -= 32 * tY
+			tX = 0
+			tY = 0
+	return TRUE
+
+
+
 

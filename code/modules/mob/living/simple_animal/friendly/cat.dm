@@ -127,9 +127,9 @@
 		return
 	set_flee_target(get_turf(src))
 
-/mob/living/simple_animal/cat/bullet_act(var/obj/item/projectile/proj)
+/mob/living/simple_animal/cat/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	. = ..()
-	set_flee_target(proj.firer? proj.firer : src.loc)
+	set_flee_target(Proj.firer? Proj.firer : src.loc)
 
 /mob/living/simple_animal/cat/hitby(atom/movable/AM)
 	. = ..()
@@ -367,7 +367,7 @@ var/cat_number = 0
 /mob/living/simple_animal/cat/runtime/set_flee_target(atom/A)
 	return
 
-/mob/living/simple_animal/cat/runtime/bullet_act(var/obj/item/projectile/proj)
+/mob/living/simple_animal/cat/runtime/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	return PROJECTILE_FORCE_MISS
 
 /mob/living/simple_animal/cat/runtime/explosion_act(target_power)

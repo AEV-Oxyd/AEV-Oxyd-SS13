@@ -48,6 +48,9 @@
 /atom/proc/update_icon()
 	return
 
+/atom/proc/getAimingLevel(atom/shooter,defZone)
+	return HBF_NOLEVEL
+
 /atom/proc/getWeight()
 	return initial(weight)
 
@@ -267,7 +270,7 @@
 	return
 
 
-/atom/proc/bullet_act(obj/item/projectile/P, def_zone)
+/atom/proc/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
 	P.on_hit(src, def_zone)
 	. = FALSE
 
@@ -822,7 +825,7 @@ its easier to just keep the beam vertical.
 	return
 
 //Bullethole shit.
-/atom/proc/create_bullethole(var/obj/item/projectile/Proj)
+/atom/proc/create_bullethole(obj/item/projectile/Proj, defZone, hitboxFlags)
 	var/p_x = Proj.p_x + rand(-8,8) // really ugly way of coding "sometimes offset Proj.p_x!"
 	var/p_y = Proj.p_y + rand(-8,8) // Used for bulletholes
 	var/obj/effect/overlay/bmark/BM = new(src)

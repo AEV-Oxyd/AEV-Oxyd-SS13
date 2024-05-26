@@ -167,7 +167,7 @@
 		description += "\The [src] shows signs of damage!"
 	..(user, afterDesc = description)
 
-/obj/machinery/shipsensors/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/shipsensors/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	take_damage(Proj.get_structure_damage())
 	..()
 
