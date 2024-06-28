@@ -136,6 +136,264 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 			return TRUE
 	return FALSE
 
+
+/// This subtype is dedicated especially to tables. Their building system changes shape depending on adjaency. So this reflects that
+/// List format is unconventional and based off the the way connections are done
+
+// Also.. holy mother of lists... yes there is a LOT of data to store for all the permutations..
+// each corner has 8 possible states , all of them have 4 directions , so this is 4 x 8 x 4 aka 256 permutations.
+// some of this could be cut down with some smart flipping ,but for some cases it doesn't work.
+
+/datum/hitboxDatum/atom/table
+	boundingBoxes = list(
+		1 = list(
+			1 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			),
+			2 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			),
+			3 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			),
+			4 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			),
+			5 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			),
+			6 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			),
+			7 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			),
+			8 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			)
+		),
+		2 = list(
+			1 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			),
+			2 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			),
+			3 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			),
+			4 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			),
+			5 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			),
+			6 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			),
+			7 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			),
+			8 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			)
+		),
+		3 = list(
+			1 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			),
+			2 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			),
+			3 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			),
+			4 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			),
+			5 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			),
+			6 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			),
+			7 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			),
+			8 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			)
+		),
+		4 = list(
+			1 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			),
+			2 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			),
+			3 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			),
+			4 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			),
+			5 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			),
+			6 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			),
+			7 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			),
+			8 = list(
+				LISTNORTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTSOUTH = list(BBOX(0,0,0,0,0,0,null)),
+				LISTEAST = list(BBOX(0,0,0,0,0,0,null)),
+				LISTWEST = list(BBOX(0,0,0,0,0,0,null))
+			)
+		)
+	)
+
+/datum/hitboxDatum/atom/table/New()
+	. = ..()
+	var/median
+	var/volumeSum
+	var/calculatedVolume = 0
+	for(var/direction in list(NORTH, SOUTH, EAST , WEST))
+		median = 0
+		volumeSum = 0
+		for(var/list/boundingBox in boundingBoxes["[direction]"])
+			calculatedVolume = (boundingBox[4] - boundingBox[2]) * (boundingBox[3] - boundingBox[1])
+			median += ((boundingBox[5] + boundingBox[6])/2) * calculatedVolume
+			volumeSum += calculatedVolume
+		medianLevels["[direction]"] = median / volumeSum
+
+/datum/hitboxDatum/atom/table/getAimingLevel(atom/shooter, defZone, atom/owner)
+	if(defZone == null || (!(defZone in defZoneToLevel)))
+		return medianLevels["[owner.dir]"]
+	if(defZoneToLevel[defZone] == HBF_USEMEDIAN)
+		return medianLevels["[owner.dir]"]
+	message_admins("Returned [defZoneToLevel[defZone]] for [defZone]")
+	return defZoneToLevel[defZone]
+
+	/// this can be optimized further by making the calculations not make a new list , and instead be added when checking line intersection - SPCR 2024
+/datum/hitboxDatum/atom/table/intersects(list/lineData,ownerDirection, turf/incomingFrom, atom/owner, list/arguments)
+	var/global/worldX
+	var/global/worldY
+	worldX = owner.x * 32
+	worldY = owner.y * 32
+	for(var/list/boundingData in boundingBoxes["[owner.dir]"])
+		/// basic AABB but only for the Z-axis.
+		if(boundingData[5] > max(lineData[5],lineData[6]) || boundingData[6] < min(lineData[6],lineData[5]))
+			continue
+		if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY)))
+			arguments[3] = boundingData[7]
+			return TRUE
+		if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY)))
+			arguments[3] = boundingData[7]
+			return TRUE
+		if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[4] + worldY, boundingData[3] + worldX, boundingData[4] + worldY)))
+			arguments[3] = boundingData[7]
+			return TRUE
+		if(lineIntersect(lineData, list(boundingData[3] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY)))
+			arguments[3] = boundingData[7]
+			return TRUE
+	return FALSE
+
 /datum/hitboxDatum/mob
 
 /datum/hitboxDatum/mob/New()
