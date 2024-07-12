@@ -72,9 +72,5 @@
 	icon_state = "fire_trails"
 
 
-/obj/effect/explosion_fire/New()
-	..()
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(qdel), src), 0.5 SECOND)
-
 
 
