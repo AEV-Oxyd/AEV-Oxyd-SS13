@@ -310,7 +310,7 @@ SUBSYSTEM_DEF(bullets)
 				projectile.pixel_y -= PPT * ty_change
 				bullet.updateLevel()
 				if(projectile.scanTurf(moveTurf, trajectoryData) == PROJECTILE_CONTINUE)
-					message_admins("[bulletCoords[3]],  [trajectoryData[6]]" )
+					//message_admins("[bulletCoords[3]],  [trajectoryData[6]]" )
 					bullet.painted.Add(moveTurf)
 					//moveTurf.color = COLOR_RED
 					projectile.forceMove(moveTurf)
@@ -333,7 +333,7 @@ SUBSYSTEM_DEF(bullets)
 
 		bullet.updateLevel()
 		var/levelRatio = 1 - (trunc(bulletCoords[3])/LEVEL_MAX)
-		message_admins("[levelRatio]")
+		//message_admins("[levelRatio]")
 		var/animationColor = gradient(list("#ffffff", "#cbcbcb"), levelRatio)
 		animate(projectile, SSbullets.wait, pixel_x =((abs(bulletCoords[1]))%HPPT * sign(bulletCoords[1]) - 1), pixel_y = ((abs(bulletCoords[2]))%HPPT * sign(bulletCoords[2]) - 1), flags = ANIMATION_END_NOW, color = animationColor)
 		bullet.currentCoords = bulletCoords

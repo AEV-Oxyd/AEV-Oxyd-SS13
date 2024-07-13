@@ -272,7 +272,7 @@
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
 	P.on_hit(src, def_zone)
-	. = FALSE
+	. = PROJECTILE_STOP
 
 /atom/proc/block_bullet(mob/user, var/obj/item/projectile/damage_source, def_zone)
 	return 0

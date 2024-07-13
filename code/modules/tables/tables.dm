@@ -42,32 +42,6 @@ var/list/custom_table_appearance = list(
 
 	var/list/connections = list("nw0", "ne0", "sw0", "se0")
 
-/datum/hitboxDatum/atom/table
-	boundingBoxes = list(
-		LISTNORTH = list(BBOX(6,2,27,29,LEVEL_TURF + 0.2, LEVEL_TABLE, null)),
-		LISTSOUTH = list(BBOX(6,2,27,29,LEVEL_TURF + 0.2, LEVEL_TABLE, null)),
-		LISTEAST = list(BBOX(6,2,27,29,LEVEL_TURF + 0.2, LEVEL_TABLE, null)),
-		LISTWEST = list(BBOX(6,2,27,29,LEVEL_TURF + 0.2, LEVEL_TABLE, null))
-	)
-
-/datum/hitboxDatum/atom/table/reinforced
-	boundingBoxes = list(
-		LISTNORTH = list(BBOX(6,2,27,29,LEVEL_TURF, LEVEL_TABLE, null)),
-		LISTSOUTH = list(BBOX(6,2,27,29,LEVEL_TURF, LEVEL_TABLE, null)),
-		LISTEAST = list(BBOX(6,2,27,29,LEVEL_TURF, LEVEL_TABLE, null)),
-		LISTWEST = list(BBOX(6,2,27,29,LEVEL_TURF, LEVEL_TABLE, null))
-	)
-
-// No table friends to connect with :(
-/datum/hitboxDatum/atom/table/flipped_alone
-	boundingBoxes = list(
-		LISTNORTH = list(BBOX(4,1,29,19,LEVEL_TURF, LEVEL_TABLE + 0.1, null)),
-		LISTSOUTH = list(BBOX(4,14,29,32,LEVEL_TURF, LEVEL_TABLE + 0.1, null)),
-		LISTEAST = list(BBOX(14,2,32,22,LEVEL_TURF, LEVEL_TABLE + 0.1, null)),
-		LISTWEST = list(BBOX(1,2,19,22,LEVEL_TURF, LEVEL_TABLE + 0.1, null))
-	)
-
-
 /obj/structure/table/get_matter()
 	var/list/matter = ..()
 	. = matter.Copy()

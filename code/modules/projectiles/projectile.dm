@@ -104,6 +104,20 @@ GLOBAL_LIST(projectileDamageConstants)
 
 	var/datum/bullet_data/dataRef = null
 
+/// Fun interaction time - 2 bullets colliding mid air ! SPCR 2024
+/obj/item/projectile/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
+	// yep , it checks itself , more efficient to handle it here..
+	if(P == src)
+		return PROJECTILE_CONTINUE
+	if(!abs(abs(P.dataRef.currentCoords[3]) - abs(dataRef.currentCoords[3])) < 0.1)
+		return PROJECTILE_CONTINUE
+	if(!(abs(abs(P.pixel_x)-abs(pixel_x)) < 2))
+		return PROJECTILE_CONTINUE
+	if(!(abs(abs(P.pixel_y)-abs(pixel_y)) < 2))
+		return PROJECTILE_CONTINUE
+	// congratulations , you have 2 intersecting bullets...
+	return PROJECTILE_STOP
+
 /// This is done to save a lot of memory from duplicated damage lists.
 /// The list is also copied whenever PrepareForLaunch is called and modified as needs to be
 /obj/item/projectile/Initialize()
