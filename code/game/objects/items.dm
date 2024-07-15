@@ -122,6 +122,10 @@ GLOBAL_LIST(melleDamagesCache)
 
 	var/chameleon_type
 
+/// OBJECTS that are relevant will implement their own logic for being hit.
+/obj/item/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
+	return PROJECTILE_CONTINUE
+
 /obj/item/hitbox_test
 	name = "hitbox tester"
 	icon_state = "hitbox"
