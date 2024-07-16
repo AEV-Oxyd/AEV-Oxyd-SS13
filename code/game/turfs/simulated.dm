@@ -14,7 +14,30 @@
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
 	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
 
+	var/list/attached
 
+/turf/simulated/proc/attach(atom/movable/thing, attachmentFlagsSupport, attachmentFlagsAttachable)
+	if(!istype(thing))
+		return FALSE
+	if(!length(attached))
+		attached = list()
+	attached[thing] = attachmentFlagsSupport
+	thing.attached[src] = attachmentFlagsAttachable
+	return TRUE
+
+/turf/simulated/proc/detach(atom/movable/thing)
+	if(!(thing in attached))
+		return -1
+	if(length(attached) == 1)
+		del(attached)
+	else
+		attached -= thing
+	if(src in thing.attached)
+		if(length(thing.attached > 1))
+			thing.attached -= src
+			return TRUE
+		del(thing.attached)
+	return TRUE
 
 /turf/simulated/New()
 	..()
