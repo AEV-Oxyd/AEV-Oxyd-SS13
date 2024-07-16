@@ -10,6 +10,9 @@
 	weight = 0
 	var/delete_me = FALSE
 
+/obj/landmark/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
+	return PROJECTILE_CONTINUE
+
 /obj/landmark/New()
 	..()
 	GLOB.landmarks_list += src
