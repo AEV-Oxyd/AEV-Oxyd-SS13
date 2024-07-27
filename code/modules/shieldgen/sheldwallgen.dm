@@ -20,7 +20,7 @@
 		var/destroyed = 0
 		var/directwired = 1
 //		var/maxshieldload = 200
-		var/obj/structure/cable/attached		// the attached cable
+		var/obj/structure/cable/powerSupply		// the powerSupply cable
 		var/storedpower = 0
 		flags = CONDUCT
 		//There have to be at least two posts, so these are effectively doubled

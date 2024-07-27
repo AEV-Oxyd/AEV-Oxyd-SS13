@@ -91,6 +91,7 @@
 #include "code\__DEFINES\verb_manager.dm"
 #include "code\__DEFINES\weapons.dm"
 #include "code\__DEFINES\ZAS.dm"
+#include "code\__DEFINES\dcs\_attachmentFlags.dm"
 #include "code\__DEFINES\dcs\flags.dm"
 #include "code\__DEFINES\dcs\helpers.dm"
 #include "code\__DEFINES\dcs\signals.dm"
