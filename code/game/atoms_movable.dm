@@ -14,10 +14,11 @@ GLOBAL_VAR_INIT(Debug,0)
 	var/throw_speed = 2
 	var/throw_range = 7
 	var/moved_recently = 0
+	/// I yearn , for the day i can remove this variable , for it will set me free of shit-code (i just need a excuse to be lazy as fuck , this shit is here for convenience). SPCR 2024
 	var/obj/item/grab/grabbedBy
 	/// Holds the hitbox datum if theres any
 	var/datum/hitboxDatum/hitbox
-	/// A associative list , each index represents the thing we are attached to, the value of the index represents attachment flags that define behaviour
+	/// A associative list , each key represents the thing we are attached to, the value of the key represents attachment flags that define behaviour
 	var/list/attached
 	var/item_state // Used to specify the item state for the on-mob overlays.
 	var/inertia_dir = 0
