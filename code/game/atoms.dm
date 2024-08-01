@@ -26,8 +26,8 @@
 	var/reagent_flags = NONE
 	var/datum/reagents/reagents
 
-	//Detective Work, used for the duplicate data points kept in the scanners
-	var/list/original_atom
+	/// Holds the hitbox datum if theres any
+	var/datum/hitboxDatum/hitbox
 
 	var/auto_init = TRUE
 
@@ -46,6 +46,26 @@
 
 	var/list/attached
 
+/// Attaches the argument(thing) to src
+/atom/proc/attachGameMovable(atom/movable/thing, attachmentFlagsSupport, attachmentFlagsAttachable)
+	if(!(ismovable(thing) || isturf(thing)))
+		return FALSE
+	ASSLADD(attached, attachmentFlagsSupport | ATFS_SUPPORTER, thing)
+	ASSLADD(thing.attached, attachmentFlagsAttachable | ATFA_ATTACHED , src)
+	afterAttach(thing, TRUE, attachmentFlagsSupport, attachmentFlagsAttachable)
+	thing.afterAttach(src, FALSE, attachmentFlagsSupport, attachmentFlagsAttachable)
+	return TRUE
+
+/// Detaches the argument(thing) from src
+/atom/proc/detachGameMovable(atom/movable/thing)
+	if(!(thing in attached))
+		return -1
+	ASSLREMOVE(attached ,thing)
+	ASSLREMOVE(thing.attached, src)
+	afterDetach(thing, TRUE)
+	thing.afterDetach(src, FALSE)
+	return TRUE
+/*
 /atom/proc/attach(atom/thing, attachmentFlagsSupport, attachmentFlagsAttachable)
 	if(!istype(thing))
 		return FALSE
@@ -72,6 +92,7 @@
 	afterDetach(thing, TRUE)
 	thing.afterDetach(src, FALSE)
 	return TRUE
+*/
 
 /atom/proc/afterAttach(atom/thing, isSupporter, attachmentFlagsSupport, attachmentFlagsAttachable)
 	return
@@ -79,6 +100,11 @@
 /atom/proc/afterDetach(atom/thing, isSupporter)
 	return
 
+/atom/getAimingLevel(atom/shooter, defZone)
+	if(hitbox)
+		return hitbox.getAimingLevel(shooter, defZone, src)
+	else
+		return ..()
 
 /atom/proc/update_icon()
 	return
@@ -185,6 +211,8 @@
 		update_light()
 
 	update_plane()
+
+	hitbox = getHitbox(hitbox)
 
 	if(preloaded_reagents)
 		if(!reagents)
