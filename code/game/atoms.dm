@@ -15,7 +15,6 @@
 	var/last_bumped = 0
 	var/pass_flags = 0
 	var/throwpass = 0
-	var/simulated = TRUE //filter for actions - used by lighting overlays
 	var/fluorescent // Shows up under a UV light.
 	var/allow_spin = TRUE // prevents thrown atoms from spinning when disabled on thrown or target
 	var/used_now = FALSE //For tools system, check for it should forbid to work on atom for more than one user at time
@@ -44,6 +43,42 @@
 	  * its inherent color, the colored paint applied on it, special color effect etc...
 	  */
 	var/list/atom_colours
+
+	var/list/attached
+
+/atom/proc/attach(atom/thing, attachmentFlagsSupport, attachmentFlagsAttachable)
+	if(!istype(thing))
+		return FALSE
+	if(!length(attached))
+		attached = list()
+	attached[thing] = attachmentFlagsSupport | ATFS_SUPPORTER
+	thing.attached[src] = attachmentFlagsAttachable | ATFA_SUPPORTER
+	afterAttach(thing, TRUE, attachmentFlagsSupport, attachmentFlagsAttachable)
+	thing.afterAttach(src, FALSE, attachmentFlagsSupport, attachmentFlagsAttachable)
+	return TRUE
+
+/atom/proc/detach(atom/thing)
+	if(!(thing in attached))
+		return -1
+	if(length(attached) == 1)
+		del(attached)
+	else
+		attached -= thing
+	if(src in thing.attached)
+		if(length(thing.attached > 1))
+			thing.attached -= src
+		else
+			del(thing.attached)
+	afterDetach(thing, TRUE)
+	thing.afterDetach(src, FALSE)
+	return TRUE
+
+/atom/proc/afterAttach(atom/thing, isSupporter, attachmentFlagsSupport, attachmentFlagsAttachable)
+	return
+
+/atom/proc/afterDetach(atom/thing, isSupporter)
+	return
+
 
 /atom/proc/update_icon()
 	return
@@ -674,8 +709,6 @@ its easier to just keep the beam vertical.
 			this.icon_state = "vomittox_[pick(1, 4)]"
 
 /atom/proc/clean_blood()
-	if(!simulated)
-		return
 	fluorescent = 0
 	if(istype(blood_DNA, /list))
 		blood_DNA = null

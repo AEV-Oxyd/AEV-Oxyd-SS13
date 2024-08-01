@@ -487,42 +487,48 @@ GLOBAL_LIST(projectileDamageConstants)
 	if(NewLoc == dataRef.targetTurf)
 		message_admins("[src] reached target with a bulletLevel of [dataRef.currentCoords[3]], and a rate of [dataRef.movementRatios[3]]")
 
-/// Has to be ordered with highest-leading typepaths to the left(aka don't put the stairs after obj/structure , since any check on obj/structure will also include the stairs as a subtype)
-#define HittingPrioritiesList list(/mob/living = 5,/obj/structure/multiz/stairs/active = 3,/obj/structure = 4, /atom = 2)
-
-
+/// The lower the index , the higher the priority. If you add new paths to the list , make sure to increase the amount of lists in scanTurf below.
+#define HittingPrioritiesList list(/mob/living,/obj/structure/multiz/stairs/active,/obj/structure,/atom)
 
 /obj/item/projectile/proc/scanTurf(turf/scanning, list/trajectoryData)
 	if(atomFlags & AF_VISUAL_MOVE)
 		return PROJECTILE_CONTINUE
-	if(scanning.bullet_act(src, def_zone) & PROJECTILE_STOP)
-		onBlockingHit(scanning)
-		return PROJECTILE_STOP
 	var/list/hittingList = list()
-	for(var/atom/thing in scanning.contents)
-		for(var/i in 1 to length(HittingPrioritiesList))
-			if(istype(thing, HittingPrioritiesList[i]))
-				hittingList[thing] = HittingPrioritiesList[HittingPrioritiesList[i]]
-				break
-
-	for(var/i in 1 to (length(hittingList) - 1))
-		if(hittingList[hittingList[i]] < hittingList[hittingList[i+1]])
-			var/temp = hittingList[hittingList[i]]
-			hittingList[hittingList[i]] = hittingList[hittingList[i+1]]
-			hittingList[hittingList[i+1]] = temp
-			i = max(i-2, 1)
+	hittingList[1] = list()
+	hittingList[2] = list()
+	hittingList[3] = list()
+	hittingList[4] = list()
+	var/list/sortingList = scanning.contents.Copy()
+	sortingList.Add(scanning)
+	for(var/atom/thing as anything in scanning.contents)
+		for(var/index=1 to length(HittingPrioritiesList))
+			if(istype(thing, HittingPrioritiesList[index]))
+				hittingList[index] += thing
+				if(length(thing.attached))
+					for(var/atom/possibleTarget in thing.attached)
+						if(thing.attached[possibleTarget] & ATFS_IGNORE_HITS)
+							continue
+						if(possibleTarget.attached[thing] & ATFA_DIRECTIONAL_HITTABLE && !(dir & reverse_dir[possibleTarget.dir]))
+								continue
+						if(possibleTarget.attached[thing] & ATFA_DIRECTIONAL_HITTABLE_STRICT && !(dir == reverse_dir[possibleTarget.dir]))
+							continue
+						if(thing.attached[possibleTarget] & ATFS_PRIORITIZE_ATTACHED_FOR_HITS)
+							hittingList[index][length(hittingList[index])] = possibleTarget
+							hittingList[index] += thing
+						else
+							hittingList[index] += possibleTarget
 
 	for(var/i in 1 to length(hittingList))
-		var/obj/target = hittingList[i]
-		if(target == firer)
-			continue
-		/// third slot reversed for flags passed back by hitbox intersect
-		var/list/arguments = list(src, def_zone, null)
-		if(target.hitbox && !target.hitbox.intersects(trajectoryData, target.dir, 0, target, arguments))
-			return PROJECTILE_CONTINUE
-		if(target.bullet_act(arglist(arguments)) & PROJECTILE_STOP)
-			onBlockingHit(target)
-			return PROJECTILE_STOP
+		for(var/atom/target as anything in hittingList[i])
+			if(target == firer)
+				continue
+			/// third slot rezerved for flags passed back by hitbox intersect
+			var/list/arguments = list(src, def_zone, null)
+			if(target.hitbox && !target.hitbox.intersects(trajectoryData, target.dir, 0, target, arguments))
+				return PROJECTILE_CONTINUE
+			if(target.bullet_act(arglist(arguments)) & PROJECTILE_STOP)
+				onBlockingHit(target)
+				return PROJECTILE_STOP
 
 	return PROJECTILE_CONTINUE
 
