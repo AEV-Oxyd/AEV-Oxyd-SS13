@@ -52,7 +52,7 @@
 	if(!length(attached))
 		attached = list()
 	attached[thing] = attachmentFlagsSupport | ATFS_SUPPORTER
-	thing.attached[src] = attachmentFlagsAttachable | ATFA_SUPPORTER
+	thing.attached[src] = attachmentFlagsAttachable | ATFA_ATTACHED
 	afterAttach(thing, TRUE, attachmentFlagsSupport, attachmentFlagsAttachable)
 	thing.afterAttach(src, FALSE, attachmentFlagsSupport, attachmentFlagsAttachable)
 	return TRUE

@@ -9,7 +9,6 @@
 	layer            = LIGHTING_LAYER
 	invisibility     = INVISIBILITY_LIGHTING
 
-	simulated = FALSE
 	anchored = TRUE
 
 	blend_mode       = BLEND_OVERLAY

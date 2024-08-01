@@ -502,21 +502,23 @@ GLOBAL_LIST(projectileDamageConstants)
 	sortingList.Add(scanning)
 	for(var/atom/thing as anything in scanning.contents)
 		for(var/index=1 to length(HittingPrioritiesList))
-			if(istype(thing, HittingPrioritiesList[index]))
-				hittingList[index] += thing
-				if(length(thing.attached))
-					for(var/atom/possibleTarget in thing.attached)
-						if(thing.attached[possibleTarget] & ATFS_IGNORE_HITS)
-							continue
-						if(possibleTarget.attached[thing] & ATFA_DIRECTIONAL_HITTABLE && !(dir & reverse_dir[possibleTarget.dir]))
-								continue
-						if(possibleTarget.attached[thing] & ATFA_DIRECTIONAL_HITTABLE_STRICT && !(dir == reverse_dir[possibleTarget.dir]))
-							continue
-						if(thing.attached[possibleTarget] & ATFS_PRIORITIZE_ATTACHED_FOR_HITS)
-							hittingList[index][length(hittingList[index])] = possibleTarget
-							hittingList[index] += thing
-						else
-							hittingList[index] += possibleTarget
+			if(!istype(thing, HittingPrioritiesList[index]))
+				continue
+			hittingList[index] += thing
+			if(!length(thing.attached))
+				continue
+			for(var/atom/possibleTarget as anything in thing.attached)
+				if(thing.attached[possibleTarget] & ATFS_IGNORE_HITS)
+					continue
+				if(possibleTarget.attached[thing] & ATFA_DIRECTIONAL_HITTABLE && !(dir & reverse_dir[possibleTarget.dir]))
+					continue
+				if(possibleTarget.attached[thing] & ATFA_DIRECTIONAL_HITTABLE_STRICT && !(dir == reverse_dir[possibleTarget.dir]))
+					continue
+				if(thing.attached[possibleTarget] & ATFS_PRIORITIZE_ATTACHED_FOR_HITS)
+					hittingList[index][length(hittingList[index])] = possibleTarget
+					hittingList[index] += thing
+				else
+					hittingList[index] += possibleTarget
 
 	for(var/i in 1 to length(hittingList))
 		for(var/atom/target as anything in hittingList[i])

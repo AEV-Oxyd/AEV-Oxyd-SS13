@@ -4,7 +4,6 @@
 	alpha = 64 //Or else they cover half of the map
 	anchored = TRUE
 	unacidable = TRUE
-	simulated = FALSE
 	invisibility = 101
 	layer = MID_LANDMARK_LAYER
 	weight = 0

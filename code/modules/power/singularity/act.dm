@@ -27,14 +27,13 @@
 	..()
 
 /obj/singularity_act()
-	if(simulated)
-		explosion_act(1000, null)
-		if(src)
-			qdel(src)
-		return 2
+	explosion_act(1000, null)
+	if(!QDELETED(src))
+		qdel(src)
+	return 2
 
 /obj/singularity_pull(S, current_size)
-	if(simulated && !anchored)
+	if(!anchored)
 		step_towards(src, S)
 
 /obj/effect/beam/singularity_pull()

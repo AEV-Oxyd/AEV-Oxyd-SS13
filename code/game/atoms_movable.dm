@@ -18,8 +18,6 @@ GLOBAL_VAR_INIT(Debug,0)
 	var/obj/item/grab/grabbedBy
 	/// Holds the hitbox datum if theres any
 	var/datum/hitboxDatum/hitbox
-	/// A associative list , each key represents the thing we are attached to, the value of the key represents attachment flags that define behaviour
-	var/list/attached
 	var/item_state // Used to specify the item state for the on-mob overlays.
 	var/inertia_dir = 0
 	var/can_anchor = TRUE
@@ -34,23 +32,6 @@ GLOBAL_VAR_INIT(Debug,0)
 	var/prob_aditional_object = 100 // Probability for the accompanying_object to spawn.
 	var/spawn_blacklisted = FALSE // Generally for niche objects, atoms blacklisted can spawn if enabled by spawner. Examples include exoplanet loot tables you don't want spawning within the player starting area.
 	var/bad_type // Use path Ex:(bad_type = obj/item). Generally for abstract code objects, atoms with a set bad_type can never be selected by spawner. Examples include parent objects which should only exist within the code, or deployable embedded items.
-
-/// Attaches the argument(thing) to src
-/atom/movable/proc/attachGameMovable(atom/movable/thing, attachmentFlagsSupport, attachmentFlagsAttachable)
-	if(!(ismovable(thing) || isturf(thing)))
-		return FALSE
-	ASSLADD(attached, attachmentFlagsSupport, thing)
-	ASSLADD(thing.attached, attachmentFlagsAttachable, src)
-	return TRUE
-
-/// Detaches the argument(thing) from src
-/atom/movable/proc/detachGameMovable(atom/movable/thing)
-	if(!(thing in attached))
-		return -1
-	ASSLREMOVE(attached ,thing)
-	ASSLREMOVE(thing.attached, src)
-	/// adauga functionalitate aicea
-	return TRUE
 
 /atom/movable/Del()
 	if(isnull(gc_destroyed) && loc)

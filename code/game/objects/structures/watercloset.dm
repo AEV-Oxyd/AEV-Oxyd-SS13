@@ -320,7 +320,7 @@
 	for(var/thing in loc)
 		var/atom/movable/AM = thing
 		var/mob/living/L = thing
-		if(istype(AM) && AM.simulated)
+		if(istype(AM))
 			wash(AM)
 			if(istype(L))
 				process_heat(L)

@@ -233,8 +233,6 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		// i=3 ==> east
 		// i=4 ==> west
 		// i dont get why owner connections is text.. but it is what it is
-		var/direct = "[(1<<(i-1))]"
-		var/conn = text2num(owner.connections[i])
 		boundingList = boundingBoxes[text2num(owner.connections[i])+1]["[(1<<(i-1))]"]
 		for(var/list/boundingData in boundingList)
 			/// basic AABB but only for the Z-axis.

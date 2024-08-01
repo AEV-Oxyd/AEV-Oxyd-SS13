@@ -1275,7 +1275,6 @@ var/list/FLOORITEMS = list(
 	density = FALSE
 
 	anchored = TRUE
-	simulated = FALSE
 
 	see_in_dark = 1e6
 
