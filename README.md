@@ -10,3 +10,6 @@ Made to run on AlmaLinux 9 for hosting, includes 3.0 TG rust-g utils. <br>
 ## CONTRIBUTING
 
 Please see [CONTRIBUTING.md](CONTRIBUTING.md)
+
+## USEFULL INFORMATION
+Define LOWMEMORYMODE to force the server to load up the testmap. This is far faster than loading the default map.
