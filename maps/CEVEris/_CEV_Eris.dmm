@@ -419,7 +419,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 28
 	},
 /turf/simulated/floor/tiled/dark,
@@ -1262,7 +1262,7 @@
 /area/eris/security/prison)
 "add" = (
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /turf/simulated/floor/tiled/dark,
@@ -1663,7 +1663,7 @@
 "aed" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/machinery/light/small{
@@ -1737,7 +1737,7 @@
 	dir = 8
 	},
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /turf/simulated/floor/tiled/dark,
@@ -2271,7 +2271,7 @@
 /area/eris/security/prisoncells)
 "afG" = (
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /obj/machinery/camera/network/security{
@@ -3582,7 +3582,7 @@
 	dir = 8
 	},
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 28
 	},
 /turf/simulated/floor/tiled/dark,
@@ -3600,7 +3600,7 @@
 /obj/structure/table/standard,
 /obj/item/storage/toolbox/mechanical,
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /obj/machinery/camera/network/security{
@@ -9581,7 +9581,7 @@
 /area/eris/maintenance/section3deck2starboard)
 "axg" = (
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /turf/simulated/floor/tiled/steel,
@@ -17574,7 +17574,7 @@
 /area/eris/hallway/side/eschangara)
 "aRK" = (
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 28
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on{
@@ -18543,7 +18543,7 @@
 	dir = 4
 	},
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /turf/simulated/floor/tiled/dark,
@@ -20100,7 +20100,7 @@
 	name = "Evidence Closet"
 	},
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /turf/simulated/floor/tiled/dark,
@@ -20900,7 +20900,7 @@
 "aZf" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 28
 	},
 /turf/simulated/floor/tiled/dark,
@@ -23966,7 +23966,7 @@
 /area/eris/maintenance/section3deck1central)
 "bff" = (
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 28
 	},
 /turf/simulated/floor/tiled/dark,
@@ -24000,7 +24000,7 @@
 /area/eris/rnd/robotics)
 "bfj" = (
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /obj/spawner/flora/low_chance,
@@ -24106,7 +24106,7 @@
 /area/eris/crew_quarters/sleep/cryo)
 "bfB" = (
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 28
 	},
 /turf/simulated/floor/tiled/steel,
@@ -24135,7 +24135,7 @@
 	dir = 4
 	},
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /obj/item/device/radio/intercom{
@@ -25939,7 +25939,7 @@
 /area/eris/crew_quarters/sleep)
 "bjO" = (
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 28
 	},
 /obj/item/device/radio/intercom{
@@ -28325,7 +28325,7 @@
 	pixel_y = 2
 	},
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /turf/simulated/floor/tiled/dark,
@@ -29274,7 +29274,7 @@
 /area/eris/maintenance/section2deck4central)
 "brG" = (
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -29629,7 +29629,7 @@
 /area/eris/crew_quarters/sleep/cryo)
 "bsH" = (
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /turf/simulated/floor/tiled/steel,
@@ -32019,7 +32019,7 @@
 	dir = 8
 	},
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 28
 	},
 /obj/machinery/light{
@@ -38418,7 +38418,7 @@
 /area/eris/security/lobby)
 "bMT" = (
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -39607,7 +39607,7 @@
 /area/eris/crew_quarters/hydroponics)
 "bPB" = (
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/machinery/light/small,
@@ -40808,7 +40808,7 @@
 "bSM" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /obj/structure/table/standard,
@@ -41673,7 +41673,7 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/structure/table/standard,
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /obj/item/paper_bin,
@@ -42222,7 +42222,7 @@
 /area/eris/command/courtroom)
 "bWr" = (
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /obj/machinery/computer/message_monitor{
@@ -42809,7 +42809,7 @@
 /area/eris/security/lobby)
 "bXP" = (
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -43398,9 +43398,6 @@
 /turf/simulated/floor/tiled/dark/gray_platform,
 /area/eris/neotheology/biogenerator)
 "bZo" = (
-/obj/machinery/firealarm{
-	pixel_y = 28
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
@@ -43572,7 +43569,7 @@
 "bZG" = (
 /obj/machinery/atmospherics/unary/freezer,
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /obj/machinery/light{
@@ -43799,7 +43796,7 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 28
 	},
 /obj/machinery/camera/network/third_section{
@@ -44901,7 +44898,7 @@
 /area/eris/rnd/mixing)
 "cdh" = (
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /obj/machinery/light{
@@ -46568,7 +46565,7 @@
 "cgL" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /turf/simulated/floor/tiled/steel/techfloor,
@@ -49165,7 +49162,7 @@
 "cnu" = (
 /obj/structure/cyberplant,
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 28
 	},
 /obj/structure/disposalpipe/segment,
@@ -49369,7 +49366,7 @@
 /obj/structure/table/standard,
 /obj/item/hand_tele,
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /turf/simulated/floor/tiled/white/gray_platform,
@@ -49397,14 +49394,14 @@
 /area/eris/neotheology/storage)
 "cnZ" = (
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /turf/simulated/floor/tiled/white,
 /area/eris/rnd/lab)
 "coa" = (
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -49444,7 +49441,7 @@
 /area/eris/command/meo)
 "coj" = (
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /obj/structure/cable/green{
@@ -50861,7 +50858,7 @@
 /area/eris/maintenance/section3deck4starboard)
 "crM" = (
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 28
 	},
 /obj/machinery/light{
@@ -51158,7 +51155,7 @@
 	dir = 1
 	},
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /turf/simulated/floor/tiled/steel/gray_platform,
@@ -51688,7 +51685,7 @@
 /area/eris/neotheology/biogenerator)
 "cuk" = (
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /obj/machinery/light{
@@ -52256,7 +52253,7 @@
 /area/eris/engineering/post)
 "cvV" = (
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /obj/machinery/light{
@@ -55219,7 +55216,7 @@
 /obj/structure/table/standard,
 /obj/item/device/aicard,
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /turf/simulated/floor/tiled/steel/gray_platform,
@@ -56861,7 +56858,7 @@
 /area/eris/maintenance/section3deck4central)
 "cGV" = (
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -58929,7 +58926,7 @@
 /area/eris/maintenance/section4deck3port)
 "cMl" = (
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 28
 	},
 /obj/machinery/camera/network/engineering{
@@ -59176,7 +59173,7 @@
 /area/eris/rnd/research)
 "cNc" = (
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 28
 	},
 /obj/machinery/light{
@@ -60745,7 +60742,7 @@
 /area/eris/crew_quarters/sleep/cryo)
 "cRN" = (
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -65868,7 +65865,7 @@
 "def" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /turf/simulated/floor/wood,
@@ -66014,7 +66011,7 @@
 	})
 "dez" = (
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /turf/simulated/floor/wood,
@@ -66469,7 +66466,7 @@
 /obj/item/clothing/suit/space/captain,
 /obj/item/clothing/head/space/capspace,
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -67407,7 +67404,7 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -68016,7 +68013,7 @@
 /area/eris/command/tcommsat/computer)
 "diX" = (
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /obj/machinery/camera/network/engineering{
@@ -68026,7 +68023,7 @@
 /area/eris/hallway/side/atmosphericshallway)
 "diY" = (
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 28
 	},
 /turf/simulated/floor/tiled/white/danger,
@@ -68171,7 +68168,7 @@
 /area/eris/rnd/xenobiology)
 "djm" = (
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /obj/machinery/camera/network/research{
@@ -70920,7 +70917,7 @@
 /area/eris/engineering/foyer)
 "dpr" = (
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /obj/structure/table/rack,
@@ -71195,7 +71192,7 @@
 	dir = 8
 	},
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 28
 	},
 /turf/simulated/floor/tiled/white,
@@ -72312,7 +72309,7 @@
 /area/eris/command/mbo/quarters)
 "dsR" = (
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -73366,7 +73363,7 @@
 /area/eris/medical/psych)
 "dvo" = (
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 28
 	},
 /turf/simulated/floor/tiled/white/brown_perforated,
@@ -73427,7 +73424,7 @@
 	dir = 4
 	},
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/item/modular_computer/console/preset/engineering/alarms{
@@ -74798,7 +74795,7 @@
 	name = "Armoury showcase"
 	},
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -76653,7 +76650,7 @@
 /area/eris/engineering/starboardhallway)
 "dDl" = (
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 28
 	},
 /obj/machinery/light{
@@ -76694,7 +76691,7 @@
 /area/eris/command/bridge)
 "dDq" = (
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -76702,7 +76699,7 @@
 /area/eris/command/bridge)
 "dDs" = (
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -76780,7 +76777,7 @@
 "dDC" = (
 /obj/structure/medical_stand,
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /turf/simulated/floor/tiled/white/brown_perforated,
@@ -77156,7 +77153,7 @@
 /area/eris/medical/medbay/organs)
 "dEu" = (
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 28
 	},
 /obj/structure/disposalpipe/trunk{
@@ -77551,7 +77548,7 @@
 /area/eris/maintenance/section3deck3starboard)
 "dFs" = (
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 28
 	},
 /turf/simulated/floor/tiled/steel,
@@ -77797,7 +77794,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 28
 	},
 /turf/simulated/floor/tiled/steel,
@@ -78466,7 +78463,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 28
 	},
 /turf/simulated/floor/tiled/steel/orangecorner,
@@ -78664,7 +78661,7 @@
 /area/eris/hallway/side/atmosphericshallway)
 "dIf" = (
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 28
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on{
@@ -79602,7 +79599,7 @@
 /area/eris/engineering/propulsion/left)
 "dKd" = (
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 28
 	},
 /obj/structure/cable/green{
@@ -81459,7 +81456,7 @@
 "dPI" = (
 /obj/structure/table/standard,
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24
 	},
 /turf/simulated/floor/tiled/steel/gray_perforated,
@@ -84432,7 +84429,7 @@
 /area/eris/rnd/research)
 "dXo" = (
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /turf/simulated/floor/tiled/white,
@@ -84488,7 +84485,7 @@
 "dXv" = (
 /obj/structure/disposalpipe/junction,
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 28
 	},
 /obj/machinery/light{
@@ -86376,7 +86373,7 @@
 "ecA" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -97490,7 +97487,7 @@
 /area/eris/medical/paramedic)
 "eCG" = (
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /turf/simulated/floor/tiled/white/gray_perforated,
@@ -97579,7 +97576,7 @@
 /area/eris/engineering/gravity_generator)
 "eCV" = (
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /turf/simulated/floor/tiled/steel/gray_perforated,
@@ -99831,7 +99828,7 @@
 	},
 /obj/machinery/light,
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 28
 	},
 /turf/simulated/floor/carpet/bcarpet,
@@ -101733,7 +101730,8 @@
 /obj/spawner/rations,
 /obj/spawner/rations,
 /obj/machinery/firealarm{
-	pixel_y = -28
+	pixel_y = -28;
+	dir = 1
 	},
 /turf/simulated/floor/tiled/cafe,
 /area/eris/crew_quarters/kitchen)
@@ -103846,7 +103844,7 @@
 /area/holodeck/alphadeck)
 "oXE" = (
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 28
 	},
 /turf/simulated/floor/tiled/dark/golden,
@@ -105255,6 +105253,13 @@
 /obj/spawner/lathe_disk/low_chance,
 /turf/simulated/floor/tiled/techmaint_perforated,
 /area/eris/maintenance/section4deck3port)
+"snI" = (
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = -24
+	},
+/turf/simulated/floor/bluegrid,
+/area/turret_protected/ai)
 "snT" = (
 /obj/landmark/join/start/janitor,
 /turf/simulated/floor/tiled/dark/golden,
@@ -106416,7 +106421,7 @@
 /area/eris/security/armory)
 "uIm" = (
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 28
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on{
@@ -106471,7 +106476,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on{
@@ -107407,7 +107412,7 @@
 /obj/spawner/medical/low_chance,
 /obj/structure/table/rack/shelf,
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -28
 	},
 /obj/item/storage/box/njoy/blue,
@@ -213735,7 +213740,7 @@ bZT
 bZU
 caW
 cbC
-bZq
+snI
 caW
 bZU
 cbC

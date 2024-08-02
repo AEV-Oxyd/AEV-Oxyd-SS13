@@ -493,7 +493,7 @@ GLOBAL_LIST(projectileDamageConstants)
 /obj/item/projectile/proc/scanTurf(turf/scanning, list/trajectoryData)
 	if(atomFlags & AF_VISUAL_MOVE)
 		return PROJECTILE_CONTINUE
-	var/list/hittingList = list()
+	var/list/hittingList = new/list(length(HittingPrioritiesList))
 	hittingList[1] = list()
 	hittingList[2] = list()
 	hittingList[3] = list()

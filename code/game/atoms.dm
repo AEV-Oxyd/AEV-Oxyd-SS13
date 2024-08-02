@@ -47,7 +47,7 @@
 	var/list/attached
 
 /// Attaches the argument(thing) to src
-/atom/proc/attachGameMovable(atom/movable/thing, attachmentFlagsSupport, attachmentFlagsAttachable)
+/atom/proc/attachGameAtom(atom/thing, attachmentFlagsSupport, attachmentFlagsAttachable)
 	if(!(ismovable(thing) || isturf(thing)))
 		return FALSE
 	ASSLADD(attached, attachmentFlagsSupport | ATFS_SUPPORTER, thing)
@@ -57,7 +57,7 @@
 	return TRUE
 
 /// Detaches the argument(thing) from src
-/atom/proc/detachGameMovable(atom/movable/thing)
+/atom/proc/detachGameAtom(atom/thing)
 	if(!(thing in attached))
 		return -1
 	ASSLREMOVE(attached ,thing)
@@ -258,7 +258,9 @@
 	if(statverbs)
 		statverbs.Cut()
 
-		//post_buckle_mob(.)
+	for(var/atom/thing as anything in attached)
+		detachGameAtom(thing)
+
 	if(reagents)
 		QDEL_NULL(reagents)
 
