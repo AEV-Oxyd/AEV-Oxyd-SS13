@@ -60,11 +60,12 @@
 /atom/proc/detachGameAtom(atom/thing)
 	if(!(thing in attached))
 		return -1
+	afterDetach(thing, TRUE, attached[thing], thing.attached[src])
+	thing.afterDetach(src, FALSE ,attached[thing], thing.attached[src])
 	ASSLREMOVE(attached ,thing)
 	ASSLREMOVE(thing.attached, src)
-	afterDetach(thing, TRUE)
-	thing.afterDetach(src, FALSE)
 	return TRUE
+
 /*
 /atom/proc/attach(atom/thing, attachmentFlagsSupport, attachmentFlagsAttachable)
 	if(!istype(thing))
@@ -95,9 +96,18 @@
 */
 
 /atom/proc/afterAttach(atom/thing, isSupporter, attachmentFlagsSupport, attachmentFlagsAttachable)
+	if(isSupporter)
+	else
+		if(attachmentFlagsAttachable & ATFA_CENTER_ON_SUPPORTER)
+			atomFlags |= AF_HITBOX_OFFSET_BY_ATTACHMENT
 	return
 
-/atom/proc/afterDetach(atom/thing, isSupporter)
+/atom/proc/afterDetach(atom/thing, isSupporter, attachmentFlagsSupport, attachmentFlagsAttachable)
+	if(isSupporter)
+	else
+		if(attachmentFlagsAttachable & ATFA_CENTER_ON_SUPPORTER)
+			atomFlags &= ~AF_HITBOX_OFFSET_BY_ATTACHMENT
+	return
 	return
 
 /atom/getAimingLevel(atom/shooter, defZone)

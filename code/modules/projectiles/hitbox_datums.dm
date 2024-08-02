@@ -129,8 +129,17 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 /datum/hitboxDatum/atom/intersects(list/lineData,ownerDirection, turf/incomingFrom, atom/owner, list/arguments)
 	var/global/worldX
 	var/global/worldY
-	worldX = owner.x * 32
-	worldY = owner.y * 32
+	worldX = owner.x
+	worldY = owner.y
+	if(owner.atomFlags & AF_HITBOX_OFFSET_BY_ATTACHMENT)
+		for(var/atom/thing as anything in owner.attached)
+			if(!(owner.attached[thing] & ATFS_SUPPORTER))
+				continue
+			worldX += thing.x - owner.x
+			worldY += thing.y - owner.y
+			break
+	worldX *= 32
+	worldY *= 32
 	for(var/list/boundingData in boundingBoxes["[owner.dir]"])
 		/// basic AABB but only for the Z-axis.
 		if(boundingData[5] > max(lineData[5],lineData[6]) || boundingData[6] < min(lineData[6],lineData[5]))

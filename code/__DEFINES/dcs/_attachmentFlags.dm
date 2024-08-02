@@ -32,3 +32,5 @@
 #define ATFA_DIRECTIONAL_HITTABLE_STRICT (1<<6)
 /// The bullet can come from any axis that shares a direction bit-flag with ourselves
 #define ATFA_DIRECTIONAL_HITTABLE (1<<7)
+/// Will force any hit-checking to be relatively offset by our position compared to the supporting atom.
+#define ATFA_CENTER_ON_SUPPORTER (1<<8)
