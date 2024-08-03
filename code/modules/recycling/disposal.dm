@@ -672,7 +672,6 @@
 		return
 
 /obj/structure/disposalpipe/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
-	. = ..()
 	return PROJECTILE_CONTINUE
 
 	// pipe is deleted

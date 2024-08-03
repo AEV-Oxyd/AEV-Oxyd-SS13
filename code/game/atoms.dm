@@ -97,15 +97,14 @@
 	if(isSupporter)
 	else
 		if(attachmentFlagsAttachable & ATFA_CENTER_ON_SUPPORTER)
-			atomFlags |= AF_HITBOX_OFFSET_BY_ATTACHMENT
+			atomFlags |= AF_HITBOX_OFFSET_BY_ATTACHMENT | AF_IGNORE_ON_BULLETSCAN
 	return
 
 /atom/proc/afterDetach(atom/thing, isSupporter, attachmentFlagsSupport, attachmentFlagsAttachable)
 	if(isSupporter)
 	else
 		if(attachmentFlagsAttachable & ATFA_CENTER_ON_SUPPORTER)
-			atomFlags &= ~AF_HITBOX_OFFSET_BY_ATTACHMENT
-	return
+			atomFlags &= ~(AF_HITBOX_OFFSET_BY_ATTACHMENT | AF_IGNORE_ON_BULLETSCAN)
 	return
 
 /atom/getAimingLevel(atom/shooter, defZone)

@@ -136,6 +136,11 @@ SUBSYSTEM_DEF(bullets)
 	else
 		message_admins(("Created bullet without target , [referencedBullet], from [usr]"))
 
+	if(abs(target.pixel_x) > PPT/2)
+		targetPos[1] += round((target.pixel_x - PPT/2 )/ PPT) + 1 * sign(target.pixel_x)
+	if(abs(target.pixel_y) > PPT/2)
+		targetPos[2] += round((target.pixel_y - PPT/2) / PPT) + 1 * sign(target.pixel_y)
+
 	//message_admins("level set to [firedLevel], towards [targetLevel]")
 	currentCoords[3] = firedLevel
 	targetLevel += (targetCoords[3] - firedPos[3])* LEVEL_MAX

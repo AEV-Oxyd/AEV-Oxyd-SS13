@@ -500,7 +500,9 @@ GLOBAL_LIST(projectileDamageConstants)
 	hittingList[4] = list()
 	var/list/sortingList = scanning.contents.Copy()
 	sortingList.Add(scanning)
-	for(var/atom/thing as anything in scanning.contents)
+	for(var/atom/thing as anything in sortingList)
+		if(thing.atomFlags & AF_IGNORE_ON_BULLETSCAN)
+			continue
 		for(var/index=1 to length(HittingPrioritiesList))
 			if(!istype(thing, HittingPrioritiesList[index]))
 				continue
@@ -510,9 +512,9 @@ GLOBAL_LIST(projectileDamageConstants)
 			for(var/atom/possibleTarget as anything in thing.attached)
 				if(thing.attached[possibleTarget] & ATFS_IGNORE_HITS)
 					continue
-				if(possibleTarget.attached[thing] & ATFA_DIRECTIONAL_HITTABLE && !(dir & reverse_dir[possibleTarget.dir]))
+				if(possibleTarget.attached[thing] & ATFA_DIRECTIONAL_HITTABLE && !(dir & reverse_dir[(get_dir(src, thing))]))
 					continue
-				if(possibleTarget.attached[thing] & ATFA_DIRECTIONAL_HITTABLE_STRICT && !(dir == reverse_dir[possibleTarget.dir]))
+				if(possibleTarget.attached[thing] & ATFA_DIRECTIONAL_HITTABLE_STRICT && !(dir == reverse_dir[(get_dir(src, thing))]))
 					continue
 				if(thing.attached[possibleTarget] & ATFS_PRIORITIZE_ATTACHED_FOR_HITS)
 					hittingList[index][length(hittingList[index])] = possibleTarget

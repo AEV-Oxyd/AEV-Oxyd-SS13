@@ -639,6 +639,10 @@
 /obj/effect/window_lwall_spawn/reinforced,
 /turf/simulated/floor/plating,
 /area/space)
+"Fe" = (
+/obj/machinery/firealarm,
+/turf/simulated/wall,
+/area/space)
 "Gc" = (
 /obj/item/reagent_containers/glass/beaker/tungsten,
 /obj/item/tool/screwdriver,
@@ -2464,7 +2468,7 @@ aa
 aa
 aa
 aa
-ab
+Fe
 an
 an
 an
@@ -2872,7 +2876,7 @@ aa
 aa
 aa
 aa
-ab
+Fe
 an
 an
 an

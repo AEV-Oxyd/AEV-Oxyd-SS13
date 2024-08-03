@@ -8,3 +8,4 @@
 #define AF_VISUAL_MOVE (1<<4)
 /// Our hitbox is offset by an attachment.
 #define AF_HITBOX_OFFSET_BY_ATTACHMENT (1<<5)
+#define AF_IGNORE_ON_BULLETSCAN (1<<6)
