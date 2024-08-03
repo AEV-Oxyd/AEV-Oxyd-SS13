@@ -671,6 +671,9 @@
 		base_icon_state = icon_state
 		return
 
+/obj/structure/disposalpipe/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
+	. = ..()
+	return PROJECTILE_CONTINUE
 
 	// pipe is deleted
 	// ensure if holder is present, it is expelled

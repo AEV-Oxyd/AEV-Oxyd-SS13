@@ -48,8 +48,6 @@
 
 /// Attaches the argument(thing) to src
 /atom/proc/attachGameAtom(atom/thing, attachmentFlagsSupport, attachmentFlagsAttachable)
-	if(!(ismovable(thing) || isturf(thing)))
-		return FALSE
 	ASSLADD(attached, attachmentFlagsSupport | ATFS_SUPPORTER, thing)
 	ASSLADD(thing.attached, attachmentFlagsAttachable | ATFA_ATTACHED , src)
 	afterAttach(thing, TRUE, attachmentFlagsSupport, attachmentFlagsAttachable)

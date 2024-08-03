@@ -133,7 +133,7 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	worldY = owner.y
 	if(owner.atomFlags & AF_HITBOX_OFFSET_BY_ATTACHMENT)
 		for(var/atom/thing as anything in owner.attached)
-			if(!(owner.attached[thing] & ATFS_SUPPORTER))
+			if(!(thing.attached[owner] & ATFS_SUPPORTER))
 				continue
 			worldX += thing.x - owner.x
 			worldY += thing.y - owner.y

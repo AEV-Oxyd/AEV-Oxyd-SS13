@@ -48,6 +48,10 @@ var/list/possible_cable_coil_colours = list(
 	color = COLOR_RED_LIGHT
 	var/obj/machinery/power/breakerbox/breaker_box
 
+/obj/structure/cable/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
+	. = ..()
+	return invisibility == 101 ? PROJECTILE_CONTINUE : PROJECTILE_STOP
+
 /obj/structure/cable/drain_power(var/drain_check, var/surge, var/amount = 0)
 
 	if(drain_check)
