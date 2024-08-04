@@ -99,6 +99,13 @@
 	var/absorbed = take_damage(target_power)
 	return absorbed
 
+/obj/structure/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
+	. = ..()
+	take_damage(P.get_structure_damage())
+	if(QDELETED(src))
+		return PROJECTILE_CONTINUE
+
+
 /obj/structure/New()
 	..()
 	if(climbable)

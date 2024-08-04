@@ -58,16 +58,21 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
   return false;
 }
 */
-// Based off the script above.
+// Based off the script above. Optimized based off github comments relating to code above.
 /datum/hitboxDatum/proc/lineIntersect(list/firstLine , list/secondLine)
 	var/global/firstRatio
 	var/global/secondRatio
-	firstRatio = ((secondLine[3] - secondLine[1]) * (firstLine[2] - secondLine[2]) - (secondLine[4] - secondLine[2]) * (firstLine[1] - secondLine[1]))
-	firstRatio /= ((secondLine[4] - secondLine[2]) * (firstLine[3] - firstLine[1]) - (secondLine[3] - secondLine[1]) * (firstLine[4] - firstLine[2]))
-	secondRatio = ((firstLine[3] - firstLine[1]) * (firstLine[2] - secondLine[2]) - (firstLine[4] - firstLine[2]) * (firstLine[1] - secondLine[1]))
-	secondRatio /= ((secondLine[4] - secondLine[2]) * (firstLine[3] - firstLine[1]) - (secondLine[3] - secondLine[1]) * (firstLine[4] - firstLine[2]))
+	var/denominator = ((secondLine[4] - secondLine[2]) * (firstLine[3] - firstLine[1]) - (secondLine[3] - secondLine[1]) * (firstLine[4] - firstLine[2]))
+	if(denominator == 0)
+		return FALSE
+	firstRatio = ((secondLine[3] - secondLine[1]) * (firstLine[2] - secondLine[2]) - (secondLine[4] - secondLine[2]) * (firstLine[1] - secondLine[1])) / denominator
+	secondRatio = ((firstLine[3] - firstLine[1]) * (firstLine[2] - secondLine[2]) - (firstLine[4] - firstLine[2]) * (firstLine[1] - secondLine[1])) / denominator
 	if(firstRatio >= 0 && firstRatio <= 1 && secondRatio >= 0 && secondRatio <= 1)
+		/// Distance to intersection of point
+		return DIST_EUCLIDIAN_2D(firstLine[1],firstLine[2],firstLine[1] + firstRatio * (firstLine[3] - firstLine[1]),firstLine[2] + firstRatio * (firstLine[4] - firstLine[2]) )
 		//return list(firstLine[1] + firstRatio * (firstLine[3] - firstLine[1]), firstLine[2] + firstRatio * (firstLine[4] - firstLine[2]))
+		//message_admins("X-collision : [firstLine[1] + firstRatio * (firstLine[3] - firstLine[1])] Y-collision : [firstLine[2] + firstRatio * (firstLine[4] - firstLine[2])]")
+		//message_admins("Distance between points : [DIST_EUCLIDIAN_2D(firstLine[1],firstLine[2],firstLine[1] + firstRatio * (firstLine[3] - firstLine[1]),firstLine[2] + firstRatio * (firstLine[4] - firstLine[2]) )]")
 		return TRUE
 	else
 		return FALSE
@@ -129,6 +134,7 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 /datum/hitboxDatum/atom/intersects(list/lineData,ownerDirection, turf/incomingFrom, atom/owner, list/arguments)
 	var/global/worldX
 	var/global/worldY
+	var/global/functionReturn
 	worldX = owner.x
 	worldY = owner.y
 	if(owner.atomFlags & AF_HITBOX_OFFSET_BY_ATTACHMENT)
@@ -144,17 +150,25 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		/// basic AABB but only for the Z-axis.
 		if(boundingData[5] > max(lineData[5],lineData[6]) || boundingData[6] < min(lineData[6],lineData[5]))
 			continue
-		if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY)))
+		functionReturn = lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY))
+		if(functionReturn)
 			arguments[3] = boundingData[7]
+			arguments[4] = functionReturn
 			return TRUE
-		if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY)))
+		functionReturn = lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY))
+		if(functionReturn)
 			arguments[3] = boundingData[7]
+			arguments[4] = functionReturn
 			return TRUE
-		if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[4] + worldY, boundingData[3] + worldX, boundingData[4] + worldY)))
+		functionReturn = lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[4] + worldY, boundingData[3] + worldX, boundingData[4] + worldY))
+		if(functionReturn)
 			arguments[3] = boundingData[7]
+			arguments[4] = functionReturn
 			return TRUE
-		if(lineIntersect(lineData, list(boundingData[3] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY)))
+		functionReturn = lineIntersect(lineData, list(boundingData[3] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY))
+		if(functionReturn)
 			arguments[3] = boundingData[7]
+			arguments[4] = functionReturn
 			return TRUE
 	return FALSE
 
@@ -232,6 +246,7 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 /datum/hitboxDatum/atom/table/intersects(list/lineData,ownerDirection, turf/incomingFrom, obj/structure/table/owner, list/arguments)
 	var/global/worldX
 	var/global/worldY
+	var/global/functionReturn
 	worldX = owner.x * 32
 	worldY = owner.y * 32
 	var/list/boundingList
@@ -249,17 +264,25 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 				continue
 			if(boundingData[5] < max(lineData[5], lineData[6]) && boundingData[6] < min(lineData[6],lineData[5]))
 				continue
-			if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY)))
+			functionReturn = lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY))
+			if(functionReturn)
 				arguments[3] = boundingData[7]
+				arguments[4] = functionReturn
 				return TRUE
-			if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY)))
+			functionReturn = lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY))
+			if(functionReturn)
 				arguments[3] = boundingData[7]
+				arguments[4] = functionReturn
 				return TRUE
-			if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[4] + worldY, boundingData[3] + worldX, boundingData[4] + worldY)))
+			functionReturn = lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[4] + worldY, boundingData[3] + worldX, boundingData[4] + worldY))
+			if(functionReturn)
 				arguments[3] = boundingData[7]
+				arguments[4] = functionReturn
 				return TRUE
-			if(lineIntersect(lineData, list(boundingData[3] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY)))
+			functionReturn = lineIntersect(lineData, list(boundingData[3] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY))
+			if(functionReturn)
 				arguments[3] = boundingData[7]
+				arguments[4] = functionReturn
 				return TRUE
 	return FALSE
 
@@ -295,7 +318,13 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		LISTWEST = list(BBOX(10,9,23,25,LEVEL_CHEST-0.1,LEVEL_CHEST+0.2,null))
 	)
 
-
+/datum/hitboxDatum/atom/wall
+	boundingBoxes = list(
+		LISTNORTH = list(BBOX(0,0,32,32,LEVEL_BELOW ,LEVEL_ABOVE,null)),
+		LISTSOUTH = list(BBOX(0,0,32,32,LEVEL_BELOW ,LEVEL_ABOVE,null)),
+		LISTEAST = list(BBOX(0,0,32,32,LEVEL_BELOW ,LEVEL_ABOVE,null)),
+		LISTWEST = list(BBOX(0,0,32,32,LEVEL_BELOW ,LEVEL_ABOVE,null))
+	)
 
 /datum/hitboxDatum/mob
 
@@ -331,6 +360,7 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	. = ..()
 	var/global/worldX
 	var/global/worldY
+	var/global/functionReturn
 	worldX = owner.x * 32
 	worldY = owner.y * 32
 	var/mob/living/perceivedOwner = owner
@@ -338,17 +368,25 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		/// basic AABB but only for the Z-axis.
 		if(boundingData[5] > max(lineData[5],lineData[6]) || boundingData[6] < min(lineData[6],lineData[5]))
 			continue
-		if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY)))
+		functionReturn = lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY))
+		if(functionReturn)
 			arguments[3] = boundingData[7]
+			arguments[4] = functionReturn
 			return TRUE
-		if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY)))
+		functionReturn = lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY))
+		if(functionReturn)
 			arguments[3] = boundingData[7]
+			arguments[4] = functionReturn
 			return TRUE
-		if(lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[4] + worldY, boundingData[3] + worldX, boundingData[4] + worldY)))
+		functionReturn = lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[4] + worldY, boundingData[3] + worldX, boundingData[4] + worldY))
+		if(functionReturn)
 			arguments[3] = boundingData[7]
+			arguments[4] = functionReturn
 			return TRUE
-		if(lineIntersect(lineData, list(boundingData[3] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY)))
+		functionReturn = lineIntersect(lineData, list(boundingData[3] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY))
+		if(functionReturn)
 			arguments[3] = boundingData[7]
+			arguments[4] = functionReturn
 			return TRUE
 	return FALSE
 

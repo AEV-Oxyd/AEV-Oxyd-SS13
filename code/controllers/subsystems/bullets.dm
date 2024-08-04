@@ -32,7 +32,8 @@ SUBSYSTEM_DEF(bullets)
 	// 1 client tick by default , can be increased by impacts
 	var/bulletWait = 1
 	//// x1,y1,x2,y2,z1,z2
-	var/list/trajectoryData = list(0,0,0,0,0,0)
+	var/list/trajectoryData = list(0,0,0,0,0,0,0)
+	var/distanceToTravelForce
 
 
 
@@ -252,7 +253,9 @@ SUBSYSTEM_DEF(bullets)
 /datum/controller/subsystem/bullets/fire(resumed)
 	if(!resumed)
 		current_queue = bullet_queue.Copy()
-	var/turf/leaving
+	var/global/turf/leaving
+	var/global/pixelXdist
+	var/global/pixelYdist
 	for(var/datum/bullet_data/bullet in current_queue)
 		current_queue -= bullet
 		bullet.lastChanges[1] = 0
@@ -262,13 +265,14 @@ SUBSYSTEM_DEF(bullets)
 			bullet_queue -= bullet
 			continue
 		bulletRatios = bullet.movementRatios
-		bulletCoords = bullet.currentCoords
 		projectile = bullet.referencedBullet
 		pixelsToTravel = bullet.pixelsPerTick
+		bulletCoords = bullet.currentCoords
 		/// We have to break up the movement into steps if its too big(since it leads to erronous steps) , this is preety much continous collision
 		/// but less performant A more performant version would be to use the same algorithm as throwing for determining which turfs to "intersect"
 		/// Im using this implementation because im getting skill issued trying to implement the same one as throwing(i had to rewrite this 4 times already)
 		/// and also because it has.. much more information about the general trajectory stored  SPCR - 2024
+		bulletCoords = bullet.currentCoords
 		trajectoryData[1] = projectile.x * 32 + projectile.pixel_x + 16
 		trajectoryData[2] = projectile.y * 32 + projectile.pixel_y + 16
 		trajectoryData[3] = bulletRatios[1] * pixelsToTravel + trajectoryData[1]
@@ -277,12 +281,16 @@ SUBSYSTEM_DEF(bullets)
 		/// Yes this is inaccurate for multi-Z  transitions somewhat , if someone wants to create a proper equation for pseudo 3D they're welcome to.
 		trajectoryData[6] = trajectoryData[5] + LERP(bullet.firedLevel, bullet.targetLevel,(bullet.traveled + pixelsToTravel)/bullet.distStartToFinish2D()) - (projectile.z - bullet.firedPos[3] * LEVEL_MAX)
 		bullet.trajSum += bulletRatios[3] * pixelsToTravel
+		forceLoop:
 		while(pixelsToTravel > 0)
 			pixelsThisStep = pixelsToTravel > MAXPIXELS ? MAXPIXELS : pixelsToTravel
 			pixelsToTravel -= pixelsThisStep
 			bullet.traveled += pixelsThisStep
-			bulletCoords[1] += (bulletRatios[1] * pixelsThisStep)
-			bulletCoords[2] += (bulletRatios[2] * pixelsThisStep)
+			pixelXdist = (bulletRatios[1] * pixelsThisStep)
+			pixelYdist = (bulletRatios[2] * pixelsThisStep)
+			trajectoryData[7] = (EAST*(pixelXdist>0)) | (WEST*(pixelXdist<0)) | (NORTH*(pixelYdist>0)) | (SOUTH*(pixelYdist<0))
+			bulletCoords[1] += pixelXdist
+			bulletCoords[2] += pixelYdist
 			bulletCoords[3] = LERP(bullet.firedLevel, bullet.targetLevel, bullet.traveled/bullet.distStartToFinish2D()) - (projectile.z - bullet.firedPos[3]) * LEVEL_MAX
 			//message_admins(bulletCoords[3])
 			//message_admins("added [(bulletRatios[3] * pixelsThisStep)]  , pixels [pixelsThisStep] , curSum [bulletCoords[3]]")
@@ -291,8 +299,10 @@ SUBSYSTEM_DEF(bullets)
 			z_change = -(bulletCoords[3] < 0) + (bulletCoords[3] > LEVEL_MAX)
 			while(x_change || y_change || z_change)
 				leaving = get_turf(projectile)
-				if(projectile.scanTurf(leaving, trajectoryData) != PROJECTILE_CONTINUE)
-					break
+				if(projectile.scanTurf(leaving, trajectoryData, &distanceToTravelForce) != PROJECTILE_CONTINUE)
+					pixelsToTravel = DIST_EUCLIDIAN_2D(trajectoryData[1], trajectoryData[2],trajectoryData[3],trajectoryData[4]) - (bullet.pixelsPerTick - pixelsToTravel) - round(distanceToTravelForce)
+					message_admins("dist set to [pixelsToTravel]")
+					goto forceLoop
 				if(QDELETED(projectile))
 					bullet_queue -= bullet
 					break
@@ -314,7 +324,7 @@ SUBSYSTEM_DEF(bullets)
 				projectile.pixel_x -= PPT * tx_change
 				projectile.pixel_y -= PPT * ty_change
 				bullet.updateLevel()
-				if(projectile.scanTurf(moveTurf, trajectoryData) == PROJECTILE_CONTINUE)
+				if(projectile.scanTurf(moveTurf, trajectoryData, &distanceToTravelForce) == PROJECTILE_CONTINUE)
 					//message_admins("[bulletCoords[3]],  [trajectoryData[6]]" )
 					bullet.painted.Add(moveTurf)
 					//moveTurf.color = COLOR_RED
@@ -325,6 +335,10 @@ SUBSYSTEM_DEF(bullets)
 					else
 						message_admins("reached target with level of [bulletCoords[3]] , pixels : [bullet.traveled], diff : [bullet.distStartToFinish2D() - bullet.traveled] , traj [trajectoryData[6]] , sum [bullet.trajSum]")
 					*/
+				else
+					pixelsToTravel = DIST_EUCLIDIAN_2D(trajectoryData[1], trajectoryData[2],trajectoryData[3],trajectoryData[4]) - (bullet.pixelsPerTick - pixelsToTravel) - round(distanceToTravelForce)
+					message_admins("dist set to [pixelsToTravel]")
+					goto forceLoop
 				moveTurf = null
 			/*
 			else
@@ -342,7 +356,7 @@ SUBSYSTEM_DEF(bullets)
 		var/animationColor = gradient(list("#ffffff", "#cbcbcb"), levelRatio)
 		animate(projectile, SSbullets.wait, pixel_x =((abs(bulletCoords[1]))%HPPT * sign(bulletCoords[1]) - 1), pixel_y = ((abs(bulletCoords[2]))%HPPT * sign(bulletCoords[2]) - 1), flags = ANIMATION_END_NOW, color = animationColor)
 		bullet.currentCoords = bulletCoords
-		if(bullet.lifetime < 0)
+		if(bullet.lifetime < 1)
 			bullet.referencedBullet.finishDeletion()
 			bullet_queue -= bullet
 			//for(var/turf/painted in bullet.painted)

@@ -15,6 +15,8 @@
 
 	weight = 0
 
+	atomFlags = AF_IGNORE_ON_BULLETSCAN
+
 	var/needs_update = FALSE
 
 /// More efficient to have the proc return bullet_continue ,avoiding another check for every object on a turf SPCR 2024
