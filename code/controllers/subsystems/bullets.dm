@@ -42,7 +42,18 @@ SUBSYSTEM_DEF(bullets)
 /// And ram is not a worry , but its better to initialize less and do the lifting on fire.
 /datum/bullet_data
 	var/obj/item/projectile/referencedBullet = null
+	//
 	var/aimedZone = ""
+	var/globalX = 0
+	var/globalY = 0
+	var/globalZ = 0
+	var/pixelSpeed = 0
+	var/ratioX = 0
+	var/ratioY = 0
+	var/ratioZ = 0
+	//
+
+
 	var/atom/firer = null
 	var/turf/firedTurf = null
 	var/list/firedCoordinates = list(0,0,0)
@@ -250,6 +261,46 @@ SUBSYSTEM_DEF(bullets)
 /datum/controller/subsystem/bullets/proc/reset()
 	current_queue = list()
 	bullet_queue = list()
+
+/datum/controller/subsystem/bullets/proc/realFire()
+	current_queue = bullet_queue.Copy()
+	var/global/turf/movementTurf
+	var/global/currentX
+	var/global/currentY
+	var/global/currentZ
+	var/global/pixelTotal
+	var/global/pixelStep
+	var/global/bulletDir
+	var/global/stepX
+	var/global/stepY
+	var/global/stepZ
+	var/global/atom/projectile
+	for(var/datum/bullet_data/dataReference in current_queue)
+		current_queue.Remove(dataReference)
+		projectile = dataReference.referencedBullet
+		currentX = dataReference.globalX
+		currentY = dataReference.globalY
+		currentZ = dataReference.globalZ
+		bulletDir = (EAST*(ratioX>0)) | (WEST*(ratioX<0)) | (NORTH*(ratioY>0)) | (SOUTH*(ratioY<0))
+		pixelTotal = dataReference.pixelSpeed
+		while(pixelTotal > 0)
+			pixelStep = min(pixelTotal, (PPT/2))
+			stepX = dataReference.ratioX * pixelStep
+			stepY = dataReference.ratioY * pixelStep
+			stepZ = dataReference.ratioZ * pixelStep
+			dataReference.globalX += stepX
+			dataReference.globalY += stepY
+			dataReference.globalZ += stepZ
+			projectile.pixel_x -= stepX
+			projectile.pixel_y -= stepY
+			projectile.pixel_z -= stepZ
+			movementTurf = locate(round(dataReference.globalX/PPT),round(dataReference.globalY/PPT),round(dataReference.globalZ/PPT))
+			if(projectile.scanTurf(movementTurf,))
+
+
+
+
+
 
 /datum/controller/subsystem/bullets/fire(resumed)
 	if(!resumed)
