@@ -491,6 +491,7 @@ GLOBAL_LIST(projectileDamageConstants)
 #define HittingPrioritiesList list(/mob/living,/obj/structure/multiz/stairs/active,/obj/structure,/atom)
 
 /obj/item/projectile/proc/scanTurf(turf/scanning, list/trajectoryData, dpDistanceToTravel)
+	. = PROJECTILE_CONTINUE
 	if(atomFlags & AF_VISUAL_MOVE)
 		return PROJECTILE_CONTINUE
 	var/list/hittingList = new/list(length(HittingPrioritiesList))
@@ -502,6 +503,8 @@ GLOBAL_LIST(projectileDamageConstants)
 	sortingList.Add(scanning)
 	for(var/atom/thing as anything in sortingList)
 		if(thing.atomFlags & AF_IGNORE_ON_BULLETSCAN)
+			continue
+		if(thing in dataRef.cannotHit)
 			continue
 		for(var/index=1 to length(HittingPrioritiesList))
 			if(!istype(thing, HittingPrioritiesList[index]))

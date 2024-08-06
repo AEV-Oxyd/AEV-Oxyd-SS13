@@ -74,6 +74,7 @@ SUBSYSTEM_DEF(bullets)
 	var/list/painted = list()
 	var/traveled
 	var/trajSum
+	var/list/cannotHit = list()
 
 /datum/bullet_data/New(obj/item/projectile/referencedBullet, aimedZone, atom/firer, atom/target, list/targetCoords, pixelsPerTick,zOffset, angleOffset, lifetime)
 	/*
@@ -300,7 +301,8 @@ SUBSYSTEM_DEF(bullets)
 			while(x_change || y_change || z_change)
 				leaving = get_turf(projectile)
 				if(projectile.scanTurf(leaving, trajectoryData, &distanceToTravelForce) != PROJECTILE_CONTINUE)
-					pixelsToTravel = DIST_EUCLIDIAN_2D(trajectoryData[1], trajectoryData[2],trajectoryData[3],trajectoryData[4]) - (bullet.pixelsPerTick - pixelsToTravel) - round(distanceToTravelForce)
+					pixelsToTravel = distanceToTravelForce
+					//pixelsToTravel = min(bullet.pixelsPerTick - pixelsToTravel, distanceToTravelForce)
 					message_admins("dist set to [pixelsToTravel]")
 					goto forceLoop
 				if(QDELETED(projectile))
@@ -336,7 +338,7 @@ SUBSYSTEM_DEF(bullets)
 						message_admins("reached target with level of [bulletCoords[3]] , pixels : [bullet.traveled], diff : [bullet.distStartToFinish2D() - bullet.traveled] , traj [trajectoryData[6]] , sum [bullet.trajSum]")
 					*/
 				else
-					pixelsToTravel = DIST_EUCLIDIAN_2D(trajectoryData[1], trajectoryData[2],trajectoryData[3],trajectoryData[4]) - (bullet.pixelsPerTick - pixelsToTravel) - round(distanceToTravelForce)
+					pixelsToTravel = distanceToTravelForce
 					message_admins("dist set to [pixelsToTravel]")
 					goto forceLoop
 				moveTurf = null
