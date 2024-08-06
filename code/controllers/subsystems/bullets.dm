@@ -265,6 +265,7 @@ SUBSYSTEM_DEF(bullets)
 /datum/controller/subsystem/bullets/proc/realFire()
 	current_queue = bullet_queue.Copy()
 	var/global/turf/movementTurf
+	var/global/turf/currentTurf
 	var/global/currentX
 	var/global/currentY
 	var/global/currentZ
@@ -275,27 +276,41 @@ SUBSYSTEM_DEF(bullets)
 	var/global/stepY
 	var/global/stepZ
 	var/global/atom/projectile
+	var/global/canContinue
 	for(var/datum/bullet_data/dataReference in current_queue)
 		current_queue.Remove(dataReference)
 		projectile = dataReference.referencedBullet
 		currentX = dataReference.globalX
 		currentY = dataReference.globalY
 		currentZ = dataReference.globalZ
-		bulletDir = (EAST*(ratioX>0)) | (WEST*(ratioX<0)) | (NORTH*(ratioY>0)) | (SOUTH*(ratioY<0))
+		bulletDir = (EAST*(dataReference.ratioX>0)) | (WEST*(dataReference.ratioX<0)) | (NORTH*(dataReference.ratioY>0)) | (SOUTH*(dataReference.ratioY<0)) | (UP*(dataReference.ratioZ>0)) | (DOWN*(dataReference.ratioZ<0))
 		pixelTotal = dataReference.pixelSpeed
 		while(pixelTotal > 0)
 			pixelStep = min(pixelTotal, (PPT/2))
 			stepX = dataReference.ratioX * pixelStep
 			stepY = dataReference.ratioY * pixelStep
 			stepZ = dataReference.ratioZ * pixelStep
-			dataReference.globalX += stepX
-			dataReference.globalY += stepY
-			dataReference.globalZ += stepZ
+			currentTurf = get_turf(projectile)
+			movementTurf = locate(round(dataReference.globalX/PPT),round(dataReference.globalY/PPT),round(dataReference.globalZ/PPT))
+			if(movementTurf == currentTurf)
+				canContinue = projectile.scanTurf(currentTurf, bulletDir, &stepX, &stepY, &step)
+			else
+				canContinue = projectile.scanTurf(currentTurf, bulletDir, &stepX, &stepY, &step)
+				if(canContinue == PROJECTILE_CONTINUE)
+					canContinue = projectile.scanTurf(movementTurf, bulletDir, &stepX, &stepY, &stepZ)
+					if(canContinue == PROJECTILE_CONTINUE)
+						stepX -= ((bulletDir & EAST) - (bulletDir & WEST)) * PPT
+						stepY -= ((bulletDir & NORTH) - (bulletDir & SOUTH)) * PPT
+						stepZ -= ((bulletDir & UP) - (bulletDir & DOWN)) * PPT
+						projectile.forceMove(movementTurf)
 			projectile.pixel_x -= stepX
 			projectile.pixel_y -= stepY
 			projectile.pixel_z -= stepZ
-			movementTurf = locate(round(dataReference.globalX/PPT),round(dataReference.globalY/PPT),round(dataReference.globalZ/PPT))
-			if(projectile.scanTurf(movementTurf,))
+			dataReference.globalX += stepX
+			dataReference.globalY += stepY
+			dataReference.globalZ += stepZ
+			if(canContinue != PROJECTILE_CONTINUE)
+				break
 
 
 
