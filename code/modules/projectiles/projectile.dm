@@ -490,7 +490,7 @@ GLOBAL_LIST(projectileDamageConstants)
 /// The lower the index , the higher the priority. If you add new paths to the list , make sure to increase the amount of lists in scanTurf below.
 #define HittingPrioritiesList list(/mob/living,/obj/structure/multiz/stairs/active,/obj/structure,/atom)
 
-/obj/item/projectile/proc/scanTurf(turf/scanning, list/trajectoryData, dpDistanceToTravel)
+/obj/item/projectile/proc/scanTurf(turf/scanning, bulletDir, startX, startY, startZ, pStepX, pStepY, pStepZ)
 	. = PROJECTILE_CONTINUE
 	if(atomFlags & AF_VISUAL_MOVE)
 		return PROJECTILE_CONTINUE
@@ -515,9 +515,9 @@ GLOBAL_LIST(projectileDamageConstants)
 			for(var/atom/possibleTarget as anything in thing.attached)
 				if(thing.attached[possibleTarget] & ATFS_IGNORE_HITS)
 					continue
-				if(possibleTarget.attached[thing] & ATFA_DIRECTIONAL_HITTABLE && !(possibleTarget.dir & reverse_dir[trajectoryData[7]]))
+				if(possibleTarget.attached[thing] & ATFA_DIRECTIONAL_HITTABLE && !(possibleTarget.dir & reverse_dir[bulletDir]))
 					continue
-				if(possibleTarget.attached[thing] & ATFA_DIRECTIONAL_HITTABLE_STRICT && !(possibleTarget.dir == reverse_dir[trajectoryData[7]]))
+				if(possibleTarget.attached[thing] & ATFA_DIRECTIONAL_HITTABLE_STRICT && !(possibleTarget.dir == reverse_dir[bulletDir]))
 					continue
 				if(thing.attached[possibleTarget] & ATFS_PRIORITIZE_ATTACHED_FOR_HITS)
 					hittingList[index][length(hittingList[index])] = possibleTarget
@@ -531,9 +531,8 @@ GLOBAL_LIST(projectileDamageConstants)
 				continue
 			/// third slot rezerved for flags passed back by hitbox intersect
 			var/list/arguments = list(src, def_zone, null, null)
-			if(target.hitbox && !target.hitbox.intersects(trajectoryData, target.dir, 0, target, arguments))
+			if(target.hitbox && !target.hitbox.intersects(target, target.dir, startX, startY, startZ, pStepX, pStepY, pStepZ))
 				return PROJECTILE_CONTINUE
-			*dpDistanceToTravel = arguments[4]
 			if(target.bullet_act(arglist(arguments)) & PROJECTILE_STOP)
 				onBlockingHit(target)
 				return PROJECTILE_STOP

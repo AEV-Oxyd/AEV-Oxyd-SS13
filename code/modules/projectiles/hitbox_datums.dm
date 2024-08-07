@@ -30,7 +30,7 @@ GLOBAL_LIST_EMPTY(hitboxPrototypes)
 	)
 
 /// this can be optimized further by making the calculations not make a new list , and instead be added when checking line intersection - SPCR 2024
-/datum/hitboxDatum/proc/intersects(list/lineData,ownerDirection, turf/incomingFrom, atom/owner, list/arguments)
+/datum/hitboxDatum/proc/intersects(atom/owner, ownerDirection, startX, startY, startZ, pStepX, pStepY, pStepZ)
 
 /datum/hitboxDatum/proc/getAimingLevel(atom/shooter, defZone, atom/owner)
 
@@ -59,23 +59,26 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 }
 */
 // Based off the script above. Optimized based off github comments relating to code above.
-/datum/hitboxDatum/proc/lineIntersect(list/firstLine , list/secondLine)
+/// x1,y1 and x2,y2 are the start and end of the first line
+/// x3,y3 and x4,y4 are the start and end of the second line
+/// pStepX and pStepY are pointers for setting the bullets step end
+/datum/hitboxDatum/proc/lineIntersect(x1,y1,x2,y2,x3,y3,x4,y4, pStepX, pStepY)
 	var/global/firstRatio
 	var/global/secondRatio
-	var/denominator = ((secondLine[4] - secondLine[2]) * (firstLine[3] - firstLine[1]) - (secondLine[3] - secondLine[1]) * (firstLine[4] - firstLine[2]))
+	var/denominator = ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1))
 	if(denominator == 0)
 		return FALSE
-	firstRatio = ((secondLine[3] - secondLine[1]) * (firstLine[2] - secondLine[2]) - (secondLine[4] - secondLine[2]) * (firstLine[1] - secondLine[1])) / denominator
-	secondRatio = ((firstLine[3] - firstLine[1]) * (firstLine[2] - secondLine[2]) - (firstLine[4] - firstLine[2]) * (firstLine[1] - secondLine[1])) / denominator
+	firstRatio = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / denominator
+	secondRatio = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / denominator
 	if(firstRatio >= 0 && firstRatio <= 1 && secondRatio >= 0 && secondRatio <= 1)
 		/// Distance to intersection of point
-		return DIST_EUCLIDIAN_2D(firstLine[1],firstLine[2],firstLine[1] + firstRatio * (firstLine[3] - firstLine[1]),firstLine[2] + firstRatio * (firstLine[4] - firstLine[2]) )
-		//return list(firstLine[1] + firstRatio * (firstLine[3] - firstLine[1]), firstLine[2] + firstRatio * (firstLine[4] - firstLine[2]))
-		//message_admins("X-collision : [firstLine[1] + firstRatio * (firstLine[3] - firstLine[1])] Y-collision : [firstLine[2] + firstRatio * (firstLine[4] - firstLine[2])]")
-		//message_admins("Distance between points : [DIST_EUCLIDIAN_2D(firstLine[1],firstLine[2],firstLine[1] + firstRatio * (firstLine[3] - firstLine[1]),firstLine[2] + firstRatio * (firstLine[4] - firstLine[2]) )]")
+		*pStepX = firstRatio * (x2 - x1)
+		*pStepY = firstRatio * (y2 - y1)
 		return TRUE
-	else
-		return FALSE
+		//return list(x1 + firstRatio * (x2 - x1), y1 + firstRatio * (y2 - y1))
+		//message_admins("X-collision : [x1 + firstRatio * (x2 - x1)] Y-collision : [y1 + firstRatio * (y2] - y1)]")
+		//message_admins("Distance between points : [DIST_EUCLIDIAN_2D(x1,y1,x1 + firstRatio * (x2 - x1),y1 + firstRatio * (y2] - y1) )]")
+	return FALSE
 
 
 /datum/hitboxDatum/proc/visualize(atom/owner)
@@ -131,10 +134,9 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	return defZoneToLevel[defZone]
 
 	/// this can be optimized further by making the calculations not make a new list , and instead be added when checking line intersection - SPCR 2024
-/datum/hitboxDatum/atom/intersects(list/lineData,ownerDirection, turf/incomingFrom, atom/owner, list/arguments)
+/datum/hitboxDatum/atom/intersects(atom/owner, ownerDirection, startX, startY, startZ, pStepX, pStepY, pStepZ)
 	var/global/worldX
 	var/global/worldY
-	var/global/functionReturn
 	worldX = owner.x
 	worldY = owner.y
 	if(owner.atomFlags & AF_HITBOX_OFFSET_BY_ATTACHMENT)
@@ -146,29 +148,17 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 			break
 	worldX *= 32
 	worldY *= 32
-	for(var/list/boundingData in boundingBoxes["[owner.dir]"])
+	for(var/list/boundingData in boundingBoxes["[ownerDirection]"])
 		/// basic AABB but only for the Z-axis.
-		if(boundingData[5] > max(lineData[5],lineData[6]) || boundingData[6] < min(lineData[6],lineData[5]))
+		if(boundingData[5] > max(startZ,startZ+*pStepZ) || boundingData[6] < min(startZ,startZ+*pStepZ))
 			continue
-		functionReturn = lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY))
-		if(functionReturn)
-			arguments[3] = boundingData[7]
-			arguments[4] = functionReturn
+		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pstepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY, pStepX, pStepY))
 			return TRUE
-		functionReturn = lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY))
-		if(functionReturn)
-			arguments[3] = boundingData[7]
-			arguments[4] = functionReturn
+		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pstepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY, pStepX, pStepY))
 			return TRUE
-		functionReturn = lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[4] + worldY, boundingData[3] + worldX, boundingData[4] + worldY))
-		if(functionReturn)
-			arguments[3] = boundingData[7]
-			arguments[4] = functionReturn
+		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pstepY, boundingData[1] + worldX, boundingData[4] + worldY, boundingData[3] + worldX, boundingData[4] + worldY, pStepX, pStepY))
 			return TRUE
-		functionReturn = lineIntersect(lineData, list(boundingData[3] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY))
-		if(functionReturn)
-			arguments[3] = boundingData[7]
-			arguments[4] = functionReturn
+		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pstepY, boundingData[3] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY, pStepX, pStepY))
 			return TRUE
 	return FALSE
 
@@ -243,7 +233,7 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	return medianLevels["[owner.dir]"]
 
 /// this can be optimized further by making the calculations not make a new list , and instead be added when checking line intersection - SPCR 2024
-/datum/hitboxDatum/atom/table/intersects(list/lineData,ownerDirection, turf/incomingFrom, obj/structure/table/owner, list/arguments)
+/datum/hitboxDatum/atom/table/intersects(atom/owner, ownerDirection, startX, startY, startZ, pStepX, pStepY, pStepZ)
 	var/global/worldX
 	var/global/worldY
 	var/global/functionReturn
@@ -260,26 +250,24 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		boundingList = boundingBoxes[text2num(owner.connections[i])+1]["[(1<<(i-1))]"]
 		for(var/list/boundingData in boundingList)
 			/// basic AABB but only for the Z-axis.
-			if(boundingData[5] > max(lineData[5],lineData[6]) && boundingData[6] > min(lineData[6],lineData[5]))
+			if(boundingData[5] > max(startZ,startZ+*pStepZ) || boundingData[6] < min(startZ,startZ+*pStepZ)),
 				continue
-			if(boundingData[5] < max(lineData[5], lineData[6]) && boundingData[6] < min(lineData[6],lineData[5]))
-				continue
-			functionReturn = lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY))
+			functionReturn = lineIntersect(startX, startY, startX+*pStepX, startY+*pstepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY)
 			if(functionReturn)
 				arguments[3] = boundingData[7]
 				arguments[4] = functionReturn
 				return TRUE
-			functionReturn = lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY))
+			functionReturn = lineIntersect(startX, startY, startX+*pStepX, startY+*pstepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY)
 			if(functionReturn)
 				arguments[3] = boundingData[7]
 				arguments[4] = functionReturn
 				return TRUE
-			functionReturn = lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[4] + worldY, boundingData[3] + worldX, boundingData[4] + worldY))
+			functionReturn = lineIntersect(startX, startY, startX+*pStepX, startY+*pstepY, boundingData[1] + worldX, boundingData[4] + worldY, boundingData[3] + worldX, boundingData[4] + worldY)
 			if(functionReturn)
 				arguments[3] = boundingData[7]
 				arguments[4] = functionReturn
 				return TRUE
-			functionReturn = lineIntersect(lineData, list(boundingData[3] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY))
+			functionReturn = lineIntersect(startX, startY, startX+*pStepX, startY+*pstepY, boundingData[3] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY)
 			if(functionReturn)
 				arguments[3] = boundingData[7]
 				arguments[4] = functionReturn
@@ -356,7 +344,7 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	message_admins("Returned [defZoneToLevel["[perceivedOwner.lying]"][defZone]] for [defZone]")
 	return defZoneToLevel["[perceivedOwner.lying]"][defZone]
 
-/datum/hitboxDatum/mob/intersects(list/lineData, ownerDirection, turf/incomingFrom, atom/owner, list/arguments)
+/datum/hitboxDatum/mob/intersects(atom/owner, ownerDirection, startX, startY, startZ, pStepX, pStepY, pStepZ)
 	. = ..()
 	var/global/worldX
 	var/global/worldY
@@ -366,24 +354,24 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	var/mob/living/perceivedOwner = owner
 	for(var/list/boundingData in boundingBoxes["[perceivedOwner.lying]"]["[owner.dir]"])
 		/// basic AABB but only for the Z-axis.
-		if(boundingData[5] > max(lineData[5],lineData[6]) || boundingData[6] < min(lineData[6],lineData[5]))
+		if(boundingData[5] > max(startZ,startZ+*pStepZ) || boundingData[6] < min(startZ,startZ+*pStepZ)),
 			continue
-		functionReturn = lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY))
+		functionReturn = lineIntersect(startX, startY, startX+*pStepX, startY+*pstepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY)
 		if(functionReturn)
 			arguments[3] = boundingData[7]
 			arguments[4] = functionReturn
 			return TRUE
-		functionReturn = lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY))
+		functionReturn = lineIntersect(startX, startY, startX+*pStepX, startY+*pstepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY)
 		if(functionReturn)
 			arguments[3] = boundingData[7]
 			arguments[4] = functionReturn
 			return TRUE
-		functionReturn = lineIntersect(lineData, list(boundingData[1] + worldX, boundingData[4] + worldY, boundingData[3] + worldX, boundingData[4] + worldY))
+		functionReturn = lineIntersect(startX, startY, startX+*pStepX, startY+*pstepY, boundingData[1] + worldX, boundingData[4] + worldY, boundingData[3] + worldX, boundingData[4] + worldY)
 		if(functionReturn)
 			arguments[3] = boundingData[7]
 			arguments[4] = functionReturn
 			return TRUE
-		functionReturn = lineIntersect(lineData, list(boundingData[3] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY))
+		functionReturn = lineIntersect(startX, startY, startX+*pStepX, startY+*pstepY, boundingData[3] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY)
 		if(functionReturn)
 			arguments[3] = boundingData[7]
 			arguments[4] = functionReturn

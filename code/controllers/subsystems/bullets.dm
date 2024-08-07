@@ -275,7 +275,7 @@ SUBSYSTEM_DEF(bullets)
 	var/global/stepX
 	var/global/stepY
 	var/global/stepZ
-	var/global/atom/projectile
+	var/global/obj/item/projectile/projectile
 	var/global/canContinue
 	for(var/datum/bullet_data/dataReference in current_queue)
 		current_queue.Remove(dataReference)
@@ -293,24 +293,21 @@ SUBSYSTEM_DEF(bullets)
 			currentTurf = get_turf(projectile)
 			movementTurf = locate(round(dataReference.globalX/PPT),round(dataReference.globalY/PPT),round(dataReference.globalZ/PPT))
 			if(movementTurf == currentTurf)
-				canContinue = projectile.scanTurf(currentTurf, bulletDir, &stepX, &stepY, &step)
+				canContinue = projectile.scanTurf(currentTurf, bulletDir, currentX, currentY, currentZ, &stepX, &stepY, &step)
 			else
-				canContinue = projectile.scanTurf(currentTurf, bulletDir, &stepX, &stepY, &step)
+				canContinue = projectile.scanTurf(currentTurf, bulletDir, currentX, currentY, currentZ, &stepX, &stepY, &step)
 				if(canContinue == PROJECTILE_CONTINUE)
-					canContinue = projectile.scanTurf(movementTurf, bulletDir, &stepX, &stepY, &stepZ)
-					if(canContinue == PROJECTILE_CONTINUE)
-						stepX -= ((bulletDir & EAST) - (bulletDir & WEST)) * PPT
-						stepY -= ((bulletDir & NORTH) - (bulletDir & SOUTH)) * PPT
-						stepZ -= ((bulletDir & UP) - (bulletDir & DOWN)) * PPT
-						projectile.forceMove(movementTurf)
-			projectile.pixel_x -= stepX
-			projectile.pixel_y -= stepY
-			projectile.pixel_z -= stepZ
+					canContinue = projectile.scanTurf(movementTurf, bulletDir, currentX, currentY, currentZ, &stepX, &stepY, &stepZ)
+					projectile.pixel_x -= ((bulletDir & EAST) - (bulletDir & WEST)) * PPT
+					projectile.pixel_y -= ((bulletDir & NORTH) - (bulletDir & SOUTH)) * PPT
+					projectile.pixel_z -= ((bulletDir & UP) - (bulletDir & DOWN)) * PPT
+					projectile.forceMove(movementTurf)
 			dataReference.globalX += stepX
 			dataReference.globalY += stepY
 			dataReference.globalZ += stepZ
 			if(canContinue != PROJECTILE_CONTINUE)
 				break
+		animate(projectile, SSbullets.wait, pixel_x = dataReference.globalX%HPPT, pixel_y = dataReference.globalY%HPPT, flags = ANIMATION_END_NOW)
 
 
 
