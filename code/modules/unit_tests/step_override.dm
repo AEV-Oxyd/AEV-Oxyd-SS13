@@ -17,5 +17,5 @@
 
 	. = step(AM, NORTH)
 	. = . && T.x == AM.x
-	. = . && T.y + 1 == AM.y // eh?
+	. = . && (T.y + 1) == AM.y // eh?
 	. = . && T.z == AM.z
