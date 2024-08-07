@@ -14,8 +14,5 @@
 	var/turf/D = locate(T.x, T.y + 1, T.z)
 	T.ChangeTurf(/turf/simulated/floor)
 	D.ChangeTurf(/turf/simulated/floor)
-
-	. = step(AM, NORTH)
-	. = . && T.x == AM.x
-	. = . && (T.y + 1) == AM.y // eh?
-	. = . && T.z == AM.z
+	step(AM, NORTH)
+	return (get_turf(AM) == D)
