@@ -399,7 +399,8 @@ GLOBAL_VAR_INIT(Debug,0)
 		var/atom/oldloc = src.loc
 		var/olddir = dir //we can't override this without sacrificing the rest of movable/New()
 		/// parent failed to enter ,movement wasn't succesfull.
-		if(!..() || loc != NewLoc)
+		. = ..()
+		if(!. || loc != NewLoc)
 			return FALSE
 
 		if(oldloc)
