@@ -398,8 +398,9 @@ GLOBAL_VAR_INIT(Debug,0)
 	else
 		var/atom/oldloc = src.loc
 		var/olddir = dir //we can't override this without sacrificing the rest of movable/New()
-
-		. = ..()
+		/// parent failed to enter ,movement wasn't succesfull.
+		if(!..() || loc != NewLoc)
+			return FALSE
 
 		if(oldloc)
 			oldloc.recalculateWeights(-weight,src)
@@ -422,7 +423,6 @@ GLOBAL_VAR_INIT(Debug,0)
 			// if we wasn't on map OR our Z coord was changed
 			if( !isturf(oldloc) || (get_z(loc) != get_z(oldloc)) )
 				update_plane()
-
 		if(get_z(oldloc) != get_z(loc))
 			SEND_SIGNAL(src, COMSIG_MOVABLE_Z_CHANGED, get_z(oldloc), get_z(NewLoc))
 
