@@ -76,6 +76,7 @@
 #define UNIT_TESTS
 #endif
 
+#define CITESTING
 #ifdef CITESTING
 #define TESTING
 #endif
