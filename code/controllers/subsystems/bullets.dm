@@ -105,7 +105,7 @@ SUBSYSTEM_DEF(bullets)
 	src.pixelsPerTick = pixelsPerTick
 	src.projectileAccuracy = projectileAccuracy
 	src.lifetime = lifetime
-	src.firedCoordinates = list(0,0, referencedBullet.z)
+	src.firedCoordinates = list(16,16, referencedBullet.z)
 	if(firer)
 		src.firer = firer
 		src.firedTurf = get_turf(firer)
@@ -154,6 +154,11 @@ SUBSYSTEM_DEF(bullets)
 	if(abs(target.pixel_y) > PPT/2)
 		targetPos[2] += round((target.pixel_y - PPT/2) / PPT) + 1 * sign(target.pixel_y)
 
+	pixelSpeed = pixelsPerTick
+	globalX = currentTurf.x * 32 + currentCoords[1] + 16
+	globalY = currentTurf.y * 32 + currentCoords[2] + 16
+	globalZ = currentTurf.z * 32
+
 	//message_admins("level set to [firedLevel], towards [targetLevel]")
 	currentCoords[3] = firedLevel
 	targetLevel += (targetCoords[3] - firedPos[3])* LEVEL_MAX
@@ -189,6 +194,8 @@ SUBSYSTEM_DEF(bullets)
 	var/matrix/rotation = matrix()
 	movementRatios[1] = sin(movementRatios[4])
 	movementRatios[2] = cos(movementRatios[4])
+	ratioX = movementRatios[1]
+	ratioY = movementRatios[2]
 
 
 	rotation.Turn(movementRatios[4] + 180)
@@ -264,57 +271,84 @@ SUBSYSTEM_DEF(bullets)
 
 /datum/controller/subsystem/bullets/proc/realFire()
 	current_queue = bullet_queue.Copy()
-	var/global/turf/movementTurf
-	var/global/turf/currentTurf
-	var/global/currentX
-	var/global/currentY
-	var/global/currentZ
-	var/global/pixelTotal
-	var/global/pixelStep
-	var/global/bulletDir
-	var/global/stepX
-	var/global/stepY
-	var/global/stepZ
-	var/global/obj/item/projectile/projectile
-	var/global/canContinue
+	var/turf/movementTurf
+	var/turf/currentTurf
+	var/currentX
+	var/currentY
+	var/currentZ
+	var/pixelTotal
+	var/pixelStep
+	var/bulletDir
+	var/stepX
+	var/stepY
+	var/stepZ
+	var/obj/item/projectile/projectile
+	var/canContinue
 	for(var/datum/bullet_data/dataReference in current_queue)
 		current_queue.Remove(dataReference)
 		projectile = dataReference.referencedBullet
+		if(QDELETED(projectile))
+			bullet_queue.Remove(dataReference)
+			continue
 		currentX = dataReference.globalX
 		currentY = dataReference.globalY
 		currentZ = dataReference.globalZ
 		bulletDir = (EAST*(dataReference.ratioX>0)) | (WEST*(dataReference.ratioX<0)) | (NORTH*(dataReference.ratioY>0)) | (SOUTH*(dataReference.ratioY<0)) | (UP*(dataReference.ratioZ>0)) | (DOWN*(dataReference.ratioZ<0))
 		pixelTotal = dataReference.pixelSpeed
+		dataReference.lifetime--
 		while(pixelTotal > 0)
 			pixelStep = min(pixelTotal, (PPT/2))
+			pixelTotal -= pixelStep
 			stepX = dataReference.ratioX * pixelStep
 			stepY = dataReference.ratioY * pixelStep
 			stepZ = dataReference.ratioZ * pixelStep
-			currentTurf = get_turf(projectile)
-			movementTurf = locate(round(dataReference.globalX/PPT),round(dataReference.globalY/PPT),round(dataReference.globalZ/PPT))
-			if(movementTurf == currentTurf)
-				canContinue = projectile.scanTurf(currentTurf, bulletDir, currentX, currentY, currentZ, &stepX, &stepY, &step)
-			else
-				canContinue = projectile.scanTurf(currentTurf, bulletDir, currentX, currentY, currentZ, &stepX, &stepY, &step)
-				if(canContinue == PROJECTILE_CONTINUE)
-					canContinue = projectile.scanTurf(movementTurf, bulletDir, currentX, currentY, currentZ, &stepX, &stepY, &stepZ)
-					projectile.pixel_x -= ((bulletDir & EAST) - (bulletDir & WEST)) * PPT
-					projectile.pixel_y -= ((bulletDir & NORTH) - (bulletDir & SOUTH)) * PPT
-					projectile.pixel_z -= ((bulletDir & UP) - (bulletDir & DOWN)) * PPT
-					projectile.forceMove(movementTurf)
 			dataReference.globalX += stepX
 			dataReference.globalY += stepY
 			dataReference.globalZ += stepZ
+			currentTurf = get_turf(projectile)
+			movementTurf = locate(round(dataReference.globalX/PPT),round(dataReference.globalY/PPT),round(dataReference.globalZ/PPT))
+			message_admins("X: [movementTurf.x] Y:[movementTurf.y] Z:[movementTurf.z]")
+			if(movementTurf == currentTurf)
+				canContinue = projectile.scanTurf(currentTurf, bulletDir, currentX, currentY, currentZ, &stepX, &stepY, &stepZ)
+			else
+				canContinue = projectile.scanTurf(currentTurf, bulletDir, currentX, currentY, currentZ, &stepX, &stepY, &stepZ)
+				if(canContinue == PROJECTILE_CONTINUE)
+					canContinue = projectile.scanTurf(movementTurf, bulletDir, currentX, currentY, currentZ, &stepX, &stepY, &stepZ)
+					projectile.pixel_x -= (movementTurf.x - currentTurf.x) * PPT
+					projectile.pixel_y -= (movementTurf.y - currentTurf.y) * PPT
+					projectile.pixel_z -= (movementTurf.z - currentTurf.z) * PPT
+					//message_admins("PX : [projectile.pixel_x] , PY : [projectile.pixel_y] , PZ: [projectile.pixel_z]")
+					projectile.forceMove(movementTurf)
+			currentX = dataReference.globalX
+			currentY = dataReference.globalY
+			currentZ = dataReference.globalZ
+
 			if(canContinue != PROJECTILE_CONTINUE)
+				var/a = round((currentX+stepX)/32)
+				var/b = round((currentY+stepY)/32)
+				var/c = round((currentZ+stepZ)/32)
+				var/turf/turfer = locate(a, b, c)
+				var/atom/movable/special = new /obj/item()
+				special.forceMove(turfer)
+				special.icon = projectile.icon
+				special.icon_state = projectile.icon_state
+				special.pixel_x = round((currentX+stepX))%32
+				special.pixel_y = round((currentY+stepY))%32
+				special.transform = projectile.transform
+				message_admins("started at X: [round(currentX)]. Y: [round(currentY)] , stopping at X: [round(currentX+stepX)] , Y:[round(currentY+stepY)]")
+				dataReference.globalX += stepX
+				dataReference.globalY += stepY
+				dataReference.globalZ += stepZ
+				dataReference.lifetime = 0
 				break
-		animate(projectile, SSbullets.wait, pixel_x = dataReference.globalX%HPPT, pixel_y = dataReference.globalY%HPPT, flags = ANIMATION_END_NOW)
 
-
-
-
-
+		animate(projectile, SSbullets.wait, pixel_x = dataReference.globalX%PPT - 16, pixel_y = dataReference.globalY%PPT - 16, flags = ANIMATION_END_NOW)
+		if(dataReference.lifetime < 1)
+			projectile.finishDeletion()
+			bullet_queue.Remove(dataReference)
 
 /datum/controller/subsystem/bullets/fire(resumed)
+	return realFire()
 	if(!resumed)
 		current_queue = bullet_queue.Copy()
 	var/global/turf/leaving

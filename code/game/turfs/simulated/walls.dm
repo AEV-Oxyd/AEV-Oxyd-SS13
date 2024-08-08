@@ -123,6 +123,7 @@
 		burn(500)//TODO : fucking write these two procs not only for plasma (see plasma in materials.dm:283) ~
 	else if(istype(hittingProjectile,/obj/item/projectile/ion))
 		burn(500)
+	/*
 	else if(istype(hittingProjectile,/obj/item/projectile/bullet))
 		var/list/lastMoves = hittingProjectile.dataRef.lastChanges
 		var/angle = hittingProjectile.dataRef.movementRatios[4]
@@ -158,6 +159,7 @@
 			hittingProjectile.dataRef.cannotHit += src
 			message_admins("Ricochet at [angle].")
 			return PROJECTILE_CONTINUE
+	*/
 
 	take_damage(projectileDamage)
 	if(health < maxHealth * 0.4 && prob(projectileDamage))

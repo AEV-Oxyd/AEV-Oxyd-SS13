@@ -501,6 +501,7 @@ GLOBAL_LIST(projectileDamageConstants)
 	hittingList[4] = list()
 	var/list/sortingList = scanning.contents.Copy()
 	sortingList.Add(scanning)
+	sortingList.Remove(src)
 	for(var/atom/thing as anything in sortingList)
 		if(thing.atomFlags & AF_IGNORE_ON_BULLETSCAN)
 			continue
