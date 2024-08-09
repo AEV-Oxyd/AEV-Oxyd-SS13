@@ -284,6 +284,8 @@ SUBSYSTEM_DEF(bullets)
 	var/stepZ
 	var/obj/item/projectile/projectile
 	var/canContinue
+	var/oldX
+	var/oldY
 	for(var/datum/bullet_data/dataReference in current_queue)
 		current_queue.Remove(dataReference)
 		projectile = dataReference.referencedBullet
@@ -302,54 +304,72 @@ SUBSYSTEM_DEF(bullets)
 			stepX = dataReference.ratioX * pixelStep
 			stepY = dataReference.ratioY * pixelStep
 			stepZ = dataReference.ratioZ * pixelStep
-			dataReference.globalX += stepX
-			dataReference.globalY += stepY
-			dataReference.globalZ += stepZ
 			currentTurf = get_turf(projectile)
-			movementTurf = locate(round(dataReference.globalX/PPT),round(dataReference.globalY/PPT),round(dataReference.globalZ/PPT))
-			message_admins("X: [movementTurf.x] Y:[movementTurf.y] Z:[movementTurf.z]")
+			movementTurf = locate(round((currentX+stepX)/PPT),round((currentY+stepY)/PPT),round((currentZ+stepZ)/PPT))
+			//message_admins("X: [movementTurf.x] Y:[movementTurf.y] Z:[movementTurf.z]")
 			if(movementTurf == currentTurf)
 				canContinue = projectile.scanTurf(currentTurf, bulletDir, currentX, currentY, currentZ, &stepX, &stepY, &stepZ)
+				dataReference.globalX += stepX
+				dataReference.globalY += stepY
+				dataReference.globalZ += stepZ
 			else
 				canContinue = projectile.scanTurf(currentTurf, bulletDir, currentX, currentY, currentZ, &stepX, &stepY, &stepZ)
 				if(canContinue == PROJECTILE_CONTINUE)
 					canContinue = projectile.scanTurf(movementTurf, bulletDir, currentX, currentY, currentZ, &stepX, &stepY, &stepZ)
-					projectile.pixel_x -= (movementTurf.x - currentTurf.x) * PPT
-					projectile.pixel_y -= (movementTurf.y - currentTurf.y) * PPT
-					projectile.pixel_z -= (movementTurf.z - currentTurf.z) * PPT
-					//message_admins("PX : [projectile.pixel_x] , PY : [projectile.pixel_y] , PZ: [projectile.pixel_z]")
-					projectile.forceMove(movementTurf)
+					if(canContinue == PROJECTILE_CONTINUE)
+						projectile.pixel_x -= (movementTurf.x - currentTurf.x) * PPT
+						projectile.pixel_y -= (movementTurf.y - currentTurf.y) * PPT
+						projectile.pixel_z -= (movementTurf.z - currentTurf.z) * PPT
+						dataReference.globalX += stepX
+						dataReference.globalY += stepY
+						dataReference.globalZ += stepZ
+						projectile.forceMove(movementTurf)
+					else
+						dataReference.globalX = stepX
+						dataReference.globalY = stepY
+						dataReference.globalZ = currentZ
+						movementTurf = locate(round(stepX/PPT), round(stepY/PPT), round(currentZ/PPT))
+						if(movementTurf != currentTurf)
+							projectile.pixel_x -= (movementTurf.x - currentTurf.x) * PPT
+							projectile.pixel_y -= (movementTurf.y - currentTurf.y) * PPT
+							projectile.pixel_z -= (movementTurf.z - currentTurf.z) * PPT
+							projectile.forceMove(movementTurf)
+						dataReference.lifetime = 0
+						break
+
+			//message_admins("stepX:[stepX] , stepY : [stepY]")
+
+			/*
+			if(canContinue != PROJECTILE_CONTINUE)
+				/*
+				var/a = round((stepX)/32)
+				var/b = round((stepY)/32)
+				var/c = round((currentZ)/32)
+				var/turf/turfer = locate(a,b,c)
+				var/atom/movable/special = new /obj/item()
+				message_admins("stepX:[stepX] , stepY : [stepY]")
+				message_admins("MovTurf ----- X: [movementTurf.x] Y:[movementTurf.y] Z:[movementTurf.z]")
+				message_admins("VisTurf ----- X: [a] Y:[b] Z:[c]")
+				special.forceMove(turfer)
+				special.icon = projectile.icon
+				special.icon_state = projectile.icon_state
+				special.pixel_x = round((stepX))%32 - 16
+				special.pixel_y = round((stepY))%32 - 16
+				special.transform = projectile.transform
+				*/
+				dataReference.lifetime = 0
+				break
+			*/
 			currentX = dataReference.globalX
 			currentY = dataReference.globalY
 			currentZ = dataReference.globalZ
 
 
-
-			if(canContinue != PROJECTILE_CONTINUE)
-				var/a = round((currentX+stepX)/32)
-				var/b = round((currentY+stepY)/32)
-				var/c = round((currentZ+stepZ)/32)
-				var/turf/turfer = locate(a, b, c)
-				var/atom/movable/special = new /obj/item()
-				special.forceMove(turfer)
-				special.icon = projectile.icon
-				special.icon_state = projectile.icon_state
-				special.pixel_x = round((currentX+stepX))%32 - 16
-				special.pixel_y = round((currentY+stepY))%32 - 16
-				special.transform = projectile.transform
-				message_admins("started at X: [round(currentX)]. Y: [round(currentY)] , stopping at X: [round(currentX+stepX)] , Y:[round(currentY+stepY)]")
-				dataReference.globalX = currentX + stepX
-				dataReference.globalY = currentY + stepY
-				dataReference.globalZ += stepZ
-				dataReference.lifetime = 0
-				break
-
-		if(canContinue != PROJECTILE_CONTINUE)
-			message_admins("globalX : [dataReference.globalX] globalY: [dataReference.globalY]")
 		animate(projectile, SSbullets.wait, pixel_x = dataReference.globalX%PPT - HPPT, pixel_y = dataReference.globalY%PPT - HPPT, flags = ANIMATION_END_NOW)
 		if(dataReference.lifetime < 1)
 			projectile.finishDeletion()
 			bullet_queue.Remove(dataReference)
+
 
 /datum/controller/subsystem/bullets/fire(resumed)
 	return realFire()
