@@ -645,7 +645,7 @@ GLOBAL_LIST(projectileDamageConstants)
 	visEffect.transform = src.transform
 	visEffect.update_plane()
 
-	QDEL_IN(src, 2)
+	QDEL_IN(src, SSbullets.wait * 5)
 
 /obj/item/projectile/explosion_act(target_power, explosion_handler/handler)
 	return 0

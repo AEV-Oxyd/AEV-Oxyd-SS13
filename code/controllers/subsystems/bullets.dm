@@ -9,7 +9,7 @@
 #define MAXPIXELS 16
 SUBSYSTEM_DEF(bullets)
 	name = "Bullets"
-	wait = 1
+	wait = 5
 	priority = SS_PRIORITY_BULLETS
 	init_order = INIT_ORDER_BULLETS
 
@@ -323,6 +323,8 @@ SUBSYSTEM_DEF(bullets)
 			currentY = dataReference.globalY
 			currentZ = dataReference.globalZ
 
+
+
 			if(canContinue != PROJECTILE_CONTINUE)
 				var/a = round((currentX+stepX)/32)
 				var/b = round((currentY+stepY)/32)
@@ -332,17 +334,19 @@ SUBSYSTEM_DEF(bullets)
 				special.forceMove(turfer)
 				special.icon = projectile.icon
 				special.icon_state = projectile.icon_state
-				special.pixel_x = round((currentX+stepX))%32
-				special.pixel_y = round((currentY+stepY))%32
+				special.pixel_x = round((currentX+stepX))%32 - 16
+				special.pixel_y = round((currentY+stepY))%32 - 16
 				special.transform = projectile.transform
 				message_admins("started at X: [round(currentX)]. Y: [round(currentY)] , stopping at X: [round(currentX+stepX)] , Y:[round(currentY+stepY)]")
-				dataReference.globalX += stepX
-				dataReference.globalY += stepY
+				dataReference.globalX = currentX + stepX
+				dataReference.globalY = currentY + stepY
 				dataReference.globalZ += stepZ
 				dataReference.lifetime = 0
 				break
 
-		animate(projectile, SSbullets.wait, pixel_x = dataReference.globalX%PPT - 16, pixel_y = dataReference.globalY%PPT - 16, flags = ANIMATION_END_NOW)
+		if(canContinue != PROJECTILE_CONTINUE)
+			message_admins("globalX : [dataReference.globalX] globalY: [dataReference.globalY]")
+		animate(projectile, SSbullets.wait, pixel_x = dataReference.globalX%PPT - HPPT, pixel_y = dataReference.globalY%PPT - HPPT, flags = ANIMATION_END_NOW)
 		if(dataReference.lifetime < 1)
 			projectile.finishDeletion()
 			bullet_queue.Remove(dataReference)
