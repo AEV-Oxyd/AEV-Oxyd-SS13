@@ -621,7 +621,7 @@ GLOBAL_LIST(projectileDamageConstants)
 	on_impact(A)
 	atomFlags |= AF_VISUAL_MOVE
 	density = FALSE
-	dataRef.lifetime = 1
+	dataRef.lifetime = 0
 
 /obj/effect/bullet_sparks
 	name = "bullet hit"

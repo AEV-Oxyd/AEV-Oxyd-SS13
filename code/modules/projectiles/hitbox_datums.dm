@@ -71,11 +71,8 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	firstRatio = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / denominator
 	secondRatio = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / denominator
 	if(firstRatio >= 0 && firstRatio <= 1 && secondRatio >= 0 && secondRatio <= 1)
-		/// Distance to intersection of point
-		message_admins("pstepX = [*pStepX] , pstepY = [*pStepY]")
 		*pStepX = x1 + firstRatio * (x2 - x1)
 		*pStepY = y1 + firstRatio * (y2 - y1)
-		message_admins("Collision put at X:[x1 + *pStepX]  Y:[y1+ *pStepY]")
 		return TRUE
 		//return list(x1 + firstRatio * (x2 - x1), y1 + firstRatio * (y2 - y1))
 		//message_admins("X-collision : [x1 + firstRatio * (x2 - x1)] Y-collision : [y1 + firstRatio * (y2] - y1)]")

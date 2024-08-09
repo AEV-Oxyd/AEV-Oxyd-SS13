@@ -286,6 +286,7 @@ SUBSYSTEM_DEF(bullets)
 	var/canContinue
 	var/oldX
 	var/oldY
+	var/list/colored = list()
 	for(var/datum/bullet_data/dataReference in current_queue)
 		current_queue.Remove(dataReference)
 		projectile = dataReference.referencedBullet
@@ -309,9 +310,27 @@ SUBSYSTEM_DEF(bullets)
 			//message_admins("X: [movementTurf.x] Y:[movementTurf.y] Z:[movementTurf.z]")
 			if(movementTurf == currentTurf)
 				canContinue = projectile.scanTurf(currentTurf, bulletDir, currentX, currentY, currentZ, &stepX, &stepY, &stepZ)
-				dataReference.globalX += stepX
-				dataReference.globalY += stepY
-				dataReference.globalZ += stepZ
+				if(canContinue == PROJECTILE_CONTINUE)
+					dataReference.globalX += stepX
+					dataReference.globalY += stepY
+					dataReference.globalZ += stepZ
+				else
+					dataReference.globalX = stepX
+					dataReference.globalY = stepY
+					dataReference.globalZ = currentZ
+					currentTurf.color = COLOR_RED
+					message_admins(" 1 New turf, X:[round(dataReference.globalX/32)] | Y:[round(dataReference.globalY/32)] | Z:[round(dataReference.globalZ/32)]")
+					dataReference.lifetime = 0
+					if(movementTurf != currentTurf)
+						message_admins("Adjusted for Delta")
+						projectile.pixel_x -= (movementTurf.x - currentTurf.x) * PPT
+						projectile.pixel_y -= (movementTurf.y - currentTurf.y) * PPT
+						projectile.pixel_z -= (movementTurf.z - currentTurf.z) * PPT
+						projectile.forceMove(movementTurf)
+						movementTurf.color = COLOR_RED
+						colored += movementTurf
+						dataReference.lifetime = 0
+					break
 			else
 				canContinue = projectile.scanTurf(currentTurf, bulletDir, currentX, currentY, currentZ, &stepX, &stepY, &stepZ)
 				if(canContinue == PROJECTILE_CONTINUE)
@@ -324,18 +343,33 @@ SUBSYSTEM_DEF(bullets)
 						dataReference.globalY += stepY
 						dataReference.globalZ += stepZ
 						projectile.forceMove(movementTurf)
+						movementTurf.color = COLOR_GREEN
+						colored += movementTurf
 					else
 						dataReference.globalX = stepX
 						dataReference.globalY = stepY
 						dataReference.globalZ = currentZ
+						message_admins(" 2 New turf, X:[round(dataReference.globalX/32)] | Y:[round(dataReference.globalY/32)] | Z:[round(dataReference.globalZ/32)]")
 						movementTurf = locate(round(stepX/PPT), round(stepY/PPT), round(currentZ/PPT))
+						movementTurf.color = COLOR_RED
 						if(movementTurf != currentTurf)
+							message_admins("Adjusted for Delta")
 							projectile.pixel_x -= (movementTurf.x - currentTurf.x) * PPT
 							projectile.pixel_y -= (movementTurf.y - currentTurf.y) * PPT
 							projectile.pixel_z -= (movementTurf.z - currentTurf.z) * PPT
 							projectile.forceMove(movementTurf)
+							movementTurf.color = COLOR_RED
+							colored += movementTurf
 						dataReference.lifetime = 0
 						break
+				else
+					dataReference.globalX = stepX
+					dataReference.globalY = stepY
+					dataReference.globalZ = currentZ
+					currentTurf.color = COLOR_RED
+					message_admins(" 3 New turf, X:[round(dataReference.globalX/32)] | Y:[round(dataReference.globalY/32)] | Z:[round(dataReference.globalZ/32)]")
+					dataReference.lifetime = 0
+					break
 
 			//message_admins("stepX:[stepX] , stepY : [stepY]")
 
@@ -370,6 +404,12 @@ SUBSYSTEM_DEF(bullets)
 			projectile.finishDeletion()
 			bullet_queue.Remove(dataReference)
 
+	if(length(colored))
+		addtimer(CALLBACK(src, PROC_REF(deleteColors), colored.Copy()), SSbullets.wait * 15)
+
+/datum/controller/subsystem/bullets/proc/deleteColors(list/specialList)
+	for(var/turf/tata in specialList)
+		tata.color = initial(tata.color)
 
 /datum/controller/subsystem/bullets/fire(resumed)
 	return realFire()
