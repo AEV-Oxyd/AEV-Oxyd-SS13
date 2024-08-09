@@ -8,7 +8,7 @@
 	flags = CONDUCT
 	layer = BELOW_OBJ_LAYER
 	// Blocks very little , since its just metal rods..
-	explosion_coverage = 0.2
+	explosionCoverage = 0.2
 	health = 50
 	var/destroyed = 0
 
@@ -59,7 +59,7 @@
 		else
 			return !density
 
-/obj/structure/grille/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/grille/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	if(!Proj)	return
 
 	//Flimsy grilles aren't so great at stopping projectiles. However they can absorb some of the impact
@@ -158,7 +158,7 @@
 
 /obj/structure/grille/take_damage(damage)
 	. = health - damage < 0 ? damage - (damage - health) : damage
-	. *= explosion_coverage
+	. *= explosionCoverage
 	if(health <= 0)
 		if(!destroyed)
 			density = FALSE

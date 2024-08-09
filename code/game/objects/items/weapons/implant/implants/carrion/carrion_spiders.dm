@@ -56,7 +56,7 @@
 		attack_animation(user)
 		die_from_attack()
 
-/obj/item/implant/carrion_spider/bullet_act(obj/item/projectile/P, def_zone)
+/obj/item/implant/carrion_spider/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
 	..()
 	die_from_attack()
 

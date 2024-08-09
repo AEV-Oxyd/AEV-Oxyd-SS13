@@ -50,7 +50,6 @@
 	alpha = 120
 	anchored = TRUE
 	unacidable = 1
-	simulated = FALSE
 	invisibility = 101
 	var/delay = 2
 

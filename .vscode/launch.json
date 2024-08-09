@@ -1,12 +1,31 @@
 {
-    "version": "0.2.0",
-    "configurations": [
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "byond",
+      "request": "launch",
+      "name": "Launch and Build TGUI and DM",
+      "preLaunchTask": "TGUI Compile",
+      "dmb": "${workspaceFolder}/${command:CurrentDMB}"
+    },
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [],
+      "stopAtEntry": false,
+      "externalConsole": true,
+      "cwd": "c:/Users/MLGTASTIC/Desktop/Eris-SS13/CEV-Eris/tgui/.yarn/unplugged/ttf2woff2-npm-4.0.4-e71f070912/node_modules/ttf2woff2/csrc/woff2",
+      "program": "c:/Users/MLGTASTIC/Desktop/Eris-SS13/CEV-Eris/tgui/.yarn/unplugged/ttf2woff2-npm-4.0.4-e71f070912/node_modules/ttf2woff2/csrc/woff2/build/Debug/outDebug",
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
         {
-            "type": "byond",
-            "request": "launch",
-            "name": "Launch and Build TGUI and DM",
-            "preLaunchTask": "TGUI Compile",
-            "dmb": "${workspaceFolder}/${command:CurrentDMB}"
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
         }
-    ]
+      ]
+    }
+  ]
 }

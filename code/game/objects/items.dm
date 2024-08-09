@@ -122,6 +122,21 @@ GLOBAL_LIST(melleDamagesCache)
 
 	var/chameleon_type
 
+/// OBJECTS that are relevant will implement their own logic for being hit.
+/obj/item/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
+	return PROJECTILE_CONTINUE
+
+/obj/item/hitbox_test
+	name = "hitbox tester"
+	icon_state = "hitbox"
+
+/obj/item/hitbox_test/Initialize()
+	. = ..()
+	var/datum/hitboxDatum/Selfhitbox = new()
+	Selfhitbox.boundingBoxes += list(list(8,8,24,24,0,0))
+	Selfhitbox.visualize()
+	hitbox = Selfhitbox
+
 /obj/item/blockDamages(list/armorToDam, armorDiv, woundMult, defZone)
 	for(var/armorType in armorToDam)
 		for(var/list/damageElement in armorToDam[armorType])

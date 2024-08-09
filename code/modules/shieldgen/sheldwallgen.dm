@@ -20,7 +20,7 @@
 		var/destroyed = 0
 		var/directwired = 1
 //		var/maxshieldload = 200
-		var/obj/structure/cable/attached		// the attached cable
+		var/obj/structure/cable/powerSupply		// the powerSupply cable
 		var/storedpower = 0
 		flags = CONDUCT
 		//There have to be at least two posts, so these are effectively doubled
@@ -247,7 +247,7 @@
 	src.cleanup(EAST)
 	. = ..()
 
-/obj/machinery/shieldwallgen/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/shieldwallgen/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	storedpower -= 400 * Proj.get_structure_damage()
 	..()
 	return
@@ -315,7 +315,7 @@
 			gen_secondary.storedpower -= power_usage
 
 
-/obj/machinery/shieldwall/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/shieldwall/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	if(needs_power)
 		var/obj/machinery/shieldwallgen/G
 		if(prob(50))

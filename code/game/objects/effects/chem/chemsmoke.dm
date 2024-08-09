@@ -171,7 +171,7 @@
 						if(!internals && !gasmask)
 							chemholder.reagents.trans_to_mob(H, 5, CHEM_INGEST, copy = TRUE)
 							chemholder.reagents.trans_to_mob(H, 5, CHEM_BLOOD, copy = TRUE)
-				else if(isobj(A) && !A.simulated)
+				else if(isobj(A))
 					chemholder.reagents.touch_obj(A)
 
 	var/color = chemholder.reagents.get_color() //build smoke icon

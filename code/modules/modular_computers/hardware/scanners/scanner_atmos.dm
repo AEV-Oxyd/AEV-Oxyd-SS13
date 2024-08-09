@@ -1,14 +1,12 @@
 /obj/item/computer_hardware/scanner/atmos
 	name = "atmospheric scanner module"
 	desc = "An atmospheric scanner module. It can scan the surroundings and report the composition of gases."
-	can_run_scan = 1
+	can_run_scan = TRUE
 
 /obj/item/computer_hardware/scanner/atmos/can_use_scanner(mob/user, atom/target, proximity = TRUE)
 	if(!..())
-		return 0
-	if(!target.simulated)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/item/computer_hardware/scanner/atmos/run_scan(mob/user, datum/computer_file/program/scanner/program)
 	if(..())

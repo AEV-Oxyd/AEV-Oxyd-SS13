@@ -95,7 +95,7 @@
 
 		if(L.invisibility >= INVISIBILITY_LEVEL_ONE) // Cannot see him. see_invisible is a mob-var
 			continue
-		if(!check_trajectory(L, src))	//check if we have true line of sight
+		if(!check_trajectory(list(x,y,z), list(L.x, L.y, L.z),null,null, L))	//check if we have true line of sight
 			continue
 
 		if(!nearest_valid_target)
@@ -136,21 +136,21 @@
 	stat |= EMPED
 	emp_timer_id = addtimer(CALLBACK(src, PROC_REF(emp_off)), emp_cooldown, TIMER_STOPPABLE)
 
-/obj/machinery/power/os_turret/bullet_act(obj/item/projectile/proj)
-	var/damage = proj.get_structure_damage()
+/obj/machinery/power/os_turret/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
+	var/damage = Proj.get_structure_damage()
 
 	if(!damage)
-		if(istype(proj, /obj/item/projectile/ion))
-			proj.on_hit(loc)
+		if(istype(Proj, /obj/item/projectile/ion))
+			Proj.on_hit(loc)
 		return
 
 	..()
 
-	take_damage(damage*proj.structure_damage_factor)
+	take_damage(damage*Proj.structure_damage_factor)
 
 	if(!returning_fire && !stat)
 		returning_fire = TRUE
-		var/turf/proj_start_turf = proj.starting
+		var/turf/proj_start_turf = Proj.starting
 		for(var/obj in proj_start_turf.contents)
 			if(istype(obj, /obj/machinery/power/os_turret))
 				return		// Don't shoot other turrets

@@ -93,7 +93,7 @@
 	check_stability()
 	return  0
 
-/obj/machinery/am_shielding/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/am_shielding/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	if(Proj.check_armour != ARMOR_BULLET)
 		stability -= dhTotalDamageStrict(Proj.melleDamages, ALL_ARMOR,  list(BRUTE,BURN))/2
 	return FALSE

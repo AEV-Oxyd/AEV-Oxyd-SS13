@@ -162,6 +162,7 @@
 	desc = "A lighting fixture."
 	anchored = TRUE
 	layer = WALL_OBJ_LAYER
+	hitbox = /datum/hitboxDatum/atom/fixtureLightTube
 	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 20
@@ -198,6 +199,7 @@
 	brightness_range = 3
 	brightness_power = 1
 	desc = "A small lighting fixture."
+	hitbox = /datum/hitboxDatum/atom/fixtureBulb
 	light_type = /obj/item/light/bulb
 
 /obj/machinery/light/small/autoattach

@@ -68,7 +68,7 @@
 	if(!can_use(user))
 		return
 
-	if(is_valid_scan_target(A) && A.simulated)
+	if(is_valid_scan_target(A))
 		if(!is_virtual)
 			user.visible_message(SPAN_NOTICE("[user] runs \the [src] over \the [A]."), range = 2)
 			if(scan_sound)

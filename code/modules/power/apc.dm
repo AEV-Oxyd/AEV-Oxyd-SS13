@@ -90,7 +90,6 @@
 	var/locked = 1
 	var/coverlocked = 1
 	var/aidisabled = 0
-	var/tdir = null
 	var/obj/machinery/power/terminal/terminal
 	var/lastused_light = 0
 	var/lastused_equip = 0
@@ -119,8 +118,6 @@
 	var/global/list/status_overlays_equipment
 	var/global/list/status_overlays_lighting
 	var/global/list/status_overlays_environ
-	/// Offsets the object by APC_PIXEL_OFFSET (defined in apc_defines.dm) pixels in the direction we want it placed in. This allows the APC to be embedded in a wall, yet still inside an area (like mapping).
-	var/offset_old
 
 /obj/machinery/power/apc/updateDialog()
 	if (stat & (BROKEN|MAINT))
@@ -182,23 +179,18 @@
 		addtimer(CALLBACK(src, PROC_REF(update)), 5)
 		set_dir(ndir)
 
-	/*
+/obj/machinery/power/apc/set_dir()
+	. = ..()
 	switch(dir)
 		if(NORTH)
-			offset_old = pixel_y
 			pixel_y = 28
 		if(SOUTH)
-			offset_old = pixel_y
 			pixel_y = -28
 		if(EAST)
-			offset_old = pixel_x
 			pixel_x = 28
 		if(WEST)
-			offset_old = pixel_x
 			pixel_x = -28
-	*/
 
-	tdir = dir		// to fix Vars bug
 
 /obj/machinery/power/apc/Initialize(mapload)
 	. = ..()
@@ -228,6 +220,15 @@
 		if(area.apc)
 			log_mapping("Duplicate APC created at [AREACOORD(src)]. Original at [AREACOORD(area.apc)].")
 		area.apc = src
+
+	var/turf/toAttach = get_step(loc, dir)
+
+	if(iswall(toAttach))
+		toAttach.attachGameAtom(src, ATFS_PRIORITIZE_ATTACHED_FOR_HITS, ATFA_EASY_INTERACTIVE | ATFA_DIRECTIONAL_HITTABLE)
+	else
+		stack_trace("[src.type] has no wall to attach itself to at X:[x] Y:[y] Z:[z]")
+		// the players need to be confused so they complain about it!
+		color = COLOR_PINK
 
 	update_icon()
 

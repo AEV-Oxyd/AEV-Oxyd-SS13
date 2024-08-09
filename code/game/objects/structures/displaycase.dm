@@ -6,7 +6,7 @@
 	density = TRUE
 	anchored = TRUE
 	unacidable = 1//Dissolving the case would also delete the gun.
-	explosion_coverage = 0.8
+	explosionCoverage = 0.8
 	health = 60
 	maxHealth = 60
 	var/occupied = 1
@@ -16,14 +16,14 @@
 	var/absorbed = take_damage(target_power)
 	return absorbed
 
-/obj/structure/displaycase/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/displaycase/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	take_damage(Proj.get_structure_damage())
 	..()
 	return
 
 /obj/structure/displaycase/take_damage(damage)
 	. = health - damage < 0 ? damage - (damage - health) : damage
-	. *= explosion_coverage
+	. *= explosionCoverage
 	health -= damage
 	if (health <= 0)
 		if (!(destroyed ))

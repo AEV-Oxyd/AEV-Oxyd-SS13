@@ -10,6 +10,9 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	var/random_offset = 0
 	weight = 0
 
+/obj/effect/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
+	return PROJECTILE_CONTINUE
+
 /obj/effect/effect
 	name = "effect"
 	icon = 'icons/effects/effects.dmi'

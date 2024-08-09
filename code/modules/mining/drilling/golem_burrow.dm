@@ -8,7 +8,7 @@
 
 	maxHealth = 50
 	health = 50
-	explosion_coverage = 0.3
+	explosionCoverage = 0.3
 	var/datum/golem_controller/controller
 
 /obj/structure/golem_burrow/New(loc, parent)
@@ -41,14 +41,14 @@
 			user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN * 1.5)
 	return TRUE
 
-/obj/structure/golem_burrow/bullet_act(obj/item/projectile/Proj)
+/obj/structure/golem_burrow/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	..()
         // Bullet not really efficient against a pile of rock
 	take_damage(Proj.get_structure_damage() * 0.25)
 
 /obj/structure/golem_burrow/take_damage(damage)
 	. = health - damage < 0 ? damage - (damage - health) : damage
-	. *= explosion_coverage
+	. *= explosionCoverage
 	health = min(max(health - damage, 0), maxHealth)
 	if(health == 0)
 		qdel(src)

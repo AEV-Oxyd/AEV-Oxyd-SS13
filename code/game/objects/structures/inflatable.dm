@@ -41,7 +41,7 @@
 
 	var/undeploy_path = null
 	health = 30
-	explosion_coverage = 1
+	explosionCoverage = 1
 
 /obj/structure/inflatable/wall
 	name = "inflatable wall"
@@ -57,7 +57,7 @@
 
 /obj/structure/inflatable/take_damage(damage)
 	. = health - damage < 0 ? damage - (damage - health) : damage
-	. *= explosion_coverage
+	. *= explosionCoverage
 	if(health < 0)
 		deflate(TRUE)
 	playsound(loc, 'sound/effects/Glasshit.ogg', 75, 1)
@@ -66,7 +66,7 @@
 /obj/structure/inflatable/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	return 0
 
-/obj/structure/inflatable/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/inflatable/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	var/proj_damage = Proj.get_structure_damage()
 	if(!proj_damage) return
 	take_damage(proj_damage)

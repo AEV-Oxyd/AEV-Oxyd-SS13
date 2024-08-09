@@ -70,7 +70,7 @@
 		visible_message("\red [user] gently taps [src] with the [O]. ")
 
 
-/mob/living/simple_animal/hostile/syndicate/melee/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/simple_animal/hostile/syndicate/melee/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	if(!Proj)	return
 	if(prob(65))
 		..()

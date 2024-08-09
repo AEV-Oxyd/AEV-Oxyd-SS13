@@ -9,7 +9,7 @@
 	flags = ON_BORDER
 	maxHealth = 20
 	health = 20
-	explosion_coverage = 1
+	explosionCoverage = 1
 	var/resistance = RESISTANCE_FLIMSY	//Incoming damage is reduced by this flat amount before being subtracted from health. Defines found in code\__defines\weapons.dm
 	var/maximal_heat = T0C + 100 		// Maximal heat before this window begins taking damage from fire
 	var/damage_per_fire_tick = 2 		// Amount of damage per fire tick. Regular windows are not fireproof so they might as well break quickly.
@@ -67,7 +67,7 @@
 /obj/structure/window/take_damage(damage = 0)
 	var/initialhealth = health
 	. = health - (damage * (1 - silicate / 200) - resistance) < 0 ? damage - (damage - health) : damage
-	. *= explosion_coverage
+	. *= explosionCoverage
 	damage = damage * (1 - silicate / 200) // up to 50% damage resistance
 	damage -= resistance // then flat resistance from material
 
@@ -148,17 +148,7 @@
 	return
 
 
-/obj/structure/window/bullet_act(var/obj/item/projectile/Proj)
-
-	if(config.z_level_shooting && Proj.height)
-		if(Proj.height == HEIGHT_LOW)// Bullet is too low
-			return PROJECTILE_STOP
-		else if(Proj.height == HEIGHT_HIGH) // Guaranteed hit
-			var/proj_damage = Proj.get_structure_damage()
-			if(proj_damage)
-				hit(proj_damage)
-			..()
-			return PROJECTILE_STOP
+/obj/structure/window/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 
 	. = PROJECTILE_CONTINUE
 	var/targetzone = check_zone(Proj.def_zone)
@@ -552,21 +542,6 @@ proc/end_grab_onto(mob/living/user, mob/living/target)
 	if(!is_fulltile())
 		icon_state = "[basestate]"
 		return
-	/*
-	var/list/dirs = list()
-	if(anchored)
-		for(var/obj/structure/window/W in orange(src,1))
-			if(W.anchored && W.density && W.type == src.type && W.is_fulltile()) //Only counts anchored, not-destroyed fill-tile windows.
-				dirs += get_dir(src, W)
-
-	for(var/turf/simulated/wall/T in RANGE_TURFS(1, src) - src)
-		var/T_dir = get_dir(src, T)
-		dirs |= T_dir
-		if(propagate)
-			spawn(0)
-				T.update_connections()
-				T.update_icon()
-	*/
 	//Since fulltile windows can't exist without an underlying wall, we will just copy connections from our wall
 	var/list/connections = list("0", "0", "0", "0")
 	var/obj/structure/low_wall/LW = (locate(/obj/structure/low_wall) in loc)

@@ -207,23 +207,26 @@ var/list/mydirs = list(NORTH, SOUTH, EAST, WEST, SOUTHWEST, NORTHWEST, NORTHEAST
 						DestroySurroundings()
 					AttackTarget()
 
+/// Rewrite of rapid fire to not use spawn() , meant to be temporary till we get a more generalized system coded in
+/// But this is SS13 so that probs won't happen soon unless i give enough of a fuck about it SPCR-2024
+/mob/living/simple_animal/hostile/proc/rapidLoop(delay, repeatsLeft)
+	if(QDELETED(src) || QDELETED(target_mob))
+		return
+	Shoot(target_mob, loc , src)
+	if(casingtype)
+		new casingtype(get_turf(src))
+	repeatsLeft--
+	if(!repeatsLeft)
+		return
+	addtimer(CALLBACK(src, PROC_REF(rapidLoop), delay, repeatsLeft), delay)
+
+
 /mob/living/simple_animal/hostile/proc/OpenFire(target_mob)
 	var/target = target_mob
 	visible_message("\red <b>[src]</b> [fire_verb] at [target]!", 1)
 
 	if(rapid)
-		spawn(1)
-			Shoot(target, loc, src)
-			if(casingtype)
-				new casingtype(get_turf(src))
-		spawn(4)
-			Shoot(target, loc, src)
-			if(casingtype)
-				new casingtype(get_turf(src))
-		spawn(6)
-			Shoot(target, loc, src)
-			if(casingtype)
-				new casingtype(get_turf(src))
+		rapidLoop(target, 0.2 SECONDS, 3)
 	else
 		Shoot(target, loc, src)
 		if(casingtype)
@@ -231,10 +234,11 @@ var/list/mydirs = list(NORTH, SOUTH, EAST, WEST, SOUTHWEST, NORTHWEST, NORTHEAST
 
 	stance = HOSTILE_STANCE_IDLE
 	target_mob = null
-	return
 
 /mob/living/simple_animal/hostile/proc/Shoot(var/target, var/start, var/user, var/bullet = 0)
 	if(target == start)
+		return
+	if(!target)
 		return
 
 	var/obj/item/projectile/A = new projectiletype(user:loc)

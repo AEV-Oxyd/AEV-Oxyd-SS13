@@ -157,10 +157,10 @@
 
 
 // Special return values from bullet_act(). Positive return values are already used to indicate the blocked level of the projectile.
-#define PROJECTILE_STOP					 1 //if the projectile should stop flying after calling bullet_act()
-#define PROJECTILE_CONTINUE				-1 //if the projectile should continue flying after calling bullet_act()
-#define PROJECTILE_FORCE_MISS			-2 //if the projectile should treat the attack as a miss (suppresses attack and admin logs) - only applies to mobs.
-#define PROJECTILE_FORCE_MISS_SILENCED	-2.5 //if the projectile should do the same thing as above, but not give the miss message
+#define PROJECTILE_STOP 1 //if the projectile should stop flying after calling bullet_act()
+#define PROJECTILE_CONTINUE 2//if the projectile should continue flying after calling bullet_act()
+#define PROJECTILE_FORCE_MISS 4 //if the projectile should treat the attack as a miss (suppresses attack and admin logs) - only applies to mobs.
+#define PROJECTILE_FORCE_MISS_SILENCED 8//if the projectile should do the same thing as above, but not give the miss message
 
 //Camera capture modes
 #define CAPTURE_MODE_REGULAR 0 //Regular polaroid camera mode
@@ -367,3 +367,7 @@
 #define TTS_SEED_DEFAULT_FEMALE "Female_1"
 #define TTS_SEED_DEFAULT_MALE "Male_1"
 #define TTS_SEED_ANNOUNCER "Robot_2"
+
+#define BBOX(x1,y1,x2,y2, minLevel, maxLevel, flags) list(x1,y1,x2,y2, minLevel, maxLevel, flags)
+#define BLINE(x1,y1,x2,y2) list(x1,y1,x2,y2)
+#define TRIGSLOPE(x1,y1,x2,y2) ((y2-y1)/(x2-x1))

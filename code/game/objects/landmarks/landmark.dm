@@ -4,11 +4,13 @@
 	alpha = 64 //Or else they cover half of the map
 	anchored = TRUE
 	unacidable = TRUE
-	simulated = FALSE
 	invisibility = 101
 	layer = MID_LANDMARK_LAYER
 	weight = 0
 	var/delete_me = FALSE
+
+/obj/landmark/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
+	return PROJECTILE_CONTINUE
 
 /obj/landmark/New()
 	..()

@@ -184,7 +184,7 @@
 			do_animate("deny")
 	return TRUE
 
-/obj/machinery/door/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/door/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	..()
 
 	var/damage = Proj.get_structure_damage()

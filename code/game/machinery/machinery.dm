@@ -119,6 +119,9 @@
 	var/commonLore = ""
 	matter = list(MATERIAL_STEEL = 8)
 
+/obj/machinery/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
+	take_damage(P.get_structure_damage())
+	return PROJECTILE_STOP
 
 /obj/machinery/Initialize(mapload, d=0)
 	. = ..()

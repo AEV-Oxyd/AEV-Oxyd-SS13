@@ -8,7 +8,7 @@
 	var/state = 0
 	var/cover = 50 //how much cover the girder provides against projectiles.
 	// Not a lot of explosion blocking but still there.
-	explosion_coverage = 0.4
+	explosionCoverage = 0.4
 	var/material/reinf_material
 	var/reinforcing = 0
 	var/resistance = RESISTANCE_TOUGH
@@ -43,7 +43,7 @@
 	else
 		attack_hand(M)
 
-/obj/structure/girder/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/girder/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	//Girders only provide partial cover. There's a chance that the projectiles will just pass through. (unless you are trying to shoot the girder)
 	if(Proj.original != src && !prob(cover))
 		return PROJECTILE_CONTINUE //pass through
@@ -304,7 +304,7 @@
 	if (!damage || damage <= 0)
 		return
 	. = health - damage < 0 ? damage - (damage - health) : damage
-	. *= explosion_coverage
+	. *= explosionCoverage
 
 	health -= damage
 	if (health <= 0)
