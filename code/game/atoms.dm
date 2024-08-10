@@ -220,6 +220,8 @@
 	update_plane()
 
 	hitbox = getHitbox(hitbox)
+	#ifdef HITBOX_DEBUG
+		hitbox.visualise(src)
 
 	if(preloaded_reagents)
 		if(!reagents)

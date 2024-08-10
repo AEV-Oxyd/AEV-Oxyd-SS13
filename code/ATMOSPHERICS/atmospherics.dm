@@ -35,7 +35,6 @@ Pipelines + Other Objects -> Pipe network
 
 /// Pending a full implementation of hitbox for every atom
 /obj/machinery/atmospherics/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
-	. = ..()
 	return PROJECTILE_CONTINUE
 
 /obj/machinery/atmospherics/Initialize(mapload, d)

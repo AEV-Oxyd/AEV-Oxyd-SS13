@@ -17,25 +17,6 @@ SUBSYSTEM_DEF(bullets)
 
 	var/list/datum/bullet_data/current_queue = list()
 	var/list/datum/bullet_data/bullet_queue = list()
-	// Used for processing bullets. No point in deallocating and reallocating them every MC tick.
-	var/list/bulletRatios
-	var/list/bulletCoords
-	var/obj/item/projectile/projectile
-	var/pixelsToTravel
-	var/pixelsThisStep
-	var/x_change
-	var/y_change
-	var/z_change
-	var/tx_change
-	var/ty_change
-	var/tz_change
-	var/turf/moveTurf = null
-	var/list/relevantAtoms = list()
-	// 1 client tick by default , can be increased by impacts
-	var/bulletWait = 1
-	//// x1,y1,x2,y2,z1,z2
-	var/list/trajectoryData = list(0,0,0,0,0,0,0)
-	var/distanceToTravelForce
 
 
 
@@ -326,8 +307,7 @@ SUBSYSTEM_DEF(bullets)
 					currentTurf.color = COLOR_RED
 					message_admins(" 1 New turf, X:[round(dataReference.globalX/32)] | Y:[round(dataReference.globalY/32)] | Z:[round(dataReference.globalZ/32)]")
 					#endif
-					dataReference.lifetime = 0
-					if(movementTurf != currentTurf)
+					if(movementTurf != currentTurf && movementTurf)
 						projectile.pixel_x -= (movementTurf.x - currentTurf.x) * PPT
 						projectile.pixel_y -= (movementTurf.y - currentTurf.y) * PPT
 						projectile.pixel_z -= (movementTurf.z - currentTurf.z) * PPT
@@ -337,7 +317,7 @@ SUBSYSTEM_DEF(bullets)
 						colored += movementTurf
 						message_admins("Adjusted for Delta")
 						#endif
-						dataReference.lifetime = 0
+					dataReference.lifetime = 0
 					break
 			else
 				canContinue = projectile.scanTurf(currentTurf, bulletDir, currentX, currentY, currentZ, &stepX, &stepY, &stepZ)
@@ -364,7 +344,7 @@ SUBSYSTEM_DEF(bullets)
 						movementTurf.color = COLOR_RED
 						#endif
 						movementTurf = locate(round(stepX/PPT), round(stepY/PPT), round(currentZ/PPT))
-						if(movementTurf != currentTurf)
+						if(movementTurf != currentTurf && movementTurf)
 							projectile.pixel_x -= (movementTurf.x - currentTurf.x) * PPT
 							projectile.pixel_y -= (movementTurf.y - currentTurf.y) * PPT
 							projectile.pixel_z -= (movementTurf.z - currentTurf.z) * PPT
@@ -432,6 +412,7 @@ SUBSYSTEM_DEF(bullets)
 
 /datum/controller/subsystem/bullets/fire(resumed)
 	return realFire()
+	/*
 	if(!resumed)
 		current_queue = bullet_queue.Copy()
 	var/global/turf/leaving
@@ -543,5 +524,6 @@ SUBSYSTEM_DEF(bullets)
 			bullet_queue -= bullet
 			//for(var/turf/painted in bullet.painted)
 			//	painted.color = initial(painted.color)
+	*/
 
 

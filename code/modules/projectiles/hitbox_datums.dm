@@ -81,18 +81,16 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 
 
 /datum/hitboxDatum/proc/visualize(atom/owner)
-	var/list/availableColors = list(COLOR_RED, COLOR_AMBER, COLOR_BLUE, COLOR_ORANGE, COLOR_CYAN, COLOR_YELLOW, COLOR_BROWN, COLOR_VIOLET, COLOR_PINK, COLOR_ASSEMBLY_BEIGE, COLOR_ASSEMBLY_GREEN, COLOR_ASSEMBLY_LBLUE, COLOR_LIGHTING_BLUE_DARK)
-	var/chosenColor = pick_n_take(availableColors)
 	for(var/list/hitbox in boundingBoxes[num2text(owner.dir)])
 		var/icon/Icon = icon('icons/hitbox.dmi', "box")
 		var/multX = hitbox[3] - hitbox[1] + 1
 		var/multY = hitbox[4] - hitbox[2] + 1
 		Icon.Scale(multX, multY)
 		var/mutable_appearance/newOverlay = mutable_appearance(Icon, "hitbox")
-		newOverlay.color = chosenColor
-		chosenColor = pick_n_take(availableColors)
+		newOverlay.color = RANDOM_RGB
 		newOverlay.pixel_x = hitbox[1] - 1
 		newOverlay.pixel_y = hitbox[2] - 1
+		newOverlay.alpha = 100
 		owner.overlays.Add(newOverlay)
 
 /datum/hitboxDatum/atom
@@ -300,6 +298,78 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		LISTEAST = list(BBOX(0,0,32,32,LEVEL_BELOW ,LEVEL_ABOVE,null)),
 		LISTWEST = list(BBOX(0,0,32,32,LEVEL_BELOW ,LEVEL_ABOVE,null))
 	)
+
+/// This checks line by line instead of a box. Less efficient.
+/datum/hitboxDatum/atom/polygon
+	boundingBoxes = list(
+		LISTNORTH = list(BLINE(0,0,32,32)),
+		LISTSOUTH = list(BLINE(0,0,32,32)),
+		LISTEAST = list(BLINE(0,0,32,32)),
+		LISTWEST = list(BLINE(0,0,32,32))
+	)
+
+/datum/hitboxDatum/atom/polygon/intersects(atom/owner, ownerDirection, startX, startY, startZ, pStepX, pStepY, pStepZ)
+	var/global/worldX
+	var/global/worldY
+	worldX = owner.x
+	worldY = owner.y
+	if(owner.atomFlags & AF_HITBOX_OFFSET_BY_ATTACHMENT)
+		for(var/atom/thing as anything in owner.attached)
+			if(!(thing.attached[owner] & ATFS_SUPPORTER))
+				continue
+			worldX += thing.x - owner.x
+			worldY += thing.y - owner.y
+			break
+	worldX *= 32
+	worldY *= 32
+	for(var/list/boundingData in boundingBoxes["[ownerDirection]"])
+		/// basic AABB but only for the Z-axis.
+		//if(boundingData[5] > max(startZ,startZ+*pStepZ) || boundingData[6] < min(startZ,startZ+*pStepZ))
+		//	continue
+		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY, pStepX, pStepY))
+			return TRUE
+	return FALSE
+
+/// Hitboxes are ordered based on center distance.
+/datum/hitboxDatum/atom/ordered
+
+/datum/hitboxDatum/atom/ordered/intersects(atom/owner, ownerDirection, startX, startY, startZ, pStepX, pStepY, pStepZ)
+	var/global/worldX
+	var/global/worldY
+	worldX = owner.x
+	worldY = owner.y
+	if(owner.atomFlags & AF_HITBOX_OFFSET_BY_ATTACHMENT)
+		for(var/atom/thing as anything in owner.attached)
+			if(!(thing.attached[owner] & ATFS_SUPPORTER))
+				continue
+			worldX += thing.x - owner.x
+			worldY += thing.y - owner.y
+			break
+	worldX *= 32
+	worldY *= 32
+	var/list/relevantHitboxes
+	for(var/list/boundingBox in boundingBoxes["[ownerDirection]"])
+		relevantHitboxes[boundingBox] = DIST_EUCLIDIAN_2D((boundingBox[1]+boundingBox[3])/2, (boundingBox[2]+boundingBox[4])/2, startX, startY)
+	for(var/index in 1 to (length(relevantHitboxes)-1))
+		if(relevantHitboxes[index] > relevantHitboxes[index+1])
+			relevantHitboxes[index+1] += relevantHitboxes[index]
+			relevantHitboxes[index] = relevantHitboxes[index+1] - relevantHitboxes[index]
+			relevantHitboxes[index+1] -= relevantHitboxes[index]
+			index = max(1, index - 1)
+	for(var/list/boundingData in relevantHitboxes)
+		/// basic AABB but only for the Z-axis.
+		//if(boundingData[5] > max(startZ,startZ+*pStepZ) || boundingData[6] < min(startZ,startZ+*pStepZ))
+		//	continue
+		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY, pStepX, pStepY))
+			return TRUE
+		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY, pStepX, pStepY))
+			return TRUE
+		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[4] + worldY, boundingData[3] + worldX, boundingData[4] + worldY, pStepX, pStepY))
+			return TRUE
+		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[3] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY, pStepX, pStepY))
+			return TRUE
+	return FALSE
+
 
 /datum/hitboxDatum/mob
 
