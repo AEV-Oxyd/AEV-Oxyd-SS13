@@ -7,9 +7,11 @@
 /// the higher this is ,the more performant the system is , since more of the math is done at once instead of in stages
 /// it is also more inaccurate the higher you go..
 #define MAXPIXELS 16
+/// Define this / uncomment it if you want to see bullet debugging data for trajectories & chosen paths.
+// #define BULLETDEBUG 1
 SUBSYSTEM_DEF(bullets)
 	name = "Bullets"
-	wait = 5
+	wait = 1
 	priority = SS_PRIORITY_BULLETS
 	init_order = INIT_ORDER_BULLETS
 
@@ -286,7 +288,9 @@ SUBSYSTEM_DEF(bullets)
 	var/canContinue
 	var/oldX
 	var/oldY
+	#ifdef BULLETDEBUG
 	var/list/colored = list()
+	#endif
 	for(var/datum/bullet_data/dataReference in current_queue)
 		current_queue.Remove(dataReference)
 		projectile = dataReference.referencedBullet
@@ -318,17 +322,21 @@ SUBSYSTEM_DEF(bullets)
 					dataReference.globalX = stepX
 					dataReference.globalY = stepY
 					dataReference.globalZ = currentZ
+					#ifdef BULLETDEBUG
 					currentTurf.color = COLOR_RED
 					message_admins(" 1 New turf, X:[round(dataReference.globalX/32)] | Y:[round(dataReference.globalY/32)] | Z:[round(dataReference.globalZ/32)]")
+					#endif
 					dataReference.lifetime = 0
 					if(movementTurf != currentTurf)
-						message_admins("Adjusted for Delta")
 						projectile.pixel_x -= (movementTurf.x - currentTurf.x) * PPT
 						projectile.pixel_y -= (movementTurf.y - currentTurf.y) * PPT
 						projectile.pixel_z -= (movementTurf.z - currentTurf.z) * PPT
 						projectile.forceMove(movementTurf)
+						#ifdef BULLETDEBUG
 						movementTurf.color = COLOR_RED
 						colored += movementTurf
+						message_admins("Adjusted for Delta")
+						#endif
 						dataReference.lifetime = 0
 					break
 			else
@@ -343,31 +351,39 @@ SUBSYSTEM_DEF(bullets)
 						dataReference.globalY += stepY
 						dataReference.globalZ += stepZ
 						projectile.forceMove(movementTurf)
+						#ifdef BULLETDEBUG
 						movementTurf.color = COLOR_GREEN
 						colored += movementTurf
+						#endif
 					else
 						dataReference.globalX = stepX
 						dataReference.globalY = stepY
 						dataReference.globalZ = currentZ
+						#ifdef BULLETDEBUG
 						message_admins(" 2 New turf, X:[round(dataReference.globalX/32)] | Y:[round(dataReference.globalY/32)] | Z:[round(dataReference.globalZ/32)]")
-						movementTurf = locate(round(stepX/PPT), round(stepY/PPT), round(currentZ/PPT))
 						movementTurf.color = COLOR_RED
+						#endif
+						movementTurf = locate(round(stepX/PPT), round(stepY/PPT), round(currentZ/PPT))
 						if(movementTurf != currentTurf)
-							message_admins("Adjusted for Delta")
 							projectile.pixel_x -= (movementTurf.x - currentTurf.x) * PPT
 							projectile.pixel_y -= (movementTurf.y - currentTurf.y) * PPT
 							projectile.pixel_z -= (movementTurf.z - currentTurf.z) * PPT
 							projectile.forceMove(movementTurf)
+							#ifdef BULLETDEBUG
 							movementTurf.color = COLOR_RED
+							message_admins("Adjusted for Delta")
 							colored += movementTurf
+							#endif
 						dataReference.lifetime = 0
 						break
 				else
 					dataReference.globalX = stepX
 					dataReference.globalY = stepY
 					dataReference.globalZ = currentZ
+					#ifdef BULLETDEBUG
 					currentTurf.color = COLOR_RED
 					message_admins(" 3 New turf, X:[round(dataReference.globalX/32)] | Y:[round(dataReference.globalY/32)] | Z:[round(dataReference.globalZ/32)]")
+					#endif
 					dataReference.lifetime = 0
 					break
 
@@ -398,14 +414,17 @@ SUBSYSTEM_DEF(bullets)
 			currentY = dataReference.globalY
 			currentZ = dataReference.globalZ
 
+		var/bulletTime = SSbullets.wait *(dataReference.pixelSpeed / (dataReference.pixelSpeed + pixelTotal))
 
-		animate(projectile, SSbullets.wait, pixel_x = dataReference.globalX%PPT - HPPT, pixel_y = dataReference.globalY%PPT - HPPT, flags = ANIMATION_END_NOW)
+		animate(projectile, bulletTime, pixel_x = dataReference.globalX%PPT - HPPT, pixel_y = dataReference.globalY%PPT - HPPT, flags = ANIMATION_END_NOW)
 		if(dataReference.lifetime < 1)
 			projectile.finishDeletion()
 			bullet_queue.Remove(dataReference)
 
+	#ifdef BULLETDEBUG
 	if(length(colored))
 		addtimer(CALLBACK(src, PROC_REF(deleteColors), colored.Copy()), SSbullets.wait * 15)
+	#endif
 
 /datum/controller/subsystem/bullets/proc/deleteColors(list/specialList)
 	for(var/turf/tata in specialList)
