@@ -130,10 +130,6 @@
 		matter[entry] /= pellets // yet disallows for pellet shrapnel created on impact multiplying the matter count
 	. = ..()
 
-/obj/item/projectile/bullet/pellet/Bumped()
-	. = ..()
-	bumped = 0 //can hit all mobs in a tile. pellets is decremented inside attack_mob so this should be fine.
-
 /obj/item/projectile/bullet/pellet/proc/get_pellets(var/distance)
 	var/pellet_loss = round((distance - 1)/range_step) //pellets lost due to distance
 	var/remaining = pellets - pellet_loss

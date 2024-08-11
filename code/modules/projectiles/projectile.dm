@@ -109,11 +109,13 @@ GLOBAL_LIST(projectileDamageConstants)
 	// yep , it checks itself , more efficient to handle it here..
 	if(P == src)
 		return PROJECTILE_CONTINUE
-	if(abs(P.dataRef.globalZ - dataRef.globalZ) > 2)
+	if(atomFlags & AF_BULLET_PASS || P.atomFlags & AF_BULLET_PASS)
 		return PROJECTILE_CONTINUE
-	if(abs(P.dataRef.globalX - dataRef.globalX) > 2)
+	if(abs(P.dataRef.globalZ - dataRef.globalZ) > 0.1)
 		return PROJECTILE_CONTINUE
-	if(abs(P.dataRef.globalY - dataRef.globalY) > 2)
+	if(abs(P.dataRef.globalX - dataRef.globalX) > 0.1)
+		return PROJECTILE_CONTINUE
+	if(abs(P.dataRef.globalY - dataRef.globalY) > 0.1)
 		return PROJECTILE_CONTINUE
 	// congratulations , you have 2 intersecting bullets...
 	return PROJECTILE_STOP
@@ -275,7 +277,7 @@ GLOBAL_LIST(projectileDamageConstants)
 		p_y = text2num(mouse_control["icon-y"])
 
 //called to launch a projectile
-/obj/item/projectile/proc/launch(atom/target, atom/firer, targetZone, xOffset = 0, yOffset = 0, zOffset = 0, angleOffset = 0, proj_sound, user_recoil = 0)
+/obj/item/projectile/proc/launch(atom/target, atom/firer, targetZone, xOffset = 0, yOffset = 0, zOffset = 0, zStart = 0, angleOffset = 0, proj_sound, user_recoil = 0)
 	var/turf/curloc = get_turf(src)
 	var/turf/targloc = get_turf(target)
 	if (!istype(targloc) || !istype(curloc))
@@ -299,7 +301,7 @@ GLOBAL_LIST(projectileDamageConstants)
 	var/list/currentCoords = list()
 	currentCoords.Add(x*PPT+HPPT + pixel_x)
 	currentCoords.Add(y*PPT+HPPT + pixel_y)
-	var/zCoords = z * PPT
+	var/zCoords = z * PPT + zStart
 	if(ismob(firer))
 		var/mob/living = firer
 		if(living.lying)
@@ -661,6 +663,7 @@ GLOBAL_LIST(projectileDamageConstants)
 
 /obj/item/projectile/proc/onBlockingHit(atom/A)
 	on_impact(A)
+	message_admins("Has hit [A]")
 	dataRef.lifetime = 0
 
 /obj/effect/bullet_sparks

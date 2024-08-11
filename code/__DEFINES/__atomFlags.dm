@@ -9,3 +9,7 @@
 /// Our hitbox is offset by an attachment.
 #define AF_HITBOX_OFFSET_BY_ATTACHMENT (1<<5)
 #define AF_IGNORE_ON_BULLETSCAN (1<<6)
+/// Bullets won't be able to hit this one and cause a mid-air collision
+#define AF_BULLET_PASS (1<<7)
+/// This atom will get ignored by explosions
+#define AF_EXPLOSION_IGNORANT (1<<8)

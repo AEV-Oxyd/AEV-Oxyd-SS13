@@ -209,6 +209,8 @@ SUBSYSTEM_DEF(explosions)
 /turf/explosion_act(target_power, explosion_handler/handler)
 	var/power_reduction = 0
 	for(var/atom/movable/thing as anything in contents)
+		if(thing.atomFlags & AF_EXPLOSION_IGNORANT)
+			continue
 		power_reduction += thing.explosion_act(target_power, handler)
 		if(!QDELETED(thing) && isobj(thing) && !thing.anchored)
 			thing.throw_at(get_turf_away_from_target_simple(src, islist(handler.epicenter ? handler.epicenter[1] : handler.epicenter)), round(target_power / 30))
