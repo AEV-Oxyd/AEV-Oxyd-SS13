@@ -204,19 +204,10 @@
 	return 1
 
 /turf/simulated/floor/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
-	if(P.dataRef.currentCoords[3] < 0)
-		if(take_damage(P.get_structure_damage(), BRUTE, FALSE))
-			var/turf/theDeep = GetBelow(src)
-			if(!theDeep)
-				return PROJECTILE_STOP
-			return PROJECTILE_CONTINUE
-		return PROJECTILE_STOP
-	else if(P.dataRef.currentCoords[3] > LEVEL_MAX)
-		var/turf/theSkies = GetAbove(src)
-		if(!theSkies)
-			return PROJECTILE_STOP
-		if(theSkies.take_damage(P.get_structure_damage(), BRUTE, FALSE))
-			return PROJECTILE_CONTINUE
-		return PROJECTILE_STOP
+	var/oldType = type
+	take_damage(P.get_structure_damage())
+	if(type != oldType)
+		return PROJECTILE_CONTINUE
+	return PROJECTILE_STOP
 
 

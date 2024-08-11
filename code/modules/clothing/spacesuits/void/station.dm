@@ -421,7 +421,7 @@
 			reflectchance /= 1.5
 		if(P.starting && prob(reflectchance))
 			visible_message(SPAN_DANGER("\The [user]\'s [name] reflects [attack_text]!"))
-			P.dataRef.movementRatios[4] += rand(25,50) * sign(rand(-1,1))
+			P.dataRef.angle += rand(25,50) * sign(rand(-1,1))
 			P.dataRef.updatePathByAngle()
 
 			return PROJECTILE_FORCE_MISS_SILENCED // complete projectile permutation

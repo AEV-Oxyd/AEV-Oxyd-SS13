@@ -109,11 +109,11 @@ GLOBAL_LIST(projectileDamageConstants)
 	// yep , it checks itself , more efficient to handle it here..
 	if(P == src)
 		return PROJECTILE_CONTINUE
-	if(!abs(abs(P.dataRef.currentCoords[3]) - abs(dataRef.currentCoords[3])) < 0.1)
+	if(abs(P.dataRef.globalZ - dataRef.globalZ) > 2)
 		return PROJECTILE_CONTINUE
-	if(!(abs(abs(P.pixel_x)-abs(pixel_x)) < 2))
+	if(abs(P.dataRef.globalX - dataRef.globalX) > 2)
 		return PROJECTILE_CONTINUE
-	if(!(abs(abs(P.pixel_y)-abs(pixel_y)) < 2))
+	if(abs(P.dataRef.globalY - dataRef.globalY) > 2)
 		return PROJECTILE_CONTINUE
 	// congratulations , you have 2 intersecting bullets...
 	return PROJECTILE_STOP
@@ -275,14 +275,14 @@ GLOBAL_LIST(projectileDamageConstants)
 		p_y = text2num(mouse_control["icon-y"])
 
 //called to launch a projectile
-/obj/item/projectile/proc/launch(atom/target, target_zone, x_offset = 0, y_offset = 0,zOffset = 0, angle_offset = 0, proj_sound, user_recoil = 0)
+/obj/item/projectile/proc/launch(atom/target, atom/firer, targetZone, xOffset = 0, yOffset = 0, zOffset = 0, angleOffset = 0, proj_sound, user_recoil = 0)
 	var/turf/curloc = get_turf(src)
 	var/turf/targloc = get_turf(target)
 	if (!istype(targloc) || !istype(curloc))
 		return TRUE
 
 	if(targloc == curloc) //Shooting something in the same turf
-		target.bullet_act(src, target_zone)
+		target.bullet_act(src, targetZone)
 		on_impact(target)
 		qdel(src)
 		return FALSE
@@ -291,19 +291,31 @@ GLOBAL_LIST(projectileDamageConstants)
 		playsound(proj_sound)
 
 	original = target
-	def_zone = target_zone
+	def_zone = targetZone
 
-	var/distance = get_dist(curloc, original)
-	check_hit_zone(distance, user_recoil)
+
 
 	muzzle_effect(effect_transform)
-	new /datum/bullet_data(src, target_zone, usr, target, list(x_offset, y_offset, target.z), 48,zOffset, angle_offset, 50)
-	//Process()
-
+	var/list/currentCoords = list()
+	currentCoords.Add(x*PPT+HPPT + pixel_x)
+	currentCoords.Add(y*PPT+HPPT + pixel_y)
+	var/zCoords = z * PPT
+	if(ismob(firer))
+		var/mob/living = firer
+		if(living.lying)
+			zCoords += LEVEL_LYING
+		else
+			zCoords += LEVEL_CHEST - 3
+	currentCoords.Add(zCoords)
+	var/list/targetCoords = list()
+	targetCoords.Add(target.x*PPT+target.pixel_x+xOffset)
+	targetCoords.Add(target.y*PPT+target.pixel_y+yOffset)
+	targetCoords.Add(target.z*PPT+target.pixel_z+zOffset + target.getAimingLevel(firer, targetZone))
+	new /datum/bullet_data(src, targetZone, firer, currentCoords, targetCoords, 48, angleOffset, 50)
 	return FALSE
 
 //called to launch a projectile from a gun
-/obj/item/projectile/proc/launch_from_gun(atom/target, mob/user, obj/item/gun/launcher, target_zone, x_offset=0, y_offset=0, zOffset=0, angle_offset)
+/obj/item/projectile/proc/launch_from_gun(atom/target, mob/user, obj/item/gun/launcher, target_zone, xOffset=0, yOffset=0, zOffset=0, angleOffset)
 	if(user == target) //Shooting yourself
 		user.bullet_act(src, target_zone)
 		qdel(src)
@@ -330,7 +342,7 @@ GLOBAL_LIST(projectileDamageConstants)
 		firer = user
 	shot_from = launcher.name
 	silenced = launcher.item_flags & SILENT
-	return launch(target, target_zone, x_offset, y_offset,zOffset, angle_offset, user_recoil = recoil)
+	return launch(target,user, target_zone, xOffset, yOffset,zOffset, angleOffset, user_recoil = recoil)
 
 /obj/item/projectile/proc/istargetloc(mob/living/target_mob)
 	if(target_mob && original)
@@ -482,13 +494,42 @@ GLOBAL_LIST(projectileDamageConstants)
 	else
 		return FALSE
 
-/obj/item/projectile/Move(NewLoc, Dir, step_x, step_y, glide_size_override, initiator)
-	. = ..()
-	if(NewLoc == dataRef.targetTurf)
-		message_admins("[src] reached target with a bulletLevel of [dataRef.currentCoords[3]], and a rate of [dataRef.movementRatios[3]]")
-
 /// The lower the index , the higher the priority. If you add new paths to the list , make sure to increase the amount of lists in scanTurf below.
 #define HittingPrioritiesList list(/mob/living,/obj/structure/multiz/stairs/active,/obj/structure,/atom)
+
+/// We don't care about order since we are just simulating to see wheter we can reach something or not
+/proc/simulateBulletScan(turf/scanning, atom/firer, bulletDir, startX, startY, startZ, StepX, StepY, StepZ, passFlags)
+	. = PROJECTILE_CONTINUE
+	var/list/hittingList = scanning.contents.Copy() + scanning
+	for(var/atom/thing as anything in hittingList)
+		if(thing.atomFlags & AF_IGNORE_ON_BULLETSCAN)
+			continue
+		if(thing.hitbox && thing.hitbox.intersects(thing, thing.dir, startX, startY, startZ, &StepX, &StepY, &StepZ))
+			if(istype(thing, /obj/structure/window) && passFlags & PASSGLASS)
+				continue
+			if(istype(thing, /obj/structure/grille) && passFlags & PASSGRILLE)
+				continue
+			if(istype(thing, /obj/structure/table) && passFlags & PASSTABLE)
+				continue
+			return PROJECTILE_STOP
+		if(!length(thing.attached))
+			continue
+		for(var/atom/possibleTarget as anything in thing.attached)
+			if(thing.attached[possibleTarget] & ATFS_IGNORE_HITS)
+				continue
+			if(possibleTarget.attached[thing] & ATFA_DIRECTIONAL_HITTABLE && !(possibleTarget.dir & reverse_dir[bulletDir]))
+				continue
+			if(possibleTarget.attached[thing] & ATFA_DIRECTIONAL_HITTABLE_STRICT && !(possibleTarget.dir == reverse_dir[bulletDir]))
+				continue
+			if(possibleTarget.hitbox && possibleTarget.hitbox.intersects(thing, thing.dir, startX, startY, startZ, &StepX, &StepY, &StepZ))
+				if(istype(thing, /obj/structure/window) && passFlags & PASSGLASS)
+					continue
+				if(istype(thing, /obj/structure/grille) && passFlags & PASSGRILLE)
+					continue
+				if(istype(thing, /obj/structure/table) && passFlags & PASSTABLE)
+					continue
+				return PROJECTILE_STOP
+	return PROJECTILE_CONTINUE
 
 /obj/item/projectile/proc/scanTurf(turf/scanning, bulletDir, startX, startY, startZ, pStepX, pStepY, pStepZ)
 	. = PROJECTILE_CONTINUE
@@ -531,10 +572,10 @@ GLOBAL_LIST(projectileDamageConstants)
 			if(target == firer)
 				continue
 			/// third slot rezerved for flags passed back by hitbox intersect
-			var/list/arguments = list(src, def_zone, null, null)
-			if(target.hitbox && !target.hitbox.intersects(target, target.dir, startX, startY, startZ, pStepX, pStepY, pStepZ))
+			var/hitFlags = null
+			if(target.hitbox && !target.hitbox.intersects(target, target.dir, startX, startY, startZ, pStepX, pStepY, pStepZ, &hitFlags))
 				return PROJECTILE_CONTINUE
-			if(target.bullet_act(arglist(arguments)) & PROJECTILE_STOP)
+			if(target.bullet_act(src, def_zone, hitFlags) & PROJECTILE_STOP)
 				onBlockingHit(target)
 				return PROJECTILE_STOP
 
@@ -619,8 +660,6 @@ GLOBAL_LIST(projectileDamageConstants)
 
 /obj/item/projectile/proc/onBlockingHit(atom/A)
 	on_impact(A)
-	atomFlags |= AF_VISUAL_MOVE
-	density = FALSE
 	dataRef.lifetime = 0
 
 /obj/effect/bullet_sparks
@@ -756,57 +795,58 @@ GLOBAL_LIST(projectileDamageConstants)
 	I.Blend(color)
 	return I
 
-/proc/check_trajectory(list/startingCoordinates, list/targetCoordinates, pass_flags=PASSTABLE|PASSGLASS|PASSGRILLE, flags=null, mob/targetMob)
+/proc/check_trajectory(list/startingCoordinates, list/targetCoordinates, passFlags=PASSTABLE|PASSGLASS|PASSGRILLE, flags=null, atom/target, turfLimit = 8)
+	var/turf/movementTurf
+	var/turf/targetTurf = get_turf(target)
+	var/currentX = startingCoordinates[1]
+	var/currentY = startingCoordinates[2]
+	var/currentZ = startingCoordinates[3]
+	var/turf/currentTurf = locate(round(currentX/PPT), round(currentY/PPT), round(currentZ/PPT))
+	var/bulletDir
+	var/stepX
+	var/stepY
+	var/stepZ
 	var/angle = ATAN2(targetCoordinates[2] - startingCoordinates[2], targetCoordinates[1] - startingCoordinates[1])
-	message_admins("CT angle : [angle]")
-	var/xRatio = sin(angle)
-	var/yRatio = cos(angle)
-	var/xChange = 0
-	var/yChange = 0
-	var/tX = 0
-	var/tY = 0
-	var/turf/check = locate(round(startingCoordinates[1]/32), round(startingCoordinates[2]/32), round(startingCoordinates[3]))
-	var/turf/targetTurf = locate(round(targetCoordinates[1]/32), round(targetCoordinates[2]/32), round(targetCoordinates[3]))
-	var/simCoords = list(0,0,0)
-	while(check != targetTurf)
-		simCoords[1] += xRatio * 32
-		simCoords[2] += yRatio * 32
-		xChange = round(abs(simCoords[1])/16) * sign(simCoords[1])
-		yChange = round(abs(simCoords[2])/16) * sign(simCoords[2])
-		while((xChange || yChange) && (check != targetTurf))
-			if(xChange)
-				tX = abs(xChange)/xChange
-			if(yChange)
-				tY = abs(yChange)/yChange
-			check = locate(check.x + tX, check.y + tY, check.z)
-			// collision checks
-			if(!check)
-				return FALSE
-			if(check.density)
-				return FALSE
-			for(var/atom/movable/object in check.contents)
-				if(object == targetMob)
-					return TRUE
-				if(object.density)
-					if(istype(object, /obj/structure/window))
-						if(!(pass_flags & PASSGLASS))
-							return FALSE
-					else if(istype(object, /obj/structure/table))
-						if(!(pass_flags & PASSTABLE))
-							return FALSE
-					else if(istype(object, /obj/structure/grille))
-						if(!(pass_flags & PASSGRILLE))
-							return FALSE
-					else if(!istype(object, /obj/structure/railing))
-						return FALSE
-			xChange -= tX
-			yChange -= tY
-			simCoords[1] -= 32 * tX
-			simCoords[2] -= 32 * tY
-			tX = 0
-			tY = 0
-	return TRUE
+	var/ratioX = sin(angle)
+	var/ratioY = cos(angle)
+	var/ratioZ = (targetCoordinates[3] - startingCoordinates[3])/DIST_EUCLIDIAN_2D(startingCoordinates[1], startingCoordinates[2], targetCoordinates[1], targetCoordinates[2])
+	var/traveledTurfs = 0
+	#ifdef BULLETDEBUG
+	var/list/colored = list()
+	#endif
+	while(currentTurf != targetTurf && traveledTurfs < turfLimit)
+		bulletDir = (EAST*(ratioX>0)) | (WEST*(ratioX<0)) | (NORTH*(ratioY>0)) | (SOUTH*(ratioY<0)) | (UP*(ratioZ>0)) | (DOWN*(ratioZ<0))
+		stepX = ratioX * HPPT
+		stepY = ratioY * HPPT
+		stepZ = ratioZ * HPPT
+		movementTurf = locate(round((currentX+stepX)/PPT),round((currentY+stepY)/PPT),round((currentZ+stepZ)/PPT))
+		if(!movementTurf)
+			return FALSE
+		if(movementTurf == currentTurf)
+			currentX += stepX
+			currentY += stepY
+			currentZ += stepZ
+			continue
+		if(simulateBulletScan(movementTurf, bulletDir, currentX, currentY, currentZ, &stepX, &stepY, &stepZ, passFlags) == PROJECTILE_STOP)
+			#ifdef BULLETDEBUG
+			movementTurf.color = COLOR_RED
+			colored.Add(movementTurf)
+			#endif
+			return movementTurf == targetTurf
+		currentX += stepX
+		currentY += stepY
+		currentZ += stepZ
+		currentTurf = movementTurf
+		traveledTurfs++
+		#ifdef BULLETDEBUG
+		movementTurf.color = COLOR_GREEN
+		colored.Add(movementTurf)
+		#endif
 
-
+	#ifdef BULLETDEBUG
+	if(length(colored))
+		QDEL_LIST_IN(colored, 2 SECONDS)
+	#endif
+	return FALSE
 
 

@@ -62,6 +62,15 @@ Pipelines + Other Objects -> Pipe network
 		return
 	..()
 
+/// Yes this is necesarry due to how atmos is handled
+/// In a perfect world this wouldn't be necesarry
+/// and i do not have the willpower to rework all of atmos yet
+/// SPCR - 2024
+/obj/machinery/atmospherics/proc/getHitboxData()
+	if(invisibility == 101)
+		return null
+	return initialize_directions
+
 /obj/machinery/atmospherics/proc/add_underlay(var/turf/T, var/obj/machinery/atmospherics/node, var/direction, var/icon_connect_type)
 	if(node)
 		if(T && !T.is_plating() && node.level == BELOW_PLATING_LEVEL && istype(node, /obj/machinery/atmospherics/pipe))

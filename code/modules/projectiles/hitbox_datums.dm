@@ -63,8 +63,8 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 /// x3,y3 and x4,y4 are the start and end of the second line
 /// pStepX and pStepY are pointers for setting the bullets step end
 /datum/hitboxDatum/proc/lineIntersect(x1,y1,x2,y2,x3,y3,x4,y4, pStepX, pStepY)
-	var/global/firstRatio
-	var/global/secondRatio
+	var/firstRatio
+	var/secondRatio
 	var/denominator = ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1))
 	if(denominator == 0)
 		message_admins("Invalid line for [src], at hitbox coords BulletLine ([x1] | [y1]) ([x2] | [y2])  HitboxLine ([x3] | [y3]) ([x4] | [y4])")
@@ -133,8 +133,9 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 
 	/// this can be optimized further by making the calculations not make a new list , and instead be added when checking line intersection - SPCR 2024
 /datum/hitboxDatum/atom/intersects(atom/owner, ownerDirection, startX, startY, startZ, pStepX, pStepY, pStepZ)
-	var/global/worldX
-	var/global/worldY
+	var/worldX
+	var/worldY
+	var/worldZ
 	worldX = owner.x
 	worldY = owner.y
 	if(owner.atomFlags & AF_HITBOX_OFFSET_BY_ATTACHMENT)
@@ -144,12 +145,12 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 			worldX += thing.x - owner.x
 			worldY += thing.y - owner.y
 			break
-	worldX *= 32
-	worldY *= 32
+	worldX *= PPT
+	worldY *= PPT
+	worldX += owner.pixel_x
+	worldY += owner.pixel_y
+	worldZ = owner.z * PPT
 	for(var/list/boundingData in boundingBoxes["[ownerDirection]"])
-		/// basic AABB but only for the Z-axis.
-		//if(boundingData[5] > max(startZ,startZ+*pStepZ) || boundingData[6] < min(startZ,startZ+*pStepZ))
-		//	continue
 		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY, pStepX, pStepY))
 			return TRUE
 		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY, pStepX, pStepY))
@@ -247,11 +248,12 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 
 /// this can be optimized further by making the calculations not make a new list , and instead be added when checking line intersection - SPCR 2024
 /datum/hitboxDatum/atom/table/intersects(obj/structure/table/owner, ownerDirection, startX, startY, startZ, pStepX, pStepY, pStepZ)
-	var/global/worldX
-	var/global/worldY
-	var/global/functionReturn
-	worldX = owner.x * 32
-	worldY = owner.y * 32
+	var/worldX
+	var/worldY
+	var/worldZ
+	worldX = owner.x * PPT + owner.pixel_x
+	worldY = owner.y * PPT + owner.pixel_y
+	worldZ = owner.z * PPT
 	var/list/boundingList
 	for(var/i = 1 to 4)
 		// 1<<(i-1) , clever way to convert from index to direction
@@ -262,8 +264,9 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		// i dont get why owner connections is text.. but it is what it is
 		boundingList = boundingBoxes[text2num(owner.connections[i])+1]["[(1<<(i-1))]"]
 		for(var/list/boundingData in boundingList)
-			/// basic AABB but only for the Z-axis.
-			if(boundingData[5] > max(startZ,startZ+*pStepZ) || boundingData[6] < min(startZ,startZ+*pStepZ))
+			if((boundingData[5]+worldZ) > max(startZ,startZ+*pStepZ) && (boundingData[6]+worldZ) > max(startZ,startZ+*pStepZ))
+				continue
+			if((boundingData[5]+worldZ) < min(startZ,startZ+*pStepZ) && (boundingData[6]+worldZ) < min(startZ,startZ+*pStepZ))
 				continue
 			if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY))
 				return TRUE
@@ -277,43 +280,66 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 
 /datum/hitboxDatum/atom/fixtureLightTube
 	boundingBoxes = list(
-		LISTNORTH = list(BBOX(4,29,29,32,LEVEL_HEAD-0.1,LEVEL_HEAD+0.1,null)),
-		LISTSOUTH = list(BBOX(4,1,29,4,LEVEL_HEAD-0.1,LEVEL_HEAD+0.1,null)),
-		LISTEAST = list(BBOX(29,4,32,29,LEVEL_HEAD-0.1,LEVEL_HEAD+0.1,null)),
-		LISTWEST = list(BBOX(1,4,4,29,LEVEL_HEAD-0.1,LEVEL_HEAD+0.1,null))
+		LISTNORTH = list(BBOX(4,29,29,32,LEVEL_HEAD-1,LEVEL_HEAD+1,null)),
+		LISTSOUTH = list(BBOX(4,1,29,4,LEVEL_HEAD-1,LEVEL_HEAD+1,null)),
+		LISTEAST = list(BBOX(29,4,32,29,LEVEL_HEAD-1,LEVEL_HEAD+1,null)),
+		LISTWEST = list(BBOX(1,4,4,29,LEVEL_HEAD-1,LEVEL_HEAD+1,null))
 	)
 
 /datum/hitboxDatum/atom/fixtureBulb
 	boundingBoxes = list(
-		LISTNORTH = list(BBOX(14,25,19,32,LEVEL_HEAD-0.1,LEVEL_HEAD+0.1,null)),
-		LISTSOUTH = list(BBOX(14,1,20,8,LEVEL_HEAD-0.1,LEVEL_HEAD+0.1,null)),
-		LISTEAST = list(BBOX(25,14,32,19,LEVEL_HEAD-0.1,LEVEL_HEAD+0.1,null)),
-		LISTWEST = list(BBOX(1,14,8,19,LEVEL_HEAD-0.1,LEVEL_HEAD+0.1,null))
+		LISTNORTH = list(BBOX(14,25,19,32,LEVEL_HEAD-1,LEVEL_HEAD+1,null)),
+		LISTSOUTH = list(BBOX(14,1,20,8,LEVEL_HEAD-1,LEVEL_HEAD+1,null)),
+		LISTEAST = list(BBOX(25,14,32,19,LEVEL_HEAD-1,LEVEL_HEAD+1,null)),
+		LISTWEST = list(BBOX(1,14,8,19,LEVEL_HEAD-1,LEVEL_HEAD+1,null))
 	)
 
 /datum/hitboxDatum/atom/fireAlarm
 	boundingBoxes = list(
-		LISTNORTH = list(BBOX(13,10,20,22,LEVEL_CHEST-0.1,LEVEL_CHEST+0.1,null)),
-		LISTSOUTH = list(BBOX(13,11,20,23,LEVEL_CHEST-0.1,LEVEL_CHEST+0.1,null)),
-		LISTEAST = list(BBOX(10,13,22,20,LEVEL_CHEST-0.1,LEVEL_CHEST+0.1,null)),
-		LISTWEST = list(BBOX(11,13,23,20,LEVEL_CHEST-0.1,LEVEL_CHEST+0.1,null))
+		LISTNORTH = list(BBOX(13,10,20,22,LEVEL_CHEST-1,LEVEL_CHEST+1,null)),
+		LISTSOUTH = list(BBOX(13,11,20,23,LEVEL_CHEST-1,LEVEL_CHEST+1,null)),
+		LISTEAST = list(BBOX(10,13,22,20,LEVEL_CHEST-1,LEVEL_CHEST+1,null)),
+		LISTWEST = list(BBOX(11,13,23,20,LEVEL_CHEST-1,LEVEL_CHEST+1,null))
 	)
 
 /datum/hitboxDatum/atom/airAlarm
 	boundingBoxes = list(
-		LISTNORTH = list(BBOX(8,10,24,23,LEVEL_CHEST-0.1,LEVEL_CHEST+0.2,null)),
-		LISTSOUTH = list(BBOX(8,10,24,23,LEVEL_CHEST-0.1,LEVEL_CHEST+0.2,null)),
-		LISTEAST = list(BBOX(10,8,23,24,LEVEL_CHEST-0.1,LEVEL_CHEST+0.2,null)),
-		LISTWEST = list(BBOX(10,9,23,25,LEVEL_CHEST-0.1,LEVEL_CHEST+0.2,null))
+		LISTNORTH = list(BBOX(8,10,24,23,LEVEL_CHEST-1,LEVEL_CHEST+2,null)),
+		LISTSOUTH = list(BBOX(8,10,24,23,LEVEL_CHEST-1,LEVEL_CHEST+2,null)),
+		LISTEAST = list(BBOX(10,8,23,24,LEVEL_CHEST-1,LEVEL_CHEST+2,null)),
+		LISTWEST = list(BBOX(10,9,23,25,LEVEL_CHEST-1,LEVEL_CHEST+2,null))
 	)
 
-/datum/hitboxDatum/atom/wall
-	boundingBoxes = list(
-		LISTNORTH = list(BBOX(0,0,32,32,LEVEL_BELOW ,LEVEL_ABOVE,null)),
-		LISTSOUTH = list(BBOX(0,0,32,32,LEVEL_BELOW ,LEVEL_ABOVE,null)),
-		LISTEAST = list(BBOX(0,0,32,32,LEVEL_BELOW ,LEVEL_ABOVE,null)),
-		LISTWEST = list(BBOX(0,0,32,32,LEVEL_BELOW ,LEVEL_ABOVE,null))
-	)
+/datum/hitboxDatum/turf
+	boundingBoxes = BBOX(0,0,32,32,LEVEL_BELOW ,LEVEL_ABOVE,null)
+
+/datum/hitboxDatum/turf/intersects(atom/owner, ownerDirection, startX, startY, startZ, pStepX, pStepY, pStepZ)
+	var/worldX
+	var/worldY
+	var/worldZ
+	worldX = owner.x * PPT
+	worldY = owner.y * PPT
+	worldZ = owner.z * PPT
+	//basic AABB but only for the Z-axis.
+	if((boundingBoxes[5]+worldZ)> max(startZ,startZ+*pStepZ) && (boundingBoxes[6]+worldZ) > max(startZ,startZ+*pStepZ))
+		return FALSE
+	if((boundingBoxes[5]+worldZ) < min(startZ,startZ+*pStepZ) && (boundingBoxes[6]+worldZ) < min(startZ,startZ+*pStepZ))
+		return FALSE
+	if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingBoxes[1] + worldX, boundingBoxes[2] + worldY, boundingBoxes[1] + worldX, boundingBoxes[4] + worldY, pStepX, pStepY))
+		return TRUE
+	if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingBoxes[1] + worldX, boundingBoxes[2] + worldY, boundingBoxes[3] + worldX, boundingBoxes[2] + worldY, pStepX, pStepY))
+		return TRUE
+	if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingBoxes[1] + worldX, boundingBoxes[4] + worldY, boundingBoxes[3] + worldX, boundingBoxes[4] + worldY, pStepX, pStepY))
+		return TRUE
+	if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingBoxes[3] + worldX, boundingBoxes[2] + worldY, boundingBoxes[3] + worldX, boundingBoxes[4] + worldY, pStepX, pStepY))
+		return TRUE
+	return FALSE
+
+/datum/hitboxDatum/turf/wall
+	boundingBoxes = BBOX(0,0,32,32,LEVEL_BELOW ,LEVEL_ABOVE,null)
+
+/datum/hitboxDatum/turf/floor
+	boundingBoxes = BBOX(0,0,32,32,LEVEL_BELOW ,LEVEL_TURF,null)
 
 /// This checks line by line instead of a box. Less efficient.
 /datum/hitboxDatum/atom/polygon
@@ -325,8 +351,8 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	)
 
 /datum/hitboxDatum/atom/polygon/intersects(atom/owner, ownerDirection, startX, startY, startZ, pStepX, pStepY, pStepZ)
-	var/global/worldX
-	var/global/worldY
+	var/worldX
+	var/worldY
 	worldX = owner.x
 	worldY = owner.y
 	if(owner.atomFlags & AF_HITBOX_OFFSET_BY_ATTACHMENT)
@@ -338,6 +364,8 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 			break
 	worldX *= 32
 	worldY *= 32
+	worldX += owner.pixel_x
+	worldY += owner.pixel_y
 	for(var/list/boundingData in boundingBoxes["[ownerDirection]"])
 		/// basic AABB but only for the Z-axis.
 		//if(boundingData[5] > max(startZ,startZ+*pStepZ) || boundingData[6] < min(startZ,startZ+*pStepZ))
@@ -347,22 +375,34 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	return FALSE
 
 /datum/hitboxDatum/atom/polygon/visualize(atom/owner)
-	for(var/list/hitbox in boundingBoxes[num2text(owner.dir)])
-		var/icon/Icon = icon('icons/hitbox.dmi', "box")
-		var/length = round(DIST_EUCLIDIAN_2D(hitbox[1], hitbox[2], hitbox[3], hitbox[4]))
-		Icon.Scale(length, 1)
-		var/x = (hitbox[3] - hitbox[1])
-		var/y = (hitbox[4] - hitbox[2])
-		var/angle = ATAN2(y, x) + 180
-		var/mutable_appearance/newOverlay = mutable_appearance(Icon, "hitbox")
-		newOverlay.color = RANDOM_RGB
-		var/matrix/rotation = matrix()
-		rotation.Turn(angle)
-		newOverlay.transform = rotation
-		newOverlay.pixel_x = hitbox[1] - 1
-		newOverlay.pixel_y = hitbox[2] - 1
-		newOverlay.alpha = 200
-		owner.overlays.Add(newOverlay)
+	/// too hard to get offsets for lines ((( SPCR 2024
+	return
+/// Indexed by whatever the fuck dirs getHitboxData() returns from the pipe
+/datum/hitboxDatum/atom/polygon/atmosphericPipe
+	boundingBoxes = list(
+		LISTNORTH = BLINE(16,16,16,32),
+		LISTSOUTH = BLINE(16,0,16,16),
+		LISTEAST = BLINE(16,16,32,16),
+		LISTWEST = BLINE(0,16,16,16)
+	)
+
+/datum/hitboxDatum/atom/polygon/atmosphericPipe/intersects(obj/machinery/atmospherics/owner, ownerDirection, startX, startY, startZ, pStepX, pStepY, pStepZ)
+	var/worldX
+	var/worldY
+	var/worldZ
+	worldX = owner.x * 32
+	worldY = owner.y * 32
+	var/validDirs = owner.getHitboxData()
+	for(var/direction in list(NORTH, EAST, WEST, SOUTH))
+		if(!(direction & validDirs))
+			continue
+		var/list/boundingData = boundingBoxes["[direction]"]
+		/// basic AABB but only for the Z-axis.
+		//if(boundingData[5] > max(startZ,startZ+*pStepZ) || boundingData[6] < min(startZ,startZ+*pStepZ))
+		//	continue
+		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY, pStepX, pStepY))
+			return TRUE
+	return FALSE
 
 /// Indexed by icon-state
 /datum/hitboxDatum/atom/polygon/powerCable
@@ -415,8 +455,8 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	)
 
 /datum/hitboxDatum/atom/polygon/powerCable/intersects(atom/owner, ownerDirection, startX, startY, startZ, pStepX, pStepY, pStepZ)
-	var/global/worldX
-	var/global/worldY
+	var/worldX
+	var/worldY
 	worldX = owner.x * 32
 	worldY = owner.y * 32
 	for(var/list/boundingData in boundingBoxes[owner.icon_state])
@@ -428,6 +468,8 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	return FALSE
 
 /datum/hitboxDatum/atom/polygon/powerCable/visualize(atom/owner)
+	return
+	/*
 	for(var/list/hitbox in boundingBoxes[owner.icon_state])
 		var/icon/Icon = icon('icons/hitbox.dmi', "box")
 		var/length = round(DIST_EUCLIDIAN_2D(hitbox[1], hitbox[2], hitbox[3], hitbox[4]))
@@ -444,15 +486,18 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		newOverlay.pixel_y = hitbox[4] - 1
 		newOverlay.alpha = 200
 		owner.overlays.Add(newOverlay)
+	*/
 
 /// Hitboxes are ordered based on center distance.
 /datum/hitboxDatum/atom/ordered
 
 /datum/hitboxDatum/atom/ordered/intersects(atom/owner, ownerDirection, startX, startY, startZ, pStepX, pStepY, pStepZ)
-	var/global/worldX
-	var/global/worldY
+	var/worldX
+	var/worldY
+	var/worldZ
 	worldX = owner.x
 	worldY = owner.y
+	worldZ = owner.z * PPT
 	if(owner.atomFlags & AF_HITBOX_OFFSET_BY_ATTACHMENT)
 		for(var/atom/thing as anything in owner.attached)
 			if(!(thing.attached[owner] & ATFS_SUPPORTER))
@@ -472,9 +517,10 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 			relevantHitboxes[index+1] -= relevantHitboxes[index]
 			index = max(1, index - 1)
 	for(var/list/boundingData in relevantHitboxes)
-		/// basic AABB but only for the Z-axis.
-		//if(boundingData[5] > max(startZ,startZ+*pStepZ) || boundingData[6] < min(startZ,startZ+*pStepZ))
-		//	continue
+		if((boundingData[5]+worldZ)> max(startZ,startZ+*pStepZ) && (boundingData[6]+worldZ)> max(startZ,startZ+*pStepZ))
+			continue
+		if((boundingData[5]+worldZ) < min(startZ,startZ+*pStepZ) && (boundingData[6]+worldZ) < min(startZ,startZ+*pStepZ))
+			continue
 		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY, pStepX, pStepY))
 			return TRUE
 		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY, pStepX, pStepY))
@@ -518,25 +564,30 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	message_admins("Returned [defZoneToLevel["[perceivedOwner.lying]"][defZone]] for [defZone]")
 	return defZoneToLevel["[perceivedOwner.lying]"][defZone]
 
-/datum/hitboxDatum/mob/intersects(atom/owner, ownerDirection, startX, startY, startZ, pStepX, pStepY, pStepZ)
-	. = ..()
-	var/global/worldX
-	var/global/worldY
-	var/global/functionReturn
-	worldX = owner.x * 32
-	worldY = owner.y * 32
+/datum/hitboxDatum/mob/intersects(atom/owner, ownerDirection, startX, startY, startZ, pStepX, pStepY, pStepZ, pHitFlags)
+	var/worldX
+	var/worldY
+	var/worldZ
+	worldX = owner.x * PPT
+	worldY = owner.y * PPT
+	worldZ = owner.z * PPT
 	var/mob/living/perceivedOwner = owner
 	for(var/list/boundingData in boundingBoxes["[perceivedOwner.lying]"]["[owner.dir]"])
-		/// basic AABB but only for the Z-axis.
-		if(boundingData[5] > max(startZ,startZ+*pStepZ) || boundingData[6] < min(startZ,startZ+*pStepZ))
+		if((boundingData[5]+worldZ)> max(startZ,startZ+*pStepZ) && (boundingData[6]+worldZ)> max(startZ,startZ+*pStepZ))
 			continue
-		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY))
+		if((boundingData[5]+worldZ) < min(startZ,startZ+*pStepZ) && (boundingData[6]+worldZ) < min(startZ,startZ+*pStepZ))
+			continue
+		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY, pStepY, pStepZ))
+			*pHitFlags = boundingData[7]
 			return TRUE
-		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY))
+		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY, pStepY, pStepZ))
+			*pHitFlags = boundingData[7]
 			return TRUE
-		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[4] + worldY, boundingData[3] + worldX, boundingData[4] + worldY))
+		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[4] + worldY, boundingData[3] + worldX, boundingData[4] + worldY, pStepY, pStepZ))
+			*pHitFlags = boundingData[7]
 			return TRUE
-		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[3] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY))
+		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[3] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY, pStepY, pStepZ))
+			*pHitFlags = boundingData[7]
 			return TRUE
 	return FALSE
 
@@ -585,28 +636,28 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		),
 		"1" = list(
 			LISTNORTH = list(
-				BBOX(1,11,9,23, LEVEL_TURF, LEVEL_TURF + 0.1, HB_LEGS),
-				BBOX(9,12,11,22, LEVEL_TURF + 0.1, LEVEL_TURF + 0.2, HB_GROIN),
-				BBOX(12,10,22,24, LEVEL_TURF + 0.2 , LEVEL_TURF + 0.3, HB_CHESTARMS),
-				BBOX(23,14,28,20, LEVEL_TURF + 0.3, LEVEL_TURF + 0.4, HB_HEAD)
+				BBOX(1,11,9,23, LEVEL_TURF, LEVEL_TURF + 1, HB_LEGS),
+				BBOX(9,12,11,22, LEVEL_TURF + 1, LEVEL_TURF + 2, HB_GROIN),
+				BBOX(12,10,22,24, LEVEL_TURF + 2 , LEVEL_TURF + 3, HB_CHESTARMS),
+				BBOX(23,14,28,20, LEVEL_TURF + 3, LEVEL_TURF + 4, HB_HEAD)
 			),
 			LISTSOUTH = list(
-				BBOX(1,11,9,23, LEVEL_TURF, LEVEL_TURF + 0.1, HB_LEGS),
-				BBOX(9,12,11,22, LEVEL_TURF + 0.1, LEVEL_TURF + 0.2, HB_GROIN),
-				BBOX(12,10,22,24, LEVEL_TURF + 0.2 , LEVEL_TURF + 0.3, HB_CHESTARMS),
-				BBOX(23,14,28,20, LEVEL_TURF + 0.3, LEVEL_TURF + 0.4, HB_HEAD)
+				BBOX(1,11,9,23, LEVEL_TURF, LEVEL_TURF + 1, HB_LEGS),
+				BBOX(9,12,11,22, LEVEL_TURF + 1, LEVEL_TURF + 2, HB_GROIN),
+				BBOX(12,10,22,24, LEVEL_TURF + 2 , LEVEL_TURF + 3, HB_CHESTARMS),
+				BBOX(23,14,28,20, LEVEL_TURF + 3, LEVEL_TURF + 4, HB_HEAD)
 			),
 			LISTEAST = list(
-				BBOX(1,14,10,19, LEVEL_TURF, LEVEL_TURF + 0.1, HB_LEGS),
-				BBOX(9,14,12,20, LEVEL_TURF + 0.1, LEVEL_TURF + 0.2 , HB_GROIN),
-				BBOX(11,12,23,21, LEVEL_TURF + 0.2, LEVEL_TURF + 0.3, HB_CHESTARMS),
-				BBOX(24,13,29,20, LEVEL_TURF + 0.3, LEVEL_TURF + 0.4, HB_HEAD)
+				BBOX(1,14,10,19, LEVEL_TURF, LEVEL_TURF + 1, HB_LEGS),
+				BBOX(9,14,12,20, LEVEL_TURF + 1, LEVEL_TURF + 2 , HB_GROIN),
+				BBOX(11,12,23,21, LEVEL_TURF + 2, LEVEL_TURF + 3, HB_CHESTARMS),
+				BBOX(24,13,29,20, LEVEL_TURF + 3, LEVEL_TURF + 4, HB_HEAD)
 			),
 			LISTWEST = list(
-				BBOX(1,14,10,19, LEVEL_TURF, LEVEL_TURF + 0.1, HB_LEGS),
-				BBOX(9,14,12,20, LEVEL_TURF + 0.1, LEVEL_TURF + 0.2 , HB_GROIN),
-				BBOX(11,12,23,21, LEVEL_TURF + 0.2, LEVEL_TURF + 0.3, HB_CHESTARMS),
-				BBOX(24,13,29,20, LEVEL_TURF + 0.3, LEVEL_TURF + 0.4, HB_HEAD)
+				BBOX(1,14,10,19, LEVEL_TURF, LEVEL_TURF + 1, HB_LEGS),
+				BBOX(9,14,12,20, LEVEL_TURF + 1, LEVEL_TURF + 2 , HB_GROIN),
+				BBOX(11,12,23,21, LEVEL_TURF + 2, LEVEL_TURF + 3, HB_CHESTARMS),
+				BBOX(24,13,29,20, LEVEL_TURF + 3, LEVEL_TURF + 4, HB_HEAD)
 			)
 		)
 	)
@@ -623,15 +674,15 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 			BP_R_LEG = (LEVEL_TURF + LEVEL_TABLE)/2
 		),
 		"1" = list(
-			BP_EYES = (LEVEL_TURF + 0.3 + LEVEL_TURF + 0.4)/2,
-			BP_MOUTH = (LEVEL_TURF + 0.3 + LEVEL_TURF + 0.4)/2,
-			BP_HEAD = (LEVEL_TURF + 0.3 + LEVEL_TURF + 0.4)/2,
-			BP_CHEST = (LEVEL_TURF + 0.2 + LEVEL_TURF + 0.1)/2,
-			BP_R_ARM = (LEVEL_TURF + 0.2 + LEVEL_TURF + 0.1)/2,
-			BP_L_ARM = (LEVEL_TURF + 0.2 + LEVEL_TURF + 0.1)/2,
-			BP_GROIN = (LEVEL_TURF + 0.1 + LEVEL_TURF + 0.2)/2,
-			BP_L_LEG = (LEVEL_TURF + 0.1 + LEVEL_TURF)/2,
-			BP_R_LEG = (LEVEL_TURF + 0.1 + LEVEL_TURF)/2
+			BP_EYES = (LEVEL_TURF + 3 + LEVEL_TURF + 4)/2,
+			BP_MOUTH = (LEVEL_TURF + 3 + LEVEL_TURF + 4)/2,
+			BP_HEAD = (LEVEL_TURF + 3 + LEVEL_TURF + 4)/2,
+			BP_CHEST = (LEVEL_TURF + 2 + LEVEL_TURF + 1)/2,
+			BP_R_ARM = (LEVEL_TURF + 2 + LEVEL_TURF + 1)/2,
+			BP_L_ARM = (LEVEL_TURF + 2 + LEVEL_TURF + 1)/2,
+			BP_GROIN = (LEVEL_TURF + 1 + LEVEL_TURF + 2)/2,
+			BP_L_LEG = (LEVEL_TURF + 1 + LEVEL_TURF)/2,
+			BP_R_LEG = (LEVEL_TURF + 1 + LEVEL_TURF)/2
 		)
 	)
 

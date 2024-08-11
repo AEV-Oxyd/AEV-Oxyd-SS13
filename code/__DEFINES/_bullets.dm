@@ -1,14 +1,14 @@
 /// These define the MAXIMUM height for a level (as in a standing human height is considered)
 #define LEVEL_BELOW 0
-#define LEVEL_TURF 0.3
-#define LEVEL_LYING 0.6
-#define LEVEL_LOWWALL 0.8
-#define LEVEL_TABLE 1
-#define LEVEL_LEGS 1
-#define LEVEL_GROIN 1.1
-#define LEVEL_CHEST 1.8
-#define LEVEL_HEAD 2.1
-#define LEVEL_ABOVE 3
+#define LEVEL_TURF 3
+#define LEVEL_LYING 6
+#define LEVEL_LOWWALL 9
+#define LEVEL_TABLE 15
+#define LEVEL_LEGS 15
+#define LEVEL_GROIN 20
+#define LEVEL_CHEST 28
+#define LEVEL_HEAD 30
+#define LEVEL_ABOVE 32
 
 // update these , using max() on defines wont give you constants
 #define LEVEL_MAX 3

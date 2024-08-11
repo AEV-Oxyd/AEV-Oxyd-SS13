@@ -523,7 +523,7 @@
 		chance = max((chance - B.armor_divisor * 10), 0)
 		if(B.starting && prob(chance))
 			visible_message(SPAN_DANGER("\The [Proj.name] ricochets off [src]\'s armour!"))
-			B.dataRef.movementRatios[4] += rand(25,50) * sign(rand(-1,1))
+			B.dataRef.angle += rand(25,50) * sign(rand(-1,1))
 			B.dataRef.updatePathByAngle()
 			return PROJECTILE_CONTINUE // complete projectile permutation
 	..(Proj)

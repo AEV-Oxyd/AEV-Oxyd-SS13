@@ -8,7 +8,7 @@
 /// it is also more inaccurate the higher you go..
 #define MAXPIXELS 16
 /// Define this / uncomment it if you want to see bullet debugging data for trajectories & chosen paths.
-// #define BULLETDEBUG 1
+#define BULLETDEBUG 1
 SUBSYSTEM_DEF(bullets)
 	name = "Bullets"
 	wait = 1
@@ -18,242 +18,99 @@ SUBSYSTEM_DEF(bullets)
 	var/list/datum/bullet_data/current_queue = list()
 	var/list/datum/bullet_data/bullet_queue = list()
 
-
-
 /// You might ask why use a bullet data datum, and not store all the vars on the bullet itself, honestly its to keep track and initialize firing relevant vars only when needed
 /// This data is guaranteed to be of temporary use spanning 15-30 seconds or how long the bullet moves for. Putting them on the bullet makes each one take up more ram
 /// And ram is not a worry , but its better to initialize less and do the lifting on fire.
 /datum/bullet_data
 	var/obj/item/projectile/referencedBullet = null
-	//
+	var/atom/firer
 	var/aimedZone = ""
 	var/globalX = 0
 	var/globalY = 0
 	var/globalZ = 0
+	var/originalX = 0
+	var/originalY = 0
+	var/originalZ = 0
+	var/targetX = 0
+	var/targetY = 0
+	var/targetZ = 0
 	var/pixelSpeed = 0
 	var/ratioX = 0
 	var/ratioY = 0
-	var/ratioZ = 0
-	//
-
-
-	var/atom/firer = null
-	var/turf/firedTurf = null
-	var/list/firedCoordinates = list(0,0,0)
-	var/list/firedPos = list(0,0,0)
-	var/firedLevel = 0
-	var/atom/target = null
-	var/turf/targetTurf = null
-	var/list/targetCoords = list(0,0,0)
-	var/list/targetPos = list(0,0,0)
-	var/turf/currentTurf = null
-	var/currentCoords = list(0,0,0)
-	/// [1]=X , [2]=Y, [3]=Z, [4]=Angle
-	/// Note : MovementRatios[3] aka Zratio is not used because i couldn't figure out
-	/// how to properly translate it to pixels travelled , main issue resides in dist_euclidian2D not being 1:1 with
-	/// actual amount of pixels to travel at other angles
-	var/movementRatios = list(0,0,0,0)
-	var/list/turf/coloreds = list()
-	var/targetLevel = 0
-	var/currentLevel = 0
-	var/pixelsPerTick = 0
-	var/projectileAccuracy = 0
+	var/angle = 0
 	var/lifetime = 30
-	var/bulletLevel = 0
-	var/lastChanges = list(0,0,0)
-	/// Used to determine wheter a projectile should be allowed to bump a turf or not.
-	var/isTraversingLevel = FALSE
-	/// Used to animate the ending pixels
-	var/hasImpacted = FALSE
-	var/list/painted = list()
-	var/traveled
-	var/trajSum
+	var/traveledPixels = 0
+	var/distanceToTarget = 0
 	var/list/cannotHit = list()
 
-/datum/bullet_data/New(obj/item/projectile/referencedBullet, aimedZone, atom/firer, atom/target, list/targetCoords, pixelsPerTick,zOffset, angleOffset, lifetime)
-	/*
-	if(!target)
-		message_admins("Created bullet without target , [referencedBullet]")
-		return
-	if(!firer)
-		message_admins("Created bullet without firer, [referencedBullet]")
-		return
-	*/
+/datum/bullet_data/New(obj/item/projectile/referencedBullet, aimedZone, atom/firer, list/currentCoordinates, list/targetCoordinates, pixelsPerTick, angleOffset, lifetime)
 	referencedBullet.dataRef = src
 	src.referencedBullet = referencedBullet
-	src.currentTurf = get_turf(referencedBullet)
-	src.currentCoords = list(referencedBullet.pixel_x, referencedBullet.pixel_y, referencedBullet.z)
-	src.targetCoords = targetCoords
 	src.aimedZone = aimedZone
-	src.pixelsPerTick = pixelsPerTick
-	src.projectileAccuracy = projectileAccuracy
 	src.lifetime = lifetime
-	src.firedCoordinates = list(16,16, referencedBullet.z)
-	if(firer)
-		src.firer = firer
-		src.firedTurf = get_turf(firer)
-		src.firedPos = list(firer.x , firer.y , firer.z)
-		if(ismob(firer))
-			if(iscarbon(firer))
-				if(firer:lying)
-					src.firedLevel = LEVEL_LYING
-				else
-					src.firedLevel = LEVEL_CHEST
-			else
-				src.firedLevel = LEVEL_CHEST
-		else
-			src.firedLevel = LEVEL_HEAD
-	if(target)
-		src.target = target
-		src.targetTurf = get_turf(target)
-		src.targetPos = list(target.x, target.y , target.z)
-		src.targetLevel = target.getAimingLevel(firer, aimedZone)
-		if(targetLevel == HBF_NOLEVEL)
-			if(ismob(target))
-				if(iscarbon(target))
-					if(target:lying)
-						src.targetLevel = LEVEL_LYING
-					else
-						src.targetLevel = LEVEL_HEAD
-				else
-					src.targetLevel = LEVEL_HEAD
-			else if(istype(target, /obj/structure/low_wall))
-				src.targetLevel = LEVEL_LOWWALL
-			else if(istype(target, /obj/structure/window))
-				src.targetLevel = LEVEL_HEAD
-			else if(istype(target, /obj/structure/table))
-				src.targetLevel = LEVEL_TABLE
-			else if(iswall(target))
-				src.targetLevel = LEVEL_HEAD
-			else if(isturf(target))
-				src.targetLevel = LEVEL_TURF
-			else if(isitem(target))
-				src.targetLevel = LEVEL_TURF
-	else
-		message_admins(("Created bullet without target , [referencedBullet], from [usr]"))
-
-	if(abs(target.pixel_x) > PPT/2)
-		targetPos[1] += round((target.pixel_x - PPT/2 )/ PPT) + 1 * sign(target.pixel_x)
-	if(abs(target.pixel_y) > PPT/2)
-		targetPos[2] += round((target.pixel_y - PPT/2) / PPT) + 1 * sign(target.pixel_y)
-
+	src.firer = firer
 	pixelSpeed = pixelsPerTick
-	globalX = currentTurf.x * 32 + currentCoords[1] + 16
-	globalY = currentTurf.y * 32 + currentCoords[2] + 16
-	globalZ = currentTurf.z * 32
-
-	//message_admins("level set to [firedLevel], towards [targetLevel]")
-	currentCoords[3] = firedLevel
-	targetLevel += (targetCoords[3] - firedPos[3])* LEVEL_MAX
-	/// These use LERP until a way can be figured out to calculate a level for amount of pixels traversed
-	//message_admins("Distance to target is [distStartToFinish2D()] , startingLevel [firedLevel] , targetLevel [targetLevel]")
-	//movementRatios[3] = (targetLevel - firedLevel) / (distStartToFinish2D() * PPT)
-
-	targetLevel += zOffset * (distStartToFinish2D() / PPT)
-	//movementRatios[3] += zOffset / MAXPIXELS
-	//message_admins("calculated movementRatio , [movementRatios[3]], offset is [zOffset * (distStartToFinish2D()/ PPT)]")
-	movementRatios[4] = getAngleByPosition()
-	movementRatios[4] += angleOffset
+	globalX = currentCoordinates[1]
+	globalY = currentCoordinates[2]
+	globalZ = currentCoordinates[3]
+	originalX = globalX
+	originalY = globalY
+	originalZ = globalZ
+	targetX = targetCoordinates[1]
+	targetY = targetCoordinates[2]
+	targetZ = targetCoordinates[3]
+	angle = getAngleByPosition()
+	angle += angleOffset
+	distanceToTarget = distStartToFinish2D()
 	updatePathByAngle()
-	SSbullets.bullet_queue += src
+	SSbullets.bullet_queue.Add(src)
 
-/datum/bullet_data/proc/redirect(list/targetCoordinates, list/firingCoordinates)
-	src.firedTurf = get_turf(referencedBullet)
-	src.firedPos = firingCoordinates
-	src.targetCoords = targetCoordinates
+/datum/bullet_data/proc/redirect(currentX, currentY, currentZ, targetX, targetY, targetZ)
+	globalX = currentX
+	globalY = currentY
+	globalZ = currentZ
+	src.targetX = targetX
+	src.targetY = targetY
+	src.targetZ = targetZ
+	angle = getAngleByPosition()
 	updatePathByPosition()
 
 /datum/bullet_data/proc/bounce(bounceAxis, angleOffset)
-	movementRatios[bounceAxis] *= -1
-	movementRatios[4] = arctan(movementRatios[2], movementRatios[1]) + angleOffset
+	switch(bounceAxis)
+		if(1)
+			ratioX *= -1
+		if(2)
+			ratioY *= -1
+	angle = arctan(ratioY, ratioX) + angleOffset
 	updatePathByAngle()
 
 /datum/bullet_data/proc/getAngleByPosition()
-	var/x = ((targetPos[1] - firedPos[1]) * PPT + targetCoords[1] - firedCoordinates[1])
-	var/y = ((targetPos[2] - firedPos[2]) * PPT + targetCoords[2] - firedCoordinates[2])
-	return ATAN2(y, x)
+	return ATAN2(targetY - originalY, targetX - originalX)
 
 /datum/bullet_data/proc/updatePathByAngle()
 	var/matrix/rotation = matrix()
-	movementRatios[1] = sin(movementRatios[4])
-	movementRatios[2] = cos(movementRatios[4])
-	ratioX = movementRatios[1]
-	ratioY = movementRatios[2]
-
-
-	rotation.Turn(movementRatios[4] + 180)
+	ratioX = sin(angle)
+	ratioY = cos(angle)
+	rotation.Turn(angle + 180)
 	referencedBullet.transform = rotation
 
 /datum/bullet_data/proc/updatePathByPosition()
 	var/matrix/rotation = matrix()
-	//movementRatios[3] = ((targetPos[3] + targetLevel - firedPos[3] - firedLevel)) / (round(distStartToFinish3D()) * PPT)
-	movementRatios[4] = getAngleByPosition()
-	movementRatios[1] = sin(movementRatios[4])
-	movementRatios[2] = cos(movementRatios[4])
-	rotation.Turn(movementRatios[4] + 180)
+	angle = getAngleByPosition()
+	ratioX = sin(angle)
+	ratioY = cos(angle)
+	rotation.Turn(angle + 180)
 	referencedBullet.transform = rotation
 
 /datum/bullet_data/proc/distStartToFinish2D()
-	var/x1 = ((targetPos[1] - 1)*PPT + targetCoords[1] + 16)
-	var/y1 = ((targetPos[2]- 1)*PPT + targetCoords[2] + 16)
-	var/x2 = ((firedPos[1] - 1)*PPT + firedCoordinates[1] + 16)
-	var/y2 = ((firedPos[2] -  1)*PPT + firedCoordinates[2] + 16)
-	return DIST_EUCLIDIAN_2D(x1,y1,x2,y2)
-
-/datum/bullet_data/proc/distStartToFinish3D()
-	return DIST_EUCLIDIAN_3D((targetPos[1]-1)*PPT + 16 + targetCoords[1],(targetPos[2]-1)*PPT + 16 + targetCoords[2],targetPos[3] + targetLevel ,(firedPos[1]*PPT)/PPT, (firedPos[2]*PPT)/PPT, firedPos[3] + firedLevel)
-	//return DIST_EUCLIDIAN_3D((targetPos[1]*PPT +targetCoords[1] + 16)/PPT,(targetPos[2]*PPT + targetCoords[2] + 16)/PPT,targetPos[3] + targetLevel ,(firedPos[1]*PPT +firedCoordinates[1] + 16)/PPT, (firedPos[2]*PPT +firedCoordinates[2] + 16)/PPT, firedPos[3] + firedLevel)
-
-
-
-	/*
-	var/x = targetPos[1] - firedPos[1]
-	var/y = targetPos[2] - firedPos[2]
-	var/px = targetCoords[1] - firedCoordinates[1]
-	var/py = targetCoords[2] - firedCoordinates[2]
-	return sqrt(x**2 + y**2) + sqrt(px**2 + py**2)
-	*/
-
-/datum/bullet_data/proc/updateLevel()
-	switch(currentCoords[3])
-		if(-INFINITY to LEVEL_BELOW)
-			currentLevel = LEVEL_BELOW
-		if(LEVEL_BELOW to LEVEL_TURF)
-			currentLevel = LEVEL_TURF
-		if(LEVEL_TURF to LEVEL_LYING)
-			currentLevel = LEVEL_LYING
-		if(LEVEL_LYING to LEVEL_LOWWALL)
-			currentLevel = LEVEL_LOWWALL
-		if(LEVEL_LOWWALL to LEVEL_TABLE)
-			currentLevel = LEVEL_TABLE
-		if(LEVEL_TABLE to LEVEL_HEAD)
-			currentLevel = LEVEL_HEAD
-		if(LEVEL_HEAD to INFINITY)
-			currentLevel = LEVEL_ABOVE
-
-/datum/bullet_data/proc/getLevel(height)
-	switch(height)
-		if(-INFINITY to LEVEL_BELOW)
-			return LEVEL_BELOW
-		if(LEVEL_BELOW to LEVEL_TURF)
-			return LEVEL_TURF
-		if(LEVEL_TURF to LEVEL_LYING)
-			return LEVEL_LYING
-		if(LEVEL_LYING to LEVEL_LOWWALL)
-			return LEVEL_LOWWALL
-		if(LEVEL_LOWWALL to LEVEL_TABLE)
-			return LEVEL_TABLE
-		if(LEVEL_TABLE to LEVEL_HEAD)
-			return LEVEL_HEAD
-		if(LEVEL_HEAD to INFINITY)
-			return LEVEL_ABOVE
+	return DIST_EUCLIDIAN_2D(targetX,targetY,originalX,originalY)
 
 /datum/controller/subsystem/bullets/proc/reset()
 	current_queue = list()
 	bullet_queue = list()
 
-/datum/controller/subsystem/bullets/proc/realFire()
-	current_queue = bullet_queue.Copy()
+/datum/controller/subsystem/bullets/fire(resumed)
+	/// processing variables
 	var/turf/movementTurf
 	var/turf/currentTurf
 	var/currentX
@@ -267,8 +124,9 @@ SUBSYSTEM_DEF(bullets)
 	var/stepZ
 	var/obj/item/projectile/projectile
 	var/canContinue
-	var/oldX
-	var/oldY
+	current_queue = bullet_queue.Copy()
+	if(!resumed)
+		current_queue = bullet_queue.Copy()
 	#ifdef BULLETDEBUG
 	var/list/colored = list()
 	#endif
@@ -281,17 +139,23 @@ SUBSYSTEM_DEF(bullets)
 		currentX = dataReference.globalX
 		currentY = dataReference.globalY
 		currentZ = dataReference.globalZ
-		bulletDir = (EAST*(dataReference.ratioX>0)) | (WEST*(dataReference.ratioX<0)) | (NORTH*(dataReference.ratioY>0)) | (SOUTH*(dataReference.ratioY<0)) | (UP*(dataReference.ratioZ>0)) | (DOWN*(dataReference.ratioZ<0))
+		bulletDir = (EAST*(dataReference.ratioX>0)) | (WEST*(dataReference.ratioX<0)) | (NORTH*(dataReference.ratioY>0)) | (SOUTH*(dataReference.ratioY<0))
 		pixelTotal = dataReference.pixelSpeed
 		dataReference.lifetime--
 		while(pixelTotal > 0)
-			pixelStep = min(pixelTotal, (PPT/2))
+			pixelStep = min(pixelTotal, MAXPIXELS)
 			pixelTotal -= pixelStep
+			dataReference.traveledPixels += pixelStep
 			stepX = dataReference.ratioX * pixelStep
 			stepY = dataReference.ratioY * pixelStep
-			stepZ = dataReference.ratioZ * pixelStep
+			stepZ = LERP(dataReference.originalZ, dataReference.targetZ, dataReference.traveledPixels/dataReference.distanceToTarget) - dataReference.globalZ
 			currentTurf = get_turf(projectile)
+			message_admins("Z : [dataReference.globalZ] with step [stepZ] , Ratio : [dataReference.traveledPixels/dataReference.distanceToTarget]")
 			movementTurf = locate(round((currentX+stepX)/PPT),round((currentY+stepY)/PPT),round((currentZ+stepZ)/PPT))
+			if(!movementTurf)
+				dataReference.lifetime = 0
+				break
+
 			//message_admins("X: [movementTurf.x] Y:[movementTurf.y] Z:[movementTurf.z]")
 			if(movementTurf == currentTurf)
 				canContinue = projectile.scanTurf(currentTurf, bulletDir, currentX, currentY, currentZ, &stepX, &stepY, &stepZ)
@@ -302,7 +166,6 @@ SUBSYSTEM_DEF(bullets)
 				else
 					dataReference.globalX = stepX
 					dataReference.globalY = stepY
-					dataReference.globalZ = currentZ
 					#ifdef BULLETDEBUG
 					currentTurf.color = COLOR_RED
 					message_admins(" 1 New turf, X:[round(dataReference.globalX/32)] | Y:[round(dataReference.globalY/32)] | Z:[round(dataReference.globalZ/32)]")
@@ -310,14 +173,12 @@ SUBSYSTEM_DEF(bullets)
 					if(movementTurf != currentTurf && movementTurf)
 						projectile.pixel_x -= (movementTurf.x - currentTurf.x) * PPT
 						projectile.pixel_y -= (movementTurf.y - currentTurf.y) * PPT
-						projectile.pixel_z -= (movementTurf.z - currentTurf.z) * PPT
 						projectile.forceMove(movementTurf)
 						#ifdef BULLETDEBUG
 						movementTurf.color = COLOR_RED
 						colored += movementTurf
 						message_admins("Adjusted for Delta")
 						#endif
-					dataReference.lifetime = 0
 					break
 			else
 				canContinue = projectile.scanTurf(currentTurf, bulletDir, currentX, currentY, currentZ, &stepX, &stepY, &stepZ)
@@ -326,7 +187,6 @@ SUBSYSTEM_DEF(bullets)
 					if(canContinue == PROJECTILE_CONTINUE)
 						projectile.pixel_x -= (movementTurf.x - currentTurf.x) * PPT
 						projectile.pixel_y -= (movementTurf.y - currentTurf.y) * PPT
-						projectile.pixel_z -= (movementTurf.z - currentTurf.z) * PPT
 						dataReference.globalX += stepX
 						dataReference.globalY += stepY
 						dataReference.globalZ += stepZ
@@ -338,7 +198,6 @@ SUBSYSTEM_DEF(bullets)
 					else
 						dataReference.globalX = stepX
 						dataReference.globalY = stepY
-						dataReference.globalZ = currentZ
 						#ifdef BULLETDEBUG
 						message_admins(" 2 New turf, X:[round(dataReference.globalX/32)] | Y:[round(dataReference.globalY/32)] | Z:[round(dataReference.globalZ/32)]")
 						movementTurf.color = COLOR_RED
@@ -347,31 +206,37 @@ SUBSYSTEM_DEF(bullets)
 						if(movementTurf != currentTurf && movementTurf)
 							projectile.pixel_x -= (movementTurf.x - currentTurf.x) * PPT
 							projectile.pixel_y -= (movementTurf.y - currentTurf.y) * PPT
-							projectile.pixel_z -= (movementTurf.z - currentTurf.z) * PPT
 							projectile.forceMove(movementTurf)
 							#ifdef BULLETDEBUG
 							movementTurf.color = COLOR_RED
 							message_admins("Adjusted for Delta")
 							colored += movementTurf
 							#endif
-						dataReference.lifetime = 0
 						break
 				else
 					dataReference.globalX = stepX
 					dataReference.globalY = stepY
-					dataReference.globalZ = currentZ
+					dataReference.globalZ = stepZ
+					movementTurf = locate(round(stepX/PPT), round(stepY/PPT), round(currentZ/PPT))
 					#ifdef BULLETDEBUG
 					currentTurf.color = COLOR_RED
 					message_admins(" 3 New turf, X:[round(dataReference.globalX/32)] | Y:[round(dataReference.globalY/32)] | Z:[round(dataReference.globalZ/32)]")
 					#endif
-					dataReference.lifetime = 0
+					if(movementTurf != currentTurf && movementTurf)
+						projectile.pixel_x -= (movementTurf.x - currentTurf.x) * PPT
+						projectile.pixel_y -= (movementTurf.y - currentTurf.y) * PPT
+						projectile.forceMove(movementTurf)
+						#ifdef BULLETDEBUG
+						movementTurf.color = COLOR_RED
+						message_admins("Adjusted for Delta")
+						colored += movementTurf
+						#endif
 					break
 
 			//message_admins("stepX:[stepX] , stepY : [stepY]")
 
-			/*
+
 			if(canContinue != PROJECTILE_CONTINUE)
-				/*
 				var/a = round((stepX)/32)
 				var/b = round((stepY)/32)
 				var/c = round((currentZ)/32)
@@ -386,10 +251,9 @@ SUBSYSTEM_DEF(bullets)
 				special.pixel_x = round((stepX))%32 - 16
 				special.pixel_y = round((stepY))%32 - 16
 				special.transform = projectile.transform
-				*/
 				dataReference.lifetime = 0
 				break
-			*/
+
 			currentX = dataReference.globalX
 			currentY = dataReference.globalY
 			currentZ = dataReference.globalZ
@@ -410,8 +274,6 @@ SUBSYSTEM_DEF(bullets)
 	for(var/turf/tata in specialList)
 		tata.color = initial(tata.color)
 
-/datum/controller/subsystem/bullets/fire(resumed)
-	return realFire()
 	/*
 	if(!resumed)
 		current_queue = bullet_queue.Copy()
