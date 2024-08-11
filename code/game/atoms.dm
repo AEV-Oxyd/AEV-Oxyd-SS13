@@ -221,7 +221,8 @@
 
 	hitbox = getHitbox(hitbox)
 	#ifdef HITBOX_DEBUG
-		hitbox.visualize(src)
+	if(hitbox)
+		addtimer(CALLBACK(hitbox, TYPE_PROC_REF(/datum/hitboxDatum, visualize), src), 1 MINUTE)
 	#endif
 
 	if(preloaded_reagents)

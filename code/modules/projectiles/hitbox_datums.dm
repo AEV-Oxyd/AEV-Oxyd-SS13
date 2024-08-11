@@ -67,6 +67,7 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	var/global/secondRatio
 	var/denominator = ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1))
 	if(denominator == 0)
+		message_admins("Invalid line for [src], at hitbox coords BulletLine ([x1] | [y1]) ([x2] | [y2])  HitboxLine ([x3] | [y3]) ([x4] | [y4])")
 		return FALSE
 	firstRatio = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / denominator
 	secondRatio = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / denominator
@@ -229,6 +230,21 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 /datum/hitboxDatum/atom/table/getAimingLevel(atom/shooter, defZone, atom/owner)
 	return medianLevels["[owner.dir]"]
 
+/datum/hitboxDatum/atom/table/visualize(obj/structure/table/owner)
+	for(var/i = 1 to 4)
+		var/list/boundingList = boundingBoxes[text2num(owner.connections[i])+1]["[(1<<(i-1))]"]
+		for(var/list/hitbox in boundingList)
+			var/icon/Icon = icon('icons/hitbox.dmi', "box")
+			var/multX = hitbox[3] - hitbox[1] + 1
+			var/multY = hitbox[4] - hitbox[2] + 1
+			Icon.Scale(multX, multY)
+			var/mutable_appearance/newOverlay = mutable_appearance(Icon, "hitbox")
+			newOverlay.color = RANDOM_RGB
+			newOverlay.pixel_x = hitbox[1] - 1
+			newOverlay.pixel_y = hitbox[2] - 1
+			newOverlay.alpha = 200
+			owner.overlays.Add(newOverlay)
+
 /// this can be optimized further by making the calculations not make a new list , and instead be added when checking line intersection - SPCR 2024
 /datum/hitboxDatum/atom/table/intersects(obj/structure/table/owner, ownerDirection, startX, startY, startZ, pStepX, pStepY, pStepZ)
 	var/global/worldX
@@ -330,6 +346,105 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 			return TRUE
 	return FALSE
 
+/datum/hitboxDatum/atom/polygon/visualize(atom/owner)
+	for(var/list/hitbox in boundingBoxes[num2text(owner.dir)])
+		var/icon/Icon = icon('icons/hitbox.dmi', "box")
+		var/length = round(DIST_EUCLIDIAN_2D(hitbox[1], hitbox[2], hitbox[3], hitbox[4]))
+		Icon.Scale(length, 1)
+		var/x = (hitbox[3] - hitbox[1])
+		var/y = (hitbox[4] - hitbox[2])
+		var/angle = ATAN2(y, x) + 180
+		var/mutable_appearance/newOverlay = mutable_appearance(Icon, "hitbox")
+		newOverlay.color = RANDOM_RGB
+		var/matrix/rotation = matrix()
+		rotation.Turn(angle)
+		newOverlay.transform = rotation
+		newOverlay.pixel_x = hitbox[1] - 1
+		newOverlay.pixel_y = hitbox[2] - 1
+		newOverlay.alpha = 200
+		owner.overlays.Add(newOverlay)
+
+/// Indexed by icon-state
+/datum/hitboxDatum/atom/polygon/powerCable
+	boundingBoxes = list(
+		"0-1" = list(BLINE(16,16,16,32)),
+		"0-2" = list(BLINE(16,0,16,16)),
+		"0-4" = list(BLINE(16,16,32,16)),
+		"0-5" = list(BLINE(16,16,32,32)),
+		"0-6" = list(BLINE(32,0,16,16)),
+		"0-8" = list(BLINE(0,16,16,16)),
+		"0-9" = list(BLINE(0,32,16,16)),
+		"0-10" = list(BLINE(0,0,16,16)),
+		"1-2" = list(BLINE(16,0,16,32)),
+		"1-4" = list(BLINE(16,32,20,20),BLINE(20,20,32,16)),
+		"1-5" = list(BLINE(16,32,21,25),BLINE(21,25,32,32)),
+		"1-6" = list(BLINE(16,32,22,12),BLINE(22,12,32,0)),
+		"1-8" = list(BLINE(0,16,13,20),BLINE(13,20,16,32)),
+		"1-9" = list(BLINE(0,32,12,25),BLINE(12,25,16,32)),
+		"1-10" = list(BLINE(0,0,12,14), BLINE(12,14,16,32)),
+		"2-4" = list(BLINE(16,0,19,12), BLINE(19,12,32,16)),
+		"2-5" = list(BLINE(16,0,21,19), BLINE(21,19,32,32)),
+		"2-6" = list(BLINE(16,0,20,9), BLINE(20,9,32,0)),
+		"2-8" = list(BLINE(0,16,13,13), BLINE(13,13,16,0)),
+		"2-9" = list(BLINE(0,32,13,17),BLINE(13,17,16,0)),
+		"2-10" = list(BLINE(0,0,13,8), BLINE(13,8,16,0)),
+		"4-5" = list(BLINE(32,16,25,22),BLINE(25,22,32,32)),
+		"4-6" = list(BLINE(32,0,25,11), BLINE(25,11,32,16)),
+		"4-8" = list(BLINE(0,16,32,16)),
+		"4-9" = list(BLINE(0,32,16,20), BLINE(16,20,32,16)),
+		"4-10" = list(BLINE(0,0,14,12), BLINE(14,12,32,16)),
+		"5-6" = list(BLINE(31,0,25,16), BLINE(25,16,31,32)),
+		"5-8" = list(BLINE(0,16,18,21), BLINE(18,21,32,32)),
+		"5-9" = list(BLINE(0,31,16,25), BLINE(16,25,32,31)),
+		"5-10" = list(BLINE(0,0,32,32)),
+		"6-8" = list(BLINE(0,17,17,13),BLINE(17,13,32,0)),
+		"6-9" = list(BLINE(0,32,32,0)),
+		"6-10" = list(BLINE(0,1,16,8), BLINE(16,8,32,1)),
+		"8-9" = list(BLINE(0,16,8,20), BLINE(8,20,2,32)),
+		"8-10" = list(BLINE(0,16,8,13), BLINE(8,13,0,0)),
+		"9-10" = list(BLINE(0,0,8,16), BLINE(8,16,0,32)),
+		"32-1" = list(BLINE(16,18,16,32)),
+		"32-2" = list(BLINE(16,0,16,16)),
+		"32-4" = list(BLINE(16,16,32,16)),
+		"32-5" = list(BLINE(16,16,32,32)),
+		"32-6" = list(BLINE(16,16,32,0)),
+		"32-8" = list(BLINE(0,16,16,16)),
+		"32-9" = list(BLINE(0,32,16,16)),
+		"32-10" = list(BLINE(0,0,16,16)),
+		"16-0" = list(BLINE(16,16,16,24))
+	)
+
+/datum/hitboxDatum/atom/polygon/powerCable/intersects(atom/owner, ownerDirection, startX, startY, startZ, pStepX, pStepY, pStepZ)
+	var/global/worldX
+	var/global/worldY
+	worldX = owner.x * 32
+	worldY = owner.y * 32
+	for(var/list/boundingData in boundingBoxes[owner.icon_state])
+		/// basic AABB but only for the Z-axis.
+		//if(boundingData[5] > max(startZ,startZ+*pStepZ) || boundingData[6] < min(startZ,startZ+*pStepZ))
+		//	continue
+		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY, pStepX, pStepY))
+			return TRUE
+	return FALSE
+
+/datum/hitboxDatum/atom/polygon/powerCable/visualize(atom/owner)
+	for(var/list/hitbox in boundingBoxes[owner.icon_state])
+		var/icon/Icon = icon('icons/hitbox.dmi', "box")
+		var/length = round(DIST_EUCLIDIAN_2D(hitbox[1], hitbox[2], hitbox[3], hitbox[4]))
+		Icon.Scale(1, length)
+		var/x = (hitbox[3] - hitbox[1])
+		var/y = (hitbox[4] - hitbox[2])
+		var/angle = ATAN2(y, x) + 180
+		var/mutable_appearance/newOverlay = mutable_appearance(Icon, "hitbox")
+		newOverlay.color = RANDOM_RGB
+		var/matrix/rotation = matrix()
+		rotation.Turn(angle)
+		newOverlay.transform = rotation
+		newOverlay.pixel_x = hitbox[3] - 1
+		newOverlay.pixel_y = hitbox[4] - 1
+		newOverlay.alpha = 200
+		owner.overlays.Add(newOverlay)
+
 /// Hitboxes are ordered based on center distance.
 /datum/hitboxDatum/atom/ordered
 
@@ -392,6 +507,8 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 				volumeSum += calculatedVolume
  			medianLevels[state]["[direction]"] = median / volumeSum
 
+
+
 /datum/hitboxDatum/mob/getAimingLevel(atom/shooter, defZone, atom/owner)
 	var/mob/living/perceivedOwner = owner
 	if(defZone == null || (!(defZone in defZoneToLevel["[perceivedOwner.lying]"])))
@@ -422,6 +539,19 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[3] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY))
 			return TRUE
 	return FALSE
+
+/datum/hitboxDatum/mob/visualize(mob/living/owner)
+	for(var/list/hitbox in boundingBoxes["[owner.lying]"]["[owner.dir]"])
+		var/icon/Icon = icon('icons/hitbox.dmi', "box")
+		var/multX = hitbox[3] - hitbox[1] + 1
+		var/multY = hitbox[4] - hitbox[2] + 1
+		Icon.Scale(multX, multY)
+		var/mutable_appearance/newOverlay = mutable_appearance(Icon, "hitbox")
+		newOverlay.color = RANDOM_RGB
+		newOverlay.pixel_x = hitbox[1] - 1
+		newOverlay.pixel_y = hitbox[2] - 1
+		newOverlay.alpha = 200
+		owner.overlays.Add(newOverlay)
 
 /datum/hitboxDatum/mob/human
 	boundingBoxes = list(
