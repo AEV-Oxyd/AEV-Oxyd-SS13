@@ -236,29 +236,28 @@ SUBSYSTEM_DEF(bullets)
 			//message_admins("stepX:[stepX] , stepY : [stepY]")
 
 
-			if(canContinue != PROJECTILE_CONTINUE)
-				var/a = round((stepX)/32)
-				var/b = round((stepY)/32)
-				var/c = round((currentZ)/32)
-				var/turf/turfer = locate(a,b,c)
-				var/atom/movable/special = new /obj/item()
-				message_admins("stepX:[stepX] , stepY : [stepY]")
-				message_admins("MovTurf ----- X: [movementTurf.x] Y:[movementTurf.y] Z:[movementTurf.z]")
-				message_admins("VisTurf ----- X: [a] Y:[b] Z:[c]")
-				special.forceMove(turfer)
-				special.icon = projectile.icon
-				special.icon_state = projectile.icon_state
-				special.pixel_x = round((stepX))%32 - 16
-				special.pixel_y = round((stepY))%32 - 16
-				special.transform = projectile.transform
-				dataReference.lifetime = 0
-				break
 
 			currentX = dataReference.globalX
 			currentY = dataReference.globalY
 			currentZ = dataReference.globalZ
 
 		var/bulletTime = SSbullets.wait *(dataReference.pixelSpeed / (dataReference.pixelSpeed + pixelTotal))
+		if(canContinue != PROJECTILE_CONTINUE)
+			var/a = round((stepX)/32)
+			var/b = round((stepY)/32)
+			var/c = round(currentZ/32)
+			var/turf/turfer = locate(a,b,c)
+			var/atom/movable/special = new /obj/item()
+			message_admins("stepX:[stepX] , stepY : [stepY]")
+			message_admins("MovTurf ----- X: [movementTurf.x] Y:[movementTurf.y] Z:[movementTurf.z]")
+			message_admins("VisTurf ----- X: [a] Y:[b] Z:[c]")
+			special.forceMove(turfer)
+			special.icon = projectile.icon
+			special.icon_state = projectile.icon_state
+			special.pixel_x = round((stepX))%32 - 16
+			special.pixel_y = round((stepY))%32 - 16
+			special.transform = projectile.transform
+
 
 		animate(projectile, bulletTime, pixel_x = dataReference.globalX%PPT - HPPT, pixel_y = dataReference.globalY%PPT - HPPT, flags = ANIMATION_END_NOW)
 		if(dataReference.lifetime < 1)
