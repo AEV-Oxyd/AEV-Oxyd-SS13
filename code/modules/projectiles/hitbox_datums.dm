@@ -74,7 +74,6 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	if(firstRatio >= 0 && firstRatio <= 1 && secondRatio >= 0 && secondRatio <= 1)
 		*pStepX = x1 + firstRatio * (x2 - x1)
 		*pStepY = y1 + firstRatio * (y2 - y1)
-		message_admins("set x to [*pStepX] , set y to [*pStepY]")
 		return TRUE
 		//return list(x1 + firstRatio * (x2 - x1), y1 + firstRatio * (y2 - y1))
 		//message_admins("X-collision : [x1 + firstRatio * (x2 - x1)] Y-collision : [y1 + firstRatio * (y2] - y1)]")
