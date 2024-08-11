@@ -405,7 +405,7 @@ GLOBAL_LIST(melleDamagesCache)
 //For non-projectile attacks this usually means the attack is blocked.
 //Otherwise should return 0 to indicate that the attack is not affected in any way.
 /obj/item/proc/handle_shield(mob/user, damage, atom/damage_source = null, mob/attacker = null, def_zone = null, attack_text = "the attack")
-	return 0
+	return PROJECTILE_CONTINUE
 
 /obj/item/proc/get_loc_turf()
 	var/atom/L = loc

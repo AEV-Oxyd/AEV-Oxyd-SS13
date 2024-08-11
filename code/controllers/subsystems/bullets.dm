@@ -8,7 +8,7 @@
 /// it is also more inaccurate the higher you go..
 #define MAXPIXELS 16
 /// Define this / uncomment it if you want to see bullet debugging data for trajectories & chosen paths.
-#define BULLETDEBUG 1
+//#define BULLETDEBUG 1
 SUBSYSTEM_DEF(bullets)
 	name = "Bullets"
 	wait = 1
@@ -150,7 +150,7 @@ SUBSYSTEM_DEF(bullets)
 			stepY = dataReference.ratioY * pixelStep
 			stepZ = LERP(dataReference.originalZ, dataReference.targetZ, dataReference.traveledPixels/dataReference.distanceToTarget) - dataReference.globalZ
 			currentTurf = get_turf(projectile)
-			message_admins("Z : [dataReference.globalZ] with step [stepZ] , Ratio : [dataReference.traveledPixels/dataReference.distanceToTarget]")
+			//message_admins("Z : [dataReference.globalZ] with step [stepZ] , Ratio : [dataReference.traveledPixels/dataReference.distanceToTarget]")
 			movementTurf = locate(round((currentX+stepX)/PPT),round((currentY+stepY)/PPT),round((currentZ+stepZ)/PPT))
 			if(!movementTurf)
 				dataReference.lifetime = 0
@@ -242,6 +242,7 @@ SUBSYSTEM_DEF(bullets)
 			currentZ = dataReference.globalZ
 
 		var/bulletTime = SSbullets.wait *(dataReference.pixelSpeed / (dataReference.pixelSpeed + pixelTotal))
+		/*
 		if(canContinue != PROJECTILE_CONTINUE)
 			var/a = round((stepX)/32)
 			var/b = round((stepY)/32)
@@ -249,7 +250,8 @@ SUBSYSTEM_DEF(bullets)
 			var/turf/turfer = locate(a,b,c)
 			var/atom/movable/special = new /obj/item()
 			message_admins("stepX:[stepX] , stepY : [stepY]")
-			message_admins("MovTurf ----- X: [movementTurf.x] Y:[movementTurf.y] Z:[movementTurf.z]")
+			if(movementTurf)
+				message_admins("MovTurf ----- X: [movementTurf.x] Y:[movementTurf.y] Z:[movementTurf.z]")
 			message_admins("VisTurf ----- X: [a] Y:[b] Z:[c]")
 			special.forceMove(turfer)
 			special.icon = projectile.icon
@@ -257,6 +259,7 @@ SUBSYSTEM_DEF(bullets)
 			special.pixel_x = round((stepX))%32 - 16
 			special.pixel_y = round((stepY))%32 - 16
 			special.transform = projectile.transform
+		*/
 
 
 		animate(projectile, bulletTime, pixel_x = dataReference.globalX%PPT - HPPT, pixel_y = dataReference.globalY%PPT - HPPT, flags = ANIMATION_END_NOW)

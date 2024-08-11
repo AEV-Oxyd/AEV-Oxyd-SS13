@@ -74,6 +74,7 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	if(firstRatio >= 0 && firstRatio <= 1 && secondRatio >= 0 && secondRatio <= 1)
 		*pStepX = x1 + firstRatio * (x2 - x1)
 		*pStepY = y1 + firstRatio * (y2 - y1)
+		message_admins("set x to [*pStepX] , set y to [*pStepY]")
 		return TRUE
 		//return list(x1 + firstRatio * (x2 - x1), y1 + firstRatio * (y2 - y1))
 		//message_admins("X-collision : [x1 + firstRatio * (x2 - x1)] Y-collision : [y1 + firstRatio * (y2] - y1)]")
@@ -268,13 +269,13 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 				continue
 			if((boundingData[5]+worldZ) < min(startZ,startZ+*pStepZ) && (boundingData[6]+worldZ) < min(startZ,startZ+*pStepZ))
 				continue
-			if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY))
+			if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY, pStepX, pStepY))
 				return TRUE
-			if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY))
+			if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY, pStepX, pStepY))
 				return TRUE
-			if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[4] + worldY, boundingData[3] + worldX, boundingData[4] + worldY))
+			if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[4] + worldY, boundingData[3] + worldX, boundingData[4] + worldY, pStepX, pStepY))
 				return TRUE
-			if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[3] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY))
+			if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[3] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY, pStepX, pStepY))
 				return TRUE
 	return FALSE
 
@@ -577,16 +578,16 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 			continue
 		if((boundingData[5]+worldZ) < min(startZ,startZ+*pStepZ) && (boundingData[6]+worldZ) < min(startZ,startZ+*pStepZ))
 			continue
-		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY, pStepY, pStepZ))
+		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY, pStepX, pStepY))
 			*pHitFlags = boundingData[7]
 			return TRUE
-		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY, pStepY, pStepZ))
+		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY, pStepX, pStepY))
 			*pHitFlags = boundingData[7]
 			return TRUE
-		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[4] + worldY, boundingData[3] + worldX, boundingData[4] + worldY, pStepY, pStepZ))
+		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[4] + worldY, boundingData[3] + worldX, boundingData[4] + worldY, pStepX, pStepY))
 			*pHitFlags = boundingData[7]
 			return TRUE
-		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[3] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY, pStepY, pStepZ))
+		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[3] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY, pStepX, pStepY))
 			*pHitFlags = boundingData[7]
 			return TRUE
 	return FALSE

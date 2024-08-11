@@ -397,6 +397,7 @@ GLOBAL_LIST(projectileDamageConstants)
 /obj/item/projectile/proc/attack_mob(mob/living/target_mob, miss_modifier=0)
 	if(!istype(target_mob))
 		return
+	message_admins("Called attack mob")
 
 	//roll to-hit
 	miss_modifier = 0

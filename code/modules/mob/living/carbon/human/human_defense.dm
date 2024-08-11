@@ -34,7 +34,7 @@ meteor_act
 			return shield_check
 		else
 			P.on_hit(src, def_zone)
-			return 2
+			return PROJECTILE_STOP
 
 	//Checking absorb for spawning shrapnel
 	.=..(P , def_zone)
@@ -56,6 +56,8 @@ meteor_act
 		return PROJECTILE_CONTINUE
 	else
 		return PROJECTILE_STOP
+	return PROJECTILE_STOP
+
 
 
 
