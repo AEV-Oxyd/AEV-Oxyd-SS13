@@ -90,7 +90,7 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		newOverlay.color = RANDOM_RGB
 		newOverlay.pixel_x = hitbox[1] - 1
 		newOverlay.pixel_y = hitbox[2] - 1
-		newOverlay.alpha = 100
+		newOverlay.alpha = 200
 		owner.overlays.Add(newOverlay)
 
 /datum/hitboxDatum/atom

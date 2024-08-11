@@ -221,7 +221,8 @@
 
 	hitbox = getHitbox(hitbox)
 	#ifdef HITBOX_DEBUG
-		hitbox.visualise(src)
+		hitbox.visualize(src)
+	#endif
 
 	if(preloaded_reagents)
 		if(!reagents)
