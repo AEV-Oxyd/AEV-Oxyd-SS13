@@ -24,6 +24,7 @@
 	anchored = TRUE
 	layer = LOW_WALL_LAYER
 	icon = 'icons/obj/structures/low_wall.dmi'
+	hitbox = /datum/hitboxDatum/atom/lowWall
 	icon_state = "metal"
 	throwpass = TRUE
 	var/connected = TRUE

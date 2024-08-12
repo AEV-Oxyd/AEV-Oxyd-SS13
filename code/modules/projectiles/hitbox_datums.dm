@@ -317,8 +317,37 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		LISTWEST = list(BBOX(10,9,23,25,LEVEL_CHEST-1,LEVEL_CHEST+2,null))
 	)
 
+/datum/hitboxDatum/atom/window/directional
+	boundingBoxes = list(
+		LISTNORTH = list(BBOX(1,26,32,32, LEVEL_TURF, LEVEL_ABOVE, null)),
+		LISTSOUTH = list(BBOX(1,1,32,7, LEVEL_TURF, LEVEL_ABOVE, null)),
+		LISTEAST = list(BBOX(26,1,32,32, LEVEL_TURF, LEVEL_ABOVE, null)),
+		LISTWEST = list(BBOX(1,1,7,32, LEVEL_TURF, LEVEL_ABOVE, null))
+	)
+
+/datum/hitboxDatum/atom/lowWall
+	boundingBoxes = list(
+		LISTNORTH = list(BBOX(0,0,32,32, LEVEL_TURF, LEVEL_LOWWALL, null)),
+		LISTSOUTH = list(BBOX(0,0,32,32, LEVEL_TURF, LEVEL_LOWWALL, null)),
+		LISTEAST = list(BBOX(0,0,32,32, LEVEL_TURF, LEVEL_LOWWALL, null)),
+		LISTWEST = list(BBOX(0,0,32,32, LEVEL_TURF, LEVEL_LOWWALL, null))
+	)
+
 /datum/hitboxDatum/turf
 	boundingBoxes = BBOX(0,0,32,32,LEVEL_BELOW ,LEVEL_ABOVE,null)
+
+/datum/hitboxDatum/turf/visualize(atom/owner)
+	var/list/hitbox = boundingBoxes
+	var/icon/Icon = icon('icons/hitbox.dmi', "box")
+	var/multX = hitbox[3] - hitbox[1] + 1
+	var/multY = hitbox[4] - hitbox[2] + 1
+	Icon.Scale(multX, multY)
+	var/mutable_appearance/newOverlay = mutable_appearance(Icon, "hitbox")
+	newOverlay.color = RANDOM_RGB
+	newOverlay.pixel_x = hitbox[1] - 1
+	newOverlay.pixel_y = hitbox[2] - 1
+	newOverlay.alpha = 200
+	owner.overlays.Add(newOverlay)
 
 /datum/hitboxDatum/turf/intersects(atom/owner, ownerDirection, startX, startY, startZ, pStepX, pStepY, pStepZ)
 	var/worldX
@@ -353,6 +382,9 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 
 /datum/hitboxDatum/turf/floor
 	boundingBoxes = BBOX(0,0,32,32,LEVEL_BELOW ,LEVEL_TURF,null)
+
+/datum/hitboxDatum/turf/window
+	boundingBoxes = BBOX(0,0,32,32, LEVEL_LOWWALL, LEVEL_ABOVE, null)
 
 /// This checks line by line instead of a box. Less efficient.
 /datum/hitboxDatum/atom/polygon
@@ -404,6 +436,7 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 /datum/hitboxDatum/atom/polygon/visualize(atom/owner)
 	/// too hard to get offsets for lines ((( SPCR 2024
 	return
+
 /// Indexed by whatever the fuck dirs getHitboxData() returns from the pipe
 /datum/hitboxDatum/atom/polygon/atmosphericPipe
 	boundingBoxes = list(

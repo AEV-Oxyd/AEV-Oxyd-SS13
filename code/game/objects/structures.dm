@@ -104,6 +104,7 @@
 	take_damage(P.get_structure_damage())
 	if(QDELETED(src))
 		return PROJECTILE_CONTINUE
+	return PROJECTILE_STOP
 
 
 /obj/structure/New()

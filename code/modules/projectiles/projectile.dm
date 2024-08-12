@@ -113,8 +113,6 @@ GLOBAL_LIST(projectileDamageConstants)
 	// yep , it checks itself , more efficient to handle it here..
 	if(P == src)
 		return PROJECTILE_CONTINUE
-	if(atomFlags & AF_BULLET_PASS || P.atomFlags & AF_BULLET_PASS)
-		return PROJECTILE_CONTINUE
 	if(abs(P.dataRef.globalZ - dataRef.globalZ) > 0.1)
 		return PROJECTILE_CONTINUE
 	if(abs(P.dataRef.globalX - dataRef.globalX) > 0.1)
@@ -581,7 +579,7 @@ GLOBAL_LIST(projectileDamageConstants)
 			/// third slot rezerved for flags passed back by hitbox intersect
 			var/hitFlags = null
 			if(target.hitbox && !target.hitbox.intersects(target, target.dir, startX, startY, startZ, pStepX, pStepY, pStepZ, &hitFlags))
-				return PROJECTILE_CONTINUE
+				continue
 			if(target.bullet_act(src, def_zone, hitFlags) & PROJECTILE_STOP)
 				onBlockingHit(target)
 				return PROJECTILE_STOP

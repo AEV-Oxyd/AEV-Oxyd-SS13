@@ -566,6 +566,7 @@ proc/end_grab_onto(mob/living/user, mob/living/target)
 	desc = "It looks thin and flimsy. A few knocks with... anything, really should shatter it."
 	icon_state = "window"
 	basestate = "window"
+	hitbox = /datum/hitboxDatum/atom/window/directional
 	glasstype = /obj/item/stack/material/glass
 	maximal_heat = T0C + 200	// Was 100. Spaceship windows surely surpass coffee pots.
 	damage_per_fire_tick = 3	// Was 2. Made weaker than rglass per tick.
@@ -576,6 +577,7 @@ proc/end_grab_onto(mob/living/user, mob/living/target)
 	dir = SOUTH|EAST
 	icon = 'icons/obj/structures/windows.dmi'
 	icon_state = "fwindow"
+	hitbox = /datum/hitboxDatum/turf/window
 	alpha = 120
 	maxHealth = 40
 	resistance = RESISTANCE_FLIMSY
@@ -585,6 +587,7 @@ proc/end_grab_onto(mob/living/user, mob/living/target)
 	name = "plasma window"
 	desc = "A borosilicate alloy window. It seems to be quite strong."
 
+	hitbox = /datum/hitboxDatum/atom/window/directional
 	icon_state = "plasmawindow"
 	shardtype = /obj/item/material/shard/plasma
 	glasstype = /obj/item/stack/material/glass/plasmaglass
@@ -597,6 +600,7 @@ proc/end_grab_onto(mob/living/user, mob/living/target)
 	dir = SOUTH|EAST
 	icon = 'icons/obj/structures/windows.dmi'
 	basestate = "pwindow"
+	hitbox = /datum/hitboxDatum/turf/window
 	icon_state = "plasmawindow_mask"
 	alpha = 150
 	maxHealth = 200
@@ -608,6 +612,7 @@ proc/end_grab_onto(mob/living/user, mob/living/target)
 	desc = "It looks rather strong. Might take a few good hits to shatter it."
 	icon_state = "rwindow"
 	basestate = "rwindow"
+	hitbox = /datum/hitboxDatum/atom/window/directional
 	reinf = 1
 	maximal_heat = T0C + 750	// Fused quartz.
 	damage_per_fire_tick = 2
@@ -627,6 +632,7 @@ proc/end_grab_onto(mob/living/user, mob/living/target)
 	dir = SOUTH|EAST
 	icon = 'icons/obj/structures/windows.dmi'
 	icon_state = "fwindow"
+	hitbox = /datum/hitboxDatum/turf/window
 	alpha = 150
 	maxHealth = 80
 	resistance = RESISTANCE_FRAGILE
@@ -637,6 +643,7 @@ proc/end_grab_onto(mob/living/user, mob/living/target)
 	desc = "A borosilicate alloy window, with rods supporting it. It seems to be very strong."
 	basestate = "plasmarwindow"
 	icon_state = "plasmarwindow"
+	hitbox = /datum/hitboxDatum/atom/window/directional
 	shardtype = /obj/item/material/shard/plasma
 	glasstype = /obj/item/stack/material/glass/plasmarglass
 	maximal_heat = T0C + 5453 // Safe use temperature at 6000 kelvin.
@@ -646,6 +653,7 @@ proc/end_grab_onto(mob/living/user, mob/living/target)
 
 /obj/structure/window/reinforced/plasma/full
 	dir = SOUTH|EAST
+	hitbox = /datum/hitboxDatum/turf/window
 	icon = 'icons/obj/structures/windows.dmi'
 	basestate = "rpwindow"
 	icon_state = "plasmarwindow_mask"
@@ -658,12 +666,14 @@ proc/end_grab_onto(mob/living/user, mob/living/target)
 	name = "tinted window"
 	desc = "It looks rather strong and opaque. Might take a few good hits to shatter it."
 	icon_state = "twindow"
+	hitbox = /datum/hitboxDatum/atom/window/directional
 	basestate = "twindow"
 	opacity = 1
 
 /obj/structure/window/reinforced/tinted/frosted
 	name = "frosted window"
 	desc = "It looks rather strong and frosted over. Looks like it might take a few less hits then a normal reinforced window."
+	hitbox = /datum/hitboxDatum/atom/window/directional
 	icon_state = "fwindow"
 	basestate = "fwindow"
 
@@ -673,6 +683,7 @@ proc/end_grab_onto(mob/living/user, mob/living/target)
 	icon = 'icons/obj/podwindows.dmi'
 	icon_state = "window"
 	basestate = "window"
+	hitbox = /datum/hitboxDatum/turf/window
 	maxHealth = 300
 	resistance = RESISTANCE_IMPROVED
 	reinf = 1
@@ -681,12 +692,13 @@ proc/end_grab_onto(mob/living/user, mob/living/target)
 
 /obj/structure/window/reinforced/polarized
 	name = "electrochromic window"
-
+	hitbox = /datum/hitboxDatum/atom/window/directional
 	desc = "Adjusts its tint with voltage. Might take a few good hits to shatter it."
 	var/id
 
 /obj/structure/window/reinforced/polarized/full
 	dir = SOUTH|EAST
+	hitbox = /datum/hitboxDatum/turf/window
 	icon = 'icons/obj/structures/windows.dmi'
 	icon_state = "fwindow"
 	flags = null

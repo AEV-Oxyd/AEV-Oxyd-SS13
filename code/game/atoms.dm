@@ -226,7 +226,7 @@
 	update_plane()
 
 	hitbox = getHitbox(hitbox)
-	#ifdef HITBOX_DEBUG
+	#ifdef BULLETDEBUG
 	if(hitbox)
 		addtimer(CALLBACK(hitbox, TYPE_PROC_REF(/datum/hitboxDatum, visualize), src), 1 MINUTE)
 	#endif
@@ -354,7 +354,9 @@
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
 	P.on_hit(src, def_zone)
+	#ifdef BULLETDEBUG
 	message_admins("Bullet stopped by [src]")
+	#endif
 	. = PROJECTILE_STOP
 
 /atom/proc/block_bullet(mob/user, var/obj/item/projectile/damage_source, def_zone)

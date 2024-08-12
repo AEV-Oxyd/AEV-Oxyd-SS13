@@ -154,10 +154,9 @@ proc/fragment_explosion(var/turf/epicenter, var/range, var/f_type, var/f_amount 
 	if(!epicenter || !f_type)
 		return
 
-	var/list/target_turfs = orange(range, epicenter)
-	var/fragments_per_projectile = f_amount/target_turfs.len //This is rounded but only later
+	var/fragments_per_projectile = round(3.14*range*range)
 	var/list/launchedList = list()
-	for(var/turf/T in target_turfs)
+	for(var/turf/T in orange(range, epicenter))
 		var/obj/item/projectile/bullet/pellet/fragment/P = new f_type(epicenter)
 
 		P.PrepareForLaunch()
@@ -168,7 +167,7 @@ proc/fragment_explosion(var/turf/epicenter, var/range, var/f_type, var/f_amount 
 		P.range_step = f_step
 
 		P.shot_from = epicenter
-		P.atomFlags = AF_BULLET_PASS|AF_EXPLOSION_IGNORANT
+		P.atomFlags = AF_IGNORE_ON_BULLETSCAN|AF_EXPLOSION_IGNORANT
 		/// has to be exxagerate due to how far the turfs are
 		P.launch(T, zStart = LEVEL_LYING ,zOffset = rand(LEVEL_LYING+5, LEVEL_CHEST))
 		launchedList.Add(P)
@@ -178,7 +177,7 @@ proc/fragment_explosion(var/turf/epicenter, var/range, var/f_type, var/f_amount 
 			for(var/mob/living/M in epicenter)
 				P.attack_mob(M, 0, 100)
 	/// 3 ticks should be enough
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(removeFlags), launchedList.Copy(), AF_BULLET_PASS | AF_EXPLOSION_IGNORANT), 3)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(removeFlags), launchedList.Copy(), AF_IGNORE_ON_BULLETSCAN | AF_EXPLOSION_IGNORANT), SSbullets.wait * 3)
 
 /proc/removeFlags(list/targets, flagsToRemove)
 	for(var/atom/thing as anything in targets)
