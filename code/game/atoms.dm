@@ -117,6 +117,12 @@
 	return
 
 /atom/proc/getAimingLevel(atom/shooter,defZone)
+	if(isliving(shooter))
+		var/mob/living/carbon/human/hoomie = shooter
+		if(!istype(hoomie))
+			return HBF_NOLEVEL
+		else
+			return hoomie.getAimingLevel(hoomie, hoomie.targeted_organ)
 	return HBF_NOLEVEL
 
 /atom/proc/getWeight()

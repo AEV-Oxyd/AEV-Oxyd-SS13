@@ -369,5 +369,5 @@
 #define TTS_SEED_ANNOUNCER "Robot_2"
 
 #define BBOX(x1,y1,x2,y2, minLevel, maxLevel, flags) list(x1,y1,x2,y2, minLevel, maxLevel, flags)
-#define BLINE(x1,y1,x2,y2) list(x1,y1,x2,y2)
+#define BLINE(x1,y1,x2,y2, minLevel, maxLevel, flags) list(x1,y1,x2,y2, minLevel, maxLevel, flags)
 #define TRIGSLOPE(x1,y1,x2,y2) ((y2-y1)/(x2-x1))

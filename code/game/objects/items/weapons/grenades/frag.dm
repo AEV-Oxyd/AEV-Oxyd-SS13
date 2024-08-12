@@ -13,7 +13,7 @@
 	var/explosion_falloff = 40
 
 	//The radius of the circle used to launch projectiles. Lower values mean less projectiles are used but if set too low gaps may appear in the spread pattern
-	var/spread_range = 7
+	var/spread_range = 4
 
 /obj/item/grenade/frag/prime()
 	set waitfor = 0

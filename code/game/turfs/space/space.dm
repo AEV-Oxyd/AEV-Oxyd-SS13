@@ -18,6 +18,12 @@
 	update_starlight()
 	..()
 
+/turf/space/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
+	return PROJECTILE_CONTINUE
+
+/turf/space/getAimingLevel(atom/shooter, defZone)
+	return shooter.getAimingLevel(shooter, defZone)
+
 /turf/space/take_damage(target_power, damage_type)
 	return TRUE
 

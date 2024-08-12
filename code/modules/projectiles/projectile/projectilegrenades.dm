@@ -51,7 +51,7 @@
 
 /obj/item/projectile/bullet/grenade/frag
 	name = "frag shell"
-	var/range = 7
+	var/range = 4
 	var/f_type = /obj/item/projectile/bullet/pellet/fragment
 	var/f_amount = 30
 	var/f_damage = 12

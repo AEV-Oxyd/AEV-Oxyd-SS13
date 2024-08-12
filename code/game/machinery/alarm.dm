@@ -129,7 +129,7 @@
 	var/turf/toAttach = get_step(loc, reverse_dir[dir])
 
 	if(iswall(toAttach))
-		toAttach.attachGameAtom(src, ATFS_PRIORITIZE_ATTACHED_FOR_HITS, ATFA_EASY_INTERACTIVE | ATFA_DIRECTIONAL_HITTABLE)
+		toAttach.attachGameAtom(src, ATFS_PRIORITIZE_ATTACHED_FOR_HITS, ATFA_EASY_INTERACTIVE | ATFA_DIRECTIONAL_HITTABLE | ATFA_CENTER_ON_SUPPORTER)
 	else
 		stack_trace("[src.type] has no wall to attach itself to at X:[x] Y:[y] Z:[z]")
 		// the players need to be confused so they complain about it!

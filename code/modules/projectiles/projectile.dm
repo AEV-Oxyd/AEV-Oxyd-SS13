@@ -104,6 +104,10 @@ GLOBAL_LIST(projectileDamageConstants)
 
 	var/datum/bullet_data/dataRef = null
 
+/// Returns 0 , no mod to aiming level
+/obj/item/projectile/getAimingLevel(atom/shooter, defZone)
+	return 0
+
 /// Fun interaction time - 2 bullets colliding mid air ! SPCR 2024
 /obj/item/projectile/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
 	// yep , it checks itself , more efficient to handle it here..
@@ -663,7 +667,9 @@ GLOBAL_LIST(projectileDamageConstants)
 
 /obj/item/projectile/proc/onBlockingHit(atom/A)
 	on_impact(A)
-	message_admins("Has hit [A]")
+	#ifdef BULLETDEBUG
+	message_admins("[src] Has hit [A]")
+	#endif
 	dataRef.lifetime = 0
 
 /obj/effect/bullet_sparks

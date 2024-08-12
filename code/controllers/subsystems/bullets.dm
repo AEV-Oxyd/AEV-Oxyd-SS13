@@ -62,7 +62,9 @@ SUBSYSTEM_DEF(bullets)
 	angle = getAngleByPosition()
 	angle += angleOffset
 	distanceToTarget = distStartToFinish2D()
+	cannotHit.Add(firer)
 	updatePathByAngle()
+	message_admins("Bullet created with Z-target at [targetZ] and starting at [globalZ]")
 	SSbullets.bullet_queue.Add(src)
 
 /datum/bullet_data/proc/redirect(currentX, currentY, currentZ, targetX, targetY, targetZ)

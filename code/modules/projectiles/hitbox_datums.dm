@@ -29,6 +29,30 @@ GLOBAL_LIST_EMPTY(hitboxPrototypes)
 		BP_L_ARM = HBF_USEMEDIAN
 	)
 
+/datum/hitboxDatum/proc/calculateAimingLevels()
+	var/median
+	var/volumeSum
+	var/calculatedVolume = 0
+	// dont bother calculating if already defined.
+	if(length(medianLevels))
+		return
+	medianLevels = list()
+	for(var/direction in list(NORTH, SOUTH, EAST , WEST))
+		median = 0
+		volumeSum = 0
+		for(var/list/boundingBox in boundingBoxes["[direction]"])
+			calculatedVolume = (boundingBox[4] - boundingBox[2]) * (boundingBox[3] - boundingBox[1])
+			median += ((boundingBox[5] + boundingBox[6])/2) * calculatedVolume
+			volumeSum += calculatedVolume
+		if(volumeSum == 0)
+			medianLevels["[direction]"] = LEVEL_TABLE
+		else
+			medianLevels["[direction]"] = median / volumeSum
+
+/datum/hitboxDatum/New()
+	. = ..()
+	calculateAimingLevels()
+
 /// this can be optimized further by making the calculations not make a new list , and instead be added when checking line intersection - SPCR 2024
 /datum/hitboxDatum/proc/intersects(atom/owner, ownerDirection, startX, startY, startZ, pStepX, pStepY, pStepZ)
 
@@ -102,27 +126,6 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		LISTWEST = list(BBOX(16,16,24,24,1,2,null))
 	)
 
-/datum/hitboxDatum/atom/New()
-	. = ..()
-	var/median
-	var/volumeSum
-	var/calculatedVolume = 0
-	// dont bother calculating if already defined.
-	if(length(medianLevels))
-		return
-	medianLevels = list()
-	for(var/direction in list(NORTH, SOUTH, EAST , WEST))
-		median = 0
-		volumeSum = 0
-		for(var/list/boundingBox in boundingBoxes["[direction]"])
-			calculatedVolume = (boundingBox[4] - boundingBox[2]) * (boundingBox[3] - boundingBox[1])
-			median += ((boundingBox[5] + boundingBox[6])/2) * calculatedVolume
-			volumeSum += calculatedVolume
-		if(volumeSum == 0)
-			medianLevels["[direction]"] = LEVEL_TABLE
-		else
-			medianLevels["[direction]"] = median / volumeSum
-
 /datum/hitboxDatum/atom/getAimingLevel(atom/shooter, defZone, atom/owner)
 	if(defZone == null || (!(defZone in defZoneToLevel)))
 		return medianLevels["[owner.dir]"]
@@ -151,6 +154,10 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	worldY += owner.pixel_y
 	worldZ = owner.z * PPT
 	for(var/list/boundingData in boundingBoxes["[ownerDirection]"])
+		if((boundingData[5]+worldZ) > max(startZ,startZ+*pStepZ) && (boundingData[6]+worldZ) > max(startZ,startZ+*pStepZ))
+			continue
+		if((boundingData[5]+worldZ) < min(startZ,startZ+*pStepZ) && (boundingData[6]+worldZ) < min(startZ,startZ+*pStepZ))
+			continue
 		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY, pStepX, pStepY))
 			return TRUE
 		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY, pStepX, pStepY))
@@ -335,6 +342,12 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		return TRUE
 	return FALSE
 
+/datum/hitboxDatum/turf/getAimingLevel(atom/shooter, defZone, atom/owner)
+	if(isliving(shooter))
+		return shooter.getAimingLevel(shooter, defZone)
+	else
+		return ..()
+
 /datum/hitboxDatum/turf/wall
 	boundingBoxes = BBOX(0,0,32,32,LEVEL_BELOW ,LEVEL_ABOVE,null)
 
@@ -344,15 +357,27 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 /// This checks line by line instead of a box. Less efficient.
 /datum/hitboxDatum/atom/polygon
 	boundingBoxes = list(
-		LISTNORTH = list(BLINE(0,0,32,32)),
-		LISTSOUTH = list(BLINE(0,0,32,32)),
-		LISTEAST = list(BLINE(0,0,32,32)),
-		LISTWEST = list(BLINE(0,0,32,32))
+		LISTNORTH = list(BLINE(0,0,32,32, LEVEL_BELOW, LEVEL_ABOVE, null)),
+		LISTSOUTH = list(BLINE(0,0,32,32, LEVEL_BELOW, LEVEL_ABOVE, null)),
+		LISTEAST = list(BLINE(0,0,32,32, LEVEL_BELOW, LEVEL_ABOVE, null)),
+		LISTWEST = list(BLINE(0,0,32,32, LEVEL_BELOW, LEVEL_ABOVE, null))
 	)
+
+/datum/hitboxDatum/atom/polygon/calculateAimingLevels()
+	var/levelSum
+	if(length(medianLevels))
+		return
+	medianLevels = list()
+	for(var/direction in list(NORTH, SOUTH, EAST , WEST))
+		levelSum = 0
+		for(var/list/boundingBox in boundingBoxes["[direction]"])
+			levelSum += (boundingBox[5]+boundingBox[6])/2
+		medianLevels["[direction]"] = levelSum / length(boundingBoxes["[direction]"])
 
 /datum/hitboxDatum/atom/polygon/intersects(atom/owner, ownerDirection, startX, startY, startZ, pStepX, pStepY, pStepZ)
 	var/worldX
 	var/worldY
+	var/worldZ
 	worldX = owner.x
 	worldY = owner.y
 	if(owner.atomFlags & AF_HITBOX_OFFSET_BY_ATTACHMENT)
@@ -362,14 +387,16 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 			worldX += thing.x - owner.x
 			worldY += thing.y - owner.y
 			break
-	worldX *= 32
-	worldY *= 32
+	worldX *= PPT
+	worldY *= PPT
 	worldX += owner.pixel_x
 	worldY += owner.pixel_y
+	worldZ = owner.z * PPT
 	for(var/list/boundingData in boundingBoxes["[ownerDirection]"])
-		/// basic AABB but only for the Z-axis.
-		//if(boundingData[5] > max(startZ,startZ+*pStepZ) || boundingData[6] < min(startZ,startZ+*pStepZ))
-		//	continue
+		if((boundingData[5]+worldZ) > max(startZ,startZ+*pStepZ) && (boundingData[6]+worldZ) > max(startZ,startZ+*pStepZ))
+			continue
+		if((boundingData[5]+worldZ) < min(startZ,startZ+*pStepZ) && (boundingData[6]+worldZ) < min(startZ,startZ+*pStepZ))
+			continue
 		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY, pStepX, pStepY))
 			return TRUE
 	return FALSE
@@ -380,26 +407,28 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 /// Indexed by whatever the fuck dirs getHitboxData() returns from the pipe
 /datum/hitboxDatum/atom/polygon/atmosphericPipe
 	boundingBoxes = list(
-		LISTNORTH = BLINE(16,16,16,32),
-		LISTSOUTH = BLINE(16,0,16,16),
-		LISTEAST = BLINE(16,16,32,16),
-		LISTWEST = BLINE(0,16,16,16)
+		LISTNORTH = BLINE(16,16,16,32, LEVEL_TURF, LEVEL_TURF+5, null),
+		LISTSOUTH = BLINE(16,0,16,16, LEVEL_TURF, LEVEL_TURF+5, null),
+		LISTEAST = BLINE(16,16,32,16, LEVEL_TURF, LEVEL_TURF+5, null),
+		LISTWEST = BLINE(0,16,16,16, LEVEL_TURF, LEVEL_TURF+5, null)
 	)
 
 /datum/hitboxDatum/atom/polygon/atmosphericPipe/intersects(obj/machinery/atmospherics/owner, ownerDirection, startX, startY, startZ, pStepX, pStepY, pStepZ)
 	var/worldX
 	var/worldY
 	var/worldZ
-	worldX = owner.x * 32
-	worldY = owner.y * 32
+	worldX = owner.x * PPT
+	worldY = owner.y * PPT
+	worldZ = owner.z * PPT
 	var/validDirs = owner.getHitboxData()
 	for(var/direction in list(NORTH, EAST, WEST, SOUTH))
 		if(!(direction & validDirs))
 			continue
 		var/list/boundingData = boundingBoxes["[direction]"]
-		/// basic AABB but only for the Z-axis.
-		//if(boundingData[5] > max(startZ,startZ+*pStepZ) || boundingData[6] < min(startZ,startZ+*pStepZ))
-		//	continue
+		if((boundingData[5]+worldZ) > max(startZ,startZ+*pStepZ) && (boundingData[6]+worldZ) > max(startZ,startZ+*pStepZ))
+			continue
+		if((boundingData[5]+worldZ) < min(startZ,startZ+*pStepZ) && (boundingData[6]+worldZ) < min(startZ,startZ+*pStepZ))
+			continue
 		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY, pStepX, pStepY))
 			return TRUE
 	return FALSE
@@ -407,52 +436,66 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 /// Indexed by icon-state
 /datum/hitboxDatum/atom/polygon/powerCable
 	boundingBoxes = list(
-		"0-1" = list(BLINE(16,16,16,32)),
-		"0-2" = list(BLINE(16,0,16,16)),
-		"0-4" = list(BLINE(16,16,32,16)),
-		"0-5" = list(BLINE(16,16,32,32)),
-		"0-6" = list(BLINE(32,0,16,16)),
-		"0-8" = list(BLINE(0,16,16,16)),
-		"0-9" = list(BLINE(0,32,16,16)),
-		"0-10" = list(BLINE(0,0,16,16)),
-		"1-2" = list(BLINE(16,0,16,32)),
-		"1-4" = list(BLINE(16,32,20,20),BLINE(20,20,32,16)),
-		"1-5" = list(BLINE(16,32,21,25),BLINE(21,25,32,32)),
-		"1-6" = list(BLINE(16,32,22,12),BLINE(22,12,32,0)),
-		"1-8" = list(BLINE(0,16,13,20),BLINE(13,20,16,32)),
-		"1-9" = list(BLINE(0,32,12,25),BLINE(12,25,16,32)),
-		"1-10" = list(BLINE(0,0,12,14), BLINE(12,14,16,32)),
-		"2-4" = list(BLINE(16,0,19,12), BLINE(19,12,32,16)),
-		"2-5" = list(BLINE(16,0,21,19), BLINE(21,19,32,32)),
-		"2-6" = list(BLINE(16,0,20,9), BLINE(20,9,32,0)),
-		"2-8" = list(BLINE(0,16,13,13), BLINE(13,13,16,0)),
-		"2-9" = list(BLINE(0,32,13,17),BLINE(13,17,16,0)),
-		"2-10" = list(BLINE(0,0,13,8), BLINE(13,8,16,0)),
-		"4-5" = list(BLINE(32,16,25,22),BLINE(25,22,32,32)),
-		"4-6" = list(BLINE(32,0,25,11), BLINE(25,11,32,16)),
-		"4-8" = list(BLINE(0,16,32,16)),
-		"4-9" = list(BLINE(0,32,16,20), BLINE(16,20,32,16)),
-		"4-10" = list(BLINE(0,0,14,12), BLINE(14,12,32,16)),
-		"5-6" = list(BLINE(31,0,25,16), BLINE(25,16,31,32)),
-		"5-8" = list(BLINE(0,16,18,21), BLINE(18,21,32,32)),
-		"5-9" = list(BLINE(0,31,16,25), BLINE(16,25,32,31)),
-		"5-10" = list(BLINE(0,0,32,32)),
-		"6-8" = list(BLINE(0,17,17,13),BLINE(17,13,32,0)),
-		"6-9" = list(BLINE(0,32,32,0)),
-		"6-10" = list(BLINE(0,1,16,8), BLINE(16,8,32,1)),
-		"8-9" = list(BLINE(0,16,8,20), BLINE(8,20,2,32)),
-		"8-10" = list(BLINE(0,16,8,13), BLINE(8,13,0,0)),
-		"9-10" = list(BLINE(0,0,8,16), BLINE(8,16,0,32)),
-		"32-1" = list(BLINE(16,18,16,32)),
-		"32-2" = list(BLINE(16,0,16,16)),
-		"32-4" = list(BLINE(16,16,32,16)),
-		"32-5" = list(BLINE(16,16,32,32)),
-		"32-6" = list(BLINE(16,16,32,0)),
-		"32-8" = list(BLINE(0,16,16,16)),
-		"32-9" = list(BLINE(0,32,16,16)),
-		"32-10" = list(BLINE(0,0,16,16)),
-		"16-0" = list(BLINE(16,16,16,24))
+		"0-1" = list(BLINE(16,16,16,32, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"0-2" = list(BLINE(16,0,16,16, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"0-4" = list(BLINE(16,16,32,16, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"0-5" = list(BLINE(16,16,32,32, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"0-6" = list(BLINE(32,0,16,16, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"0-8" = list(BLINE(0,16,16,16, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"0-9" = list(BLINE(0,32,16,16, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"0-10" = list(BLINE(0,0,16,16, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"1-2" = list(BLINE(16,0,16,32, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"1-4" = list(BLINE(16,32,20,20, LEVEL_TURF, LEVEL_TURF+5, null),BLINE(20,20,32,16, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"1-5" = list(BLINE(16,32,21,25, LEVEL_TURF, LEVEL_TURF+5, null),BLINE(21,25,32,32, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"1-6" = list(BLINE(16,32,22,12, LEVEL_TURF, LEVEL_TURF+5, null),BLINE(22,12,32,0, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"1-8" = list(BLINE(0,16,13,20, LEVEL_TURF, LEVEL_TURF+5, null),BLINE(13,20,16,32, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"1-9" = list(BLINE(0,32,12,25, LEVEL_TURF, LEVEL_TURF+5, null),BLINE(12,25,16,32, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"1-10" = list(BLINE(0,0,12,14, LEVEL_TURF, LEVEL_TURF+5, null),BLINE(12,14,16,32, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"2-4" = list(BLINE(16,0,19,12, LEVEL_TURF, LEVEL_TURF+5, null),BLINE(19,12,32,16, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"2-5" = list(BLINE(16,0,21,19, LEVEL_TURF, LEVEL_TURF+5, null),BLINE(21,19,32,32, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"2-6" = list(BLINE(16,0,20,9, LEVEL_TURF, LEVEL_TURF+5, null),BLINE(20,9,32,0, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"2-8" = list(BLINE(0,16,13,13, LEVEL_TURF, LEVEL_TURF+5, null),BLINE(13,13,16,0, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"2-9" = list(BLINE(0,32,13,17, LEVEL_TURF, LEVEL_TURF+5, null),BLINE(13,17,16,0, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"2-10" = list(BLINE(0,0,13,8, LEVEL_TURF, LEVEL_TURF+5, null),BLINE(13,8,16,0, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"4-5" = list(BLINE(32,16,25,22, LEVEL_TURF, LEVEL_TURF+5, null),BLINE(25,22,32,32, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"4-6" = list(BLINE(32,0,25,11, LEVEL_TURF, LEVEL_TURF+5, null),BLINE(25,11,32,16, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"4-8" = list(BLINE(0,16,32,16, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"4-9" = list(BLINE(0,32,16,20, LEVEL_TURF, LEVEL_TURF+5, null),BLINE(16,20,32,16, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"4-10" = list(BLINE(0,0,14,12, LEVEL_TURF, LEVEL_TURF+5, null),BLINE(14,12,32,16, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"5-6" = list(BLINE(31,0,25,16, LEVEL_TURF, LEVEL_TURF+5, null),BLINE(25,16,31,32, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"5-8" = list(BLINE(0,16,18,21, LEVEL_TURF, LEVEL_TURF+5, null),BLINE(18,21,32,32, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"5-9" = list(BLINE(0,31,16,25, LEVEL_TURF, LEVEL_TURF+5, null),BLINE(16,25,32,31, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"5-10" = list(BLINE(0,0,32,32, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"6-8" = list(BLINE(0,17,17,13, LEVEL_TURF, LEVEL_TURF+5, null),BLINE(17,13,32,0, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"6-9" = list(BLINE(0,32,32,0, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"6-10" = list(BLINE(0,1,16,8, LEVEL_TURF, LEVEL_TURF+5, null),BLINE(16,8,32,1, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"8-9" = list(BLINE(0,16,8,20, LEVEL_TURF, LEVEL_TURF+5, null),BLINE(8,20,2,32, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"8-10" = list(BLINE(0,16,8,13, LEVEL_TURF, LEVEL_TURF+5, null),BLINE(8,13,0,0, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"9-10" = list(BLINE(0,0,8,16, LEVEL_TURF, LEVEL_TURF+5, null),BLINE(8,16,0,32, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"32-1" = list(BLINE(16,18,16,32, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"32-2" = list(BLINE(16,0,16,16, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"32-4" = list(BLINE(16,16,32,16, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"32-5" = list(BLINE(16,16,32,32, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"32-6" = list(BLINE(16,16,32,0, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"32-8" = list(BLINE(0,16,16,16, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"32-9" = list(BLINE(0,32,16,16, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"32-10" = list(BLINE(0,0,16,16, LEVEL_TURF, LEVEL_TURF+5, null)),
+		"16-0" = list(BLINE(16,16,16,24, LEVEL_TURF, LEVEL_TURF+5, null))
 	)
+
+/datum/hitboxDatum/atom/polygon/powerCable/calculateAimingLevels()
+	var/levelSum
+	if(length(medianLevels))
+		return
+	medianLevels = list()
+	for(var/possibleState in boundingBoxes)
+		levelSum = 0
+		for(var/list/boundingBox in boundingBoxes[possibleState])
+			levelSum += (boundingBox[5]+boundingBox[6])/2
+		medianLevels[possibleState] = levelSum / length(boundingBoxes[possibleState])
+
+/datum/hitboxDatum/atom/polygon/powerCable/getAimingLevel(atom/shooter, defZone, atom/owner)
+	return medianLevels[owner.icon_state]
 
 /datum/hitboxDatum/atom/polygon/powerCable/intersects(atom/owner, ownerDirection, startX, startY, startZ, pStepX, pStepY, pStepZ)
 	var/worldX
@@ -534,8 +577,7 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 
 /datum/hitboxDatum/mob
 
-/datum/hitboxDatum/mob/New()
-	. = ..()
+/datum/hitboxDatum/mob/calculateAimingLevels()
 	var/median
 	var/volumeSum
 	var/calculatedVolume = 0
@@ -552,8 +594,6 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 				median += ((boundingBox[5] + boundingBox[6])/2) * calculatedVolume
 				volumeSum += calculatedVolume
  			medianLevels[state]["[direction]"] = median / volumeSum
-
-
 
 /datum/hitboxDatum/mob/getAimingLevel(atom/shooter, defZone, atom/owner)
 	var/mob/living/perceivedOwner = owner

@@ -154,7 +154,7 @@ proc/fragment_explosion(var/turf/epicenter, var/range, var/f_type, var/f_amount 
 	if(!epicenter || !f_type)
 		return
 
-	var/list/target_turfs = getcircle(epicenter, range)
+	var/list/target_turfs = orange(range, epicenter)
 	var/fragments_per_projectile = f_amount/target_turfs.len //This is rounded but only later
 	var/list/launchedList = list()
 	for(var/turf/T in target_turfs)
@@ -169,8 +169,8 @@ proc/fragment_explosion(var/turf/epicenter, var/range, var/f_type, var/f_amount 
 
 		P.shot_from = epicenter
 		P.atomFlags = AF_BULLET_PASS|AF_EXPLOSION_IGNORANT
-
-		P.launch(T, zStart = LEVEL_LYING ,zOffset = rand(LEVEL_LYING, LEVEL_ABOVE))
+		/// has to be exxagerate due to how far the turfs are
+		P.launch(T, zStart = LEVEL_LYING ,zOffset = rand(LEVEL_LYING+5, LEVEL_CHEST))
 		launchedList.Add(P)
 
 		//Some of the fragments will hit mobs in the same turf
