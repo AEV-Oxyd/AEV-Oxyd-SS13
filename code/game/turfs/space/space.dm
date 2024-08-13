@@ -3,6 +3,7 @@
 	name = "\proper space"
 	icon_state = "0"
 	dynamic_lighting = 0
+	atomFlags = AF_PASS_AIMING_LEVEL
 
 	plane = PLANE_SPACE
 	layer = SPACE_LAYER
@@ -20,9 +21,6 @@
 
 /turf/space/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
 	return PROJECTILE_CONTINUE
-
-/turf/space/getAimingLevel(atom/shooter, defZone)
-	return shooter.getAimingLevel(shooter, defZone)
 
 /turf/space/take_damage(target_power, damage_type)
 	return TRUE

@@ -71,7 +71,7 @@
 	anchored = TRUE
 	use_power = NO_POWER_USE
 	req_access = list(access_engine_equip)
-	//hitbox = /datum/hitboxDatum/atom/apc
+	hitbox = /datum/hitboxDatum/atom/areaPowerController
 	var/need_sound
 	var/area/area
 	var/areastring
@@ -183,13 +183,13 @@
 /obj/machinery/power/apc/set_dir()
 	. = ..()
 	switch(dir)
-		if(NORTH)
-			pixel_y = 28
 		if(SOUTH)
+			pixel_y = 28
+		if(NORTH)
 			pixel_y = -28
-		if(EAST)
-			pixel_x = 28
 		if(WEST)
+			pixel_x = 28
+		if(EAST)
 			pixel_x = -28
 
 
@@ -222,10 +222,10 @@
 			log_mapping("Duplicate APC created at [AREACOORD(src)]. Original at [AREACOORD(area.apc)].")
 		area.apc = src
 
-	var/turf/toAttach = get_step(loc, dir)
+	var/turf/toAttach = get_step(loc, reverse_dir[dir])
 
 	if(iswall(toAttach))
-		toAttach.attachGameAtom(src,  ATFS_PRIORITIZE_ATTACHED_FOR_HITS, ATFA_EASY_INTERACTIVE | ATFA_DIRECTIONAL_HITTABLE | ATFA_CENTER_ON_SUPPORTER)
+		toAttach.attachGameAtom(src,  ATFS_PRIORITIZE_ATTACHED_FOR_HITS, ATFA_EASY_INTERACTIVE | ATFA_DIRECTIONAL_HITTABLE )
 	else
 		stack_trace("[src.type] has no wall to attach itself to at X:[x] Y:[y] Z:[z]")
 		// the players need to be confused so they complain about it!

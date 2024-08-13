@@ -14,6 +14,8 @@
 
 	var/footstep_type
 
+	atomFlags = AF_PASS_AIMING_LEVEL
+
 	//Properties for airtight tiles (/wall)
 	var/thermal_conductivity = 0.05
 	var/heat_capacity = 1

@@ -477,7 +477,7 @@
 /area/testing/first)
 "cp" = (
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -492,7 +492,7 @@
 /area/testing/first)
 "gB" = (
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -613,7 +613,7 @@
 /area/testing/first)
 "xv" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},

@@ -147,22 +147,6 @@
 	qdel(src)
 	return
 
-
-/obj/structure/window/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
-
-	. = PROJECTILE_CONTINUE
-	var/targetzone = check_zone(Proj.def_zone)
-	if(targetzone in list(BP_CHEST, BP_HEAD, BP_L_ARM, BP_R_ARM))
-		var/proj_damage = Proj.get_structure_damage()
-		if(proj_damage)
-			hit(proj_damage)
-		..()
-		if(!QDELETED(src))
-			return PROJECTILE_STOP
-
-	return PROJECTILE_STOP
-
-
 //TODO: Make full windows a separate type of window.
 //Once a full window, it will always be a full window, so there's no point
 //having the same type for both.

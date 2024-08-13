@@ -86,7 +86,7 @@
 /obj/item/target,
 /obj/item/target,
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -345,7 +345,7 @@
 "abb" = (
 /obj/structure/closet/wardrobe/sec,
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -773,7 +773,7 @@
 "acc" = (
 /obj/structure/closet/wardrobe/color/orange,
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -918,7 +918,7 @@
 /area/eris/security/disposal)
 "acu" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -2645,7 +2645,7 @@
 /area/eris/security/exerooms)
 "agz" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -2881,7 +2881,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -4367,7 +4367,7 @@
 /area/eris/security/exerooms)
 "akn" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -5116,7 +5116,7 @@
 /area/eris/security/maintpost)
 "amg" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -6460,7 +6460,7 @@
 /area/eris/crew_quarters/sleep)
 "apz" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -6721,7 +6721,7 @@
 /area/eris/crew_quarters/bar)
 "aqb" = (
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -6929,7 +6929,7 @@
 "aqA" = (
 /obj/structure/catwalk,
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -7028,7 +7028,7 @@
 /area/eris/hallway/side/eschangarb)
 "aqJ" = (
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -7613,7 +7613,7 @@
 /area/eris/hallway/side/eschangarb)
 "arV" = (
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -8280,7 +8280,7 @@
 /area/eris/maintenance/section3deck5starboard)
 "atq" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -9055,7 +9055,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -9073,7 +9073,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -9242,7 +9242,7 @@
 "awc" = (
 /obj/structure/catwalk,
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -10937,7 +10937,7 @@
 /area/eris/maintenance/disposal)
 "aAC" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -11449,7 +11449,7 @@
 /area/eris/crew_quarters/toilet/medbay)
 "aBQ" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -11934,7 +11934,7 @@
 /area/eris/maintenance/section4deck5port)
 "aDh" = (
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -12529,7 +12529,7 @@
 /area/eris/maintenance/section4deck5port)
 "aEF" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -13100,7 +13100,7 @@
 	dir = 8
 	},
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -16187,7 +16187,7 @@
 /area/eris/engineering/wastingroom)
 "aOG" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -16320,7 +16320,7 @@
 	pixel_y = -22
 	},
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -16597,7 +16597,7 @@
 /area/eris/engineering/atmos/storage)
 "aPH" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -17345,7 +17345,7 @@
 /area/eris/security/main)
 "aRi" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -17627,7 +17627,7 @@
 /area/eris/security/barracks)
 "aRQ" = (
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -17926,7 +17926,7 @@
 /area/eris/security/warden)
 "aSz" = (
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -18729,7 +18729,7 @@
 /area/eris/security/prisoncells)
 "aUs" = (
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -19886,7 +19886,7 @@
 /area/eris/maintenance/section2deck4port)
 "aWU" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -20113,7 +20113,7 @@
 /area/eris/engineering/atmos)
 "aXy" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -22103,7 +22103,7 @@
 "bbB" = (
 /obj/structure/catwalk,
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -23690,7 +23690,7 @@
 /area/eris/maintenance/substation/section1)
 "bez" = (
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -23938,7 +23938,7 @@
 /area/eris/maintenance/substation/section2)
 "bfc" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -24148,7 +24148,7 @@
 	dir = 4
 	},
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -24542,7 +24542,7 @@
 /area/eris/maintenance/section2deck4starboard)
 "bgD" = (
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -25569,7 +25569,7 @@
 	dir = 8
 	},
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -25995,7 +25995,7 @@
 /area/eris/rnd/robotics)
 "bjW" = (
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -26778,7 +26778,7 @@
 /area/eris/crew_quarters/librarybackroom)
 "blC" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -27863,7 +27863,7 @@
 /area/eris/medical/morgue)
 "bnW" = (
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -28056,7 +28056,7 @@
 /area/eris/maintenance/section3deck1central)
 "box" = (
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -30290,7 +30290,7 @@
 /area/eris/command/teleporter)
 "bux" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -31058,7 +31058,7 @@
 /area/eris/hallway/main/section1)
 "bws" = (
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -31866,7 +31866,7 @@
 /area/eris/engineering/drone_fabrication)
 "byc" = (
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -32341,7 +32341,7 @@
 	dir = 8
 	},
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -32640,7 +32640,7 @@
 /area/eris/engineering/atmos/storage)
 "bzP" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -32864,7 +32864,7 @@
 /area/eris/maintenance/sorter)
 "bAt" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -33133,7 +33133,7 @@
 /area/eris/maintenance/section3deck1central)
 "bBb" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -34095,7 +34095,7 @@
 /area/eris/rnd/docking)
 "bDK" = (
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -35186,7 +35186,7 @@
 /area/eris/security/lobby)
 "bGf" = (
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -35287,7 +35287,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -35912,7 +35912,7 @@
 /area/eris/hallway/main/section4)
 "bHG" = (
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -37136,7 +37136,7 @@
 /area/eris/maintenance/section4deck4port)
 "bKj" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -38050,7 +38050,7 @@
 /area/eris/maintenance/section4deck4port)
 "bMi" = (
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -39358,7 +39358,7 @@
 /area/eris/engineering/construction)
 "bOZ" = (
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -40148,7 +40148,7 @@
 /area/eris/maintenance/section4deck4port)
 "bQR" = (
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -40193,7 +40193,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -40523,7 +40523,7 @@
 "bRW" = (
 /obj/structure/closet/wardrobe/color/mixed,
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -40757,7 +40757,7 @@
 "bSC" = (
 /obj/structure/closet/firecloset,
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -41266,7 +41266,7 @@
 "bTP" = (
 /obj/structure/catwalk,
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -41935,7 +41935,7 @@
 /area/eris/hallway/main/section1)
 "bVD" = (
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -42181,7 +42181,7 @@
 /area/eris/medical/psych)
 "bWm" = (
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -44212,7 +44212,7 @@
 /area/eris/command/fo)
 "cbz" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -44834,7 +44834,7 @@
 /area/eris/maintenance/section3deck4central)
 "cda" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -47069,7 +47069,7 @@
 /area/eris/rnd/server)
 "chX" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -48282,7 +48282,7 @@
 /area/eris/medical/medbay)
 "clh" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -48410,7 +48410,7 @@
 /area/eris/rnd/mixing)
 "clA" = (
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -49660,7 +49660,7 @@
 	pixel_y = 4
 	},
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -49685,7 +49685,7 @@
 /area/eris/maintenance/section3deck4central)
 "coO" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -50450,7 +50450,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -51447,7 +51447,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -51584,7 +51584,7 @@
 /area/eris/quartermaster/storage)
 "ctT" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -51852,7 +51852,7 @@
 /area/eris/command/meo)
 "cuJ" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -51942,7 +51942,7 @@
 /area/eris/medical/medbreak)
 "cuV" = (
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -52888,7 +52888,7 @@
 "cxr" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -53961,7 +53961,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -54019,7 +54019,7 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/box/donut,
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -54217,7 +54217,7 @@
 /obj/structure/table/standard,
 /obj/item/device/radio/off,
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -54236,7 +54236,7 @@
 "cAG" = (
 /obj/structure/catwalk,
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -56573,7 +56573,7 @@
 /area/eris/maintenance/section3deck4central)
 "cGp" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -56631,7 +56631,7 @@
 "cGu" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -57266,7 +57266,7 @@
 	dir = 4
 	},
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -57690,7 +57690,7 @@
 "cJj" = (
 /obj/structure/catwalk,
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -58762,7 +58762,7 @@
 "cLS" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -61534,7 +61534,7 @@
 	pixel_y = 30
 	},
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -62360,7 +62360,7 @@
 /area/space)
 "cWe" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -62401,7 +62401,7 @@
 /area/eris/rnd/xenobiology)
 "cWi" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -63129,7 +63129,7 @@
 "cXU" = (
 /obj/structure/catwalk,
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -63167,7 +63167,7 @@
 /area/eris/maintenance/section2deck2port)
 "cXY" = (
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -63195,7 +63195,7 @@
 /area/eris/maintenance/section3deck3starboard)
 "cYa" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -63645,7 +63645,7 @@
 /area/shuttle/mining/station)
 "cYY" = (
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -64273,7 +64273,7 @@
 /obj/item/clothing/mask/muzzle,
 /obj/item/clothing/mask/muzzle,
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -65596,7 +65596,7 @@
 /area/eris/command/bridgebar)
 "ddF" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -66055,7 +66055,7 @@
 /area/eris/command/captain)
 "deD" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -66737,7 +66737,7 @@
 /area/eris/maintenance/section3deck4starboard)
 "dgi" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -66822,7 +66822,7 @@
 /area/eris/rnd/anomal)
 "dgr" = (
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -67246,7 +67246,7 @@
 /area/eris/command/fo/quarters)
 "dhe" = (
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -68474,7 +68474,7 @@
 /area/eris/rnd/research)
 "djW" = (
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -68942,7 +68942,7 @@
 "dla" = (
 /obj/structure/table/woodentable,
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -69464,7 +69464,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -70020,7 +70020,7 @@
 /area/eris/medical/reception)
 "dnp" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -70431,7 +70431,7 @@
 /area/eris/maintenance/section2deck2port)
 "dok" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -72213,7 +72213,7 @@
 "dsE" = (
 /obj/structure/closet/secure_closet/engineering_electrical,
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -72285,7 +72285,7 @@
 /obj/structure/table/standard,
 /obj/structure/cable/green,
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -72783,7 +72783,7 @@
 /area/eris/maintenance/section3deck4starboard)
 "dua" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -72848,7 +72848,7 @@
 /area/eris/security/checkpoint/medical)
 "dui" = (
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -73070,7 +73070,7 @@
 "duF" = (
 /obj/structure/closet/secure_closet/personal/doctor,
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -73199,7 +73199,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -74257,7 +74257,7 @@
 /area/eris/command/bridge)
 "dxC" = (
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -75209,7 +75209,7 @@
 "dzV" = (
 /obj/structure/table/standard,
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -75564,7 +75564,7 @@
 /obj/structure/table/standard,
 /obj/item/device/eftpos,
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -75796,7 +75796,7 @@
 /area/eris/medical/medbay)
 "dBp" = (
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -76108,7 +76108,7 @@
 /obj/structure/bed/padded,
 /obj/item/bedsheet/medical,
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -76600,7 +76600,7 @@
 /area/eris/maintenance/section1deck1central)
 "dDd" = (
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -76714,7 +76714,7 @@
 "dDu" = (
 /obj/structure/catwalk,
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -77855,7 +77855,7 @@
 /area/eris/maintenance/section1deck5central)
 "dGn" = (
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -77957,7 +77957,7 @@
 /area/eris/hallway/main/section3)
 "dGz" = (
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -77998,7 +77998,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -78418,7 +78418,7 @@
 /area/eris/maintenance/section3deck4port)
 "dHE" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -81003,7 +81003,7 @@
 "dOs" = (
 /obj/structure/closet/secure_closet/reinforced/engineering_chief,
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -81443,7 +81443,7 @@
 /obj/item/stack/cable_coil,
 /obj/item/device/radio,
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -82012,7 +82012,7 @@
 "dRn" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -83715,7 +83715,7 @@
 /area/eris/medical/chemstor)
 "dVO" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -84087,7 +84087,7 @@
 	dir = 1
 	},
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -85205,7 +85205,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -85601,7 +85601,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -85985,7 +85985,7 @@
 	dir = 4
 	},
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -86015,7 +86015,7 @@
 	dir = 4
 	},
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -86584,7 +86584,7 @@
 /area/eris/rnd/misc_lab)
 "ecZ" = (
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -87182,7 +87182,7 @@
 /area/eris/rnd/anomal)
 "eeu" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -88210,7 +88210,7 @@
 /obj/structure/table/standard,
 /obj/item/device/lighting/toggleable/lamp,
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -88996,7 +88996,7 @@
 "eiP" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -89110,7 +89110,7 @@
 /area/eris/maintenance/section4deck1central)
 "ejb" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -90692,7 +90692,7 @@
 /area/eris/hallway/side/section3deck2port)
 "emX" = (
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -90829,7 +90829,7 @@
 "enq" = (
 /obj/structure/table/standard,
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -91875,7 +91875,7 @@
 /area/eris/engineering/propulsion/left)
 "eqc" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -92527,7 +92527,7 @@
 /area/eris/crew_quarters/clownoffice)
 "erz" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -92942,7 +92942,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -94149,7 +94149,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -96856,7 +96856,7 @@
 	dir = 10
 	},
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -96965,7 +96965,7 @@
 /area/eris/engineering/gravity_generator)
 "eBC" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -97832,7 +97832,7 @@
 "eDG" = (
 /obj/structure/closet/secure_closet/medicine,
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -98933,7 +98933,7 @@
 /area/eris/engineering/propulsion/right)
 "eHd" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -99210,7 +99210,7 @@
 /area/eris/maintenance/section3deck2starboard)
 "ePg" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -100288,7 +100288,7 @@
 /area/eris/medical/medbay/organs)
 "haf" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -101210,7 +101210,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -101515,7 +101515,7 @@
 "jwC" = (
 /obj/spawner/mob/roaches/low_chance,
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -101640,7 +101640,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -102239,7 +102239,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -102970,7 +102970,7 @@
 /area/eris/crew_quarters/kitchen)
 "mFk" = (
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -103767,7 +103767,7 @@
 /area/eris/crew_quarters/hydroponics)
 "oSZ" = (
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -103964,7 +103964,7 @@
 "ppW" = (
 /obj/structure/table/rack/shelf,
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -104279,7 +104279,7 @@
 /area/eris/crew_quarters/fitness)
 "pYm" = (
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -104580,7 +104580,7 @@
 	dir = 1
 	},
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	name = "North APC";
 	pixel_y = 28
 	},
@@ -105557,7 +105557,7 @@
 "sRC" = (
 /obj/structure/cable/green,
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},
@@ -106342,7 +106342,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -107568,7 +107568,7 @@
 "xsu" = (
 /obj/structure/cable/green,
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "East APC";
 	pixel_x = 28
 	},

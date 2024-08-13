@@ -11,3 +11,5 @@
 #define AF_IGNORE_ON_BULLETSCAN (1<<6)
 /// This atom will get ignored by explosions
 #define AF_EXPLOSION_IGNORANT (1<<8)
+/// Uses the aiming level for shooting at the shooter instead.
+#define AF_PASS_AIMING_LEVEL (1<<9)

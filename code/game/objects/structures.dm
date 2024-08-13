@@ -106,7 +106,6 @@
 		return PROJECTILE_CONTINUE
 	return PROJECTILE_STOP
 
-
 /obj/structure/New()
 	..()
 	if(climbable)

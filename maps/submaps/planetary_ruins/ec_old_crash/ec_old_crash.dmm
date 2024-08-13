@@ -379,7 +379,7 @@
 	dir = 8
 	},
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	icon_state = "apc0";
 	pixel_x = 28
 	},
@@ -611,7 +611,7 @@
 	},
 /obj/structure/closet/l3closet,
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	icon_state = "apc0";
 	pixel_y = -28
 	},
@@ -701,7 +701,7 @@
 /area/map_template/ecship/engineering)
 "cM" = (
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	icon_state = "apc0";
 	pixel_y = 28
 	},

@@ -108,6 +108,9 @@
 	return
 
 /atom/getAimingLevel(atom/shooter, defZone)
+	if(atomFlags & AF_PASS_AIMING_LEVEL)
+		if(isliving(shooter))
+			return shooter.getAimingLevel(shooter, defZone)
 	if(hitbox)
 		return hitbox.getAimingLevel(shooter, defZone, src)
 	else

@@ -317,6 +317,14 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		LISTWEST = list(BBOX(10,9,23,25,LEVEL_CHEST-1,LEVEL_CHEST+2,null))
 	)
 
+/datum/hitboxDatum/atom/areaPowerController
+	boundingBoxes = list(
+		LISTNORTH = list(BBOX(8,10,24,23,LEVEL_CHEST-1,LEVEL_CHEST+2,null)),
+		LISTSOUTH = list(BBOX(8,10,24,23,LEVEL_CHEST-1,LEVEL_CHEST+2,null)),
+		LISTEAST = list(BBOX(10,8,23,24,LEVEL_CHEST-1,LEVEL_CHEST+2,null)),
+		LISTWEST = list(BBOX(10,9,23,25,LEVEL_CHEST-1,LEVEL_CHEST+2,null))
+	)
+
 /datum/hitboxDatum/atom/window/directional
 	boundingBoxes = list(
 		LISTNORTH = list(BBOX(1,26,32,32, LEVEL_TURF, LEVEL_ABOVE, null)),
@@ -331,6 +339,14 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		LISTSOUTH = list(BBOX(0,0,32,32, LEVEL_TURF, LEVEL_LOWWALL, null)),
 		LISTEAST = list(BBOX(0,0,32,32, LEVEL_TURF, LEVEL_LOWWALL, null)),
 		LISTWEST = list(BBOX(0,0,32,32, LEVEL_TURF, LEVEL_LOWWALL, null))
+	)
+
+/datum/hitboxDatum/atom/reagentTank
+	boundingBoxes = list(
+		LISTNORTH = list(BBOX(5,4,31,28, LEVEL_TURF, LEVEL_TABLE, null)),
+		LISTSOUTH = list(BBOX(5,4,31,28, LEVEL_TURF, LEVEL_TABLE, null)),
+		LISTEAST = list(BBOX(5,4,31,28, LEVEL_TURF, LEVEL_TABLE, null)),
+		LISTWEST = list(BBOX(5,4,31,28, LEVEL_TURF, LEVEL_TABLE, null))
 	)
 
 /datum/hitboxDatum/turf
@@ -370,12 +386,6 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingBoxes[3] + worldX, boundingBoxes[2] + worldY, boundingBoxes[3] + worldX, boundingBoxes[4] + worldY, pStepX, pStepY))
 		return TRUE
 	return FALSE
-
-/datum/hitboxDatum/turf/getAimingLevel(atom/shooter, defZone, atom/owner)
-	if(isliving(shooter))
-		return shooter.getAimingLevel(shooter, defZone)
-	else
-		return ..()
 
 /datum/hitboxDatum/turf/wall
 	boundingBoxes = BBOX(0,0,32,32,LEVEL_BELOW ,LEVEL_ABOVE,null)
