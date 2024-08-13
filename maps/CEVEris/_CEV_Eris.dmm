@@ -14385,7 +14385,8 @@
 	},
 /obj/machinery/power/apc{
 	name = "South APC";
-	pixel_y = -28
+	pixel_y = -28;
+	dir = 1
 	},
 /turf/simulated/floor/plating/under,
 /area/eris/maintenance/section4deck5starboard)
@@ -15855,7 +15856,8 @@
 	},
 /obj/machinery/power/apc{
 	name = "South APC";
-	pixel_y = -28
+	pixel_y = -28;
+	dir = 1
 	},
 /obj/structure/cable/green,
 /turf/simulated/floor/tiled/dark/techfloor,
@@ -27029,7 +27031,8 @@
 /obj/structure/cable/green,
 /obj/machinery/power/apc{
 	name = "South APC";
-	pixel_y = -28
+	pixel_y = -28;
+	dir = 1
 	},
 /turf/simulated/floor/tiled/dark/golden,
 /area/eris/neotheology/bioreactor)
@@ -31771,7 +31774,8 @@
 	},
 /obj/machinery/power/apc{
 	name = "South APC";
-	pixel_y = -28
+	pixel_y = -28;
+	dir = 1
 	},
 /obj/structure/cable/green{
 	d2 = 8;
@@ -32225,7 +32229,6 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/super/critical{
-	dir = 1;
 	name = "north bump";
 	pixel_y = 28
 	},
@@ -33497,7 +33500,8 @@
 /obj/structure/reagent_dispensers/fueltank,
 /obj/machinery/power/apc{
 	name = "South APC";
-	pixel_y = -28
+	pixel_y = -28;
+	dir = 1
 	},
 /obj/structure/cable/green{
 	d2 = 4;
@@ -36932,7 +36936,8 @@
 	},
 /obj/machinery/power/apc{
 	name = "South APC";
-	pixel_y = -28
+	pixel_y = -28;
+	dir = 1
 	},
 /turf/simulated/floor/tiled/dark/gray_platform,
 /area/eris/quartermaster/hangarsupply)
@@ -39986,7 +39991,8 @@
 /obj/structure/catwalk,
 /obj/machinery/power/apc{
 	name = "South APC";
-	pixel_y = -28
+	pixel_y = -28;
+	dir = 1
 	},
 /obj/structure/cable/green,
 /obj/spawner/traps/wire_splicing/low_chance,
@@ -42903,7 +42909,8 @@
 "bXY" = (
 /obj/machinery/power/apc{
 	name = "South APC";
-	pixel_y = -28
+	pixel_y = -28;
+	dir = 1
 	},
 /obj/structure/cable/green,
 /obj/structure/flora/ausbushes/fullgrass,
@@ -44687,7 +44694,6 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/critical{
-	dir = 1;
 	name = "north bump";
 	pixel_y = 28
 	},
@@ -44960,7 +44966,6 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/super/critical{
-	dir = 1;
 	name = "north bump";
 	pixel_y = 28
 	},
@@ -46068,7 +46073,8 @@
 "cfF" = (
 /obj/machinery/power/apc{
 	name = "South APC";
-	pixel_y = -28
+	pixel_y = -28;
+	dir = 1
 	},
 /obj/structure/cable/green{
 	d2 = 8;
@@ -47478,7 +47484,8 @@
 /obj/structure/cable/green,
 /obj/machinery/power/apc{
 	name = "South APC";
-	pixel_y = -28
+	pixel_y = -28;
+	dir = 1
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/eris/maintenance/section3deck5port)
@@ -48600,7 +48607,8 @@
 /obj/structure/cable/green,
 /obj/machinery/power/apc{
 	name = "South APC";
-	pixel_y = -28
+	pixel_y = -28;
+	dir = 1
 	},
 /turf/simulated/floor/tiled/white/golden,
 /area/eris/crew_quarters/kitchen_storage)
@@ -67662,7 +67670,8 @@
 "die" = (
 /obj/machinery/power/apc{
 	name = "South APC";
-	pixel_y = -28
+	pixel_y = -28;
+	dir = 1
 	},
 /obj/structure/catwalk,
 /obj/structure/cable/green,
@@ -81185,7 +81194,8 @@
 "dOS" = (
 /obj/machinery/power/apc{
 	name = "South APC";
-	pixel_y = -28
+	pixel_y = -28;
+	dir = 1
 	},
 /obj/structure/catwalk,
 /obj/structure/cable/green,
@@ -82701,7 +82711,8 @@
 "dTf" = (
 /obj/machinery/power/apc{
 	name = "South APC";
-	pixel_y = -28
+	pixel_y = -28;
+	dir = 1
 	},
 /obj/structure/catwalk,
 /obj/structure/cable/green{
@@ -82926,7 +82937,8 @@
 "dTI" = (
 /obj/machinery/power/apc{
 	name = "South APC";
-	pixel_y = -28
+	pixel_y = -28;
+	dir = 1
 	},
 /obj/structure/catwalk,
 /obj/structure/cable/green,
@@ -92181,7 +92193,8 @@
 "eqM" = (
 /obj/machinery/power/apc{
 	name = "South APC";
-	pixel_y = -28
+	pixel_y = -28;
+	dir = 1
 	},
 /obj/structure/cable/green,
 /turf/simulated/floor/tiled/steel,
@@ -92207,7 +92220,8 @@
 "eqO" = (
 /obj/machinery/power/apc{
 	name = "South APC";
-	pixel_y = -28
+	pixel_y = -28;
+	dir = 1
 	},
 /obj/structure/cable/green,
 /turf/simulated/floor/wood,
@@ -92414,7 +92428,8 @@
 	},
 /obj/machinery/power/apc{
 	name = "South APC";
-	pixel_y = -28
+	pixel_y = -28;
+	dir = 1
 	},
 /turf/simulated/floor/tiled/white/brown_platform,
 /area/eris/maintenance/section3deck2starboard)
@@ -96262,7 +96277,8 @@
 "eAe" = (
 /obj/machinery/power/apc{
 	name = "South APC";
-	pixel_y = -28
+	pixel_y = -28;
+	dir = 1
 	},
 /obj/structure/cable/green,
 /obj/structure/catwalk,
@@ -98595,7 +98611,8 @@
 "eFo" = (
 /obj/machinery/power/apc{
 	name = "South APC";
-	pixel_y = -28
+	pixel_y = -28;
+	dir = 1
 	},
 /obj/structure/cable/green{
 	d2 = 4;
@@ -98760,7 +98777,6 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/hyper/critical{
-	dir = 1;
 	name = "north bump";
 	pixel_y = 28
 	},
@@ -101290,7 +101306,8 @@
 /obj/structure/cable/green,
 /obj/machinery/power/apc{
 	name = "South APC";
-	pixel_y = -28
+	pixel_y = -28;
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -105305,7 +105322,8 @@
 /obj/machinery/light,
 /obj/machinery/power/apc{
 	name = "South APC";
-	pixel_y = -28
+	pixel_y = -28;
+	dir = 1
 	},
 /turf/simulated/floor/tiled/steel/gray_perforated,
 /area/eris/engineering/long_range_scanner)
@@ -105751,7 +105769,8 @@
 	},
 /obj/machinery/light,
 /obj/machinery/power/apc/super{
-	pixel_y = -28
+	pixel_y = -28;
+	dir = 1
 	},
 /obj/structure/cable/green,
 /turf/simulated/floor/carpet/sblucarpet,
@@ -106499,7 +106518,8 @@
 "uXJ" = (
 /obj/machinery/power/apc{
 	name = "South APC";
-	pixel_y = -28
+	pixel_y = -28;
+	dir = 1
 	},
 /obj/structure/cable/green,
 /turf/simulated/floor/carpet/bcarpet,

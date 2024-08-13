@@ -301,7 +301,7 @@
 /obj/machinery/power/apc/update_icon()
 
 	var/matrix/trans = matrix()
-	trans.Turn(dir2angle(dir))
+	trans.Turn(dir2angle(dir) + 180)
 	transform = trans
 	if (!status_overlays)
 		status_overlays = 1

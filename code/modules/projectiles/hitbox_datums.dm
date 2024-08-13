@@ -543,12 +543,15 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 /datum/hitboxDatum/atom/polygon/powerCable/intersects(atom/owner, ownerDirection, startX, startY, startZ, pStepX, pStepY, pStepZ)
 	var/worldX
 	var/worldY
-	worldX = owner.x * 32
-	worldY = owner.y * 32
+	var/worldZ
+	worldX = owner.x * PPT
+	worldY = owner.y * PPT
+	worldZ = owner.z * PPT
 	for(var/list/boundingData in boundingBoxes[owner.icon_state])
-		/// basic AABB but only for the Z-axis.
-		//if(boundingData[5] > max(startZ,startZ+*pStepZ) || boundingData[6] < min(startZ,startZ+*pStepZ))
-		//	continue
+		if((boundingData[5]+worldZ) > max(startZ,startZ+*pStepZ) && (boundingData[6]+worldZ) > max(startZ,startZ+*pStepZ))
+			continue
+		if((boundingData[5]+worldZ) < min(startZ,startZ+*pStepZ) && (boundingData[6]+worldZ) < min(startZ,startZ+*pStepZ))
+			continue
 		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY, pStepX, pStepY))
 			return TRUE
 	return FALSE
