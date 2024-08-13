@@ -11,6 +11,7 @@
 	opacity = 1
 	density = TRUE
 	layer = OPEN_DOOR_LAYER
+	hitbox = /datum/hitboxDatum/turf/door
 	var/open_layer = OPEN_DOOR_LAYER
 	var/closed_layer = CLOSED_DOOR_LAYER
 	var/visible = 1
@@ -185,6 +186,8 @@
 	return TRUE
 
 /obj/machinery/door/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
+	if(!density)
+		return PROJECTILE_CONTINUE
 	..()
 
 	var/damage = Proj.get_structure_damage()

@@ -22,6 +22,7 @@
 	anchored = TRUE
 	density = TRUE
 	layer = LOW_OBJ_LAYER //This allows disposal bins to be underneath tables
+	hitbox = /datum/hitboxDatum/disposalUnit
 	var/datum/gas_mixture/air_contents	// internal reservoir
 	var/mode = DISPOSALS_CHARGING
 	var/flush = 0	// true if flush handle is pulled

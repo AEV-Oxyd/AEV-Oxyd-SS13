@@ -53,6 +53,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on
 	use_power = IDLE_POWER_USE
 	icon_state = "map_vent_out"
+	hitbox = /datum/hitboxDatum/atom/atmosphericVentScrubber
 
 /obj/machinery/atmospherics/unary/vent_pump/siphon
 	pump_direction = 0

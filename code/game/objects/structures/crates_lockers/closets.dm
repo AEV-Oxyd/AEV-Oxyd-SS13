@@ -9,6 +9,7 @@
 	matter = list(MATERIAL_STEEL = 10)
 	//bad_type = /obj/structure/closet
 	spawn_tags = SPAWN_TAG_CLOSET
+	hitbox = /datum/hitboxDatum/atom/closet
 	var/locked = FALSE
 	var/broken = FALSE
 	var/horizontal = FALSE

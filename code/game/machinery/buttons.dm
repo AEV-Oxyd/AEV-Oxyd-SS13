@@ -3,6 +3,7 @@
 	icon = 'icons/obj/machines/buttons.dmi'
 	icon_state = "launcher0"
 	desc = "A remote control switch for something."
+	hitbox = /datum/hitboxDatum/atom/button
 	var/id = null
 	var/active = 0
 	var/operating = 0
@@ -18,6 +19,18 @@
 	update_icon()
 	if(_wifi_id && !wifi_sender)
 		wifi_sender = new/datum/wifi/sender/button(_wifi_id, src)
+
+	//// YES this doesn't rely on proper mapping because i can't really replace most of them and wouldn't make sense in most cases anyway.(since pixel_x and pixel_y will always vary etc etc.)
+	var/attachmentDir = (pixel_x > 16)*EAST | (pixel_x < -16)*WEST | (pixel_y > 16)*NORTH | (pixel_y <16)*SOUTH
+	var/turf/toAttach = get_step(loc, attachmentDir)
+
+	if(iswall(toAttach))
+		toAttach.attachGameAtom(src, ATFS_PRIORITIZE_ATTACHED_FOR_HITS, ATFA_EASY_INTERACTIVE | ATFA_DIRECTIONAL_HITTABLE )
+	else
+		stack_trace("[src.type] has no wall to attach itself to at X:[x] Y:[y] Z:[z]")
+		// the players need to be confused so they complain about it!
+		color = COLOR_PINK
+
 
 /obj/machinery/button/Destroy()
 	qdel(wifi_sender)

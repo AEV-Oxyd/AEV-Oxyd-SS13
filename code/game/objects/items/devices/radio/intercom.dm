@@ -8,6 +8,7 @@
 	volumeClass = ITEM_SIZE_BULKY
 	canhear_range = 2
 	flags = CONDUCT | NOBLOODY
+	hitbox = /datum/hitboxDatum/atom/intercom
 	var/number = 0
 	var/area/linked_area
 
@@ -111,6 +112,17 @@
 	on = FALSE
 	icon_state = "intercom-p"
 	addtimer(CALLBACK(src, PROC_REF(loop_area_check)), 30 SECONDS)
+
+/obj/item/device/radio/intercom/Initialize()
+	. = ..()
+	var/turf/toAttach = get_step(loc, reverse_dir[dir])
+
+	if(iswall(toAttach))
+		toAttach.attachGameAtom(src,  ATFS_PRIORITIZE_ATTACHED_FOR_HITS, ATFA_EASY_INTERACTIVE | ATFA_DIRECTIONAL_HITTABLE )
+	else
+		stack_trace("[src.type] has no wall to attach itself to at X:[x] Y:[y] Z:[z]")
+		// the players need to be confused so they complain about it!
+		color = COLOR_PINK
 
 /obj/item/device/radio/intercom/broadcasting
 	broadcasting = 1

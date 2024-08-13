@@ -93,7 +93,8 @@
 /obj/item/seeds/random,
 /obj/effect/decal/cleanable/spiderling_remains,
 /obj/structure/fireaxecabinet{
-	pixel_x = -32
+	pixel_x = -32;
+	dir = 4
 	},
 /turf/simulated/floor/tiled/cafe,
 /area/map_template/spider_nest)

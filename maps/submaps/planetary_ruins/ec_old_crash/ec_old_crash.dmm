@@ -599,7 +599,8 @@
 /obj/effect/floor_decal/industrial/warning,
 /obj/structure/closet/l3closet,
 /obj/structure/fireaxecabinet{
-	pixel_y = -32
+	pixel_y = -32;
+	dir = 1
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor/tiled/white/lowpressure,

@@ -7,6 +7,7 @@
 	icon = 'icons/obj/doors/windoor.dmi'
 	icon_state = "left"
 	var/base_state = "left"
+	hitbox = /datum/hitboxDatum/atom/window/directional
 	resistance = RESISTANCE_FRAGILE
 	hitsound = 'sound/effects/Glasshit.ogg'
 	maxHealth = 100 //If you change this, consiter changing ../door/window/brigdoor/ health at the bottom of this .dm file

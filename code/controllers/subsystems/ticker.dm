@@ -124,14 +124,14 @@ SUBSYSTEM_DEF(ticker)
 				//setup failed
 				current_state = GAME_STATE_STARTUP
 				Master.SetRunLevel(RUNLEVEL_LOBBY)
-				#ifdef BULLETDEBUG
-				for(var/atom/thing as anything in GLOB.initVis)
-					if(QDELETED(thing))
-						continue
-					thing.hitbox.visualize(thing)
-				#endif
-
 		if(GAME_STATE_PLAYING)
+			#ifdef BULLETDEBUG
+			for(var/atom/thing as anything in GLOB.initVis)
+				if(QDELETED(thing))
+					continue
+				thing.hitbox.visualize(thing)
+				GLOB.initVis -= thing
+			#endif
 			GLOB.storyteller.Process()
 			GLOB.storyteller.process_events()
 

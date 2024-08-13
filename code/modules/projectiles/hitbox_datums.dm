@@ -397,7 +397,95 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		LISTWEST = list(BBOX(8,2,24,18, LEVEL_TURF, LEVEL_LYING+3, null), BBOX(20,11,25,29, LEVEL_LYING+3, LEVEL_TABLE+5, null)),
 	)
 
+/datum/hitboxDatum/atom/fireAxeCabinet
+	boundingBoxes = list(
+		LISTNORTH = list(BBOX(3,8,29,26,LEVEL_CHEST-5,LEVEL_CHEST+4,null)),
+		LISTSOUTH = list(BBOX(3,8,29,26,LEVEL_CHEST-5,LEVEL_CHEST+4,null)),
+		LISTEAST = list(BBOX(3,8,29,26,LEVEL_CHEST-5,LEVEL_CHEST+4,null)),
+		LISTWEST = list(BBOX(3,8,29,26,LEVEL_CHEST-5,LEVEL_CHEST+4,null))
+	)
 
+/datum/hitboxDatum/atom/fireExtinguisherCabinet
+	boundingBoxes = list(
+		LISTNORTH = list(BBOX(10,6,23,28,LEVEL_CHEST-5,LEVEL_CHEST+4,null)),
+		LISTSOUTH = list(BBOX(10,6,23,28,LEVEL_CHEST-5,LEVEL_CHEST+4,null)),
+		LISTEAST = list(BBOX(10,6,23,28,LEVEL_CHEST-5,LEVEL_CHEST+4,null)),
+		LISTWEST = list(BBOX(10,6,23,28,LEVEL_CHEST-5,LEVEL_CHEST+4,null))
+	)
+
+/datum/hitboxDatum/atom/intercom
+	boundingBoxes = list(
+		LISTSOUTH = list(BBOX(8,11,25,23,LEVEL_CHEST-3,LEVEL_CHEST+3,null)),
+		LISTNORTH = list(BBOX(8,10,25,22,LEVEL_CHEST-3,LEVEL_CHEST+3,null)),
+		LISTEAST = list(BBOX(10,8,22,25,LEVEL_CHEST-3,LEVEL_CHEST+3,null)),
+		LISTWEST = list(BBOX(11,8,23,25,LEVEL_CHEST-3,LEVEL_CHEST+3,null))
+	)
+
+ /datum/hitboxDatum/atom/camera
+	boundingBoxes = list(
+		LISTSOUTH = list(BBOX(14,27,17,32,LEVEL_HEAD-3, LEVEL_HEAD+3,null)),
+		LISTNORTH = list(BBOX(12,1,20,7,LEVEL_HEAD-3, LEVEL_HEAD+3,null)),
+		LISTEAST = list(BBOX(1,14,16,20,LEVEL_HEAD-3, LEVEL_HEAD+3,null)),
+		LISTWEST = list(BBOX(27,13,32,19,LEVEL_HEAD-3, LEVEL_HEAD+3,null))
+	)
+
+/datum/hitboxDatum/atom/button
+	boundingBoxes = list(
+		LISTSOUTH = list(BBOX(13,13,20,21,LEVEL_CHEST+1, LEVEL_CHEST-1,null)),
+		LISTNORTH = list(BBOX(13,13,20,21,LEVEL_CHEST+1, LEVEL_CHEST-1,null)),
+		LISTEAST = list(BBOX(13,13,20,21,LEVEL_CHEST+1, LEVEL_CHEST-1,null)),
+		LISTWEST = list(BBOX(13,13,20,21,LEVEL_CHEST+1, LEVEL_CHEST-1,null))
+	)
+
+/datum/hitboxDatum/atom/closet
+	boundingBoxes = list(
+		LISTSOUTH = list(BBOX(9,3,24,32,LEVEL_TURF, LEVEL_HEAD,null)),
+		LISTNORTH = list(BBOX(9,3,24,32,LEVEL_TURF, LEVEL_HEAD,null)),
+		LISTEAST = list(BBOX(9,3,24,32,LEVEL_TURF, LEVEL_HEAD,null)),
+		LISTWEST = list(BBOX(9,3,24,32,LEVEL_TURF, LEVEL_HEAD,null))
+	)
+
+/datum/hitboxDatum/atom/vendingMachine
+	boundingBoxes = list(
+		LISTSOUTH = list(BBOX(4,1,29,31,LEVEL_TURF, LEVEL_HEAD,null)),
+		LISTNORTH = list(BBOX(4,1,29,31,LEVEL_TURF, LEVEL_HEAD,null)),
+		LISTEAST = list(BBOX(4,1,29,31,LEVEL_TURF, LEVEL_HEAD,null)),
+		LISTWEST = list(BBOX(4,1,29,31,LEVEL_TURF, LEVEL_HEAD,null))
+	)
+
+/datum/hitboxDatum/atom/holopad
+	boundingBoxes = list(
+		LISTSOUTH = list(BBOX(8,8,25,25,LEVEL_TURF+3, LEVEL_TURF+6,null)),
+		LISTNORTH = list(BBOX(8,8,25,25,LEVEL_TURF+3, LEVEL_TURF+6,null)),
+		LISTEAST = list(BBOX(8,8,25,25,LEVEL_TURF+3, LEVEL_TURF+6,null)),
+		LISTWEST = list(BBOX(8,8,25,25,LEVEL_TURF+3, LEVEL_TURF+6,null))
+	)
+
+ /datum/hitboxDatum/atom/atmosphericVentScrubber
+	boundingBoxes = list(
+		LISTSOUTH = list(BBOX(8,8,24,25,LEVEL_TURF-2, LEVEL_TURF,null)),
+		LISTNORTH = list(BBOX(8,8,24,25,LEVEL_TURF-2, LEVEL_TURF,null)),
+		LISTEAST = list(BBOX(8,8,24,25,LEVEL_TURF-2, LEVEL_TURF,null)),
+		LISTWEST = list(BBOX(8,8,24,25,LEVEL_TURF-2, LEVEL_TURF,null))
+	)
+
+/datum/hitboxDatum/atom/modularConsole
+	boundingBoxes = list(
+		LISTSOUTH = list(BBOX(5,5,28,14,LEVEL_TURF, LEVEL_TABLE,null),BBOX(4 ,15, 29, 30, LEVEL_TURF, LEVEL_HEAD, null)),
+		LISTNORTH = list(BBOX(5,4,29,29,LEVEL_TURF, LEVEL_TABLE,null),BBOX(5 ,9, 29, 22, LEVEL_TURF, LEVEL_HEAD, null)),
+		LISTEAST = list(BBOX(5,4,27,26,LEVEL_TURF, LEVEL_TABLE,null),BBOX(9 ,8, 19, 31, LEVEL_TURF, LEVEL_HEAD, null)),
+		LISTWEST = list(BBOX(5,5,28,26,LEVEL_TURF, LEVEL_TABLE,null),BBOX(14 ,7, 24, 32, LEVEL_TURF, LEVEL_HEAD, null))
+	)
+
+/datum/hitboxDatum/disposalUnit
+	boundingBoxes = list(
+		LISTSOUTH = list(BBOX(8,4,25,28,LEVEL_TURF-2, LEVEL_LOWWALL,null)),
+		LISTNORTH = list(BBOX(8,4,25,28,LEVEL_TURF-2, LEVEL_LOWWALL,null)),
+		LISTEAST = list(BBOX(8,4,25,28,LEVEL_TURF-2, LEVEL_LOWWALL,null)),
+		LISTWEST = list(BBOX(8,4,25,28,LEVEL_TURF-2, LEVEL_LOWWALL,null))
+	)
+
+/datum/hitboxDatum/atom/atmosphericCanister
 
 /datum/hitboxDatum/turf
 	boundingBoxes = BBOX(0,0,32,32,LEVEL_BELOW ,LEVEL_ABOVE,null)
@@ -445,6 +533,9 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 
 /datum/hitboxDatum/turf/window
 	boundingBoxes = BBOX(0,0,32,32, LEVEL_LOWWALL, LEVEL_ABOVE, null)
+
+/datum/hitboxDatum/turf/door
+	boundingBoxes = BBOX(0,0,32,32,LEVEL_TURF ,LEVEL_ABOVE,null)
 
 /// This checks line by line instead of a box. Less efficient.
 /datum/hitboxDatum/atom/polygon

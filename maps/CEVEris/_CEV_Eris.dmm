@@ -1882,7 +1882,8 @@
 	dir = 4
 	},
 /obj/structure/fireaxecabinet{
-	pixel_y = -24
+	pixel_y = -24;
+	dir = 1
 	},
 /turf/simulated/floor/tiled/dark,
 /area/eris/security/armory)
@@ -63673,7 +63674,8 @@
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
 /obj/structure/fireaxecabinet{
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 2
 	},
 /turf/simulated/floor/tiled/white/gray_platform,
 /area/eris/medical/reception)
@@ -74303,7 +74305,8 @@
 /area/eris/engineering/foyer)
 "dxB" = (
 /obj/structure/fireaxecabinet{
-	pixel_x = -32
+	pixel_x = -32;
+	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
 /area/eris/command/bridge)
@@ -83214,7 +83217,8 @@
 /obj/machinery/recharger,
 /obj/machinery/camera/network/engineering,
 /obj/structure/fireaxecabinet{
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 2
 	},
 /turf/simulated/floor/tiled/steel/gray_perforated,
 /area/eris/engineering/breakroom)
