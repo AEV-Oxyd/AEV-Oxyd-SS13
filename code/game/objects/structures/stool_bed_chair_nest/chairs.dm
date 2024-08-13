@@ -3,6 +3,7 @@
 	desc = "You sit in this. Either by will or force."
 	description_info = "Can be used as a support to climb up by looking up and clicking on a free tile that is not blocked by a railing"
 	icon_state = "chair_preview"
+	hitbox = /datum/hitboxDatum/atom/chair
 	color = "#666666"
 	base_icon = "chair"
 	var/propelled = 0 // Check for fire-extinguisher-driven chairs
@@ -109,6 +110,7 @@
 /obj/structure/bed/chair/comfy
 	desc = "A chair. It looks comfy."
 	icon_state = "comfychair_preview"
+	hitbox = /datum/hitboxDatum/atom/armChair
 
 /obj/structure/bed/chair/comfy/brown/New(var/newloc,var/newmaterial)
 	..(newloc,MATERIAL_STEEL, MATERIAL_LEATHER)

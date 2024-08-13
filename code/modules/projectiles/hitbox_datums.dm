@@ -349,6 +349,56 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		LISTWEST = list(BBOX(5,4,31,28, LEVEL_TURF, LEVEL_TABLE, null))
 	)
 
+/datum/hitboxDatum/atom/storageRack
+	boundingBoxes = list(
+		LISTNORTH = list(BBOX(5,5,28,27, LEVEL_TURF, LEVEL_TABLE, null)),
+		LISTSOUTH = list(BBOX(5,5,28,27, LEVEL_TURF, LEVEL_TABLE, null)),
+		LISTEAST = list(BBOX(5,5,28,27, LEVEL_TURF, LEVEL_TABLE, null)),
+		LISTWEST = list(BBOX(5,5,28,27, LEVEL_TURF, LEVEL_TABLE, null))
+	)
+
+/datum/hitboxDatum/atom/storageShelf
+	boundingBoxes = list(
+		LISTNORTH = list(BBOX(5,5,28,27, LEVEL_TURF, LEVEL_CHEST, null)),
+		LISTSOUTH = list(BBOX(5,5,28,27, LEVEL_TURF, LEVEL_CHEST, null)),
+		LISTEAST = list(BBOX(5,5,28,27, LEVEL_TURF, LEVEL_CHEST, null)),
+		LISTWEST = list(BBOX(5,5,28,27, LEVEL_TURF, LEVEL_CHEST, null))
+	)
+
+/datum/hitboxDatum/atom/bed
+	boundingBoxes = list(
+		LISTNORTH = list(BBOX(2,4,31,19, LEVEL_TURF+2, LEVEL_LYING-5, null)),
+		LISTSOUTH = list(BBOX(2,4,31,19, LEVEL_TURF+2, LEVEL_LYING-5, null)),
+		LISTEAST = list(BBOX(2,4,31,19, LEVEL_TURF+2, LEVEL_LYING-5, null)),
+		LISTWEST = list(BBOX(2,4,31,19, LEVEL_TURF+2, LEVEL_LYING-5, null))
+	)
+
+/datum/hitboxDatum/atom/stool
+	boundingBoxes = list(
+		LISTNORTH = list(BBOX(10,1,23,17, LEVEL_TURF, LEVEL_LYING+5, null)),
+		LISTSOUTH = list(BBOX(10,1,23,17, LEVEL_TURF, LEVEL_LYING+5, null)),
+		LISTEAST = list(BBOX(10,1,23,17, LEVEL_TURF, LEVEL_LYING+5, null)),
+		LISTWEST = list(BBOX(10,1,23,17, LEVEL_TURF, LEVEL_LYING+5, null))
+	)
+
+/datum/hitboxDatum/atom/chair
+	boundingBoxes = list(
+		LISTSOUTH = list(BBOX(9,6,23,15, LEVEL_LYING, LEVEL_LYING+3, null), BBOX(10,15,22,25, LEVEL_LYING+3, LEVEL_TABLE, null)),
+		LISTNORTH = list(BBOX(9,4,23,10, LEVEL_LYING, LEVEL_LYING+3, null), BBOX(9,11,23,22, LEVEL_LYING+3, LEVEL_TABLE, null)),
+		LISTEAST = list(BBOX(10,7,22,19, LEVEL_LYING, LEVEL_LYING+3, null), BBOX(8,9,12,26, LEVEL_LYING+3, LEVEL_TABLE, null)),
+		LISTWEST = list(BBOX(11,7,23,19, LEVEL_LYING, LEVEL_LYING+3, null), BBOX(21,8,25,26, LEVEL_LYING+3, LEVEL_TABLE, null))
+	)
+
+/datum/hitboxDatum/atom/armChair
+	boundingBoxes = list(
+		LISTSOUTH = list(BBOX(8,1,25,15, LEVEL_TURF, LEVEL_LYING+3, null), BBOX(10,14,23,25, LEVEL_LYING+3, LEVEL_TABLE+5, null)),
+		LISTNORTH = list(BBOX(8,2,25,15, LEVEL_TURF, LEVEL_LYING+3, null), BBOX(10,11,23,28, LEVEL_LYING+3, LEVEL_TABLE+5, null)),
+		LISTEAST = list(BBOX(9,2,25,18, LEVEL_TURF, LEVEL_LYING+3, null), BBOX(8,10,13,29, LEVEL_LYING+3, LEVEL_TABLE+5, null)),
+		LISTWEST = list(BBOX(8,2,24,18, LEVEL_TURF, LEVEL_LYING+3, null), BBOX(20,11,25,29, LEVEL_LYING+3, LEVEL_TABLE+5, null)),
+	)
+
+
+
 /datum/hitboxDatum/turf
 	boundingBoxes = BBOX(0,0,32,32,LEVEL_BELOW ,LEVEL_ABOVE,null)
 

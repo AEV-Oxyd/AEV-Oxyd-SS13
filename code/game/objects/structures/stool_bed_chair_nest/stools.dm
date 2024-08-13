@@ -5,6 +5,7 @@ var/global/list/stool_cache = list() //haha stool
 	name = "stool"
 	desc = "Apply butt."
 	icon = 'icons/obj/furniture.dmi'
+	hitbox = /datum/hitboxDatum/atom/stool
 	icon_state = "stool_preview" //set for the map
 	melleDamages = list(ARMOR_BLUNT = list(DELEM(BRUTE,15)))
 	throwforce = 10
