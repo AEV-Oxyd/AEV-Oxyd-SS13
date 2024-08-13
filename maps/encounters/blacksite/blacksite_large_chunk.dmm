@@ -1554,7 +1554,8 @@
 /area/outpost/blacksite/large)
 "RX" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27
+	pixel_x = 27;
+	dir = 8
 	},
 /turf/simulated/floor/tiled/derelict,
 /area/outpost/blacksite/large)

@@ -453,9 +453,8 @@
 		return
 	force_open()
 	if(autoclose)
-		spawn(150)
-			close()
-	return 1
+		addtimer(CALLBACK(src, PROC_REF(close)), 15 SECONDS)
+	return TRUE
 
 // Proc: close()
 // Parameters: 1 (forced - if true, the checks will be skipped)

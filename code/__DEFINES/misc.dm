@@ -228,6 +228,10 @@
 #define EMAIL_BROADCAST "broadcast@internal-services.net"
 #define EMAIL_PAYROLL "payroll@internal-services.net"
 
+#ifdef BULLETDEBUG
+GLOBAL_LIST_EMPTY(initVis)
+#endif
+
 #define LEGACY_RECORD_STRUCTURE(X, Y) GLOBAL_LIST_EMPTY(##X);/datum/computer_file/data/##Y/var/list/fields[0];/datum/computer_file/data/##Y/New(){..();GLOB.##X.Add(src);}/datum/computer_file/data/##Y/Destroy(){. = ..();GLOB.##X.Remove(src);}
 
 //Number of slots a modular computer has which can be tweaked via gear tweaks.

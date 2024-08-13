@@ -885,8 +885,7 @@
 
 /obj/machinery/alarm/power_change()
 	..()
-	spawn(rand(0,15))
-		update_icon()
+	update_icon()
 
 /obj/machinery/alarm/examine(mob/user)
 	var/description = ""
@@ -1120,8 +1119,7 @@ FIRE ALARM
 
 /obj/machinery/firealarm/power_change()
 	..()
-	spawn(rand(0,15))
-		update_icon()
+	update_icon()
 
 /obj/machinery/firealarm/nano_ui_interact(var/mob/user, var/ui_key = "main", var/datum/nanoui/ui = null, var/force_open = NANOUI_FOCUS, var/datum/nano_topic_state/state = GLOB.outside_state)
 	var/data[0]

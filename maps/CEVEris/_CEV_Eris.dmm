@@ -10605,7 +10605,8 @@
 	dir = 4
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_y = 27
+	pixel_y = 27;
+	dir = 2
 	},
 /turf/simulated/floor/tiled/dark/techfloor,
 /area/eris/quartermaster/disposaldrop)
@@ -11288,7 +11289,8 @@
 	dir = 4
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_y = 27
+	pixel_y = 27;
+	dir = 2
 	},
 /turf/simulated/floor/tiled/dark/techfloor,
 /area/eris/hallway/side/section3starboard)
@@ -17359,7 +17361,8 @@
 /area/eris/security/barracks)
 "aRj" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_y = 27
+	pixel_y = 27;
+	dir = 2
 	},
 /turf/simulated/floor/tiled/dark/techfloor,
 /area/eris/engineering/atmos/storage)
@@ -17933,7 +17936,8 @@
 	pixel_x = 28
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_y = 27
+	pixel_y = 27;
+	dir = 2
 	},
 /obj/structure/cable/green{
 	d2 = 8;
@@ -18314,7 +18318,8 @@
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 24
+	pixel_x = 24;
+	dir = 8
 	},
 /obj/item/computer_hardware/hard_drive/portable{
 	default_files = list(/datum/computer_file/program/trade);
@@ -25146,7 +25151,8 @@
 /obj/item/storage/box/mousetraps,
 /obj/item/storage/box/mousetraps,
 /obj/structure/extinguisher_cabinet{
-	pixel_y = 27
+	pixel_y = 27;
+	dir = 2
 	},
 /turf/simulated/floor/tiled/dark/gray_platform,
 /area/eris/neotheology/altar)
@@ -27985,7 +27991,8 @@
 /area/eris/hallway/side/morguehallway)
 "bop" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
 /area/eris/hallway/side/morguehallway)
@@ -29782,7 +29789,8 @@
 	dir = 1
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_y = -28
+	pixel_y = -28;
+	dir = 1
 	},
 /turf/simulated/floor/tiled/dark/golden,
 /area/eris/neotheology/bioreactor)
@@ -31703,7 +31711,8 @@
 	pixel_y = -28
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 4
 	},
 /turf/simulated/floor/tiled/steel,
 /area/eris/hallway/main/section1)
@@ -33535,7 +33544,8 @@
 /obj/item/ammo_casing/flare,
 /obj/item/gun/projectile/flare_gun,
 /obj/structure/extinguisher_cabinet{
-	pixel_y = 27
+	pixel_y = 27;
+	dir = 2
 	},
 /turf/simulated/floor/tiled/dark/gray_platform,
 /area/eris/maintenance/junk)
@@ -33988,7 +33998,8 @@
 /area/eris/rnd/docking)
 "bDw" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_y = 27
+	pixel_y = 27;
+	dir = 2
 	},
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 4
@@ -36916,7 +36927,8 @@
 /area/eris/command/tcommsat/chamber)
 "bJJ" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/green{
@@ -37685,7 +37697,8 @@
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 4
 	},
 /obj/item/device/radio/intercom{
 	pixel_y = 24
@@ -39880,7 +39893,8 @@
 	dir = 1
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_y = 27
+	pixel_y = 27;
+	dir = 2
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -41021,7 +41035,8 @@
 "bTo" = (
 /obj/machinery/atmospherics/unary/vent_pump/on,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 24
+	pixel_x = 24;
+	dir = 8
 	},
 /turf/simulated/floor/tiled/dark/techfloor,
 /area/eris/engineering/atmos)
@@ -41800,7 +41815,8 @@
 "bVi" = (
 /obj/spawner/junk/low_chance,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 4
 	},
 /turf/simulated/floor/tiled/steel,
 /area/eris/maintenance/section2deck4central)
@@ -42458,7 +42474,8 @@
 	dir = 4
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 4
 	},
 /obj/machinery/camera/network/research{
 	dir = 4
@@ -45071,7 +45088,8 @@
 /area/eris/crew_quarters/clothingstorage)
 "cdI" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 4
 	},
 /turf/simulated/floor/wood,
 /area/eris/crew_quarters/clothingstorage)
@@ -47819,7 +47837,8 @@
 /area/eris/quartermaster/storage)
 "cjS" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 4
 	},
 /obj/machinery/camera/network/research{
 	dir = 4
@@ -48906,7 +48925,8 @@
 /area/eris/command/meo)
 "cmK" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 4
 	},
 /obj/machinery/atmospherics/binary/passive_gate{
 	dir = 1;
@@ -49830,7 +49850,8 @@
 /area/eris/hallway/main/section2)
 "cpf" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 4
 	},
 /turf/simulated/floor/tiled/white,
 /area/eris/rnd/lab)
@@ -49985,7 +50006,8 @@
 /area/eris/medical/surgery)
 "cpz" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 4
 	},
 /obj/machinery/light{
 	dir = 8
@@ -51181,7 +51203,8 @@
 /area/eris/crew_quarters/kitchen_storage)
 "csE" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 4
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/plating/under,
@@ -51228,7 +51251,8 @@
 	req_access = null
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_y = -28
+	pixel_y = -28;
+	dir = 1
 	},
 /obj/machinery/button/remote/blast_door{
 	id = "artist_office_west";
@@ -51516,7 +51540,8 @@
 /area/eris/maintenance/section3deck4central)
 "ctI" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/eris/maintenance/oldtele)
@@ -51703,7 +51728,8 @@
 /area/eris/hallway/side/bridgehallway)
 "cul" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 4
 	},
 /turf/simulated/floor/tiled/steel/bluecorner,
 /area/eris/hallway/side/bridgehallway)
@@ -52103,7 +52129,8 @@
 /obj/spawner/pack/tech_loot,
 /obj/spawner/pack/tech_loot,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techmaint_perforated,
 /area/eris/maintenance/section3deck4central)
@@ -53356,7 +53383,8 @@
 /area/eris/quartermaster/storage)
 "cyu" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27
+	pixel_x = 27;
+	dir = 8
 	},
 /obj/item/device/radio/intercom{
 	pixel_y = 24
@@ -57007,7 +57035,8 @@
 /obj/spawner/material/building/low_chance,
 /obj/spawner/material/building/low_chance,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 24
+	pixel_x = 24;
+	dir = 8
 	},
 /turf/simulated/floor/tiled/steel/gray_perforated,
 /area/eris/engineering/drone_fabrication)
@@ -57880,7 +57909,8 @@
 "cJJ" = (
 /obj/spawner/junk/low_chance,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 24
+	pixel_x = 24;
+	dir = 8
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/eris/maintenance/section4deck4central)
@@ -57919,14 +57949,16 @@
 "cJO" = (
 /obj/structure/cyberplant,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 4
 	},
 /turf/simulated/floor/tiled/steel/gray_platform,
 /area/eris/crew_quarters/sleep/cryo)
 "cJP" = (
 /obj/structure/cyberplant,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 24
+	pixel_x = 24;
+	dir = 8
 	},
 /turf/simulated/floor/tiled/steel/gray_platform,
 /area/eris/crew_quarters/sleep/cryo)
@@ -58197,7 +58229,8 @@
 /area/eris/medical/medbay)
 "cKw" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_y = 27
+	pixel_y = 27;
+	dir = 2
 	},
 /turf/simulated/floor/tiled/steel,
 /area/eris/hallway/side/section3deck2port)
@@ -58676,7 +58709,8 @@
 /area/eris/medical/medbay)
 "cLH" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 26
+	pixel_x = 26;
+	dir = 8
 	},
 /turf/simulated/floor/tiled/steel/techfloor_grid,
 /area/eris/engineering/breakroom)
@@ -58832,7 +58866,8 @@
 	icon_state = "1-2"
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 24
+	pixel_x = 24;
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/eris/engineering/construction)
@@ -60193,7 +60228,8 @@
 /obj/item/tank/oxygen,
 /obj/item/clothing/mask/gas,
 /obj/structure/extinguisher_cabinet{
-	pixel_y = 27
+	pixel_y = 27;
+	dir = 2
 	},
 /turf/simulated/floor/tiled/steel,
 /area/eris/command/teleporter)
@@ -62446,7 +62482,8 @@
 	pixel_y = 3
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27
+	pixel_x = 27;
+	dir = 8
 	},
 /turf/simulated/floor/tiled/white/violetcorener,
 /area/eris/rnd/xenobiology)
@@ -65887,7 +65924,8 @@
 	dir = 8
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 4
 	},
 /turf/simulated/floor/carpet/bcarpet,
 /area/eris/command/meeting_room)
@@ -66802,7 +66840,8 @@
 "dgo" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 24
+	pixel_x = 24;
+	dir = 8
 	},
 /turf/simulated/floor/tiled/white/brown_platform,
 /area/eris/medical/reception)
@@ -66842,7 +66881,8 @@
 /area/eris/rnd/xenobiology)
 "dgs" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 24
+	pixel_x = 24;
+	dir = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/eris/medical/medbay)
@@ -68441,7 +68481,8 @@
 /area/eris/hallway/side/atmosphericshallway)
 "djS" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27
+	pixel_x = 27;
+	dir = 8
 	},
 /obj/structure/cable/green{
 	d1 = 1;
@@ -68517,7 +68558,8 @@
 	dir = 8
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 4
 	},
 /turf/simulated/floor/tiled/steel,
 /area/eris/hallway/main/section3)
@@ -72013,7 +72055,8 @@
 /area/eris/maintenance/section3deck2starboard)
 "dsa" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_y = 27
+	pixel_y = 27;
+	dir = 2
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -74379,7 +74422,8 @@
 /area/eris/engineering/foyer)
 "dxT" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -26
+	pixel_x = -26;
+	dir = 4
 	},
 /turf/simulated/floor/tiled/steel/orangecorner,
 /area/eris/engineering/starboardhallway)
@@ -76416,7 +76460,8 @@
 /area/eris/medical/reception)
 "dCD" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -24
+	pixel_x = -24;
+	dir = 4
 	},
 /obj/item/modular_computer/console/preset/engineering/alarms{
 	dir = 4
@@ -76591,7 +76636,8 @@
 "dDa" = (
 /obj/structure/catwalk,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 4
 	},
 /turf/simulated/open,
 /area/eris/quartermaster/storage)
@@ -76849,7 +76895,8 @@
 	dir = 4
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27
+	pixel_x = 27;
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/dark,
@@ -76956,7 +77003,8 @@
 	dir = 8
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
@@ -78626,7 +78674,8 @@
 /area/eris/engineering/starboardhallway)
 "dHZ" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 24
+	pixel_x = 24;
+	dir = 8
 	},
 /turf/simulated/floor/tiled/steel/techfloor,
 /area/eris/engineering/engine_room)
@@ -80571,7 +80620,8 @@
 /area/eris/engineering/propulsion/right)
 "dNb" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -26
+	pixel_x = -26;
+	dir = 4
 	},
 /turf/simulated/floor/tiled/steel/techfloor_grid,
 /area/eris/engineering/propulsion/left)
@@ -80754,13 +80804,15 @@
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -24
+	pixel_x = -24;
+	dir = 4
 	},
 /turf/simulated/floor/tiled/steel/gray_platform,
 /area/eris/engineering/foyer)
 "dNF" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 26
+	pixel_x = 26;
+	dir = 8
 	},
 /turf/simulated/floor/tiled/steel/techfloor_grid,
 /area/eris/engineering/propulsion/right)
@@ -80832,7 +80884,8 @@
 /area/eris/engineering/foyer)
 "dNS" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 4
 	},
 /turf/simulated/floor/tiled/cafe,
 /area/eris/crew_quarters/kitchen)
@@ -81332,7 +81385,8 @@
 /area/eris/engineering/gravity_generator)
 "dPp" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -26
+	pixel_x = -26;
+	dir = 4
 	},
 /obj/machinery/firealarm{
 	dir = 1;
@@ -81664,7 +81718,8 @@
 /area/eris/maintenance/section2deck1port)
 "dQq" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27
+	pixel_x = 27;
+	dir = 8
 	},
 /obj/structure/cable/green{
 	d1 = 2;
@@ -83059,7 +83114,8 @@
 /obj/item/tool/crowbar,
 /obj/item/tool/crowbar,
 /obj/structure/extinguisher_cabinet{
-	pixel_y = 27
+	pixel_y = 27;
+	dir = 2
 	},
 /turf/simulated/floor/tiled/steel/gray_platform,
 /area/eris/quartermaster/misc)
@@ -83996,7 +84052,8 @@
 "dWo" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27
+	pixel_x = 27;
+	dir = 8
 	},
 /obj/structure/cable/green{
 	d1 = 1;
@@ -85324,7 +85381,8 @@
 /area/eris/maintenance/section3deck2port)
 "dZS" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 24
+	pixel_x = 24;
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/white/golden,
@@ -87921,7 +87979,8 @@
 	dir = 1
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 4
 	},
 /turf/simulated/floor/tiled/steel/brown_platform,
 /area/eris/quartermaster/storage)
@@ -90340,7 +90399,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/catwalk,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 24
+	pixel_x = 24;
+	dir = 8
 	},
 /turf/simulated/floor/plating/under,
 /area/eris/maintenance/section3deck3starboard)
@@ -91875,7 +91935,8 @@
 /obj/item/storage/toolbox/emergency,
 /obj/item/storage/toolbox/emergency,
 /obj/structure/extinguisher_cabinet{
-	pixel_y = 27
+	pixel_y = 27;
+	dir = 2
 	},
 /turf/simulated/floor/tiled/steel/cargo,
 /area/eris/hallway/main/section3)
@@ -93244,7 +93305,8 @@
 "eta" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 4
 	},
 /turf/simulated/floor/tiled/steel,
 /area/eris/hallway/side/section3starboard)
@@ -93275,7 +93337,8 @@
 /area/eris/command/exultant)
 "etf" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_y = 27
+	pixel_y = 27;
+	dir = 2
 	},
 /obj/machinery/portable_atmospherics/powered/scrubber,
 /turf/simulated/floor/tiled/steel/gray_platform,
@@ -94220,7 +94283,8 @@
 /area/eris/neotheology/chapel)
 "evv" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 24
+	pixel_x = 24;
+	dir = 8
 	},
 /obj/structure/table/standard,
 /obj/item/reagent_containers/dropper{
@@ -103067,7 +103131,8 @@
 /area/eris/medical/chemstor)
 "nfm" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_y = 27
+	pixel_y = 27;
+	dir = 2
 	},
 /obj/structure/bed/chair{
 	dir = 4
@@ -105553,7 +105618,8 @@
 /area/eris/maintenance/section2deck3port)
 "sOh" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 4
 	},
 /obj/structure/bed/chair/comfy/beige,
 /turf/simulated/floor/carpet/bcarpet,
@@ -105887,7 +105953,8 @@
 /area/eris/medical/chemistry)
 "tAt" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled/dark/golden,
@@ -108031,7 +108098,8 @@
 /area/eris/neotheology/chapelritualroom)
 "yit" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_y = -28
+	pixel_y = -28;
+	dir = 1
 	},
 /obj/structure/bed/chair/comfy/brown{
 	dir = 8

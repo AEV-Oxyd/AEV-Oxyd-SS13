@@ -231,7 +231,7 @@
 	hitbox = getHitbox(hitbox)
 	#ifdef BULLETDEBUG
 	if(hitbox)
-		addtimer(CALLBACK(hitbox, TYPE_PROC_REF(/datum/hitboxDatum, visualize), src), 1 MINUTE)
+		GLOB.initVis += src
 	#endif
 
 	if(preloaded_reagents)

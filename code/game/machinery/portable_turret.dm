@@ -277,9 +277,8 @@ var/list/turret_icons
 		stat &= ~NOPOWER
 		update_icon()
 	else
-		spawn(rand(0, 15))
-			stat |= NOPOWER
-			update_icon()
+		stat |= NOPOWER
+		update_icon()
 
 
 /obj/machinery/porta_turret/attackby(obj/item/I, mob/user)

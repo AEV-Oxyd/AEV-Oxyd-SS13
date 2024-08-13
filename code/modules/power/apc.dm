@@ -472,9 +472,8 @@
 	if(!updating_icon)
 		updating_icon = 1
 		// Start the update
-		spawn(APC_UPDATE_ICON_COOLDOWN)
-			update_icon()
-			updating_icon = 0
+		update_icon()
+		updating_icon = 0
 
 //attack with an item - open/close cover, insert cell, or (un)lock interface
 

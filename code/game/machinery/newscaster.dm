@@ -250,9 +250,8 @@ var/datum/feed_network/news_network = new /datum/feed_network     //The global n
 		src.ispowered = 1
 		src.update_icon()
 	else
-		spawn(rand(0, 15))
-			src.ispowered = 0
-			src.update_icon()
+		src.ispowered = 0
+		src.update_icon()
 
 /obj/machinery/newscaster/take_damage(amount)
 	. = ..()

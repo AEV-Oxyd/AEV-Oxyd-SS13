@@ -258,11 +258,13 @@
 			use_power(360)
 
 	if(checkAlarmed())
-		spawn(150)
-			if(checkAlarmed())
-				close()
+		addtimer(CALLBACK(src, PROC_REF(tryClose)), 15 SECONDS)
 
 	return ..()
+
+/obj/machinery/door/firedoor/proc/tryClose()
+	if(checkAlarmed())
+		close()
 
 /obj/machinery/door/firedoor/do_animate(animation)
 	switch(animation)
