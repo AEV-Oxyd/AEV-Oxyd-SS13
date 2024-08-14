@@ -486,6 +486,12 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	)
 
 /datum/hitboxDatum/atom/atmosphericCanister
+	boundingBoxes = list(
+		LISTSOUTH = list(BBOX(9,3,24,31,LEVEL_TURF, LEVEL_CHEST,null)),
+		LISTNORTH = list(BBOX(9,3,24,31,LEVEL_TURF, LEVEL_CHEST,null)),
+		LISTEAST = list(BBOX(9,3,24,31,LEVEL_TURF, LEVEL_CHEST,null)),
+		LISTWEST = list(BBOX(9,3,24,31,LEVEL_TURF, LEVEL_CHEST,null))
+	)
 
 /datum/hitboxDatum/turf
 	boundingBoxes = BBOX(0,0,32,32,LEVEL_BELOW ,LEVEL_ABOVE,null)

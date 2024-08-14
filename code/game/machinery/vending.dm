@@ -91,6 +91,7 @@
 	layer = BELOW_OBJ_LAYER
 	anchored = TRUE
 	density = TRUE
+	hitbox = /datum/hitboxDatum/atom/vendingMachine
 
 	var/icon_vend //Icon_state when vending
 	var/icon_deny //Icon_state when denying access

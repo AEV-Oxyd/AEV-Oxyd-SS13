@@ -7,6 +7,7 @@
 	maxHealth = 100
 	flags = CONDUCT
 	volumeClass = ITEM_SIZE_HUGE
+	hitbox = /datum/hitboxDatum/atom/atmosphericCanister
 
 	var/valve_open = 0
 	var/release_pressure = ONE_ATMOSPHERE

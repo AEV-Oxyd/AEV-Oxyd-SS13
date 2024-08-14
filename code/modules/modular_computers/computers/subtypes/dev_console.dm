@@ -17,6 +17,7 @@
 	max_damage = 300
 	broken_damage = 150
 	spawn_tags = SPAWN_TAG_MACHINERY
+	hitbox = /datum/hitboxDatum/atom/modularConsole
 
 /obj/item/modular_computer/console/CouldUseTopic(mob/user)
 	..()
