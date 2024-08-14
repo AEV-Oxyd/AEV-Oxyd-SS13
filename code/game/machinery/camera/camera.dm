@@ -66,6 +66,9 @@
 
 /obj/machinery/camera/Initialize(mapload, d)
 	. = ..()
+	/// sim-camera.
+	if(!isturf(loc))
+		return
 	var/turf/toAttach = get_step(loc, reverse_dir[dir])
 
 	if(iswall(toAttach))

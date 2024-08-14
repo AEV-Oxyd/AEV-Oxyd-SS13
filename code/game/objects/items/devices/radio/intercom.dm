@@ -115,7 +115,13 @@
 
 /obj/item/device/radio/intercom/Initialize()
 	. = ..()
-	var/turf/toAttach = get_step(loc, reverse_dir[dir])
+
+	/// We are a internal intercom, not for game-usage.
+	if(!isturf(loc))
+		return
+	//// YES this doesn't rely on proper mapping because i can't really replace most of them and wouldn't make sense in most cases anyway.(since pixel_x and pixel_y will always vary etc etc.)
+	var/attachmentDir = (pixel_x > 16)*EAST | (pixel_x < -16)*WEST | (pixel_y > 16)*NORTH | (pixel_y < -16)*SOUTH
+	var/turf/toAttach = get_step(loc, attachmentDir)
 
 	if(iswall(toAttach))
 		toAttach.attachGameAtom(src,  ATFS_PRIORITIZE_ATTACHED_FOR_HITS, ATFA_EASY_INTERACTIVE | ATFA_DIRECTIONAL_HITTABLE )

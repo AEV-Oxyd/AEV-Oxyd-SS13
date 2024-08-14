@@ -22,6 +22,7 @@
 	description_info = "Can be deconstructed by welding closed, screwing and crowbaring the circuits out."
 	icon_state = "door_open"
 	req_one_access = list(access_atmospherics, access_engine_equip, access_medical_equip)
+	hitbox = /datum/hitboxDatum/turf/door
 	opacity = FALSE
 	density = FALSE
 	layer = BELOW_OPEN_DOOR_LAYER

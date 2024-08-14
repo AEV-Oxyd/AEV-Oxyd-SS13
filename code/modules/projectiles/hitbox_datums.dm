@@ -421,7 +421,7 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		LISTWEST = list(BBOX(11,8,23,25,LEVEL_CHEST-3,LEVEL_CHEST+3,null))
 	)
 
- /datum/hitboxDatum/atom/camera
+/datum/hitboxDatum/atom/camera
 	boundingBoxes = list(
 		LISTSOUTH = list(BBOX(14,27,17,32,LEVEL_HEAD-3, LEVEL_HEAD+3,null)),
 		LISTNORTH = list(BBOX(12,1,20,7,LEVEL_HEAD-3, LEVEL_HEAD+3,null)),
@@ -461,7 +461,7 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		LISTWEST = list(BBOX(8,8,25,25,LEVEL_TURF+3, LEVEL_TURF+6,null))
 	)
 
- /datum/hitboxDatum/atom/atmosphericVentScrubber
+/datum/hitboxDatum/atom/atmosphericVentScrubber
 	boundingBoxes = list(
 		LISTSOUTH = list(BBOX(8,8,24,25,LEVEL_TURF-2, LEVEL_TURF,null)),
 		LISTNORTH = list(BBOX(8,8,24,25,LEVEL_TURF-2, LEVEL_TURF,null)),

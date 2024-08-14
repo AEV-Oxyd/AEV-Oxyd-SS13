@@ -17209,13 +17209,6 @@
 /obj/structure/catwalk,
 /turf/simulated/open,
 /area/eris/security/barracks)
-"aQN" = (
-/obj/structure/catwalk,
-/obj/machinery/camera/network/security{
-	dir = 8
-	},
-/turf/simulated/open,
-/area/eris/security/main)
 "aQO" = (
 /obj/structure/catwalk,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -17233,13 +17226,6 @@
 "aQQ" = (
 /obj/structure/multiz/ladder,
 /obj/structure/catwalk,
-/turf/simulated/open,
-/area/eris/security/barracks)
-"aQR" = (
-/obj/structure/catwalk,
-/obj/machinery/camera/network/security{
-	dir = 8
-	},
 /turf/simulated/open,
 /area/eris/security/barracks)
 "aQT" = (
@@ -99946,7 +99932,7 @@
 /area/eris/hallway/side/section3deck2port)
 "gey" = (
 /obj/machinery/camera/network/research{
-	dir = 8
+	dir = 1
 	},
 /obj/item/storage/toolbox/mechanical,
 /obj/structure/table/reinforced,
@@ -168353,7 +168339,7 @@ aaA
 aaa
 aac
 aQJ
-aQN
+aQJ
 aQT
 aac
 aBl
@@ -171989,7 +171975,7 @@ aaA
 aaa
 aag
 aQL
-aQR
+aQL
 bNB
 aag
 aag
