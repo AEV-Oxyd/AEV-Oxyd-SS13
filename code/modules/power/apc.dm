@@ -72,6 +72,7 @@
 	use_power = NO_POWER_USE
 	req_access = list(access_engine_equip)
 	hitbox = /datum/hitboxDatum/atom/areaPowerController
+	atomFlags = AF_WALL_MOUNTED
 	var/need_sound
 	var/area/area
 	var/areastring
@@ -221,15 +222,6 @@
 		if(area.apc)
 			log_mapping("Duplicate APC created at [AREACOORD(src)]. Original at [AREACOORD(area.apc)].")
 		area.apc = src
-
-	var/turf/toAttach = get_step(loc, reverse_dir[dir])
-
-	if(iswall(toAttach))
-		toAttach.attachGameAtom(src,  ATFS_PRIORITIZE_ATTACHED_FOR_HITS, ATFA_EASY_INTERACTIVE | ATFA_DIRECTIONAL_HITTABLE )
-	else
-		stack_trace("[src.type] has no wall to attach itself to at X:[x] Y:[y] Z:[z]")
-		// the players need to be confused so they complain about it!
-		color = COLOR_PINK
 
 	update_icon()
 

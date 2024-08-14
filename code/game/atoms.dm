@@ -20,7 +20,7 @@
 	var/used_now = FALSE //For tools system, check for it should forbid to work on atom for more than one user at time
 
 
-	var/atomFlags = null
+	var/atomFlags = 0
 
 	///Chemistry.
 	var/reagent_flags = NONE

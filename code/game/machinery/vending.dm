@@ -1215,6 +1215,7 @@
 	custom_vendor = TRUE // Chemists can load it for customers
 	can_stock = list(/obj/item/reagent_containers/glass, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/pill, /obj/item/stack/medical, /obj/item/bodybag, /obj/item/device/scanner/health, /obj/item/reagent_containers/hypospray, /obj/item/storage/pill_bottle, /obj/item/reagent_containers/food/snacks/moecube, /obj/item/organ/internal)
 	vendor_department = DEPARTMENT_MEDICAL
+	atomFlags = AF_WALL_MOUNTED
 
 /obj/machinery/vending/wallmed/minor
 	products = list(

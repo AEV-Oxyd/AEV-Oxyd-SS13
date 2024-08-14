@@ -70,6 +70,30 @@ SUBSYSTEM_DEF(statverbs)
 /atom/Initialize()
 	. = ..()
 	initalize_statverbs()
+	if(atomFlags & AF_WALL_MOUNTED)
+		//// YES this doesn't rely on proper mapping because i can't really replace most of them and wouldn't make sense in most cases anyway.(since pixel_x and pixel_y will always vary etc etc.)
+		if(!isturf(loc))
+			stack_trace("[src.type] has the AF_WALL_MOUNTED flag, but is not initialized with a valid location(on a turf). Remove it or fix the underlying issue.")
+			return
+		var/turf/toAttach
+		var/attachmentDir = (pixel_x > 16)*EAST | (pixel_x < -16)*WEST | (pixel_y > 16)*NORTH | (pixel_y < -16)*SOUTH
+		if(atomFlags & AF_WALL_MOUNTED_REVERSE_DIR)
+			if(!attachmentDir)
+				attachmentDir = dir
+		else
+			if(!attachmentDir)
+				attachmentDir = reverse_dir[dir]
+			dir = reverse_dir[attachmentDir]
+		toAttach = get_step(loc, attachmentDir)
+
+		if(iswall(toAttach))
+			toAttach.attachGameAtom(src, ATFS_PRIORITIZE_ATTACHED_FOR_HITS, ATFA_EASY_INTERACTIVE | ATFA_DIRECTIONAL_HITTABLE )
+		else
+			stack_trace("[src.type] has no wall to attach itself to at X:[x] Y:[y] Z:[z]")
+			// the players need to be confused so they complain about it!
+			name = "I am bugged tell devs!!"
+			desc = "Bugged at X:[x] Y:[y] Z:[z]"
+			color = COLOR_PINK
 
 
 

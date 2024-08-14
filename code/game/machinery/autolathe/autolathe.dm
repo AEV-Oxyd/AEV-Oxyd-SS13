@@ -11,6 +11,7 @@
 	idle_power_usage = 10
 	active_power_usage = 2000
 	circuit = /obj/item/electronics/circuitboard/autolathe
+	hitbox = /datum/hitboxDatum/atom/autolathe
 
 	var/build_type = AUTOLATHE
 

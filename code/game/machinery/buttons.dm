@@ -4,6 +4,7 @@
 	icon_state = "launcher0"
 	desc = "A remote control switch for something."
 	hitbox = /datum/hitboxDatum/atom/button
+	atomFlags = AF_WALL_MOUNTED
 	var/id = null
 	var/active = 0
 	var/operating = 0
@@ -19,29 +20,6 @@
 	update_icon()
 	if(_wifi_id && !wifi_sender)
 		wifi_sender = new/datum/wifi/sender/button(_wifi_id, src)
-
-	//// YES this doesn't rely on proper mapping because i can't really replace most of them and wouldn't make sense in most cases anyway.(since pixel_x and pixel_y will always vary etc etc.)
-	var/attachmentDir = (pixel_x > 16)*EAST | (pixel_x < -16)*WEST | (pixel_y > 16)*NORTH | (pixel_y < -16)*SOUTH
-	var/turf/toAttach
-	if(!attachmentDir)
-		stack_trace("[src.type] is directly placed ontop of a wall / not on a wall at X:[x] Y:[y] Z:[z], this shoudln't be done so buttons don't show on other sides of the walls.")
-		color = COLOR_PINK
-		name = "I am bugged tell devs!!"
-		desc = "Bugged at X:[x] Y:[y] Z:[z]"
-		toAttach = get_turf(src)
-	else
-		toAttach = get_step(loc, attachmentDir)
-		dir = reverse_dir[attachmentDir]
-
-	if(iswall(toAttach))
-		toAttach.attachGameAtom(src, ATFS_PRIORITIZE_ATTACHED_FOR_HITS, ATFA_EASY_INTERACTIVE | ATFA_DIRECTIONAL_HITTABLE )
-	else
-		stack_trace("[src.type] has no wall to attach itself to at X:[x] Y:[y] Z:[z]")
-		// the players need to be confused so they complain about it!
-		name = "I am bugged tell devs!!"
-		desc = "Bugged at X:[x] Y:[y] Z:[z]"
-		color = COLOR_PINK
-
 
 /obj/machinery/button/Destroy()
 	qdel(wifi_sender)

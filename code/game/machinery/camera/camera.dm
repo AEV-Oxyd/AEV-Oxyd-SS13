@@ -9,6 +9,7 @@
 	active_power_usage = 10
 	layer = WALL_OBJ_LAYER
 	hitbox = /datum/hitboxDatum/atom/camera
+	atomFlags = AF_WALL_MOUNTED
 
 	var/list/network = list(NETWORK_CEV_ERIS)
 	var/c_tag = null
@@ -63,20 +64,6 @@
 	if(isturf(loc) && !c_tag)
 		var/area/A = get_area(src)
 		c_tag = A.get_camera_tag(src)
-
-/obj/machinery/camera/Initialize(mapload, d)
-	. = ..()
-	/// sim-camera.
-	if(!isturf(loc))
-		return
-	var/turf/toAttach = get_step(loc, reverse_dir[dir])
-
-	if(iswall(toAttach))
-		toAttach.attachGameAtom(src, ATFS_PRIORITIZE_ATTACHED_FOR_HITS, ATFA_EASY_INTERACTIVE | ATFA_DIRECTIONAL_HITTABLE )
-	else
-		stack_trace("[src.type] has no wall to attach itself to at X:[x] Y:[y] Z:[z]")
-		// the players need to be confused so they complain about it!
-		color = COLOR_PINK
 
 /obj/machinery/camera/Destroy()
 	deactivate(null, 0) //kick anyone viewing out

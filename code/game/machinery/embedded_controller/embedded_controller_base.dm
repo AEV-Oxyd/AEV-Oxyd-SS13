@@ -7,9 +7,12 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 
+	atomFlags = AF_WALL_MOUNTED
+	hitbox = /datum/hitboxDatum/atom/button
+
 	var/on = TRUE
 
-obj/machinery/embedded_controller/radio/Destroy()
+/obj/machinery/embedded_controller/radio/Destroy()
 	SSradio.remove_object(src,frequency)
 	. = ..()
 

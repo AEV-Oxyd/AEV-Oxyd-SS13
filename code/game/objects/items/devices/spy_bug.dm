@@ -59,6 +59,8 @@
 
 	origin_tech = list(TECH_DATA = 1, TECH_ENGINEERING = 1, TECH_COVERT = 3)
 
+	atomFlags = parent_type::atomFlags & ~AF_WALL_MOUNTED
+
 	var/operating = 0
 	var/obj/item/device/radio/spy/radio
 	var/obj/machinery/camera/spy/selected_camera

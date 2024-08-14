@@ -166,6 +166,7 @@
 	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 20
+	atomFlags = AF_WALL_MOUNTED | AF_WALL_MOUNTED_REVERSE_DIR
 	power_channel = STATIC_LIGHT //Lights are calc'd via area so they dont need to be in the machine list
 	var/on = FALSE					// 1 if on, 0 if off
 	var/on_gs = 0
@@ -190,6 +191,7 @@
 	name = "floorlight fixture"
 	base_state = "floortube"
 	icon_state = "floortube1"
+	atomFlags = parent_type::atomFlags & ~AF_WALL_MOUNTED
 	layer = 2.5
 
 /obj/machinery/light/small

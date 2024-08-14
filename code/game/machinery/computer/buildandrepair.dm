@@ -5,6 +5,7 @@
 	density = TRUE
 	anchored = FALSE
 	matter = list(MATERIAL_STEEL = 5)
+	hitbox = /datum/hitboxDatum/atom/modularConsole
 	var/state = 0
 	var/obj/item/electronics/circuitboard/circuit
 	spawn_tags = SPAWN_TAG_MACHINE_FRAME

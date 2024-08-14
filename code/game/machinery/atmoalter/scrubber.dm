@@ -12,6 +12,8 @@
 
 	volume = 750
 
+	hitbox = /datum/hitboxDatum/atom/atmosphericScrubber
+
 	power_rating = 7500 //7500 W ~ 10 HP
 	power_losses = 150
 

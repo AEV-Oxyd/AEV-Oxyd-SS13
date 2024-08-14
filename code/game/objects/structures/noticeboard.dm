@@ -5,6 +5,7 @@
 	icon_state = "nboard00"
 	density = FALSE
 	anchored = TRUE
+	atomFlags = AF_WALL_MOUNTED
 	var/notices = 0
 
 /obj/structure/noticeboard/Initialize()

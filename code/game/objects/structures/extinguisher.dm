@@ -4,6 +4,7 @@
 	icon = 'icons/obj/closet.dmi'
 	icon_state = "extinguisher_closed"
 	hitbox = /datum/hitboxDatum/atom/fireExtinguisherCabinet
+	atomFlags = AF_WALL_MOUNTED
 	anchored = TRUE
 	density = FALSE
 	var/obj/item/extinguisher/has_extinguisher
@@ -13,17 +14,6 @@
 	..()
 	has_extinguisher = new/obj/item/extinguisher(src)
 	update_icon()
-
-/obj/structure/extinguisher_cabinet/Initialize()
-	. = ..()
-	var/turf/toAttach = get_step(loc, reverse_dir[dir])
-
-	if(iswall(toAttach))
-		toAttach.attachGameAtom(src, ATFS_PRIORITIZE_ATTACHED_FOR_HITS, ATFA_EASY_INTERACTIVE | ATFA_DIRECTIONAL_HITTABLE )
-	else
-		stack_trace("[src.type] has no wall to attach itself to at X:[x] Y:[y] Z:[z]")
-		// the players need to be confused so they complain about it!
-		color = COLOR_PINK
 
 /obj/structure/extinguisher_cabinet/attackby(obj/item/O, mob/user)
 	if(isrobot(user))

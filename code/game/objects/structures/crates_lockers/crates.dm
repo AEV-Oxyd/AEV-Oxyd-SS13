@@ -11,6 +11,7 @@
 	health = 600
 	maxHealth = 600
 	price_tag = 50
+	hitbox = /datum/hitboxDatum/atom/crate
 
 /obj/structure/closet/crate/close()
 	if(!src.opened)

@@ -14,6 +14,7 @@
 	density = TRUE
 	anchored = TRUE
 	use_power = NO_POWER_USE
+	hitbox = /datum/hitboxDatum/atom/smes
 
 	var/capacity = 5e6 // maximum charge
 	var/charge = 1e6 // actual charge

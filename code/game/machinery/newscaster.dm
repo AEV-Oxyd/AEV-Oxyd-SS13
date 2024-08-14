@@ -137,6 +137,7 @@ var/datum/feed_network/news_network = new /datum/feed_network     //The global n
 	icon_state = "newscaster_normal"
 	light_range = 0
 	anchored = TRUE
+	atomFlags = AF_WALL_MOUNTED
 
 	var/isbroken = 0  //1 if someone banged it with something heavy
 	var/ispowered = 1 //starts powered, changes with power_change()

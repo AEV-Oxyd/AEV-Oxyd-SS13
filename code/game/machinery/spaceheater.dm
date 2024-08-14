@@ -6,6 +6,7 @@
 	name = "space heater"
 	desc = "Made by Space Amish using traditional space techniques, this heater is guaranteed not to set the ship on fire."
 	description_info = "Can have its temperature adjusted by opening the panel with a screwdriver and clicking."
+	hitbox = /datum/hitboxDatum/atom/atmosphericHeater
 	var/obj/item/cell/large/cell
 	var/on = FALSE
 	var/set_temperature = T0C + 50	//K

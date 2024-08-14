@@ -5,6 +5,7 @@
 	anchored = TRUE
 	density = FALSE
 	hitbox = /datum/hitboxDatum/atom/fireAxeCabinet
+	atomFlags = AF_WALL_MOUNTED
 
 	var/damage_threshold = 15
 	var/open
@@ -27,17 +28,6 @@
 	open = 1
 	playsound(user, 'sound/effects/Glassbr3.ogg', 100, 1)
 	update_icon()
-
-/obj/structure/fireaxecabinet/Initialize()
-	. = ..()
-
-	var/turf/toAttach = get_step(loc, reverse_dir[dir])
-	if(iswall(toAttach))
-		toAttach.attachGameAtom(src,  ATFS_PRIORITIZE_ATTACHED_FOR_HITS, ATFA_EASY_INTERACTIVE | ATFA_DIRECTIONAL_HITTABLE )
-	else
-		stack_trace("[src.type] has no wall to attach itself to at X:[x] Y:[y] Z:[z]")
-		// the players need to be confused so they complain about it!
-		color = COLOR_PINK
 
 /obj/structure/fireaxecabinet/update_icon()
 	overlays.Cut()

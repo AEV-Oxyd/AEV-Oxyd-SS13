@@ -130,7 +130,6 @@
 	GLOB.machines += src
 	InitCircuit()
 	START_PROCESSING(SSmachines, src)
-
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/LateInitialize()

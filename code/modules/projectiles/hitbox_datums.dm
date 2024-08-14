@@ -493,6 +493,89 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		LISTWEST = list(BBOX(9,3,24,31,LEVEL_TURF, LEVEL_CHEST,null))
 	)
 
+/datum/hitboxDatum/atom/atmosphericPump
+	boundingBoxes = list(
+		LISTSOUTH = list(BBOX(6,4,25,27,LEVEL_TURF, LEVEL_LOWWALL,null)),
+		LISTNORTH = list(BBOX(6,4,25,27,LEVEL_TURF, LEVEL_LOWWALL,null)),
+		LISTEAST = list(BBOX(6,4,25,27,LEVEL_TURF, LEVEL_LOWWALL,null)),
+		LISTWEST = list(BBOX(6,4,25,27,LEVEL_TURF, LEVEL_LOWWALL,null))
+	)
+
+/datum/hitboxDatum/atom/atmosphericScrubber
+	boundingBoxes = list(
+		LISTSOUTH = list(BBOX(6,4,29,26,LEVEL_TURF, LEVEL_LOWWALL,null)),
+		LISTNORTH =list(BBOX(6,4,29,26,LEVEL_TURF, LEVEL_LOWWALL,null)),
+		LISTEAST = list(BBOX(6,4,29,26,LEVEL_TURF, LEVEL_LOWWALL,null)),
+		LISTWEST = list(BBOX(6,4,29,26,LEVEL_TURF, LEVEL_LOWWALL,null))
+	)
+
+/datum/hitboxDatum/atom/atmosphericHeater
+	boundingBoxes = list(
+		LISTSOUTH = list(BBOX(8,3,25,23,LEVEL_TURF, LEVEL_LOWWALL,null)),
+		LISTNORTH = list(BBOX(8,3,25,23,LEVEL_TURF, LEVEL_LOWWALL,null)),
+		LISTEAST = list(BBOX(8,3,25,23,LEVEL_TURF, LEVEL_LOWWALL,null)),
+		LISTWEST = list(BBOX(8,3,25,23,LEVEL_TURF, LEVEL_LOWWALL,null))
+	)
+
+/datum/hitboxDatum/atom/photocopier
+	boundingBoxes = list(
+		LISTSOUTH = list(BBOX(7,4,26,27,LEVEL_TURF, LEVEL_TABLE,null)),
+		LISTNORTH = list(BBOX(7,4,26,27,LEVEL_TURF, LEVEL_TABLE,null)),
+		LISTEAST = list(BBOX(7,4,26,27,LEVEL_TURF, LEVEL_TABLE,null)),
+		LISTWEST = list(BBOX(7,4,26,27,LEVEL_TURF, LEVEL_TABLE,null))
+	)
+
+/datum/hitboxDatum/atom/filingCabinet
+	boundingBoxes = list(
+		LISTSOUTH = list(BBOX(11,1,21,23,LEVEL_TURF, LEVEL_TABLE+4,null)),
+		LISTNORTH = list(BBOX(11,1,21,23,LEVEL_TURF, LEVEL_TABLE+4,null)),
+		LISTEAST = list(BBOX(11,1,21,23,LEVEL_TURF, LEVEL_TABLE+4,null)),
+		LISTWEST = list(BBOX(11,1,21,23,LEVEL_TURF, LEVEL_TABLE+4,null))
+	)
+
+/datum/hitboxDatum/atom/tankDispenser
+	boundingBoxes = list(
+		LISTSOUTH = list(BBOX(4,2,30,30,LEVEL_TURF, LEVEL_TABLE+4,null)),
+		LISTNORTH = list(BBOX(4,2,30,30,LEVEL_TURF, LEVEL_TABLE+4,null)),
+		LISTEAST = list(BBOX(4,2,30,30,LEVEL_TURF, LEVEL_TABLE+4,null)),
+		LISTWEST = list(BBOX(4,2,30,30,LEVEL_TURF, LEVEL_TABLE+4,null))
+	)
+
+/datum/hitboxDatum/atom/smes
+	boundingBoxes = list(
+		LISTSOUTH = list(BBOX(1,5,31,26,LEVEL_TURF, LEVEL_TABLE+4,null), BBOX(16,2,31,31, LEVEL_TURF, LEVEL_TABLE+4, null)),
+		LISTNORTH = list(BBOX(1,5,31,26,LEVEL_TURF, LEVEL_TABLE+4,null), BBOX(16,2,31,31, LEVEL_TURF, LEVEL_TABLE+4, null)),
+		LISTEAST = list(BBOX(1,5,31,26,LEVEL_TURF, LEVEL_TABLE+4,null), BBOX(16,2,31,31, LEVEL_TURF, LEVEL_TABLE+4, null)),
+		LISTWEST = list(BBOX(1,5,31,26,LEVEL_TURF, LEVEL_TABLE+4,null), BBOX(16,2,31,31, LEVEL_TURF, LEVEL_TABLE+4, null))
+	)
+
+/datum/hitboxDatum/atom/crate
+	boundingBoxes = list(
+		LISTSOUTH = list(BBOX(4,5,29,22,LEVEL_TURF, LEVEL_LOWWALL,null)),
+		LISTNORTH = list(BBOX(4,5,29,22,LEVEL_TURF, LEVEL_LOWWALL,null)),
+		LISTEAST = list(BBOX(4,5,29,22,LEVEL_TURF, LEVEL_LOWWALL,null)),
+		LISTWEST = list(BBOX(4,5,29,22,LEVEL_TURF, LEVEL_LOWWALL,null))
+	)
+
+/datum/hitboxDatum/atom/autolathe
+	boundingBoxes = list(
+		LISTSOUTH = list(BBOX(3,3,30,21,LEVEL_TURF, LEVEL_LYING,null), BBOX(3,6,22,30, LEVEL_LYING, LEVEL_TABLE, null)),
+		LISTNORTH = list(BBOX(3,3,30,21,LEVEL_TURF, LEVEL_LYING,null), BBOX(3,6,22,30, LEVEL_LYING, LEVEL_TABLE, null)),
+		LISTEAST = list(BBOX(3,3,30,21,LEVEL_TURF, LEVEL_LYING,null), BBOX(3,6,22,30, LEVEL_LYING, LEVEL_TABLE, null)),
+		LISTWEST = list(BBOX(3,3,30,21,LEVEL_TURF, LEVEL_LYING,null), BBOX(3,6,22,30, LEVEL_LYING, LEVEL_TABLE, null))
+	)
+
+/datum/hitboxDatum/atom/smartfridge
+	boundingBoxes = list(
+		LISTSOUTH = list(BBOX(3,2,30,32,LEVEL_TURF, LEVEL_HEAD,null)),
+		LISTNORTH = list(BBOX(3,2,30,32,LEVEL_TURF, LEVEL_HEAD,null)),
+		LISTEAST = list(BBOX(3,2,30,32,LEVEL_TURF, LEVEL_HEAD,null)),
+		LISTWEST = list(BBOX(3,2,30,32,LEVEL_TURF, LEVEL_HEAD,null))
+	)
+
+
+
+
 /datum/hitboxDatum/turf
 	boundingBoxes = BBOX(0,0,32,32,LEVEL_BELOW ,LEVEL_ABOVE,null)
 
