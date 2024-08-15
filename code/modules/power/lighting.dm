@@ -166,7 +166,7 @@
 	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 20
-	atomFlags = AF_WALL_MOUNTED | AF_WALL_MOUNTED_REVERSE_DIR
+	atomFlags = AF_WALL_MOUNTED
 	power_channel = STATIC_LIGHT //Lights are calc'd via area so they dont need to be in the machine list
 	var/on = FALSE					// 1 if on, 0 if off
 	var/on_gs = 0
@@ -247,6 +247,15 @@
 	if(location)
 		if(location.area_light_color)
 			brightness_color = location.area_light_color
+
+	if(type == /obj/machinery/light)
+		switch(dir)
+			if(SOUTH)
+				pixel_y = 20
+			if(EAST)
+				pixel_x = -10
+			if(WEST)
+				pixel_x = 10
 
 	update(0)
 

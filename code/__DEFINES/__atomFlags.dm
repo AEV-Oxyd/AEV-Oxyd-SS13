@@ -15,4 +15,3 @@
 #define AF_PASS_AIMING_LEVEL (1<<9)
 /// This is a wall-mounted atom and should be treated as such on initialization.
 #define AF_WALL_MOUNTED (1<<10)
-#define AF_WALL_MOUNTED_REVERSE_DIR (1<<11)

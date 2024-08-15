@@ -287,18 +287,18 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 
 /datum/hitboxDatum/atom/fixtureLightTube
 	boundingBoxes = list(
-		LISTNORTH = list(BBOX(4,29,29,32,LEVEL_HEAD-1,LEVEL_HEAD+1,null)),
-		LISTSOUTH = list(BBOX(4,1,29,4,LEVEL_HEAD-1,LEVEL_HEAD+1,null)),
-		LISTEAST = list(BBOX(29,4,32,29,LEVEL_HEAD-1,LEVEL_HEAD+1,null)),
-		LISTWEST = list(BBOX(1,4,4,29,LEVEL_HEAD-1,LEVEL_HEAD+1,null))
+		LISTSOUTH = list(BBOX(4,29,29,32,LEVEL_HEAD-1,LEVEL_HEAD+1,null)),
+		LISTNORTH = list(BBOX(4,1,29,4,LEVEL_HEAD-1,LEVEL_HEAD+1,null)),
+		LISTWEST = list(BBOX(29,4,32,29,LEVEL_HEAD-1,LEVEL_HEAD+1,null)),
+		LISTEAST = list(BBOX(1,4,4,29,LEVEL_HEAD-1,LEVEL_HEAD+1,null))
 	)
 
 /datum/hitboxDatum/atom/fixtureBulb
 	boundingBoxes = list(
-		LISTNORTH = list(BBOX(14,25,19,32,LEVEL_HEAD-1,LEVEL_HEAD+1,null)),
-		LISTSOUTH = list(BBOX(14,1,20,8,LEVEL_HEAD-1,LEVEL_HEAD+1,null)),
-		LISTEAST = list(BBOX(25,14,32,19,LEVEL_HEAD-1,LEVEL_HEAD+1,null)),
-		LISTWEST = list(BBOX(1,14,8,19,LEVEL_HEAD-1,LEVEL_HEAD+1,null))
+		LISTSOUTH = list(BBOX(14,25,19,32,LEVEL_HEAD-1,LEVEL_HEAD+1,null)),
+		LISTNORTH = list(BBOX(14,1,20,8,LEVEL_HEAD-1,LEVEL_HEAD+1,null)),
+		LISTWEST = list(BBOX(25,14,32,19,LEVEL_HEAD-1,LEVEL_HEAD+1,null)),
+		LISTEAST = list(BBOX(1,14,8,19,LEVEL_HEAD-1,LEVEL_HEAD+1,null))
 	)
 
 /datum/hitboxDatum/atom/fireAlarm

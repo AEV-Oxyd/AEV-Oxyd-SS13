@@ -499,9 +499,6 @@ GLOBAL_LIST(projectileDamageConstants)
 	else
 		return FALSE
 
-/// The lower the index , the higher the priority. If you add new paths to the list , make sure to increase the amount of lists in scanTurf below.
-#define HittingPrioritiesList list(/mob/living,/obj/structure/multiz/stairs/active,/obj/structure,/atom)
-
 /// We don't care about order since we are just simulating to see wheter we can reach something or not
 /proc/simulateBulletScan(turf/scanning, atom/firer, bulletDir, startX, startY, startZ, StepX, StepY, StepZ, passFlags)
 	. = PROJECTILE_CONTINUE
@@ -536,6 +533,8 @@ GLOBAL_LIST(projectileDamageConstants)
 				return PROJECTILE_STOP
 	return PROJECTILE_CONTINUE
 
+/// The lower the index , the higher the priority. If you add new paths to the list , make sure to increase the amount of lists in scanTurf below.
+#define HittingPrioritiesList list(/obj/machinery/door/blast/shutters/glass, /mob/living,/obj/structure/multiz/stairs/active,/obj/structure,/atom)
 /obj/item/projectile/proc/scanTurf(turf/scanning, bulletDir, startX, startY, startZ, pStepX, pStepY, pStepZ)
 	. = PROJECTILE_CONTINUE
 	if(atomFlags & AF_VISUAL_MOVE)
@@ -545,6 +544,7 @@ GLOBAL_LIST(projectileDamageConstants)
 	hittingList[2] = list()
 	hittingList[3] = list()
 	hittingList[4] = list()
+	hittingList[5] = list()
 	var/list/sortingList = scanning.contents.Copy()
 	sortingList.Add(scanning)
 	sortingList.Remove(src)

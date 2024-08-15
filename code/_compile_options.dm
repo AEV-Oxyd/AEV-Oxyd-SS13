@@ -48,7 +48,7 @@
 								// 2 for preloading absolutely everything;
 //#define LOWMEMORYMODE 1
 
-#define BULLETDEBUG 1
+//#define BULLETDEBUG 1
 
 //Update this whenever you need to take advantage of more recent byond features
 #define MIN_COMPILER_VERSION 514

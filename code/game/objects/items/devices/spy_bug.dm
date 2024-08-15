@@ -149,6 +149,7 @@
 /obj/machinery/camera/spy
 	// These cheap toys are accessible from the mercenary camera console as well
 	network = list(NETWORK_MERCENARY)
+	atomFlags = parent_type::atomFlags & ~AF_WALL_MOUNTED
 
 /obj/machinery/camera/spy/New()
 	..()

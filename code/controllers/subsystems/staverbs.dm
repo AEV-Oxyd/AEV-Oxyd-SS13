@@ -75,16 +75,11 @@ SUBSYSTEM_DEF(statverbs)
 		if(!isturf(loc))
 			stack_trace("[src.type] has the AF_WALL_MOUNTED flag, but is not initialized with a valid location(on a turf). Remove it or fix the underlying issue.")
 			return
-		var/turf/toAttach
 		var/attachmentDir = (pixel_x > 16)*EAST | (pixel_x < -16)*WEST | (pixel_y > 16)*NORTH | (pixel_y < -16)*SOUTH
-		if(atomFlags & AF_WALL_MOUNTED_REVERSE_DIR)
-			if(!attachmentDir)
-				attachmentDir = dir
-		else
-			if(!attachmentDir)
-				attachmentDir = reverse_dir[dir]
-			dir = reverse_dir[attachmentDir]
-		toAttach = get_step(loc, attachmentDir)
+		if(!attachmentDir)
+			attachmentDir = reverse_dir[dir]
+		dir = reverse_dir[attachmentDir]
+		var/turf/toAttach = get_step(loc, attachmentDir)
 
 		if(iswall(toAttach))
 			toAttach.attachGameAtom(src, ATFS_PRIORITIZE_ATTACHED_FOR_HITS, ATFA_EASY_INTERACTIVE | ATFA_DIRECTIONAL_HITTABLE )

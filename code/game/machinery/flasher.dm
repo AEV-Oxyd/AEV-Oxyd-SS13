@@ -29,6 +29,7 @@
 	base_state = "pflash"
 	density = TRUE
 	range = 3 //the eris' hallways are wider than other maps
+	atomFlags = parent_type::atomFlags & ~AF_WALL_MOUNTED
 
 /obj/machinery/flasher/Initialize()
 	. = ..()
