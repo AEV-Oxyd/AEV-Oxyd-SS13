@@ -175,3 +175,4 @@
 /obj/machinery/button/ignition/table
 	atomFlags = parent_type::atomFlags & ~AF_WALL_MOUNTED
 	hitbox = /datum/hitboxDatum/atom/button/table
+	icon_state = "launcher_table"

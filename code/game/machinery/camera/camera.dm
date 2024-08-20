@@ -65,16 +65,6 @@
 		var/area/A = get_area(src)
 		c_tag = A.get_camera_tag(src)
 
-/obj/machinery/camera/Initialize(mapload, d)
-	. = ..()
-	switch(dir)
-		if(SOUTH)
-			pixel_y = 20
-		if(EAST)
-			pixel_x = -10
-		if(WEST)
-			pixel_x = 10
-
 /obj/machinery/camera/Destroy()
 	deactivate(null, 0) //kick anyone viewing out
 	taped = 0

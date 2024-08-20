@@ -248,15 +248,6 @@
 		if(location.area_light_color)
 			brightness_color = location.area_light_color
 
-	if(type == /obj/machinery/light)
-		switch(dir)
-			if(SOUTH)
-				pixel_y = 20
-			if(EAST)
-				pixel_x = -10
-			if(WEST)
-				pixel_x = 10
-
 	update(0)
 
 /obj/machinery/light/Destroy()
