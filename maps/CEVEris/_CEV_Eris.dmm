@@ -9657,10 +9657,9 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/button/remote/blast_door{
+/obj/machinery/button/remote/blast_door/table{
 	id = "xenobio4";
-	name = "Containment 4 Blast Doors";
-	pixel_y = 4
+	name = "Containment 4 Blast Doors"
 	},
 /turf/simulated/floor/tiled/white,
 /area/eris/rnd/xenobiology)
@@ -25558,8 +25557,7 @@
 /area/eris/rnd/lab)
 "biY" = (
 /obj/structure/table/standard,
-/obj/machinery/button/remote/blast_door{
-	desc = "It controls the blast door to the main RND entrance.";
+/obj/machinery/button/remote/blast_door/table{
 	id = "RDDoorLockdown";
 	name = "RND Door Blast Door Control"
 	},
@@ -25858,8 +25856,7 @@
 /area/eris/maintenance/section2deck4starboard)
 "bjC" = (
 /obj/structure/table/standard,
-/obj/machinery/button/remote/blast_door{
-	desc = "It controls the RND Window Blast doors.";
+/obj/machinery/button/remote/blast_door/table{
 	id = "RDWindowsLockdown";
 	name = "RND Window Blast Doors Control"
 	},
@@ -26178,10 +26175,9 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/button/remote/blast_door{
+/obj/machinery/button/remote/blast_door/table{
 	id = "xenobio2";
-	name = "Containment 2 Blast Doors";
-	pixel_y = 4
+	name = "Containment 2 Blast Doors"
 	},
 /turf/simulated/floor/tiled/white,
 /area/eris/rnd/xenobiology)
@@ -34541,10 +34537,9 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/button/remote/blast_door{
-	id = "xenobio5";
+/obj/machinery/button/remote/blast_door/table{
 	name = "Containment 5 Blast Doors";
-	pixel_y = 4
+	id = "xenobio5"
 	},
 /turf/simulated/floor/tiled/steel,
 /area/eris/rnd/xenobiology)
@@ -34657,10 +34652,9 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/button/remote/blast_door{
-	id = "xenobio3";
+/obj/machinery/button/remote/blast_door/table{
 	name = "Containment 3 Blast Doors";
-	pixel_y = 4
+	id = "xenobio3"
 	},
 /turf/simulated/floor/tiled/steel,
 /area/eris/rnd/xenobiology)
@@ -34672,10 +34666,9 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/button/remote/blast_door{
+/obj/machinery/button/remote/blast_door/table{
 	id = "xenobio1";
-	name = "Containment 1 Blast Doors";
-	pixel_y = 4
+	name = "Containment 1 Blast Doors"
 	},
 /turf/simulated/floor/tiled/steel,
 /area/eris/rnd/xenobiology)
@@ -45931,10 +45924,11 @@
 	id = "toxin_chamber1";
 	pixel_y = -5
 	},
-/obj/machinery/button/remote/blast_door{
+/obj/machinery/button/remote/blast_door/table{
+	pixel_x = 0;
+	pixel_y = 5;
 	id = "toxinchamber1";
-	name = "Mixing Room Vent Control";
-	pixel_y = 5
+	name = "Mixing Room Vent Control"
 	},
 /turf/simulated/floor/tiled/white/techfloor_grid,
 /area/eris/rnd/mixing)
@@ -48568,10 +48562,11 @@
 	id = "toxin_chamber2";
 	pixel_y = -5
 	},
-/obj/machinery/button/remote/blast_door{
+/obj/machinery/button/remote/blast_door/table{
+	pixel_x = 0;
+	pixel_y = 5;
 	id = "toxinchamber2";
-	name = "Mixing Room Vent Control";
-	pixel_y = 5
+	name = "Mixing Room Vent Control"
 	},
 /turf/simulated/floor/tiled/white/techfloor_grid,
 /area/eris/rnd/mixing)
@@ -71588,10 +71583,9 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/button/remote/blast_door{
+/obj/machinery/button/remote/blast_door/table{
 	id = "xenobio6";
-	name = "Containment 6 Blast Doors";
-	pixel_y = 4
+	name = "Containment 6 Blast Doors"
 	},
 /turf/simulated/floor/tiled/white,
 /area/eris/rnd/xenobiology)
@@ -76148,26 +76142,23 @@
 /area/eris/medical/reception)
 "dBO" = (
 /obj/structure/table/standard,
-/obj/machinery/button/remote/airlock{
-	desc = "A remote control switch.";
-	id = "MedbayPatients";
-	name = "Patients Exit Button";
-	pixel_x = -6;
-	pixel_y = 6
-	},
-/obj/machinery/button/remote/airlock{
-	desc = "A remote control switch.";
-	id = "MedbayCryo2";
-	name = "Medbay Therapy Exit Button";
-	pixel_x = 4;
-	pixel_y = -4
-	},
-/obj/machinery/button/remote/airlock{
-	desc = "A remote control switch.";
+/obj/machinery/button/remote/blast_door/table{
+	pixel_x = -5;
+	pixel_y = -5;
 	id = "MedbayExam";
-	name = "Examination Door Control";
-	pixel_x = -6;
-	pixel_y = -4
+	name = "Examination Door Control"
+	},
+/obj/machinery/button/remote/blast_door/table{
+	pixel_x = 5;
+	pixel_y = -5;
+	id = "MedbayCryo2";
+	name = "Medbay Therapy Exit Button"
+	},
+/obj/machinery/button/remote/blast_door/table{
+	pixel_x = -5;
+	pixel_y = 5;
+	id = "MedbayPatients";
+	name = "Patients Exit Button"
 	},
 /turf/simulated/floor/tiled/white/brown_perforated,
 /area/eris/medical/reception)
@@ -81785,7 +81776,7 @@
 /obj/structure/table/standard,
 /obj/item/cell/large/high,
 /obj/item/cell/large/high,
-/obj/machinery/button/remote/blast_door{
+/obj/machinery/button/remote/blast_door/table{
 	id = "shieldroom";
 	name = "Shield Generator Shutters"
 	},
@@ -98327,7 +98318,8 @@
 	pixel_y = -30
 	},
 /obj/structure/table/reinforced,
-/obj/machinery/button/remote/blast_door{
+/obj/structure/table/reinforced,
+/obj/machinery/button/remote/blast_door/table{
 	id = "BridgeEntrance";
 	name = "Bridge Entrance Lockdown"
 	},
@@ -100962,6 +100954,16 @@
 /obj/structure/cable/green,
 /turf/simulated/floor/plating/under,
 /area/eris/maintenance/section3deck5port)
+"hYq" = (
+/obj/machinery/button/remote/airlock{
+	desc = "A remote control switch.";
+	id = s;
+	name = s;
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/turf/simulated/floor/tiled/white/brown_perforated,
+/area/eris/medical/reception)
 "iaf" = (
 /obj/structure/multiz/stairs/enter{
 	dir = 1
@@ -106653,9 +106655,9 @@
 /area/eris/crew_quarters/fitness)
 "uPp" = (
 /obj/structure/table/standard,
-/obj/machinery/button/remote/blast_door{
+/obj/machinery/button/remote/blast_door/table{
 	id = "scannerroom";
-	name = "Long Range Scanner Shutters"
+	name = "Long Range Scansner Shutters"
 	},
 /turf/simulated/floor/tiled/steel/gray_perforated,
 /area/eris/engineering/long_range_scanner)
@@ -107990,8 +107992,7 @@
 /area/eris/neotheology/chapel)
 "xTZ" = (
 /obj/structure/table/standard,
-/obj/machinery/button/remote/blast_door{
-	desc = "It controls the blast door to the main RND entrance.";
+/obj/machinery/button/remote/blast_door/table{
 	id = "MEOPrivacyShutters";
 	name = "MEO Privacy Shutters"
 	},
@@ -207904,7 +207905,7 @@ kUI
 coS
 coM
 dzF
-coM
+hYq
 coM
 dno
 cqJ

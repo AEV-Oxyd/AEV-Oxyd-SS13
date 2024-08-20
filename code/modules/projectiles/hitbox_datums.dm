@@ -437,6 +437,14 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		LISTWEST = list(BBOX(13,13,20,21,LEVEL_CHEST+1, LEVEL_CHEST-1,null))
 	)
 
+/datum/hitboxDatum/atom/button/table
+	boundingBoxes = list(
+		LISTSOUTH = list(BBOX(13,13,20,21,LEVEL_TABLE, LEVEL_TABLE+4,null)),
+		LISTNORTH = list(BBOX(13,13,20,21,LEVEL_TABLE, LEVEL_TABLE+4,null)),
+		LISTEAST = list(BBOX(13,13,20,21,LEVEL_TABLE, LEVEL_TABLE+4,null)),
+		LISTWEST = list(BBOX(13,13,20,21,LEVEL_TABLE, LEVEL_TABLE+4,null))
+	)
+
 /datum/hitboxDatum/atom/closet
 	boundingBoxes = list(
 		LISTSOUTH = list(BBOX(9,3,24,32,LEVEL_TURF, LEVEL_HEAD,null)),

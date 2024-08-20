@@ -171,3 +171,7 @@
 	active = 0
 
 	return
+
+/obj/machinery/buttion/ignition/table
+	atomFlags = parent_type::atomFlags & ~AF_WALL_MOUNTED
+	hitbox = /datum/hitboxDatum/atom/button/table

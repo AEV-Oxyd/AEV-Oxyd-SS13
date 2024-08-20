@@ -193,6 +193,7 @@
 			wifi_sender.activate("lock")
 	operating = 0
 
+
 #undef OPEN
 #undef IDSCAN
 #undef BOLTS

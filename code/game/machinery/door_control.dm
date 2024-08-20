@@ -134,6 +134,11 @@
 	var/closed = 0
 	var/last_message
 
+/// a subtype meant for tables
+/obj/machinery/button/remote/blast_door/table
+	atomFlags = parent_type::atomFlags & ~AF_WALL_MOUNTED
+	hitbox = /datum/hitboxDatum/atom/button/table
+
 /obj/machinery/button/remote/blast_door/Initialize()
 	. = ..()
 	radio_conn = SSradio.add_object(src, BLAST_DOOR_FREQ, RADIO_BLASTDOORS)
@@ -232,6 +237,10 @@
 	name = "remote blast id card door-control"
 	desc = "It controls blast doors, remotely. But need id_card with access to it."
 	icon_state = "doorid0"
+
+/obj/machinery/button/remote/blast_door/id_card/table
+	atomFlags = parent_type::atomFlags & ~AF_WALL_MOUNTED
+	hitbox = /datum/hitboxDatum/atom/button/table
 
 /obj/machinery/button/remote/blast_door/id_card/attackby(obj/item/W, mob/user as mob)
 	if(istype(W, /obj/item/card/id))
