@@ -99964,11 +99964,9 @@
 /area/eris/quartermaster/hangarsupply)
 "faY" = (
 /obj/structure/table/standard,
-/obj/machinery/button/remote/blast_door{
+/obj/machinery/button/remote/blast_door/table{
 	id = "neotheology_shop";
-	name = "NeoTheology Shop Access";
-	pixel_x = 4;
-	pixel_y = -4
+	name = "NeoTheology Shop Access"
 	},
 /turf/simulated/floor/tiled/white/golden,
 /area/eris/neotheology/churchbooth)
@@ -101433,15 +101431,12 @@
 /turf/simulated/floor/plating/under,
 /area/eris/maintenance/section3deck5port)
 "hYq" = (
-/obj/machinery/button/remote/airlock{
-	desc = "A remote control switch.";
-	id = s;
-	name = s;
-	pixel_x = 4;
-	pixel_y = -4
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = 28
 	},
-/turf/simulated/floor/tiled/white/brown_perforated,
-/area/eris/medical/reception)
+/turf/simulated/floor/tiled/white/golden,
+/area/eris/neotheology/bioprinter)
 "iaf" = (
 /obj/structure/multiz/stairs/enter{
 	dir = 1
@@ -108401,13 +108396,6 @@
 /obj/machinery/door/holy/preacher,
 /turf/simulated/floor/tiled/white/cargo,
 /area/eris/neotheology/office)
-"xCT" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = 28
-	},
-/turf/simulated/floor/tiled/white/golden,
-/area/eris/neotheology/bioprinter)
 "xDB" = (
 /obj/machinery/atmospherics/pipe/zpipe/up,
 /obj/structure/disposalpipe/up,
@@ -165841,7 +165829,7 @@ evn
 jKn
 hQD
 hQD
-xCT
+hYq
 uCj
 ulE
 uYj
@@ -208437,7 +208425,7 @@ kUI
 coS
 coM
 dzF
-hYq
+coM
 coM
 dno
 cqJ

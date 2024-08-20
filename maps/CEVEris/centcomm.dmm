@@ -1843,12 +1843,12 @@
 	},
 /area/centcom/merc_base)
 "iH" = (
-/obj/machinery/button/remote/blast_door{
+/obj/structure/table/reinforced,
+/obj/machinery/button/remote/blast_door/id_card/table{
 	id = "syndieshutters";
 	name = "remote shutter control";
 	req_access = list(150)
 	},
-/obj/structure/table/reinforced,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
