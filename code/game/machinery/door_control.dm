@@ -241,7 +241,7 @@
 
 /obj/machinery/button/remote/blast_door/id_card/table
 	atomFlags = parent_type::atomFlags & ~AF_WALL_MOUNTED
-	hitbox =
+	hitbox = /datum/hitboxDatum/atom/button/table
 	icon_state = "doorid0_table"
 
 /obj/machinery/button/remote/blast_door/id_card/attackby(obj/item/W, mob/user as mob)
