@@ -54,7 +54,7 @@ GLOBAL_LIST_EMPTY(hitboxPrototypes)
 	calculateAimingLevels()
 
 /// this can be optimized further by making the calculations not make a new list , and instead be added when checking line intersection - SPCR 2024
-/datum/hitboxDatum/proc/intersects(atom/owner, ownerDirection, startX, startY, startZ, pStepX, pStepY, pStepZ)
+/datum/hitboxDatum/proc/intersects(atom/owner, ownerDirection, startX, startY, startZ, pStepX, pStepY, pStepZ) as number
 
 /datum/hitboxDatum/proc/getAimingLevel(atom/shooter, defZone, atom/owner)
 
@@ -86,23 +86,23 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 /// x1,y1 and x2,y2 are the start and end of the first line
 /// x3,y3 and x4,y4 are the start and end of the second line
 /// pStepX and pStepY are pointers for setting the bullets step end
-/datum/hitboxDatum/proc/lineIntersect(x1,y1,x2,y2,x3,y3,x4,y4, pStepX, pStepY)
+/datum/hitboxDatum/proc/lineIntersect(x1,y1,x2,y2,x3,y3,x4,y4, pStepX, pStepY) as number
 	var/firstRatio
 	var/secondRatio
 	var/denominator = ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1))
 	if(denominator == 0)
 		message_admins("Invalid line for [src], at hitbox coords BulletLine ([x1] | [y1]) ([x2] | [y2])  HitboxLine ([x3] | [y3]) ([x4] | [y4])")
-		return FALSE
+		return 0
 	firstRatio = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / denominator
 	secondRatio = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / denominator
 	if(firstRatio >= 0 && firstRatio <= 1 && secondRatio >= 0 && secondRatio <= 1)
 		*pStepX = x1 + firstRatio * (x2 - x1)
 		*pStepY = y1 + firstRatio * (y2 - y1)
-		return TRUE
+		return DIST_EUCLIDIAN_2D(x1,y1, *pStepX, *pStepY)
 		//return list(x1 + firstRatio * (x2 - x1), y1 + firstRatio * (y2 - y1))
 		//message_admins("X-collision : [x1 + firstRatio * (x2 - x1)] Y-collision : [y1 + firstRatio * (y2] - y1)]")
 		//message_admins("Distance between points : [DIST_EUCLIDIAN_2D(x1,y1,x1 + firstRatio * (x2 - x1),y1 + firstRatio * (y2] - y1) )]")
-	return FALSE
+	return 0
 
 
 /datum/hitboxDatum/proc/visualize(atom/owner)
@@ -117,6 +117,21 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		newOverlay.pixel_y = hitbox[2] - 1
 		newOverlay.alpha = 200
 		owner.overlays.Add(newOverlay)
+
+/datum/hitboxDatum/proc/getHitboxLines(atom/owner, ownerDirection, worldX, worldY, worldZ)
+	. = new/list(length(boundingBoxes["[ownerDirection]"])*4)
+	var/currentIndex = 1
+	var/firstZ
+	var/lastZ
+	var/flags
+	for(var/list/boundingData in boundingBoxes["[ownerDirection]"])
+		firstZ =  boundingData[5] + worldZ
+		vlastZ = boundingData[6] + worldZ
+		vflags = boundingData[7]
+		.[currentIndex++] = (list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY, firstZ, lastZ, flags))
+		.[currentIndex++] = (list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY, firstZ, lastZ, flags))
+		.[currentIndex++] = (list(boundingData[1] + worldX, boundingData[4] + worldY, boundingData[3] + worldX, boundingData[4] + worldY, firstZ, lastZ, flags))
+		.[currentIndex++] = (list(boundingData[3] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY, firstZ, lastZ, flags))
 
 /datum/hitboxDatum/atom
 	boundingBoxes = list(
@@ -139,6 +154,8 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	var/worldX
 	var/worldY
 	var/worldZ
+	var/minimumIntersection = 999999
+	var/intersectionDistance = 0
 	worldX = owner.x
 	worldY = owner.y
 	if(owner.atomFlags & AF_HITBOX_OFFSET_BY_ATTACHMENT)
@@ -153,20 +170,16 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	worldX += owner.pixel_x
 	worldY += owner.pixel_y
 	worldZ = owner.z * PPT
-	for(var/list/boundingData in boundingBoxes["[ownerDirection]"])
+	for(var/list/boundingData in getHitboxLines(owner, ownerDirection, worldX, worldY, worldZ))
 		if((boundingData[5]+worldZ) > max(startZ,startZ+*pStepZ) && (boundingData[6]+worldZ) > max(startZ,startZ+*pStepZ))
 			continue
 		if((boundingData[5]+worldZ) < min(startZ,startZ+*pStepZ) && (boundingData[6]+worldZ) < min(startZ,startZ+*pStepZ))
 			continue
-		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY, pStepX, pStepY))
-			return TRUE
-		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY, pStepX, pStepY))
-			return TRUE
-		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1] + worldX, boundingData[4] + worldY, boundingData[3] + worldX, boundingData[4] + worldY, pStepX, pStepY))
-			return TRUE
-		if(lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[3] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[4] + worldY, pStepX, pStepY))
-			return TRUE
-	return FALSE
+		intersectionDistance = lineIntersect(startX, startY, startX+*pStepX, startY+*pStepY, boundingData[1], boundingData[2], boundingData[3], boundingData[4], pStepX, pStepY)
+		if(intersectionDistance > 0 && intersectionDistance < minimumIntersection)
+			minimumIntersection = intersectionDistance
+			*pHitFlags = boundingData[7]
+	return minimumIntersection = 999999 ? 0 : minimumIntersection
 
 
 /// This subtype is dedicated especially to tables. Their building system changes shape depending on adjaency. So this reflects that

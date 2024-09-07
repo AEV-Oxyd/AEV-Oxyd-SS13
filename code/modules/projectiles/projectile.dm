@@ -538,7 +538,7 @@ GLOBAL_LIST(projectileDamageConstants)
 /obj/item/projectile/proc/scanTurf(turf/scanning, bulletDir, startX, startY, startZ, pStepX, pStepY, pStepZ)
 	. = PROJECTILE_CONTINUE
 	if(atomFlags & AF_VISUAL_MOVE)
-		return PROJECTILE_CONTINUE
+		return
 	var/list/hittingList = new/list(length(HittingPrioritiesList))
 	hittingList[1] = list()
 	hittingList[2] = list()
@@ -572,17 +572,31 @@ GLOBAL_LIST(projectileDamageConstants)
 				else
 					hittingList[index] += possibleTarget
 
+	var/list/hitboxesList = list()
+
 	for(var/i in 1 to length(hittingList))
 		for(var/atom/target as anything in hittingList[i])
 			if(target == firer)
 				continue
 			/// third slot rezerved for flags passed back by hitbox intersect
 			var/hitFlags = null
-			if(target.hitbox && !target.hitbox.intersects(target, target.dir, startX, startY, startZ, pStepX, pStepY, pStepZ, &hitFlags))
+			var/hitboxIntersect = target.hitbox.intersects(target, target.dir, startX, startY, startZ, pStepX, pStepY, pStepZ, &hitFlags)
+			if(target.hitbox && !hitboxIntersect)
 				continue
-			if(target.bullet_act(src, def_zone, hitFlags) & PROJECTILE_STOP)
-				onBlockingHit(target)
-				return PROJECTILE_STOP
+			hitboxesList.Add(list(hitboxIntersect, hitFlags, target))
+
+	var/temp
+	for(var/i in 1 to length(hitboxesList) - 1)
+		if(hitboxList[i][1] < hitboxList[i+1][1])
+			temp = hitboxList[i]
+			hitboxesList[i] = hitboxesList[i+1]
+			hitboxesList[i+1] = temp
+			i = max(i-2, 1)
+
+	for(var/i in 1 to length(hitboxesList))
+		if(hitboxesList[i][3].bullet_act(src, def_zone, hitFlags) & PROJECTILE_STOP)
+			onBlockingHit(hitboxesList[i][3])
+			return PROJECTILE_STOP
 
 	return PROJECTILE_CONTINUE
 
