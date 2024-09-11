@@ -28,7 +28,7 @@
 			for (var/atom/A in T)
 				if (ismob(A))
 					affected_mobs |= A
-				else if (A.simulated)
+				else
 					reagents.touch(A)
 
 			for (var/mob/M in affected_mobs)

@@ -47,7 +47,7 @@
 /obj/machinery/filler_object
 	name = ""
 	icon = 'icons/obj/doors/rapid_pdoor.dmi'
-	icon_state = "pdoor1"
+	icon_state = ""
 	density = FALSE
 	anchored = TRUE
 

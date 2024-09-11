@@ -8,6 +8,8 @@
 	var/broken
 	var/burnt
 
+	hitbox = /datum/hitboxDatum/turf/floor
+
 
 	// Flooring data.
 	var/flooring_override

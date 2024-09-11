@@ -57,7 +57,7 @@ for reference:
 	density = TRUE
 	health = 100
 	maxHealth = 100
-	explosion_coverage = 0.7
+	explosionCoverage = 0.7
 	var/material/material
 
 /obj/structure/barricade/New(newloc, material_name)
@@ -116,7 +116,7 @@ for reference:
 
 /obj/structure/barricade/take_damage(damage)
 	. = health - damage < 0 ? damage - (damage - health) : damage
-	. *= density ? explosion_coverage : explosion_coverage / 2
+	. *= density ? explosionCoverage : explosionCoverage / 2
 	health -= damage
 	if(health <= 0)
 		dismantle()
@@ -141,45 +141,6 @@ for reference:
 		return TRUE
 	else
 		return FALSE
-
-/obj/structure/barricade/proc/check_cover(obj/item/projectile/P, turf/from)
-
-	if(config.z_level_shooting)
-		if(P.height == HEIGHT_HIGH)
-			return TRUE // Bullet is too high to hit
-		P.height = (P.height == HEIGHT_LOW) ? HEIGHT_LOW : HEIGHT_CENTER
-
-	if (get_dist(P.starting, loc) <= 1) //Cover won't help you if people are THIS close
-		return TRUE
-	if(get_dist(loc, P.trajectory.target) > 1 ) // Target turf must be adjacent for it to count as cover
-		return TRUE
-	var/valid = FALSE
-	if(!P.def_zone)
-		return TRUE // Emitters, or anything with no targeted bodypart will always bypass the cover
-
-	var/targetzone = check_zone(P.def_zone)
-	if (targetzone in list(BP_R_LEG, BP_L_LEG, BP_GROIN))
-		valid = TRUE //The lower body is always concealed
-	if (ismob(P.original))
-		var/mob/M = P.original
-		if (M.lying)
-			valid = TRUE			//Lying down covers your whole body
-
-	// Bullet is low enough to hit the wall
-	if(config.z_level_shooting && P.height == HEIGHT_LOW)
-		valid = TRUE
-
-	if(valid)
-		var/pierce = P.check_penetrate(src)
-		health -= P.get_structure_damage()/2
-		if (health > 0)
-			visible_message(SPAN_WARNING("[P] hits \the [src]!"))
-			return pierce
-		else
-			visible_message(SPAN_WARNING("[src] breaks down!"))
-			qdel(src)
-			return TRUE
-	return TRUE
 
 //Actual Deployable machinery stuff
 /obj/machinery/deployable
@@ -278,6 +239,9 @@ for reference:
 		if(H.checkpass(PASSTABLE) && H.stats?.getPerk(PERK_PARKOUR))
 			return TRUE
 
+/obj/machinery/deployable/barrier/proc/check_cover(obj/item/projectile/P, turf/from)
+	return TRUE
+
 /obj/machinery/deployable/barrier/proc/explode()
 
 	visible_message(SPAN_DANGER("[src] blows apart!"))
@@ -313,45 +277,6 @@ for reference:
 		s.start()
 		visible_message(SPAN_WARNING("BZZzZZzZZzZT"))
 		return 1
-
-/obj/machinery/deployable/barrier/proc/check_cover(obj/item/projectile/P, turf/from)
-
-	if(config.z_level_shooting)
-		if(P.height == HEIGHT_HIGH)
-			return TRUE // Bullet is too high to hit
-		P.height = (P.height == HEIGHT_LOW) ? HEIGHT_LOW : HEIGHT_CENTER
-
-	if (get_dist(P.starting, loc) <= 1) //Cover won't help you if people are THIS close
-		return 1
-	if(get_dist(loc, P.trajectory.target) > 1 ) // Target turf must be adjacent for it to count as cover
-		return TRUE
-	var/valid = FALSE
-	if(!P.def_zone)
-		return 1 // Emitters, or anything with no targeted bodypart will always bypass the cover
-
-	var/targetzone = check_zone(P.def_zone)
-	if (targetzone in list(BP_R_LEG, BP_L_LEG, BP_GROIN))
-		valid = TRUE //The lower body is always concealed
-	if (ismob(P.original))
-		var/mob/M = P.original
-		if (M.lying)
-			valid = TRUE			//Lying down covers your whole body
-
-	// Bullet is low enough to hit the wall
-	if(config.z_level_shooting && P.height == HEIGHT_LOW)
-		valid = TRUE
-
-	if(valid)
-		var/pierce = P.check_penetrate(src)
-		health -= P.get_structure_damage()/2
-		if (health > 0)
-			visible_message(SPAN_WARNING("[P] hits \the [src]!"))
-			return pierce
-		else
-			visible_message(SPAN_WARNING("[src] breaks down!"))
-			qdel(src)
-			return 1
-	return 1
 
 /obj/machinery/deployable/barrier/take_damage(damage)
 	health -= damage

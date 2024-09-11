@@ -11,6 +11,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 80
 	active_power_usage = 3000
+	atomFlags = AF_WALL_MOUNTED
 
 	var/use_auto_lights = 1
 	var/light_power_on = 1

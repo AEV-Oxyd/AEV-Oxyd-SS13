@@ -29,7 +29,7 @@
     return
 
 
-/mob/living/carbon/superior_animal/roach/benzin/bullet_act(obj/item/projectile/P, def_zone)
+/mob/living/carbon/superior_animal/roach/benzin/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
 	. = ..()
 	if(prob(80))
 		explosion(get_turf(src), -1, -1, 2, 3)

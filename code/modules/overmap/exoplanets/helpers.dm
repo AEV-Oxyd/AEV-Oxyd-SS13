@@ -126,7 +126,6 @@ GLOBAL_LIST_EMPTY(banned_ruin_ids)
 	icon_state = "x2"
 	anchored = 1.0
 	unacidable = 1
-	simulated = 0
 	invisibility = 101
 	var/delete_me = 0
 
@@ -153,7 +152,7 @@ GLOBAL_LIST_EMPTY(banned_ruin_ids)
 
 /obj/effect/landmark/ruin/automatic/clearing/New(loc, my_ruin_template, ruin_radius)
 	. = ..(loc, my_ruin_template)
-	radius = ruin_radius	
+	radius = ruin_radius
 
 /obj/effect/landmark/ruin/automatic/clearing/Initialize()
 	..()

@@ -42,6 +42,7 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 	var/power_per_hologram = 500 //per usage per hologram
 	idle_power_usage = 5
 	use_power = IDLE_POWER_USE
+	hitbox = /datum/hitboxDatum/atom/holopad
 
 	var/list/mob/living/silicon/ai/masters = new() //List of AIs that use the holopad
 	var/last_request = 0 //to prevent request spam. ~Carn

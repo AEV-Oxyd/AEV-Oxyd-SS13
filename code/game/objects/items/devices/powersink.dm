@@ -25,7 +25,7 @@
 	var/drained_this_tick = 0		// This is unfortunately necessary to ensure we process powersinks BEFORE other machinery such as APCs.
 
 	var/datum/powernet/PN			// Our powernet
-	var/obj/structure/cable/attached		// the attached cable
+	var/obj/structure/cable/power_supply		// the power_supply cable
 
 /obj/item/device/powersink/Initialize(mapload)
 	. = ..()
@@ -36,8 +36,8 @@
 			if(mode == 0)
 				var/turf/T = loc
 				if(isturf(T) && !!T.is_plating())
-					attached = locate() in T
-					if(!attached)
+					power_supply = locate() in T
+					if(!power_supply)
 						to_chat(user, "No exposed cable here to attach to.")
 						return
 					else
@@ -81,7 +81,7 @@
 			STOP_PROCESSING(SSmachines, src)
 
 /obj/item/device/powersink/pwr_drain()
-	if(!attached)
+	if(!power_supply)
 		return 0
 
 	if(drained_this_tick)
@@ -124,7 +124,7 @@
 		explosion(get_turf(src), 1500, 100)
 		qdel(src)
 		return
-	if(attached && attached.powernet)
-		PN = attached.powernet
+	if(power_supply && power_supply.powernet)
+		PN = power_supply.powernet
 	else
 		PN = null

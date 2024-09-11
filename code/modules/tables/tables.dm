@@ -22,10 +22,11 @@ var/list/custom_table_appearance = list(
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
 	throwpass = 1
 	matter = list(MATERIAL_STEEL = 2)
+	hitbox = /datum/hitboxDatum/atom/table
 	var/flipped = 0
 	maxHealth = 10
 	health = 10
-	explosion_coverage = 0.1
+	explosionCoverage = 0.1
 
 	// For racks.
 	var/can_reinforce = 1
@@ -76,7 +77,7 @@ var/list/custom_table_appearance = list(
 		else
 			amount *= TABLE_BRITTLE_MATERIAL_MULTIPLIER
 	. = health - amount < 0 ? amount - health : initialdamage
-	. *= explosion_coverage
+	. *= explosionCoverage
 	health -= amount
 	if(health <= 0)
 		visible_message(SPAN_WARNING("\The [src] breaks down!"))

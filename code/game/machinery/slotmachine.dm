@@ -36,8 +36,7 @@
 		if( !(stat & NOPOWER) )
 			icon_state = icon_type
 		else
-			spawn(rand(0, 15))
-				icon_state = "[icon_type]_off"
+			icon_state = "[icon_type]_off"
 
 /obj/machinery/slotmachine/update_icon()
 	overlays.Cut()
@@ -126,7 +125,7 @@
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 
 		set_spin_ovarlay()
-		
+
 		set_pull_overlay()
 
 		set_slots_overlay()

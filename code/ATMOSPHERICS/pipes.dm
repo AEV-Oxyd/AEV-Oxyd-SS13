@@ -7,8 +7,18 @@
 	layer = GAS_PIPE_HIDDEN_LAYER
 	use_power = NO_POWER_USE
 
+	hitbox = /datum/hitboxDatum/atom/polygon/atmosphericPipe
+
 	var/alert_pressure = 80*ONE_ATMOSPHERE
 		//minimum pressure before check_pressure(...) should be called
+
+/// Pending a full implementation of hitbox for every atom
+/obj/machinery/atmospherics/pipe/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
+	take_damage(P.get_structure_damage())
+	if(QDELETED(src))
+		return PROJECTILE_CONTINUE
+	return PROJECTILE_STOP
+
 
 /obj/machinery/atmospherics/pipe/Initialize(mapload, d)
 	. = ..()
@@ -190,6 +200,11 @@
 	if(istype(loc, /turf/simulated))
 		invisibility = i ? 101 : 0
 	update_icon()
+
+/obj/machinery/atmospherics/pipe/simple/getHitboxData()
+	if(invisibility == 101)
+		return null
+	return initialize_directions
 
 /obj/machinery/atmospherics/pipe/simple/Process()
 	if(!parent) //This should cut back on the overhead calling build_network thousands of times per cycle

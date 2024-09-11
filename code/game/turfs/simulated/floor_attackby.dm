@@ -38,7 +38,7 @@
 				take_damage(calc_damage, BRUTE)
 			else
 				visible_message(SPAN_DANGER("[user] ineffectually hits [src] with [I]"))
-			user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN) 
+			user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 			return TRUE
 
 	for(var/atom/movable/A in src)
@@ -202,3 +202,12 @@
 		to_chat(user, SPAN_WARNING("This section is too damaged to support anything. Use a welder to fix the damage."))
 		return 0
 	return 1
+
+/turf/simulated/floor/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
+	var/oldType = type
+	take_damage(P.get_structure_damage())
+	if(type != oldType)
+		return PROJECTILE_CONTINUE
+	return PROJECTILE_STOP
+
+

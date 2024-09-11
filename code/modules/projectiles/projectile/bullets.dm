@@ -81,6 +81,33 @@
 
 	return 0
 
+/obj/item/projectile/bullet/shotgunBuckshot
+	name = "12 Gauge buck pellet"
+	damage_types = list(
+		ARMOR_BULLET = list(
+			DELEM(BRUTE, 12)
+		)
+	)
+	/// Wheter we are the initla buckshot pellet that should create the rest or not
+	var/isInitial = TRUE
+	/// Amount of pellets to create / replicate
+	var/pelletCount = 15
+	/// Angle offset. This is forced by the shotgun if fired from one. If not, then the default is used
+	var/angleOffset = 24
+
+/obj/item/projectile/bullet/shotgunBuckshot/launch(atom/target, target_zone, x_offset, y_offset, angle_offset, proj_sound, user_recoil)
+	if(!isInitial)
+		return ..()
+	else while(pelletCount)
+		pelletCount--
+		var/obj/item/projectile/bullet/shotgunBuckshot/fellowPellet = new(get_turf(src))
+		fellowPellet.isInitial = FALSE
+		fellowPellet.firer = src.firer
+		fellowPellet.PrepareForLaunch()
+		var/angleBruh = rand(-angleOffset/2,angleOffset/2)
+		fellowPellet.launch(target, target_zone, x_offset , y_offset, angleBruh, null, null)
+	..()
+
 //For projectiles that actually represent clouds of projectiles
 /obj/item/projectile/bullet/pellet
 	name = "shrapnel" //'shrapnel' sounds more dangerous (i.e. cooler) than 'pellet'
@@ -98,14 +125,10 @@
 	wounding_mult = WOUNDING_SMALL
 	matter = list(MATERIAL_STEEL = 0.4)
 
-/obj/item/projectile/bullet/pellet/launch_from_gun(atom/target, mob/user, obj/item/gun/launcher, target_zone, x_offset=0, y_offset=0, angle_offset)
-	for(var/entry in matter) // this allows for the projectile in the casing having the correct matter 
+/obj/item/projectile/bullet/pellet/launch_from_gun(atom/target, mob/user, obj/item/gun/launcher, target_zone, x_offset=0, y_offset=0,zOffset, angle_offset)
+	for(var/entry in matter) // this allows for the projectile in the casing having the correct matter
 		matter[entry] /= pellets // yet disallows for pellet shrapnel created on impact multiplying the matter count
 	. = ..()
-
-/obj/item/projectile/bullet/pellet/Bumped()
-	. = ..()
-	bumped = 0 //can hit all mobs in a tile. pellets is decremented inside attack_mob so this should be fine.
 
 /obj/item/projectile/bullet/pellet/proc/get_pellets(var/distance)
 	var/pellet_loss = round((distance - 1)/range_step) //pellets lost due to distance

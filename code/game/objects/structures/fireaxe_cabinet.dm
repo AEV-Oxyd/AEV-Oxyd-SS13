@@ -4,6 +4,8 @@
 	icon_state = "fireaxe"
 	anchored = TRUE
 	density = FALSE
+	hitbox = /datum/hitboxDatum/atom/fireAxeCabinet
+	atomFlags = AF_WALL_MOUNTED
 
 	var/damage_threshold = 15
 	var/open
@@ -82,7 +84,7 @@
 	if(istype(O, /obj/item/tool/multitool))
 		toggle_lock(user)
 		return
-	if(istype(O, /obj/item/card/id))	
+	if(istype(O, /obj/item/card/id))
 		var/obj/item/card/id/ID = O
 		if(has_access(list(), req_one_access, ID.GetAccess()))
 			toggle_lock(user)

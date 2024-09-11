@@ -76,7 +76,7 @@
 		..()
 		healthcheck()
 
-/obj/machinery/bot/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/bot/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	if(!Proj.get_structure_damage())
 		return
 	health -= Proj.get_structure_damage()

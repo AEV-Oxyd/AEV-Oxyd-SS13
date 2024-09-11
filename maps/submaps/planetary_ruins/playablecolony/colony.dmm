@@ -424,7 +424,7 @@
 	dir = 4
 	},
 /obj/machinery/power/apc{
-	dir = 2;
+	dir = 1;
 	locked = 0;
 	name = "south bump";
 	operating = 1;
@@ -447,7 +447,7 @@
 	dir = 1
 	},
 /obj/machinery/power/apc{
-	dir = 2;
+	dir = 1;
 	locked = 0;
 	name = "south bump";
 	operating = 1;
@@ -1712,7 +1712,7 @@
 /obj/machinery/door/blast/shutters{
 	id = "colsen";
 	name = "Hard Storage Shutter";
-	
+
 	},
 /turf/simulated/floor/plating,
 /area/map_template/colony/command)
@@ -1766,7 +1766,7 @@
 	dir = 4
 	},
 /obj/machinery/power/apc{
-	dir = 2;
+	dir = 1;
 	locked = 0;
 	name = "south bump";
 	operating = 1;
@@ -2342,7 +2342,7 @@
 /area/map_template/colony/messhall)
 "gf" = (
 /obj/machinery/power/apc{
-	dir = 2;
+	dir = 1;
 	locked = 0;
 	name = "south bump";
 	operating = 1;
@@ -2632,7 +2632,7 @@
 /obj/structure/railing/mapped{
 	dir = 8;
 	icon_state = "railing0-1";
-	
+
 	},
 /obj/structure/railing/mapped{
 	dir = 1;
@@ -2647,12 +2647,12 @@
 	dir = 2;
 	frequency = 2222;
 	id_tag = "playablecolonymain_pump_out_external";
-	
+
 	},
 /obj/structure/railing/mapped{
 	dir = 8;
 	icon_state = "railing0-1";
-	
+
 	},
 /obj/structure/railing/mapped,
 /obj/effect/floor_decal/industrial/hatch/orange,
@@ -2699,7 +2699,7 @@
 /area/map_template/colony/atmospherics)
 "gY" = (
 /obj/machinery/power/apc{
-	dir = 2;
+	dir = 1;
 	locked = 0;
 	name = "south bump";
 	operating = 1;
@@ -2848,7 +2848,7 @@
 /obj/structure/railing/mapped{
 	dir = 8;
 	icon_state = "railing0-1";
-	
+
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/template_noop)
@@ -2874,7 +2874,7 @@
 /area/map_template/colony)
 "hv" = (
 /obj/machinery/power/apc{
-	dir = 2;
+	dir = 1;
 	locked = 0;
 	name = "south bump";
 	operating = 1;
@@ -3201,7 +3201,7 @@
 "ip" = (
 /obj/effect/floor_decal/borderfloorwhite,
 /obj/machinery/power/apc{
-	dir = 2;
+	dir = 1;
 	locked = 0;
 	name = "south bump";
 	operating = 1;
@@ -3360,7 +3360,7 @@
 	dir = 1
 	},
 /obj/machinery/power/apc{
-	dir = 2;
+	dir = 1;
 	locked = 0;
 	name = "south bump";
 	operating = 1;
@@ -3516,7 +3516,7 @@
 /area/map_template/colony/jail)
 "ji" = (
 /obj/machinery/power/apc{
-	dir = 2;
+	dir = 1;
 	locked = 0;
 	name = "south bump";
 	operating = 1;
@@ -4216,7 +4216,7 @@
 /obj/structure/railing/mapped{
 	dir = 8;
 	icon_state = "railing0-1";
-	
+
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/map_template/colony/mineralprocessing)
@@ -4295,7 +4295,7 @@
 /obj/structure/railing/mapped{
 	dir = 8;
 	icon_state = "railing0-1";
-	
+
 	},
 /obj/machinery/conveyor_switch{
 	id = "colonymine"
@@ -4367,7 +4367,7 @@
 /area/map_template/colony/jail)
 "lt" = (
 /obj/machinery/power/apc{
-	dir = 2;
+	dir = 1;
 	locked = 0;
 	name = "south bump";
 	operating = 1;
@@ -4435,7 +4435,7 @@
 /obj/structure/railing/mapped{
 	dir = 8;
 	icon_state = "railing0-1";
-	
+
 	},
 /obj/machinery/computer/mining,
 /obj/structure/table/steel_reinforced,
@@ -4554,7 +4554,7 @@
 	frequency = 2222;
 	id_tag = "playablecolonymain_pump";
 	power_rating = 25000;
-	
+
 	},
 /turf/simulated/floor/tiled/steel/techfloor,
 /area/map_template/colony/airlock)
@@ -4589,7 +4589,7 @@
 	frequency = 2222;
 	id_tag = "playablecolonymain_pump";
 	power_rating = 25000;
-	
+
 	},
 /turf/simulated/floor/tiled/steel/techfloor,
 /area/map_template/colony/airlock)
@@ -4815,7 +4815,7 @@
 /obj/structure/railing/mapped{
 	dir = 8;
 	icon_state = "railing0-1";
-	
+
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/exoplanet/concrete,
@@ -4852,12 +4852,12 @@
 /obj/structure/railing/mapped{
 	dir = 8;
 	icon_state = "railing0-1";
-	
+
 	},
 /obj/structure/railing/mapped{
 	dir = 4;
 	icon_state = "railing0-1";
-	
+
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -4976,7 +4976,7 @@
 	id = "colsen";
 	name = "Hard Equipment Storage";
 	pixel_y = 28;
-	
+
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -5064,7 +5064,7 @@
 /obj/structure/railing/mapped{
 	dir = 8;
 	icon_state = "railing0-1";
-	
+
 	},
 /obj/machinery/recharge_station,
 /turf/simulated/floor/exoplanet/concrete,
@@ -5430,7 +5430,7 @@
 	frequency = 2222;
 	id_tag = "playablecolonymain_pump_out_internal";
 	power_rating = 25000;
-	
+
 	},
 /obj/item/device/radio/intercom{
 	dir = 4;
@@ -5494,7 +5494,7 @@
 	frequency = 2222;
 	id_tag = "playablecolonymain_pump";
 	power_rating = 25000;
-	
+
 	},
 /turf/simulated/floor/tiled/steel/techfloor,
 /area/map_template/colony/airlock)
@@ -5521,7 +5521,7 @@
 	frequency = 2222;
 	id_tag = "playablecolonymain_pump";
 	power_rating = 25000;
-	
+
 	},
 /turf/simulated/floor/tiled/steel/techfloor,
 /area/map_template/colony/airlock)
@@ -5672,7 +5672,7 @@
 /obj/structure/railing/mapped{
 	dir = 8;
 	icon_state = "railing0-1";
-	
+
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -5711,7 +5711,7 @@
 /obj/structure/railing/mapped{
 	dir = 4;
 	icon_state = "railing0-1";
-	
+
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -5858,7 +5858,7 @@
 	frequency = 2222;
 	id_tag = "playablecolonymain_pump_out_internal";
 	power_rating = 25000;
-	
+
 	},
 /turf/simulated/floor/tiled/steel/techfloor,
 /area/map_template/colony/airlock)
@@ -6104,7 +6104,7 @@
 /obj/structure/railing/mapped{
 	dir = 8;
 	icon_state = "railing0-1";
-	
+
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -6340,7 +6340,7 @@
 /area/map_template/colony/commons)
 "zV" = (
 /obj/machinery/power/apc{
-	dir = 2;
+	dir = 1;
 	locked = 0;
 	name = "south bump";
 	operating = 1;
@@ -6376,7 +6376,7 @@
 	dir = 10
 	},
 /obj/machinery/power/apc{
-	dir = 2;
+	dir = 1;
 	locked = 0;
 	name = "south bump";
 	operating = 1;
@@ -6482,7 +6482,7 @@
 "Hy" = (
 /obj/machinery/portable_atmospherics/hydroponics,
 /obj/machinery/power/apc{
-	dir = 2;
+	dir = 1;
 	locked = 0;
 	name = "south bump";
 	operating = 1;
@@ -6652,7 +6652,7 @@
 /obj/structure/railing/mapped{
 	dir = 8;
 	icon_state = "railing0-1";
-	
+
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -6855,7 +6855,7 @@
 /obj/structure/railing/mapped{
 	dir = 8;
 	icon_state = "railing0-1";
-	
+
 	},
 /obj/structure/railing/mapped,
 /turf/simulated/floor/exoplanet/concrete,
@@ -6877,7 +6877,7 @@
 /area/map_template/colony/commons)
 "OV" = (
 /obj/machinery/power/apc{
-	dir = 2;
+	dir = 1;
 	locked = 0;
 	name = "south bump";
 	operating = 1;
@@ -6977,7 +6977,7 @@
 "Sr" = (
 /obj/structure/table/steel_reinforced,
 /obj/machinery/power/apc{
-	dir = 2;
+	dir = 1;
 	locked = 0;
 	name = "south bump";
 	operating = 1;
@@ -7077,7 +7077,7 @@
 /area/map_template/colony/command)
 "Xj" = (
 /obj/machinery/power/apc{
-	dir = 2;
+	dir = 1;
 	locked = 0;
 	name = "south bump";
 	operating = 1;

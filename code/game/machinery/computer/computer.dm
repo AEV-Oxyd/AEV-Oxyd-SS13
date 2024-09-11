@@ -5,6 +5,7 @@
 	density = TRUE
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
+	hitbox = /datum/hitboxDatum/atom/modularConsole
 	idle_power_usage = 300
 	active_power_usage = 300
 	var/processing = 0
@@ -43,7 +44,7 @@
 		set_broken()
 	return 0
 
-/obj/machinery/computer/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/computer/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	if(prob(Proj.get_structure_damage()))
 		if(!(stat & BROKEN))
 			var/datum/effect/effect/system/smoke_spread/S = new/datum/effect/effect/system/smoke_spread()

@@ -16,7 +16,7 @@
 	var/is_loosen = TRUE
 	var/valve_opened = FALSE
 	//blood stuff
-	var/mob/living/carbon/attached
+	var/mob/living/carbon/pacient
 	var/mode = 1 // 1 is injecting, 0 is taking blood.
 	var/obj/item/reagent_containers/beaker
 	var/list/transfer_amounts = list(REM, 1, 2)
@@ -54,7 +54,7 @@
 
 	if(beaker)
 		overlays += "beaker"
-		if(attached)
+		if(pacient)
 			overlays += "line_active"
 		else
 			overlays += "line"
@@ -89,7 +89,7 @@
 	contained = null
 	breather = null
 
-	attached = null
+	pacient = null
 	qdel(beaker)
 	beaker = null
 	return ..()
@@ -149,11 +149,11 @@
 					START_PROCESSING(SSobj,src)
 				return
 			if("Drip needle")
-				if(attached)
+				if(pacient)
 					if(!do_mob(usr, target, 10))
 						return
-					visible_message("\The [attached] is taken off \the [src]")
-					attached = null
+					visible_message("\The [pacient] is taken off \the [src]")
+					pacient = null
 				else if(ishuman(target))
 					usr.visible_message(SPAN_NOTICE("\The [usr] begins inserting needle into [target]'s vein."),
 									SPAN_NOTICE("You begin inserting needle into [target]'s vein."))
@@ -164,7 +164,7 @@
 						return
 					usr.visible_message(SPAN_NOTICE("\The [usr] hooks \the [target] up to \the [src]."),
 									SPAN_NOTICE("You hook \the [target] up to \the [src]."))
-					attached = target
+					pacient = target
 					START_PROCESSING(SSobj,src)
 				update_icon()
 
@@ -350,10 +350,10 @@
 		description += "The IV drip is [mode ? "injecting" : "taking blood"]. \n"
 		description += "It is set to transfer [transfer_amount]u of chemicals per cycle. \n"
 		if(beaker.reagents && beaker.reagents.total_volume)
-			description += SPAN_NOTICE("Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid. \n")
+			description += SPAN_NOTICE("pacient is \a [beaker] with [beaker.reagents.total_volume] units of liquid. \n")
 		else
-			description += SPAN_NOTICE("Attached is an empty [beaker]. \n")
-		description += SPAN_NOTICE("[attached ? attached : "No one"] is hooked up to it. \n")
+			description += SPAN_NOTICE("pacient is an empty [beaker]. \n")
+		description += SPAN_NOTICE("[pacient ? pacient : "No one"] is hooked up to it. \n")
 	else
 		description += SPAN_NOTICE("There is no vessel. \n")
 
@@ -399,17 +399,17 @@
 		environment.merge(removed)
 
 	//Reagent Stuff
-	if(attached)
-		if(!Adjacent(attached))
-			visible_message("The needle is ripped out of [src.attached], doesn't that hurt?")
-			attached.apply_damage(3, BRUTE, pick(BP_R_ARM, BP_L_ARM), used_weapon = "Drip needle")
-			attached = null
+	if(pacient)
+		if(!Adjacent(pacient))
+			visible_message("The needle is ripped out of [src.pacient], doesn't that hurt?")
+			pacient.apply_damage(3, BRUTE, pick(BP_R_ARM, BP_L_ARM), used_weapon = "Drip needle")
+			pacient = null
 			update_icon()
 
 	if(beaker)
 		if(mode) // Give blood
 			if(beaker.volume > 0)
-				beaker.reagents.trans_to_mob(attached, transfer_amount, CHEM_BLOOD)
+				beaker.reagents.trans_to_mob(pacient, transfer_amount, CHEM_BLOOD)
 				update_icon()
 		else // Take blood
 			var/amount = beaker.reagents.maximum_volume - beaker.reagents.total_volume
@@ -419,7 +419,7 @@
 				if(prob(5)) visible_message("\The [src] pings.")
 				return
 
-			var/mob/living/carbon/human/H = attached
+			var/mob/living/carbon/human/H = pacient
 			if(!istype(H))
 				return
 //			if(NOCLONE in H.mutations)
@@ -441,7 +441,7 @@
 				beaker.reagents.handle_reactions()
 				update_icon()
 
-	if ((!valve_opened || tank.distribute_pressure == 0) && !breather && !attached)
+	if ((!valve_opened || tank.distribute_pressure == 0) && !breather && !pacient)
 		return PROCESS_KILL
 
 /obj/structure/medical_stand/anesthetic

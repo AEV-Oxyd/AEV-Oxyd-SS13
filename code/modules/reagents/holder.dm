@@ -425,7 +425,7 @@
 		remove_any(amount) //If we don't do this, then only the spill amount above is removed, and someone can keep splashing with the same beaker endlessly
 
 /datum/reagents/proc/trans_id_to(atom/target, id, amount = 1, ignore_isinjectable = FALSE)
-	if (!target || !target.reagents || !target.simulated)
+	if (!target || !target.reagents)
 		return
 
 	amount = min(amount, get_reagent_amount(id))
@@ -454,7 +454,7 @@
 	return
 
 /datum/reagents/proc/touch_mob(mob/target)
-	if(!target || !istype(target) || !target.simulated)
+	if(!target || !istype(target))
 		return
 
 	for(var/datum/reagent/current in reagent_list)
@@ -463,7 +463,7 @@
 	update_total()
 
 /datum/reagents/proc/touch_turf(turf/target)
-	if(!target || !istype(target) || !target.simulated)
+	if(!target || !istype(target))
 		return
 	if(istype(target, /turf/simulated/open))
 		var/turf/simulated/open/T = target
@@ -478,7 +478,7 @@
 	return handled
 
 /datum/reagents/proc/touch_obj(obj/target)
-	if(!target || !istype(target) || !target.simulated)
+	if(!target || !istype(target))
 		return
 
 	for(var/datum/reagent/current in reagent_list)
@@ -497,7 +497,7 @@
 	return trans_to_mob(target, amount, CHEM_TOUCH, multiplier, copy)
 
 /datum/reagents/proc/trans_to_mob(mob/target, amount = 1, type = CHEM_BLOOD, multiplier = 1, copy = 0) // Transfer after checking into which holder...
-	if(!target || !istype(target) || !target.simulated)
+	if(!target || !istype(target))
 		return
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
@@ -520,7 +520,7 @@
 			R.touch_mob(target)
 
 /datum/reagents/proc/trans_to_turf(turf/target, amount = 1, multiplier = 1, copy = 0) // Turfs don't have any reagents (at least, for now). Just touch it.
-	if(!target || !target.simulated)
+	if(!target)
 		return
 
 	var/datum/reagents/R = new /datum/reagents(amount * multiplier)
@@ -543,7 +543,7 @@
 	return
 
 /datum/reagents/proc/trans_to_obj(obj/target, amount = 1, multiplier = 1, copy = 0) // Objects may or may not; if they do, it's probably a beaker or something and we need to transfer properly; otherwise, just touch.
-	if(!target || !target.simulated)
+	if(!target)
 		return
 
 	if(!target.reagents)

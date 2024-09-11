@@ -17,6 +17,7 @@
 	active_power_usage = 3000 //For heating/cooling rooms. 1000 joules equates to about 1 degree every 2 seconds for a single tile of air.
 	power_channel = STATIC_ENVIRON
 	req_one_access = list(access_atmospherics, access_engine_equip)
+	hitbox = /datum/hitboxDatum/atom/airAlarm
 	var/alarm_id = null
 	var/breach_detection = 1 // Whether to use automatic breach detection or not
 	var/frequency = 1439
@@ -81,14 +82,14 @@
 	wires = null
 	return ..()
 
-/obj/machinery/alarm/New(loc, dir, building = 0)
+/obj/machinery/alarm/New(loc, dir, building = FALSE)
 	GLOB.alarm_list += src
 	if(building)
 		if(dir)
 			src.set_dir(dir)
 
 		buildstage = 0
-		wiresexposed = 1
+		wiresexposed = TRUE
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 		update_icon()
@@ -124,6 +125,16 @@
 	set_frequency(frequency)
 	if(buildstage == 2 && !master_is_operating())
 		elect_master()
+
+	var/turf/toAttach = get_step(loc, reverse_dir[dir])
+
+	if(iswall(toAttach))
+		toAttach.attachGameAtom(src, ATFS_PRIORITIZE_ATTACHED_FOR_HITS, ATFA_EASY_INTERACTIVE | ATFA_DIRECTIONAL_HITTABLE )
+	else
+		stack_trace("[src.type] has no wall to attach itself to at X:[x] Y:[y] Z:[z]")
+		// the players need to be confused so they complain about it!
+		color = COLOR_PINK
+
 
 /obj/machinery/alarm/fire_act()
 	return
@@ -874,8 +885,7 @@
 
 /obj/machinery/alarm/power_change()
 	..()
-	spawn(rand(0,15))
-		update_icon()
+	update_icon()
 
 /obj/machinery/alarm/examine(mob/user)
 	var/description = ""
@@ -924,6 +934,7 @@ FIRE ALARM
 	desc = "<i>\"Pull this in case of emergency\"</i>. Thus, keep pulling it forever."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
+	hitbox = /datum/hitboxDatum/atom/fireAlarm
 	var/detecting = 1
 	var/working = 1
 	var/time = 10
@@ -985,7 +996,7 @@ FIRE ALARM
 
 /obj/machinery/firealarm/bullet_act()
 	alarm()
-	return PROJECTILE_CONTINUE
+	. = ..()
 
 /obj/machinery/firealarm/emp_act(severity)
 	if(prob(50/severity))
@@ -1108,8 +1119,7 @@ FIRE ALARM
 
 /obj/machinery/firealarm/power_change()
 	..()
-	spawn(rand(0,15))
-		update_icon()
+	update_icon()
 
 /obj/machinery/firealarm/nano_ui_interact(var/mob/user, var/ui_key = "main", var/datum/nanoui/ui = null, var/force_open = NANOUI_FOCUS, var/datum/nano_topic_state/state = GLOB.outside_state)
 	var/data[0]
@@ -1198,11 +1208,23 @@ FIRE ALARM
 
 	if(building)
 		buildstage = 0
-		wiresexposed = 1
+		wiresexposed = TRUE
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 
 	GLOB.firealarm_list += src
+
+/obj/machinery/firealarm/Initialize(mapload, d)
+	. = ..()
+	var/turf/toAttach = get_step(loc, reverse_dir[dir])
+
+	if(iswall(toAttach))
+		toAttach.attachGameAtom(src, ATFS_PRIORITIZE_ATTACHED_FOR_HITS, ATFA_EASY_INTERACTIVE | ATFA_DIRECTIONAL_HITTABLE )
+	else
+		stack_trace("[src.type] has no wall to attach itself to at X:[x] Y:[y] Z:[z]")
+		// the players need to be confused so they complain about it!
+		color = COLOR_PINK
+
 
 /obj/machinery/firealarm/Destroy()
 	GLOB.firealarm_list -= src

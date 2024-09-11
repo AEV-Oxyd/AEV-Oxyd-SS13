@@ -9,7 +9,6 @@ var/const/GHOST_IMAGE_ALL = ~GHOST_IMAGE_NONE
 	layer = FLY_LAYER
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	sight = SEE_TURFS|SEE_MOBS|SEE_OBJS|SEE_SELF
-	simulated = FALSE
 	stat = DEAD
 	status_flags = GODMODE
 	var/ghost_image_flag = GHOST_IMAGE_DARKNESS

@@ -8,6 +8,8 @@
 	idle_power_usage = 5
 	active_power_usage = 10
 	layer = WALL_OBJ_LAYER
+	hitbox = /datum/hitboxDatum/atom/camera
+	atomFlags = AF_WALL_MOUNTED
 
 	var/list/network = list(NETWORK_CEV_ERIS)
 	var/c_tag = null
@@ -99,7 +101,7 @@
 			update_coverage()
 			START_PROCESSING(SSmachines, src)
 
-/obj/machinery/camera/bullet_act(var/obj/item/projectile/P)
+/obj/machinery/camera/bullet_act(obj/item/projectile/P, defZone, hitboxFlags)
 	take_damage(P.get_structure_damage())
 
 /obj/machinery/camera/explosion_act(target_power, explosion_handler/handler)

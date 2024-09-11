@@ -156,7 +156,7 @@
 	T?.levelupdate()
 	update_icon()
 
-/obj/machinery/portable_atmospherics/hydroponics/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/portable_atmospherics/hydroponics/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	//Don't act on seeds like dionaea that shouldn't change.
 	if(seed && seed.get_trait(TRAIT_IMMUTABLE) > 0)
 		return

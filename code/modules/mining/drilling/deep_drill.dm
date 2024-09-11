@@ -384,7 +384,7 @@
 	take_damage(damage)
 	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN * 1.5)
 
-/obj/machinery/mining/deep_drill/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/mining/deep_drill/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	..()
 	var/damage = Proj.get_structure_damage()
 	take_damage(damage)

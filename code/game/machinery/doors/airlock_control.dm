@@ -154,6 +154,9 @@
 	anchored = TRUE
 	power_channel = STATIC_ENVIRON
 
+	atomFlags = AF_WALL_MOUNTED
+	hitbox = /datum/hitboxDatum/atom/button
+
 	var/id_tag
 	var/master_tag
 	var/frequency = 1379

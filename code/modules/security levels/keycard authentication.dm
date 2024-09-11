@@ -8,6 +8,7 @@
 	active_power_usage = 0
 	interact_offline = TRUE
 	req_access = list(access_keycard_auth)
+	atomFlags = AF_WALL_MOUNTED
 	var/static/const/countdown = 3 MINUTES
 	var/static/const/cooldown = 10 MINUTES
 	var/static/list/ongoing_countdowns = list()

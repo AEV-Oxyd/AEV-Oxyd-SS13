@@ -5,6 +5,7 @@
 	desc = "A wall-mounted flashbulb device."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mflash1"
+	atomFlags = AF_WALL_MOUNTED
 	var/id = null
 	var/range = 2 //this is roughly the size of brig cell
 	var/disable = 0
@@ -28,6 +29,7 @@
 	base_state = "pflash"
 	density = TRUE
 	range = 3 //the eris' hallways are wider than other maps
+	atomFlags = parent_type::atomFlags & ~AF_WALL_MOUNTED
 
 /obj/machinery/flasher/Initialize()
 	. = ..()

@@ -212,7 +212,7 @@
 	applies_stasis = 0
 
 /obj/machinery/cryopod/New()
-	announce = new /obj/item/device/radio/intercom(src)
+	announce = new /obj/item/device/radio/intercom/internal(src)
 	update_icon()
 	..()
 

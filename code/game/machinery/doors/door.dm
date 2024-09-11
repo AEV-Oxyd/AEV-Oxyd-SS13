@@ -11,6 +11,7 @@
 	opacity = 1
 	density = TRUE
 	layer = OPEN_DOOR_LAYER
+	hitbox = /datum/hitboxDatum/turf/door
 	var/open_layer = OPEN_DOOR_LAYER
 	var/closed_layer = CLOSED_DOOR_LAYER
 	var/visible = 1
@@ -47,7 +48,16 @@
 
 /obj/machinery/door/New()
 	GLOB.all_doors += src
-	..()
+	. = ..()
+	if(density)
+		layer = closed_layer
+		update_heat_protection(get_turf(src))
+	else
+		layer = open_layer
+
+	health = maxHealth
+
+	update_nearby_tiles(need_rebuild=TRUE)
 
 /obj/machinery/door/Destroy()
 	GLOB.all_doors -= src
@@ -66,24 +76,12 @@
 	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN*1.5)
 	attack_animation(user)
 
-/obj/machinery/door/New()
-	. = ..()
-	if(density)
-		layer = closed_layer
-		update_heat_protection(get_turf(src))
-	else
-		layer = open_layer
-
-	health = maxHealth
-
-	update_nearby_tiles(need_rebuild=TRUE)
-	return
-
 /// modifying bounds when the map is not fully loaded causes improper detection
 /// this was apparent when done through DMMSuite loading , where left/right facing multi-tile
 /// wouldn't work , because the right turf didn't exist at the moment or was replaced, erasing its
 /// contents list - SPCR 2024
 /obj/machinery/door/Initialize(mapload, d)
+	. = ..()
 	if(width > 1)
 		if(dir in list(EAST, WEST))
 			bound_width = width * world.icon_size
@@ -91,8 +89,6 @@
 		else
 			bound_width = world.icon_size
 			bound_height = width * world.icon_size
-
-
 
 /obj/machinery/door/Destroy()
 	density = FALSE
@@ -184,7 +180,9 @@
 			do_animate("deny")
 	return TRUE
 
-/obj/machinery/door/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/door/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
+	if(!density)
+		return PROJECTILE_CONTINUE
 	..()
 
 	var/damage = Proj.get_structure_damage()

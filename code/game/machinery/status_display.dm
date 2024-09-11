@@ -17,6 +17,7 @@
 	density = FALSE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
+	atomFlags = AF_WALL_MOUNTED
 	var/mode = 1	// 0 = Blank
 					// 1 = Shuttle timer
 					// 2 = Arbitrary message(s)

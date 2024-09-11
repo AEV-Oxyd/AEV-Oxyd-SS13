@@ -14,6 +14,7 @@ GLOBAL_VAR_INIT(Debug,0)
 	var/throw_speed = 2
 	var/throw_range = 7
 	var/moved_recently = 0
+	/// I yearn , for the day i can remove this variable , for it will set me free of shit-code (i just need a excuse to be lazy as fuck , this shit is here for convenience). SPCR 2024
 	var/obj/item/grab/grabbedBy
 	var/item_state // Used to specify the item state for the on-mob overlays.
 	var/inertia_dir = 0
@@ -39,7 +40,6 @@ GLOBAL_VAR_INIT(Debug,0)
 //	else
 //		testing("GC: [type] was deleted via GC with qdel()")
 	..()
-
 
 /atom/movable/Destroy()
 	var/turf/T = loc

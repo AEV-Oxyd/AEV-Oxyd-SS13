@@ -94,7 +94,7 @@
 "as" = (
 /obj/effect/floor_decal/industrial/outline/blue,
 /obj/machinery/power/apc{
-	dir = 2;
+	dir = 1;
 	locked = 0;
 	name = "south bump";
 	operating = 1;

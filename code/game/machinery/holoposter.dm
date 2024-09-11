@@ -7,6 +7,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 80
 	power_channel = STATIC_ENVIRON
+	atomFlags = AF_WALL_MOUNTED
 
 	var/static/list/poster_types = list(
 		"ironhammer" = COLOR_LIGHTING_BLUE_BRIGHT,
@@ -46,7 +47,7 @@
 	src.add_fingerprint(user)
 	if(stat & (NOPOWER))
 		return
-		
+
 	if(istype(W, /obj/item/tool/multitool))
 		ui_interact(user)
 		return
@@ -99,12 +100,12 @@
 		"selected" = selected_icon,
 		"icon" = icon2base64html(icon_chache[selected_icon])
 	)
-	
+
 /obj/machinery/holoposter/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
-	
+
 	switch(action)
 		if("change")
 			change(params["value"])
