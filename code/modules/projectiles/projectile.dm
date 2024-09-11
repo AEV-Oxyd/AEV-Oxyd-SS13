@@ -539,63 +539,56 @@ GLOBAL_LIST(projectileDamageConstants)
 	. = PROJECTILE_CONTINUE
 	if(atomFlags & AF_VISUAL_MOVE)
 		return
-	var/list/hittingList = new/list(length(HittingPrioritiesList))
-	hittingList[1] = list()
-	hittingList[2] = list()
-	hittingList[3] = list()
-	hittingList[4] = list()
-	hittingList[5] = list()
-	var/list/sortingList = scanning.contents.Copy()
-	sortingList.Add(scanning)
-	sortingList.Remove(src)
-	for(var/atom/thing as anything in sortingList)
-		if(thing.atomFlags & AF_IGNORE_ON_BULLETSCAN)
-			continue
-		if(thing in dataRef.cannotHit)
-			continue
-		for(var/index=1 to length(HittingPrioritiesList))
-			if(!istype(thing, HittingPrioritiesList[index]))
-				continue
-			hittingList[index] += thing
-			if(!length(thing.attached))
-				continue
-			for(var/atom/possibleTarget as anything in thing.attached)
-				if(thing.attached[possibleTarget] & ATFS_IGNORE_HITS)
-					continue
-				if(possibleTarget.attached[thing] & ATFA_DIRECTIONAL_HITTABLE && !(possibleTarget.dir & reverse_dir[bulletDir]))
-					continue
-				if(possibleTarget.attached[thing] & ATFA_DIRECTIONAL_HITTABLE_STRICT && !(possibleTarget.dir == reverse_dir[bulletDir]))
-					continue
-				if(thing.attached[possibleTarget] & ATFS_PRIORITIZE_ATTACHED_FOR_HITS)
-					hittingList[index][length(hittingList[index])] = possibleTarget
-					hittingList[index] += thing
-				else
-					hittingList[index] += possibleTarget
 
 	var/list/hitboxesList = list()
 
-	for(var/i in 1 to length(hittingList))
-		for(var/atom/target as anything in hittingList[i])
-			if(target == firer)
+	for(var/atom/target as anything in scanning.contents)
+		if(target.atomFlags & AF_IGNORE_ON_BULLETSCAN)
+			continue
+		if(target in dataRef.cannotHit)
+			continue
+		if(target == firer)
+			continue
+		if(target == src)
+			continue
+		if(!target.hitbox)
+			message_admins("[src] [src.type] has no hitbox!")
+			continue
+		/// third slot rezerved for flags passed back by hitbox intersect
+		var/hitFlags = null
+
+		var/hitboxIntersect = target.hitbox.intersects(target, target.dir, startX, startY, startZ, pStepX, pStepY, pStepZ, &hitFlags)
+		if(target.hitbox && !hitboxIntersect)
+			continue
+		hitboxesList.Add(list(hitboxIntersect, hitFlags, target))
+		for(var/atom/possibleTarget as anything in target.attached)
+			if(target.attached[possibleTarget] & ATFS_IGNORE_HITS)
 				continue
-			/// third slot rezerved for flags passed back by hitbox intersect
-			var/hitFlags = null
-			var/hitboxIntersect = target.hitbox.intersects(target, target.dir, startX, startY, startZ, pStepX, pStepY, pStepZ, &hitFlags)
-			if(target.hitbox && !hitboxIntersect)
+			if(possibleTarget.attached[target] & ATFA_DIRECTIONAL_HITTABLE && !(possibleTarget.dir & reverse_dir[bulletDir]))
 				continue
-			hitboxesList.Add(list(hitboxIntersect, hitFlags, target))
+			if(possibleTarget.attached[target] & ATFA_DIRECTIONAL_HITTABLE_STRICT && !(possibleTarget.dir == reverse_dir[bulletDir]))
+				continue
+			var/intersectDistance = possibleTarget.hitbox.intersects(possibleTarget, possibleTarget.dir, startX, startY,startZ, pStepX, pStepY, pStepZ, &hitFlags)
+			if(intersectDistance)
+				if(target.attached[possibleTarget] & ATFS_PRIORITIZE_ATTACHED_FOR_HITS)
+					var/listReference = hitboxesList[length(hitboxesList)]
+					hitboxesList[length(hitboxesList)]= list(intersectDistance, hitFlags, possibleTarget)
+					hitboxesList.Add(listReference)
+				else
+					hitboxesList.Add(list(intersectDistance, hitFlags, possibleTarget))
 
 	var/temp
 	for(var/i in 1 to length(hitboxesList) - 1)
-		if(hitboxList[i][1] < hitboxList[i+1][1])
-			temp = hitboxList[i]
+		if(hitboxesList[i][1] < hitboxesList[i+1][1])
+			temp = hitboxesList[i]
 			hitboxesList[i] = hitboxesList[i+1]
 			hitboxesList[i+1] = temp
 			i = max(i-2, 1)
 
 	for(var/i in 1 to length(hitboxesList))
-		if(hitboxesList[i][3].bullet_act(src, def_zone, hitFlags) & PROJECTILE_STOP)
-			onBlockingHit(hitboxesList[i][3])
+		var/atom/target = hitboxesList[i][3]
+		if(target.bullet_act(src, def_zone, hitboxesList[i][2]) & PROJECTILE_STOP)
+			onBlockingHit(target)
 			return PROJECTILE_STOP
 
 	return PROJECTILE_CONTINUE

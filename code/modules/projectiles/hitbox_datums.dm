@@ -54,7 +54,7 @@ GLOBAL_LIST_EMPTY(hitboxPrototypes)
 	calculateAimingLevels()
 
 /// this can be optimized further by making the calculations not make a new list , and instead be added when checking line intersection - SPCR 2024
-/datum/hitboxDatum/proc/intersects(atom/owner, ownerDirection, startX, startY, startZ, pStepX, pStepY, pStepZ) as number
+/datum/hitboxDatum/proc/intersects(atom/owner, ownerDirection, startX, startY, startZ, pStepX, pStepY, pStepZ)
 
 /datum/hitboxDatum/proc/getAimingLevel(atom/shooter, defZone, atom/owner)
 
@@ -86,7 +86,7 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 /// x1,y1 and x2,y2 are the start and end of the first line
 /// x3,y3 and x4,y4 are the start and end of the second line
 /// pStepX and pStepY are pointers for setting the bullets step end
-/datum/hitboxDatum/proc/lineIntersect(x1,y1,x2,y2,x3,y3,x4,y4, pStepX, pStepY) as number
+/datum/hitboxDatum/proc/lineIntersect(x1,y1,x2,y2,x3,y3,x4,y4, pStepX, pStepY)
 	var/firstRatio
 	var/secondRatio
 	var/denominator = ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1))
@@ -126,8 +126,8 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	var/flags
 	for(var/list/boundingData in boundingBoxes["[ownerDirection]"])
 		firstZ =  boundingData[5] + worldZ
-		vlastZ = boundingData[6] + worldZ
-		vflags = boundingData[7]
+		lastZ = boundingData[6] + worldZ
+		flags = boundingData[7]
 		.[currentIndex++] = (list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[1] + worldX, boundingData[4] + worldY, firstZ, lastZ, flags))
 		.[currentIndex++] = (list(boundingData[1] + worldX, boundingData[2] + worldY, boundingData[3] + worldX, boundingData[2] + worldY, firstZ, lastZ, flags))
 		.[currentIndex++] = (list(boundingData[1] + worldX, boundingData[4] + worldY, boundingData[3] + worldX, boundingData[4] + worldY, firstZ, lastZ, flags))
@@ -150,7 +150,7 @@ boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	return defZoneToLevel[defZone]
 
 	/// this can be optimized further by making the calculations not make a new list , and instead be added when checking line intersection - SPCR 2024
-/datum/hitboxDatum/atom/intersects(atom/owner, ownerDirection, startX, startY, startZ, pStepX, pStepY, pStepZ)
+/datum/hitboxDatum/atom/intersects(atom/owner, ownerDirection, startX, startY, startZ, pStepX, pStepY, pStepZ, pHitFlags)
 	var/worldX
 	var/worldY
 	var/worldZ
