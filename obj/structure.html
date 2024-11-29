@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;structure - Space Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">Space Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/structure.html#proc">Proc Details</a></header>
+<main>
+<h1>structure <aside>/<a href="obj.html">obj</a>/<a href="obj/structure.html">structure</a></aside>
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/game/objects/structures.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;structures.dm 22"/></a></h1>
+
+<p>Global list for storing the blocking levels for all structures
+format is list(type = number) or list(type = list(list(minimum,maximum), list(minimum,maximum)))
+if its not meant to be continous</p>
+<p>Any projectile under this height will be blocked by this structure. Can be a list if its not meant to be continous
+List format is list(list(minimum, maximum), list(minimum, maximum))
+Normal format is just the number.
+Blocking lists are stored in the global list GLOB.structureBlockingLevels.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/structure.html#proc/get_fall_damage">get_fall_damage</a></th><td>An overridable proc used by SSfalling to determine whether if the object deals
+mimimal dmg or their volumeClass * 10</td></tr></table><h2 id="proc">Proc Details</h2><h3 id="proc/get_fall_damage">get_fall_damage<aside>(/<a href="turf.html">turf</a>/from, /<a href="turf.html">turf</a>/dest) 
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/game/objects/structures.dm#L65">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;structures.dm 65"/></a></aside>
+        </h3>
+        <p>An overridable proc used by SSfalling to determine whether if the object deals
+mimimal dmg or their volumeClass * 10</p>
+<p>@return	ITEM_SIZE_TINY * 10 	if volumeClass is not defined in subtypes structures
+volumeClass * 10 			if volumeClass is set</p>
+<p>Values are found in code/__defines/inventory_sizes.dm</p></main>
+<footer>
+    cev_eris.dme
+    <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/tree/7dc78a0437f317133ec79dbd1a2d2618166fb411">7dc78a0</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

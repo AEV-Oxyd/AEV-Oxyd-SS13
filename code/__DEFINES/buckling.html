@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__DEFINES&#x2F;buckling.dm - Space Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">Space Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__DEFINES/buckling.html#define">Define Details</a></header>
+<main>
+<h1>code/__DEFINES/buckling.dm 
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__DEFINES/buckling.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;buckling.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__DEFINES/buckling.html#define/BUCKLE_MOB_ONLY">BUCKLE_MOB_ONLY</a></th><td>Only permits mob to buckle  1</td></tr>
+        <tr><th><a href="code/__DEFINES/buckling.html#define/BUCKLE_FORCE_LIE">BUCKLE_FORCE_LIE</a></th><td>Forces the buckled to lie if its a mob 2</td></tr>
+        <tr><th><a href="code/__DEFINES/buckling.html#define/BUCKLE_FORCE_STAND">BUCKLE_FORCE_STAND</a></th><td>Forces the buckled to stand if its a mob 4</td></tr>
+        <tr><th><a href="code/__DEFINES/buckling.html#define/BUCKLE_FORCE_DIR">BUCKLE_FORCE_DIR</a></th><td>Forces the dir of the buckled if its a mob 8</td></tr>
+        <tr><th><a href="code/__DEFINES/buckling.html#define/BUCKLE_MOVE_RELAY">BUCKLE_MOVE_RELAY</a></th><td>Relays any move attempts of the buckled if its a mob to the owner 16</td></tr>
+        <tr><th><a href="code/__DEFINES/buckling.html#define/BUCKLE_HANDLE_LAYER">BUCKLE_HANDLE_LAYER</a></th><td>Wheter the component should handle the layer 32</td></tr>
+        <tr><th><a href="code/__DEFINES/buckling.html#define/BUCKLE_PIXEL_SHIFT">BUCKLE_PIXEL_SHIFT</a></th><td>Wheter the buckled atom gets pixel shifted 64</td></tr>
+        <tr><th><a href="code/__DEFINES/buckling.html#define/BUCKLE_REQUIRE_RESTRAINTED">BUCKLE_REQUIRE_RESTRAINTED</a></th><td>Only permitted to be done if the target is restrained 128</td></tr>
+        <tr><th><a href="code/__DEFINES/buckling.html#define/BUCKLE_REQUIRE_BIGGER_BUCKLER">BUCKLE_REQUIRE_BIGGER_BUCKLER</a></th><td>Doesn't permit buckling if the size of the buckler is the smaller than that of the buckled 256</td></tr>
+        <tr><th><a href="code/__DEFINES/buckling.html#define/BUCKLE_REQUIRE_NOT_BUCKLED">BUCKLE_REQUIRE_NOT_BUCKLED</a></th><td>Wheter we require the target is not buckle to something else. 512</td></tr>
+        <tr><th><a href="code/__DEFINES/buckling.html#define/BUCKLE_CUSTOM_UNBUCKLE">BUCKLE_CUSTOM_UNBUCKLE</a></th><td>For letting the owner handle all unbuckling behavior 2024</td></tr>
+        <tr><th><a href="code/__DEFINES/buckling.html#define/BUCKLE_CUSTOM_BUCKLE">BUCKLE_CUSTOM_BUCKLE</a></th><td>For letting the owner handle all buckling behavior 4048</td></tr>
+        <tr><th><a href="code/__DEFINES/buckling.html#define/BUCKLE_SEND_UPDATES">BUCKLE_SEND_UPDATES</a></th><td>For calling  proc on the owner after buckling/unbuckling 8096</td></tr>
+        <tr><th><a href="code/__DEFINES/buckling.html#define/BUCKLE_MOVING">BUCKLE_MOVING</a></th><td>For letting the buckled know this buckle moves. Prevents resist attempts on move relay 16192</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/BUCKLE_CUSTOM_BUCKLE"><aside class="declaration">#define </aside>BUCKLE_CUSTOM_BUCKLE
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__DEFINES/buckling.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;buckling.dm 26"/></a>
+    </h3>
+    <p>For letting the owner handle all buckling behavior 4048</p><h3 id="define/BUCKLE_CUSTOM_UNBUCKLE"><aside class="declaration">#define </aside>BUCKLE_CUSTOM_UNBUCKLE
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__DEFINES/buckling.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;buckling.dm 24"/></a>
+    </h3>
+    <p>For letting the owner handle all unbuckling behavior 2024</p><h3 id="define/BUCKLE_FORCE_DIR"><aside class="declaration">#define </aside>BUCKLE_FORCE_DIR
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__DEFINES/buckling.dm#L8">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;buckling.dm 8"/></a>
+    </h3>
+    <p>Forces the dir of the buckled if its a mob 8</p><h3 id="define/BUCKLE_FORCE_LIE"><aside class="declaration">#define </aside>BUCKLE_FORCE_LIE
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__DEFINES/buckling.dm#L4">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;buckling.dm 4"/></a>
+    </h3>
+    <p>Forces the buckled to lie if its a mob 2</p><h3 id="define/BUCKLE_FORCE_STAND"><aside class="declaration">#define </aside>BUCKLE_FORCE_STAND
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__DEFINES/buckling.dm#L6">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;buckling.dm 6"/></a>
+    </h3>
+    <p>Forces the buckled to stand if its a mob 4</p><h3 id="define/BUCKLE_HANDLE_LAYER"><aside class="declaration">#define </aside>BUCKLE_HANDLE_LAYER
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__DEFINES/buckling.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;buckling.dm 12"/></a>
+    </h3>
+    <p>Wheter the component should handle the layer 32</p><h3 id="define/BUCKLE_MOB_ONLY"><aside class="declaration">#define </aside>BUCKLE_MOB_ONLY
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__DEFINES/buckling.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;buckling.dm 2"/></a>
+    </h3>
+    <p>Only permits mob to buckle  1</p><h3 id="define/BUCKLE_MOVE_RELAY"><aside class="declaration">#define </aside>BUCKLE_MOVE_RELAY
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__DEFINES/buckling.dm#L10">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;buckling.dm 10"/></a>
+    </h3>
+    <p>Relays any move attempts of the buckled if its a mob to the owner 16</p><h3 id="define/BUCKLE_MOVING"><aside class="declaration">#define </aside>BUCKLE_MOVING
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__DEFINES/buckling.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;buckling.dm 30"/></a>
+    </h3>
+    <p>For letting the buckled know this buckle moves. Prevents resist attempts on move relay 16192</p><h3 id="define/BUCKLE_PIXEL_SHIFT"><aside class="declaration">#define </aside>BUCKLE_PIXEL_SHIFT
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__DEFINES/buckling.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;buckling.dm 14"/></a>
+    </h3>
+    <p>Wheter the buckled atom gets pixel shifted 64</p><h3 id="define/BUCKLE_REQUIRE_BIGGER_BUCKLER"><aside class="declaration">#define </aside>BUCKLE_REQUIRE_BIGGER_BUCKLER
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__DEFINES/buckling.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;buckling.dm 18"/></a>
+    </h3>
+    <p>Doesn't permit buckling if the size of the buckler is the smaller than that of the buckled 256</p><h3 id="define/BUCKLE_REQUIRE_NOT_BUCKLED"><aside class="declaration">#define </aside>BUCKLE_REQUIRE_NOT_BUCKLED
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__DEFINES/buckling.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;buckling.dm 20"/></a>
+    </h3>
+    <p>Wheter we require the target is not buckle to something else. 512</p><h3 id="define/BUCKLE_REQUIRE_RESTRAINTED"><aside class="declaration">#define </aside>BUCKLE_REQUIRE_RESTRAINTED
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__DEFINES/buckling.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;buckling.dm 16"/></a>
+    </h3>
+    <p>Only permitted to be done if the target is restrained 128</p><h3 id="define/BUCKLE_SEND_UPDATES"><aside class="declaration">#define </aside>BUCKLE_SEND_UPDATES
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__DEFINES/buckling.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;buckling.dm 28"/></a>
+    </h3>
+    <p>For calling  proc on the owner after buckling/unbuckling 8096</p></main>
+<footer>
+    cev_eris.dme
+    <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/tree/7dc78a0437f317133ec79dbd1a2d2618166fb411">7dc78a0</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

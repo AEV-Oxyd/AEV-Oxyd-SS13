@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;modules&#x2F;clothing&#x2F;_clothing_defs.dm - Space Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">Space Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/modules/clothing/_clothing_defs.html#define">Define Details</a></header>
+<main>
+<h1>code/modules/clothing/_clothing_defs.dm 
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/clothing/_clothing_defs.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;clothing&#x2F;_clothing_defs.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/modules/clothing/_clothing_defs.html#define/CS_PROJBLOCK">CS_PROJBLOCK</a></th><td>For accesing sounds to play from clothing components for various actions</td></tr>
+        <tr><th><a href="code/modules/clothing/_clothing_defs.html#define/CF_ARMOR_DEG_LINEAR">CF_ARMOR_DEG_LINEAR</a></th><td>For defining the effects armor
+Linear armor degradation based on health</td></tr>
+        <tr><th><a href="code/modules/clothing/_clothing_defs.html#define/CF_ARMOR_DEG_EXPONENTIAL">CF_ARMOR_DEG_EXPONENTIAL</a></th><td>Exponential armor degradation , based on how much health has been lost.</td></tr>
+        <tr><th><a href="code/modules/clothing/_clothing_defs.html#define/CF_ARMOR_DEG_CUSTOM">CF_ARMOR_DEG_CUSTOM</a></th><td>Custom armor degradation , will call proc/customDregadation and expect its new armor values</td></tr>
+        <tr><th><a href="code/modules/clothing/_clothing_defs.html#define/CF_ARMOR_CUSTOM_VALS">CF_ARMOR_CUSTOM_VALS</a></th><td>For custom armor values , will not fetch from material type</td></tr>
+        <tr><th><a href="code/modules/clothing/_clothing_defs.html#define/CF_ARMOR_CUSTOM_INTEGRITY">CF_ARMOR_CUSTOM_INTEGRITY</a></th><td>Will not fetch integrity from material</td></tr>
+        <tr><th><a href="code/modules/clothing/_clothing_defs.html#define/CF_ARMOR_CUSTOM_WEIGHT">CF_ARMOR_CUSTOM_WEIGHT</a></th><td>Will not fetch weight from material</td></tr>
+        <tr><th><a href="code/modules/clothing/_clothing_defs.html#define/CF_ARMOR_CUSTOM_DEGR">CF_ARMOR_CUSTOM_DEGR</a></th><td>Will not fetch degradation from material</td></tr>
+        <tr><th><a href="code/modules/clothing/_clothing_defs.html#define/CLOTH_NORMAL_MTA_MUT">CLOTH_NORMAL_MTA_MUT</a></th><td>Multiplier for material armor values to clothing.  1 for now since they match 1 to 1</td></tr>
+        <tr><th><a href="code/modules/clothing/_clothing_defs.html#define/CLOTH_NORMAL_MTI_MUT">CLOTH_NORMAL_MTI_MUT</a></th><td>Multiplier for material integrity to clothing healthArmor , 5 times for clothing since bullests are very damaging</td></tr>
+        <tr><th><a href="code/modules/clothing/_clothing_defs.html#define/CLOTH_NORMAL_MTW_MUT">CLOTH_NORMAL_MTW_MUT</a></th><td>Multiplier for material weight to clothing weight. a little bit less since the human body is curvier than a cube</td></tr>
+        <tr><th><a href="code/modules/clothing/_clothing_defs.html#define/CLOTH_ARMOR_TORSO">CLOTH_ARMOR_TORSO</a></th><td>Indexes for volumes on each bodypart and armor plates</td></tr>
+        <tr><th><a href="code/modules/clothing/_clothing_defs.html#define/CLOTH_NO_MOD">CLOTH_NO_MOD</a></th><td>Clothing flags
+A cloth whose armor plates can't be modified.</td></tr>
+        <tr><th><a href="code/modules/clothing/_clothing_defs.html#define/ACS_GARMOR">ACS_GARMOR</a></th><td>Defines for accesories
+Glueable armor.</td></tr>
+        <tr><th><a href="code/modules/clothing/_clothing_defs.html#define/ACS_ARMBAND">ACS_ARMBAND</a></th><td>Armband , custom type so there can only be one</td></tr>
+        <tr><th><a href="code/modules/clothing/_clothing_defs.html#define/ACS_DECOR">ACS_DECOR</a></th><td>For anything that can be used as decor and that generally doesn't stack.</td></tr>
+        <tr><th><a href="code/modules/clothing/_clothing_defs.html#define/ACS_UTILITY">ACS_UTILITY</a></th><td>For utility related stuff , holster, etc.</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/ACS_ARMBAND"><aside class="declaration">#define </aside>ACS_ARMBAND
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/clothing/_clothing_defs.dm#L46">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;clothing&#x2F;_clothing_defs.dm 46"/></a>
+    </h3>
+    <p>Armband , custom type so there can only be one</p><h3 id="define/ACS_DECOR"><aside class="declaration">#define </aside>ACS_DECOR
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/clothing/_clothing_defs.dm#L48">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;clothing&#x2F;_clothing_defs.dm 48"/></a>
+    </h3>
+    <p>For anything that can be used as decor and that generally doesn't stack.</p><h3 id="define/ACS_GARMOR"><aside class="declaration">#define </aside>ACS_GARMOR
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/clothing/_clothing_defs.dm#L44">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;clothing&#x2F;_clothing_defs.dm 44"/></a>
+    </h3>
+    <p>Defines for accesories
+Glueable armor.</p><h3 id="define/ACS_UTILITY"><aside class="declaration">#define </aside>ACS_UTILITY
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/clothing/_clothing_defs.dm#L50">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;clothing&#x2F;_clothing_defs.dm 50"/></a>
+    </h3>
+    <p>For utility related stuff , holster, etc.</p><h3 id="define/CF_ARMOR_CUSTOM_DEGR"><aside class="declaration">#define </aside>CF_ARMOR_CUSTOM_DEGR
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/clothing/_clothing_defs.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;clothing&#x2F;_clothing_defs.dm 24"/></a>
+    </h3>
+    <p>Will not fetch degradation from material</p><h3 id="define/CF_ARMOR_CUSTOM_INTEGRITY"><aside class="declaration">#define </aside>CF_ARMOR_CUSTOM_INTEGRITY
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/clothing/_clothing_defs.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;clothing&#x2F;_clothing_defs.dm 20"/></a>
+    </h3>
+    <p>Will not fetch integrity from material</p><h3 id="define/CF_ARMOR_CUSTOM_VALS"><aside class="declaration">#define </aside>CF_ARMOR_CUSTOM_VALS
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/clothing/_clothing_defs.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;clothing&#x2F;_clothing_defs.dm 18"/></a>
+    </h3>
+    <p>For custom armor values , will not fetch from material type</p><h3 id="define/CF_ARMOR_CUSTOM_WEIGHT"><aside class="declaration">#define </aside>CF_ARMOR_CUSTOM_WEIGHT
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/clothing/_clothing_defs.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;clothing&#x2F;_clothing_defs.dm 22"/></a>
+    </h3>
+    <p>Will not fetch weight from material</p><h3 id="define/CF_ARMOR_DEG_CUSTOM"><aside class="declaration">#define </aside>CF_ARMOR_DEG_CUSTOM
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/clothing/_clothing_defs.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;clothing&#x2F;_clothing_defs.dm 16"/></a>
+    </h3>
+    <p>Custom armor degradation , will call proc/customDregadation and expect its new armor values</p><h3 id="define/CF_ARMOR_DEG_EXPONENTIAL"><aside class="declaration">#define </aside>CF_ARMOR_DEG_EXPONENTIAL
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/clothing/_clothing_defs.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;clothing&#x2F;_clothing_defs.dm 14"/></a>
+    </h3>
+    <p>Exponential armor degradation , based on how much health has been lost.</p><h3 id="define/CF_ARMOR_DEG_LINEAR"><aside class="declaration">#define </aside>CF_ARMOR_DEG_LINEAR
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/clothing/_clothing_defs.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;clothing&#x2F;_clothing_defs.dm 12"/></a>
+    </h3>
+    <p>For defining the effects armor
+Linear armor degradation based on health</p><h3 id="define/CLOTH_ARMOR_TORSO"><aside class="declaration">#define </aside>CLOTH_ARMOR_TORSO
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/clothing/_clothing_defs.dm#L34">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;clothing&#x2F;_clothing_defs.dm 34"/></a>
+    </h3>
+    <p>Indexes for volumes on each bodypart and armor plates</p><h3 id="define/CLOTH_NORMAL_MTA_MUT"><aside class="declaration">#define </aside>CLOTH_NORMAL_MTA_MUT
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/clothing/_clothing_defs.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;clothing&#x2F;_clothing_defs.dm 27"/></a>
+    </h3>
+    <p>Multiplier for material armor values to clothing.  1 for now since they match 1 to 1</p><h3 id="define/CLOTH_NORMAL_MTI_MUT"><aside class="declaration">#define </aside>CLOTH_NORMAL_MTI_MUT
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/clothing/_clothing_defs.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;clothing&#x2F;_clothing_defs.dm 29"/></a>
+    </h3>
+    <p>Multiplier for material integrity to clothing healthArmor , 5 times for clothing since bullests are very damaging</p><h3 id="define/CLOTH_NORMAL_MTW_MUT"><aside class="declaration">#define </aside>CLOTH_NORMAL_MTW_MUT
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/clothing/_clothing_defs.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;clothing&#x2F;_clothing_defs.dm 31"/></a>
+    </h3>
+    <p>Multiplier for material weight to clothing weight. a little bit less since the human body is curvier than a cube</p><h3 id="define/CLOTH_NO_MOD"><aside class="declaration">#define </aside>CLOTH_NO_MOD
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/clothing/_clothing_defs.dm#L39">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;clothing&#x2F;_clothing_defs.dm 39"/></a>
+    </h3>
+    <p>Clothing flags
+A cloth whose armor plates can't be modified.</p><h3 id="define/CS_PROJBLOCK"><aside class="declaration">#define </aside>CS_PROJBLOCK
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/clothing/_clothing_defs.dm#L3">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;clothing&#x2F;_clothing_defs.dm 3"/></a>
+    </h3>
+    <p>For accesing sounds to play from clothing components for various actions</p></main>
+<footer>
+    cev_eris.dme
+    <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/tree/7dc78a0437f317133ec79dbd1a2d2618166fb411">7dc78a0</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

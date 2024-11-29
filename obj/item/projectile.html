@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;projectile - Space Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">Space Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/projectile.html#var">Var Details</a> - <a href="obj/item/projectile.html#proc">Proc Details</a></header>
+<main>
+<h1>projectile <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/projectile.html">projectile</a></aside>
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/projectiles/projectile.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 13"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/projectile.html#var/damage">damage</a></th><td>Will be left as nothing until we get fired(we copy damage_types then)</td></tr>
+            <tr><th><a href="obj/item/projectile.html#var/weight">weight</a></th><td>Ammo is heavy</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/projectile.html#proc/Destroy">Destroy</a></th><td>delete the list. Don't need QDEL for this</td></tr>
+            <tr><th><a href="obj/item/projectile.html#proc/Initialize">Initialize</a></th><td>This is done to save a lot of memory from duplicated damage lists.
+The list is also copied whenever PrepareForLaunch is called and modified as needs to be</td></tr>
+            <tr><th><a href="obj/item/projectile.html#proc/PrepareForLaunch">PrepareForLaunch</a></th><td>This MUST be called before any modifications are done to the damage list.</td></tr>
+            <tr><th><a href="obj/item/projectile.html#proc/bullet_act">bullet_act</a></th><td>Fun interaction time - 2 bullets colliding mid air ! SPCR 2024</td></tr>
+            <tr><th><a href="obj/item/projectile.html#proc/finishDeletion">finishDeletion</a></th><td>Called to properly delete a bullet after a delay from its impact, ensures the animation for it travelling finishes</td></tr>
+            <tr><th><a href="obj/item/projectile.html#proc/getAimingLevel">getAimingLevel</a></th><td>Returns 0 , no mod to aiming level</td></tr>
+            <tr><th><a href="obj/item/projectile.html#proc/onBlockingHit">onBlockingHit</a></th><td>third slot rezerved for flags passed back by hitbox intersect</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/damage"><aside class="declaration">var </aside>damage
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/projectiles/projectile.dm#L57">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 57"/></a></h3>
+        <p>Will be left as nothing until we get fired(we copy damage_types then)</p><h3 id="var/weight"><aside class="parent"><a title="/obj/item" href="obj/item.html#var/weight">&uarr;</a></aside>weight
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/projectiles/projectile.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 28"/></a></h3>
+        <p>Ammo is heavy</p><h2 id="proc">Proc Details</h2><h3 id="proc/Destroy"><aside class="parent"><a title="/atom" href="atom.html#proc/Destroy">&uarr;</a></aside>Destroy<aside>() 
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/projectiles/projectile.dm#L139">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 139"/></a></aside>
+        </h3>
+        <p>delete the list. Don't need QDEL for this</p><h3 id="proc/Initialize">Initialize<aside>() 
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/projectiles/projectile.dm#L127">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 127"/></a></aside>
+        </h3>
+        <p>This is done to save a lot of memory from duplicated damage lists.
+The list is also copied whenever PrepareForLaunch is called and modified as needs to be</p><h3 id="proc/PrepareForLaunch"><aside class="declaration">proc </aside>PrepareForLaunch<aside>() 
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/projectiles/projectile.dm#L147">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 147"/></a></aside>
+        </h3>
+        <p>This MUST be called before any modifications are done to the damage list.</p><h3 id="proc/bullet_act"><aside class="parent"><a title="/obj/item" href="obj/item.html#proc/bullet_act">&uarr;</a></aside>bullet_act<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/projectile.html">projectile</a>/P, def_zone, hitboxFlags) 
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/projectiles/projectile.dm#L112">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 112"/></a></aside>
+        </h3>
+        <p>Fun interaction time - 2 bullets colliding mid air ! SPCR 2024</p><h3 id="proc/finishDeletion"><aside class="declaration">proc </aside>finishDeletion<aside>() 
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/projectiles/projectile.dm#L694">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 694"/></a></aside>
+        </h3>
+        <p>Called to properly delete a bullet after a delay from its impact, ensures the animation for it travelling finishes</p><h3 id="proc/getAimingLevel">getAimingLevel<aside>(/<a href="atom.html">atom</a>/shooter, defZone) 
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/projectiles/projectile.dm#L108">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 108"/></a></aside>
+        </h3>
+        <p>Returns 0 , no mod to aiming level</p><h3 id="proc/onBlockingHit"><aside class="declaration">proc </aside>onBlockingHit<aside>(/<a href="atom.html">atom</a>/A) 
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/projectiles/projectile.dm#L673">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 673"/></a></aside>
+        </h3>
+        <p>third slot rezerved for flags passed back by hitbox intersect</p></main>
+<footer>
+    cev_eris.dme
+    <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/tree/7dc78a0437f317133ec79dbd1a2d2618166fb411">7dc78a0</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

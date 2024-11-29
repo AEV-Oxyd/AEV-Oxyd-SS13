@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__DEFINES&#x2F;dcs&#x2F;_attachmentFlags.dm - Space Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">Space Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__DEFINES/dcs/_attachmentFlags.html#define">Define Details</a></header>
+<main>
+<h1>code/__DEFINES/dcs/_attachmentFlags.dm 
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__DEFINES/dcs/_attachmentFlags.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;_attachmentFlags.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__DEFINES/dcs/_attachmentFlags.html#define/ATFA_ATTACHED">ATFA_ATTACHED</a></th><td>This denotes that we are attached to a supporting atom</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/_attachmentFlags.html#define/ATFS_SUPPORTER">ATFS_SUPPORTER</a></th><td>This denotes that we are a supporting atom to the thing attached to us</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/_attachmentFlags.html#define/ATFS_DELETE_RECURSIVE">ATFS_DELETE_RECURSIVE</a></th><td>ATFS - Attachment flags for the supporting atom
+DEPENDING on wheter its an attached or a supporter, the bitflags change meaning
+If the supporter is marked for deletion/deleted , also delete the attached atoms. Default behaviour</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/_attachmentFlags.html#define/ATFS_DROP_ATTACHED">ATFS_DROP_ATTACHED</a></th><td>Will detach all attached atoms and drop them on the turf</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/_attachmentFlags.html#define/ATFS_RELAY_SIGNALS">ATFS_RELAY_SIGNALS</a></th><td>The supporting atom shall relay signals to all its attached atoms</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/_attachmentFlags.html#define/ATFS_PRIORITIZE_ATTACHED_FOR_HITS">ATFS_PRIORITIZE_ATTACHED_FOR_HITS</a></th><td>This will cause all attached atoms to be checked first for hitbox collisions instead of us</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/_attachmentFlags.html#define/ATFS_IGNORE_HITS">ATFS_IGNORE_HITS</a></th><td>This will make all bullets ignore the attached atom</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/_attachmentFlags.html#define/ATFA_HOLDING">ATFA_HOLDING</a></th><td>ATFA - Attachment flags for the attached atom
+This denotes that we are holding onto the supporting atom.</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/_attachmentFlags.html#define/ATFA_DETACHABLE">ATFA_DETACHABLE</a></th><td>We can be detached from the wall(either through a interaction or verb)</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/_attachmentFlags.html#define/ATFA_EMBEDDED">ATFA_EMBEDDED</a></th><td>This is embedded into the wall , removeable using surgical clamps or pliers, and not by normal means.</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/_attachmentFlags.html#define/ATFA_CLOSE_INTERACTIVE">ATFA_CLOSE_INTERACTIVE</a></th><td>The player must be next to the wall to interact with the attached</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/_attachmentFlags.html#define/ATFA_EASY_INTERACTIVE">ATFA_EASY_INTERACTIVE</a></th><td>Player has to be near the turf the attached is facing to interact with it. Default behaviour</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/_attachmentFlags.html#define/ATFA_DIRECTIONAL_HITTABLE_STRICT">ATFA_DIRECTIONAL_HITTABLE_STRICT</a></th><td>This can only be hit if the bullets come from the direction it is facing or if they are penetrating  ,but otherwise not.</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/_attachmentFlags.html#define/ATFA_DIRECTIONAL_HITTABLE">ATFA_DIRECTIONAL_HITTABLE</a></th><td>The bullet can come from any axis that shares a direction bit-flag with ourselves</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/_attachmentFlags.html#define/ATFA_CENTER_ON_SUPPORTER">ATFA_CENTER_ON_SUPPORTER</a></th><td>Will force any hit-checking to be relatively offset by our position compared to the supporting atom.</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/ATFA_ATTACHED"><aside class="declaration">#define </aside>ATFA_ATTACHED
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__DEFINES/dcs/_attachmentFlags.dm#L3">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;_attachmentFlags.dm 3"/></a>
+    </h3>
+    <p>This denotes that we are attached to a supporting atom</p><h3 id="define/ATFA_CENTER_ON_SUPPORTER"><aside class="declaration">#define </aside>ATFA_CENTER_ON_SUPPORTER
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__DEFINES/dcs/_attachmentFlags.dm#L36">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;_attachmentFlags.dm 36"/></a>
+    </h3>
+    <p>Will force any hit-checking to be relatively offset by our position compared to the supporting atom.</p><h3 id="define/ATFA_CLOSE_INTERACTIVE"><aside class="declaration">#define </aside>ATFA_CLOSE_INTERACTIVE
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__DEFINES/dcs/_attachmentFlags.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;_attachmentFlags.dm 28"/></a>
+    </h3>
+    <p>The player must be next to the wall to interact with the attached</p><h3 id="define/ATFA_DETACHABLE"><aside class="declaration">#define </aside>ATFA_DETACHABLE
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__DEFINES/dcs/_attachmentFlags.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;_attachmentFlags.dm 24"/></a>
+    </h3>
+    <p>We can be detached from the wall(either through a interaction or verb)</p><h3 id="define/ATFA_DIRECTIONAL_HITTABLE"><aside class="declaration">#define </aside>ATFA_DIRECTIONAL_HITTABLE
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__DEFINES/dcs/_attachmentFlags.dm#L34">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;_attachmentFlags.dm 34"/></a>
+    </h3>
+    <p>The bullet can come from any axis that shares a direction bit-flag with ourselves</p><h3 id="define/ATFA_DIRECTIONAL_HITTABLE_STRICT"><aside class="declaration">#define </aside>ATFA_DIRECTIONAL_HITTABLE_STRICT
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__DEFINES/dcs/_attachmentFlags.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;_attachmentFlags.dm 32"/></a>
+    </h3>
+    <p>This can only be hit if the bullets come from the direction it is facing or if they are penetrating  ,but otherwise not.</p><h3 id="define/ATFA_EASY_INTERACTIVE"><aside class="declaration">#define </aside>ATFA_EASY_INTERACTIVE
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__DEFINES/dcs/_attachmentFlags.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;_attachmentFlags.dm 30"/></a>
+    </h3>
+    <p>Player has to be near the turf the attached is facing to interact with it. Default behaviour</p><h3 id="define/ATFA_EMBEDDED"><aside class="declaration">#define </aside>ATFA_EMBEDDED
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__DEFINES/dcs/_attachmentFlags.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;_attachmentFlags.dm 26"/></a>
+    </h3>
+    <p>This is embedded into the wall , removeable using surgical clamps or pliers, and not by normal means.</p><h3 id="define/ATFA_HOLDING"><aside class="declaration">#define </aside>ATFA_HOLDING
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__DEFINES/dcs/_attachmentFlags.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;_attachmentFlags.dm 22"/></a>
+    </h3>
+    <p>ATFA - Attachment flags for the attached atom
+This denotes that we are holding onto the supporting atom.</p><h3 id="define/ATFS_DELETE_RECURSIVE"><aside class="declaration">#define </aside>ATFS_DELETE_RECURSIVE
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__DEFINES/dcs/_attachmentFlags.dm#L10">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;_attachmentFlags.dm 10"/></a>
+    </h3>
+    <p>ATFS - Attachment flags for the supporting atom
+DEPENDING on wheter its an attached or a supporter, the bitflags change meaning
+If the supporter is marked for deletion/deleted , also delete the attached atoms. Default behaviour</p><h3 id="define/ATFS_DROP_ATTACHED"><aside class="declaration">#define </aside>ATFS_DROP_ATTACHED
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__DEFINES/dcs/_attachmentFlags.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;_attachmentFlags.dm 12"/></a>
+    </h3>
+    <p>Will detach all attached atoms and drop them on the turf</p><h3 id="define/ATFS_IGNORE_HITS"><aside class="declaration">#define </aside>ATFS_IGNORE_HITS
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__DEFINES/dcs/_attachmentFlags.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;_attachmentFlags.dm 18"/></a>
+    </h3>
+    <p>This will make all bullets ignore the attached atom</p><h3 id="define/ATFS_PRIORITIZE_ATTACHED_FOR_HITS"><aside class="declaration">#define </aside>ATFS_PRIORITIZE_ATTACHED_FOR_HITS
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__DEFINES/dcs/_attachmentFlags.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;_attachmentFlags.dm 16"/></a>
+    </h3>
+    <p>This will cause all attached atoms to be checked first for hitbox collisions instead of us</p><h3 id="define/ATFS_RELAY_SIGNALS"><aside class="declaration">#define </aside>ATFS_RELAY_SIGNALS
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__DEFINES/dcs/_attachmentFlags.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;_attachmentFlags.dm 14"/></a>
+    </h3>
+    <p>The supporting atom shall relay signals to all its attached atoms</p><h3 id="define/ATFS_SUPPORTER"><aside class="declaration">#define </aside>ATFS_SUPPORTER
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__DEFINES/dcs/_attachmentFlags.dm#L5">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;_attachmentFlags.dm 5"/></a>
+    </h3>
+    <p>This denotes that we are a supporting atom to the thing attached to us</p></main>
+<footer>
+    cev_eris.dme
+    <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/tree/7dc78a0437f317133ec79dbd1a2d2618166fb411">7dc78a0</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

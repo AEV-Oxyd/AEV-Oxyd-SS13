@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__HELPERS&#x2F;_lists.dm - Space Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">Space Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__HELPERS/_lists.html#define">Define Details</a></header>
+<main>
+<h1>code/__HELPERS/_lists.dm 
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__HELPERS/_lists.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;_lists.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__HELPERS/_lists.html#define/ASSLADD">ASSLADD</a></th><td>L - List, I - Item , K = Key . For associative lists</td></tr>
+        <tr><th><a href="code/__HELPERS/_lists.html#define/ASSLREMOVE">ASSLREMOVE</a></th><td>L - List, K = Key . For associative lists</td></tr>
+        <tr><th><a href="code/__HELPERS/_lists.html#define/ASSLLADD">ASSLLADD</a></th><td>L - List, I - Item , K = Key . For lists indexed by associative</td></tr>
+        <tr><th><a href="code/__HELPERS/_lists.html#define/ASSLLREMOVE">ASSLLREMOVE</a></th><td>L - List, I - Item , K = Key . For lists indexed by associtive</td></tr>
+        <tr><th><a href="code/__HELPERS/_lists.html#define/COMPARE_KEY">COMPARE_KEY</a></th><td>Passed into BINARY_INSERT to compare keys</td></tr>
+        <tr><th><a href="code/__HELPERS/_lists.html#define/COMPARE_VALUE">COMPARE_VALUE</a></th><td>Passed into BINARY_INSERT to compare values</td></tr>
+        <tr><th><a href="code/__HELPERS/_lists.html#define/BINARY_INSERT">BINARY_INSERT</a></th><td>Binary search sorted insert
+INPUT: Object to be inserted
+LIST: List to insert object into
+TYPECONT: The typepath of the contents of the list
+COMPARE: The object to compare against, usualy the same as INPUT
+COMPARISON: The variable on the objects to compare
+COMPTYPE: How should the values be compared? Either COMPARE_KEY or COMPARE_VALUE.</td></tr>
+        <tr><th>/proc/<a href="global.html#proc/bitfield_to_list">bitfield_to_list</a></th>
+                <td>Converts a bitfield to a list of numbers (or words if a wordlist is provided)</td></tr>
+        <tr><th>/proc/<a href="global.html#proc/deep_copy_list">deep_copy_list</a></th>
+                <td>Copies a list, and all lists inside it recusively
+Does not copy any other reference type</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/ASSLADD"><aside class="declaration">#define </aside>ASSLADD
+            <aside>(L, I, K)</aside>
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__HELPERS/_lists.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;_lists.dm 31"/></a>
+    </h3>
+    <p>L - List, I - Item , K = Key . For associative lists</p><h3 id="define/ASSLLADD"><aside class="declaration">#define </aside>ASSLLADD
+            <aside>(L, I, K)</aside>
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__HELPERS/_lists.dm#L45">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;_lists.dm 45"/></a>
+    </h3>
+    <p>L - List, I - Item , K = Key . For lists indexed by associative</p><h3 id="define/ASSLLREMOVE"><aside class="declaration">#define </aside>ASSLLREMOVE
+            <aside>(L, I, K)</aside>
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__HELPERS/_lists.dm#L57">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;_lists.dm 57"/></a>
+    </h3>
+    <p>L - List, I - Item , K = Key . For lists indexed by associtive</p><h3 id="define/ASSLREMOVE"><aside class="declaration">#define </aside>ASSLREMOVE
+            <aside>(L, K)</aside>
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__HELPERS/_lists.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;_lists.dm 37"/></a>
+    </h3>
+    <p>L - List, K = Key . For associative lists</p><h3 id="define/BINARY_INSERT"><aside class="declaration">#define </aside>BINARY_INSERT
+            <aside>(INPUT, LIST, TYPECONT, COMPARE, COMPARISON, COMPTYPE)</aside>
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__HELPERS/_lists.dm#L94">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;_lists.dm 94"/></a>
+    </h3>
+    <p>Binary search sorted insert
+INPUT: Object to be inserted
+LIST: List to insert object into
+TYPECONT: The typepath of the contents of the list
+COMPARE: The object to compare against, usualy the same as INPUT
+COMPARISON: The variable on the objects to compare
+COMPTYPE: How should the values be compared? Either COMPARE_KEY or COMPARE_VALUE.</p><h3 id="define/COMPARE_KEY"><aside class="declaration">#define </aside>COMPARE_KEY
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__HELPERS/_lists.dm#L81">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;_lists.dm 81"/></a>
+    </h3>
+    <p>Passed into BINARY_INSERT to compare keys</p><h3 id="define/COMPARE_VALUE"><aside class="declaration">#define </aside>COMPARE_VALUE
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/__HELPERS/_lists.dm#L83">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;_lists.dm 83"/></a>
+    </h3>
+    <p>Passed into BINARY_INSERT to compare values</p></main>
+<footer>
+    cev_eris.dme
+    <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/tree/7dc78a0437f317133ec79dbd1a2d2618166fb411">7dc78a0</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

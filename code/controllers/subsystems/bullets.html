@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;controllers&#x2F;subsystems&#x2F;bullets.dm - Space Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">Space Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/controllers/subsystems/bullets.html#define">Define Details</a></header>
+<main>
+<h1>code/controllers/subsystems/bullets.dm 
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/controllers/subsystems/bullets.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystems&#x2F;bullets.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/controllers/subsystems/bullets.html#define/PPT">PPT</a></th><td>Pixels per turf</td></tr>
+        <tr><th><a href="code/controllers/subsystems/bullets.html#define/MAXPIXELS">MAXPIXELS</a></th><td>the higher you go the higher you risk trajectories becoming wobbly and inaccurate.
+16 is the absolute lowest which guarantees maximum accuracy.
+20 is a safe bet between 24 and 16
+the higher this is ,the more performant the system is , since more of the math is done at once instead of in stages
+it is also more inaccurate the higher you go..</td></tr>
+        <tr><th>/var/<a href="global.html#var/SSbullets">SSbullets</a></th>
+                <td>Define this / uncomment it if you want to see bullet debugging data for trajectories &amp; chosen paths.</td></tr>
+        <tr><th>/<a href="datum.html">datum</a>/bullet_data</th><td>You might ask why use a bullet data datum, and not store all the vars on the bullet itself, honestly its to keep track and initialize firing relevant vars only when needed
+This data is guaranteed to be of temporary use spanning 15-30 seconds or how long the bullet moves for. Putting them on the bullet makes each one take up more ram
+And ram is not a worry , but its better to initialize less and do the lifting on fire.</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/MAXPIXELS"><aside class="declaration">#define </aside>MAXPIXELS
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/controllers/subsystems/bullets.dm#L9">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystems&#x2F;bullets.dm 9"/></a>
+    </h3>
+    <p>the higher you go the higher you risk trajectories becoming wobbly and inaccurate.
+16 is the absolute lowest which guarantees maximum accuracy.
+20 is a safe bet between 24 and 16
+the higher this is ,the more performant the system is , since more of the math is done at once instead of in stages
+it is also more inaccurate the higher you go..</p><h3 id="define/PPT"><aside class="declaration">#define </aside>PPT
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/controllers/subsystems/bullets.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystems&#x2F;bullets.dm 2"/></a>
+    </h3>
+    <p>Pixels per turf</p></main>
+<footer>
+    cev_eris.dme
+    <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/tree/7dc78a0437f317133ec79dbd1a2d2618166fb411">7dc78a0</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

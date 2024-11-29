@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human - Space Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">Space Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="mob/living/carbon/human.html#var">Var Details</a> - <a href="mob/living/carbon/human.html#proc">Proc Details</a></header>
+<main>
+<h1>human <aside>/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a></aside>
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/mob/language/codespeak.dm#L49">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;language&#x2F;codespeak.dm 49"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#var/energy">energy</a></th><td>How much energy we currently have for combat actions</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#var/energyRegenRate">energyRegenRate</a></th><td>How much energy we regenerate per human life tick</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#var/maxEnergy">maxEnergy</a></th><td>Maximum permitted, can be increased with stimulants</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#var/needsEnergyUpdate">needsEnergyUpdate</a></th><td>Triggers a energy update on the next life tick.</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#var/weight">weight</a></th><td>everyone is 65 KGs</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/allow_spacemove">allow_spacemove</a></th><td>yes becauses we used to have -1 on shoes
+Slower if underenergized
+No boosts
+No slowdown for mech pilots , mech already handles movement.</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/embed">embed</a></th><td>Get hit with glass shards , your fibers are on them now, or with a rod idk.</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/eyecheck">eyecheck</a></th><td>sanity , could be switched by client anyway to be something he shouldn't be able to check
+eyecheck()
+Returns a number between -1 to 2</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/getEnergyRatio">getEnergyRatio</a></th><td>Returns if we are above normal energized levels</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/handle_chemical_smoke">handle_chemical_smoke</a></th><td>breathing</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/update_eyes">update_eyes</a></th><td>1000 From KG,  25 from conversion rate</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/energy"><aside class="declaration">var </aside>energy
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/mob/living/carbon/human/human_defines.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human_defines.dm 27"/></a></h3>
+        <p>How much energy we currently have for combat actions</p><h3 id="var/energyRegenRate"><aside class="declaration">var </aside>energyRegenRate
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/mob/living/carbon/human/human_defines.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human_defines.dm 29"/></a></h3>
+        <p>How much energy we regenerate per human life tick</p><h3 id="var/maxEnergy"><aside class="declaration">var </aside>maxEnergy
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/mob/living/carbon/human/human_defines.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human_defines.dm 31"/></a></h3>
+        <p>Maximum permitted, can be increased with stimulants</p><h3 id="var/needsEnergyUpdate"><aside class="declaration">var </aside>needsEnergyUpdate
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/mob/living/carbon/human/human_defines.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human_defines.dm 33"/></a></h3>
+        <p>Triggers a energy update on the next life tick.</p><h3 id="var/weight"><aside class="parent"><a title="/atom" href="atom.html#var/weight">&uarr;</a></aside>weight
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/mob/living/carbon/human/human.dm#L8">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human.dm 8"/></a></h3>
+        <p>everyone is 65 KGs</p><h2 id="proc">Proc Details</h2><h3 id="proc/allow_spacemove">allow_spacemove<aside>() 
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/mob/living/carbon/human/human_movement.dm#L81">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human_movement.dm 81"/></a></aside>
+        </h3>
+        <p>yes becauses we used to have -1 on shoes
+Slower if underenergized
+No boosts
+No slowdown for mech pilots , mech already handles movement.</p><h3 id="proc/embed">embed<aside>(/<a href="obj.html">obj</a>/O, def_zone) 
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/mob/living/carbon/human/human_defense.dm#L584">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human_defense.dm 584"/></a></aside>
+        </h3>
+        <p>Get hit with glass shards , your fibers are on them now, or with a rod idk.</p><h3 id="proc/eyecheck">eyecheck<aside>() 
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/mob/living/carbon/human/human.dm#L643">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human.dm 643"/></a></aside>
+        </h3>
+        <p>sanity , could be switched by client anyway to be something he shouldn't be able to check
+eyecheck()
+Returns a number between -1 to 2</p><h3 id="proc/getEnergyRatio"><aside class="declaration">proc </aside>getEnergyRatio<aside>() 
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/mob/living/carbon/human/human_damage.dm#L181">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human_damage.dm 181"/></a></aside>
+        </h3>
+        <p>Returns if we are above normal energized levels</p><h3 id="proc/handle_chemical_smoke">handle_chemical_smoke<aside>(/<a href="datum.html">datum</a>/gas_mixture/environment) 
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/mob/living/carbon/human/life.dm#L298">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;life.dm 298"/></a></aside>
+        </h3>
+        <p>breathing</p><h3 id="proc/update_eyes"><aside class="declaration">proc </aside>update_eyes<aside>() 
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/mob/living/carbon/human/human_organs.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human_organs.dm 1"/></a></aside>
+        </h3>
+        <p>1000 From KG,  25 from conversion rate</p></main>
+<footer>
+    cev_eris.dme
+    <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/tree/7dc78a0437f317133ec79dbd1a2d2618166fb411">7dc78a0</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

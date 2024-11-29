@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;clothing - Space Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">Space Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/clothing.html#var">Var Details</a> - <a href="obj/item/clothing.html#proc">Proc Details</a></header>
+<main>
+<h1>clothing <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/clothing.html">clothing</a></aside>
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/clothing/clothing.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;clothing&#x2F;clothing.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/clothing.html#var/accessories">accessories</a></th><td>list of all accesories attached</td></tr>
+            <tr><th><a href="obj/item/clothing.html#var/armorComps">armorComps</a></th><td>A list of all the armorComps, order is important since we iterate inversely.
+if it has typepaths at round-start, it will initialize them</td></tr>
+            <tr><th><a href="obj/item/clothing.html#var/maxArmorVolume">maxArmorVolume</a></th><td>For the new custom armor system. Determines how many plates and side guards we can install</td></tr>
+            <tr><th><a href="obj/item/clothing.html#var/restricted_accessory_slots">restricted_accessory_slots</a></th><td>List of all accessories where only ONE object can occupy</td></tr>
+            <tr><th><a href="obj/item/clothing.html#var/valid_accessory_slots">valid_accessory_slots</a></th><td>list of all slots available to accesories. List can be found in _clothing_defines</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/clothing.html#proc/attach_accessory">attach_accessory</a></th><td>Attach accessory A to src</td></tr>
+            <tr><th><a href="obj/item/clothing.html#proc/getArmorRating">getArmorRating</a></th><td>Get the return list from parent.
+divide to get the average</td></tr>
+            <tr><th><a href="obj/item/clothing.html#proc/getDamageBlockerRatings">getDamageBlockerRatings</a></th><td>From the clothing itself
+From all the internal clothing components</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/accessories"><aside class="declaration">var </aside>accessories
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/clothing/clothing.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;clothing&#x2F;clothing.dm 16"/></a></h3>
+        <p>list of all accesories attached</p><h3 id="var/armorComps"><aside class="declaration">var </aside>armorComps
+            <aside>&ndash; /list/obj/item/armor_component</aside>
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/clothing/clothing.dm#L34">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;clothing&#x2F;clothing.dm 34"/></a></h3>
+        <p>A list of all the armorComps, order is important since we iterate inversely.
+if it has typepaths at round-start, it will initialize them</p><h3 id="var/maxArmorVolume"><aside class="declaration">var </aside>maxArmorVolume
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/clothing/clothing.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;clothing&#x2F;clothing.dm 27"/></a></h3>
+        <p>For the new custom armor system. Determines how many plates and side guards we can install</p><h3 id="var/restricted_accessory_slots"><aside class="declaration">var </aside>restricted_accessory_slots
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/clothing/clothing.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;clothing&#x2F;clothing.dm 20"/></a></h3>
+        <p>List of all accessories where only ONE object can occupy</p><h3 id="var/valid_accessory_slots"><aside class="declaration">var </aside>valid_accessory_slots
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/clothing/clothing.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;clothing&#x2F;clothing.dm 18"/></a></h3>
+        <p>list of all slots available to accesories. List can be found in _clothing_defines</p><h2 id="proc">Proc Details</h2><h3 id="proc/attach_accessory"><aside class="declaration">proc </aside>attach_accessory<aside>(/<a href="mob.html">mob</a>/user, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/clothing.html">clothing</a>/accessory/A) 
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/clothing/clothing_accessories.dm#L38">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;clothing&#x2F;clothing_accessories.dm 38"/></a></aside>
+        </h3>
+        <p>Attach accessory A to src</p>
+<p>user is the user doing the attaching. Can be null, such as when attaching
+items on spawn</p><h3 id="proc/getArmorRating"><aside class="declaration">proc </aside>getArmorRating<aside>(type, defZone) 
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/clothing/clothing.dm#L78">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;clothing&#x2F;clothing.dm 78"/></a></aside>
+        </h3>
+        <p>Get the return list from parent.
+divide to get the average</p><h3 id="proc/getDamageBlockerRatings"><aside class="parent"><a title="/atom" href="atom.html#proc/getDamageBlockerRatings">&uarr;</a></aside>getDamageBlockerRatings<aside>(/list/relevantTypes) 
+        
+    
+            <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/blob/7dc78a0437f317133ec79dbd1a2d2618166fb411/code/modules/clothing/clothing.dm#L67">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;clothing&#x2F;clothing.dm 67"/></a></aside>
+        </h3>
+        <p>From the clothing itself
+From all the internal clothing components</p></main>
+<footer>
+    cev_eris.dme
+    <a href="https://github.com/AEV-Oxyd/AEV-Oxyd-SS13/tree/7dc78a0437f317133ec79dbd1a2d2618166fb411">7dc78a0</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>
