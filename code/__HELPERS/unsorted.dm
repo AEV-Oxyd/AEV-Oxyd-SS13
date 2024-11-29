@@ -45,6 +45,19 @@
 	else if(dx<0)
 		.+=360
 
+/// First 2 are for the start,  last 2 for the end
+/proc/getAngleCoordinates(x1,y1,x2,y2)
+	var/dy = y2-y1
+	var/dx = x2-x1
+	if(dy == 0)
+		return (dx >= 0) ? 90 : 270
+	. = arctan(dx/dy)
+	if(dy < 0)
+		. += 180
+	else if(dx < 0)
+		. += 360
+
+
 //Returns location. Returns null if no location was found.
 /proc/get_teleport_loc(turf/location, mob/target, distance = 1, density = FALSE, errorx = 0, errory = 0, eoffsetx = 0, eoffsety = 0)
 /*
@@ -158,18 +171,22 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 
 /proc/DirBlocked(turf/loc, var/dir)
-	for(var/obj/structure/window/D in loc)
-		if(!D.density)			continue
-		if(D.dir == SOUTHWEST)	return 1
-		if(D.dir == dir)		return 1
-
-	for(var/obj/machinery/door/D in loc)
-		if(!D.density)			continue
-		if(istype(D, /obj/machinery/door/window))
-			if((dir & SOUTH) && (D.dir & (EAST|WEST)))		return 1
-			if((dir & EAST ) && (D.dir & (NORTH|SOUTH)))	return 1
-		else return 1	// it's a real, air blocking door
-	return 0
+	for(var/obj/gameObject in loc)
+		if(!gameObject.density)
+			continue
+		if(istype(gameObject, /obj/structure/window))
+			if(gameObject.dir == dir || gameObject.dir == SOUTHWEST)
+				return TRUE
+			/// bypass rest of the loop fast, no need to cehck the other type.(unless more are added) SPCR-2024
+			continue
+		if(istype(gameObject, /obj/machinery/door))
+			if(!istype(gameObject, /obj/machinery/door/window))
+				return TRUE
+			if((dir & SOUTH) && (gameObject.dir & (EAST|WEST)))
+				return TRUE
+			if((dir & EAST) && (gameObject.dir & (NORTH|SOUTH)))
+				return TRUE
+	return FALSE
 
 /proc/TurfBlockedNonWindow(turf/loc)
 	for(var/obj/O in loc)
@@ -558,6 +575,13 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //Makes sure MIDDLE is between LOW and HIGH. If not, it adjusts it. Returns the adjusted value. Lower bound takes priority.
 /proc/between(var/low, var/middle, var/high)
 	return max(min(middle, high), low)
+
+/proc/int_range(value,limit1,limit2)
+	if(limit1 > limit2)
+		var/temp = limit2
+		limit2 = limit1
+		limit1 = temp
+	return !(value<limit1 || value>limit2)
 
 //returns random gauss number
 proc/GaussRand(var/sigma)
@@ -1251,7 +1275,6 @@ var/list/FLOORITEMS = list(
 	density = FALSE
 
 	anchored = TRUE
-	simulated = FALSE
 
 	see_in_dark = 1e6
 

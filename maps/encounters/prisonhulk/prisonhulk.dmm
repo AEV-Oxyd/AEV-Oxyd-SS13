@@ -17,7 +17,7 @@
 /area/outpost/prisonhulk/food)
 "bD" = (
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "West APC";
 	pixel_x = -28
 	},
@@ -535,7 +535,8 @@
 /area/outpost/prisonhulk/security)
 "DG" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -27;
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/outpost/prisonhulk/security)

@@ -59,7 +59,7 @@
 
 	..()
 
-/obj/machinery/shield/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/shield/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	shieldHealth -= Proj.get_structure_damage()
 	..()
 	check_failure()

@@ -27,6 +27,44 @@
 #define SANITIZE_LIST(L) ( islist(L) ? L : list() )
 #define reverseList(L) reverseRange(L.Copy())
 
+/// L - List, I - Item , K = Key . For associative lists
+#define ASSLADD(L, I, K) \
+	if(!length(L))\
+		L = list();\
+	L[K] = I;\
+
+/// L - List, K = Key . For associative lists
+#define ASSLREMOVE(L, K)\
+	if(length(L)){\
+		L -= K;\
+		if(length(L) == 0){\
+			del(L);};\
+	};
+
+/// L - List, I - Item , K = Key . For lists indexed by associative
+#define ASSLLADD(L, I, K) \
+	if(length(L)){\
+		if(!length(L[K])){\
+			L[K] = list(I);}\
+		else{\
+			L[K] += I;};\
+	}\
+	else\
+		L = list();\
+		L[K] = list(I);\
+
+/// L - List, I - Item , K = Key . For lists indexed by associtive
+#define ASSLLREMOVE(L, I, K)\
+	if(length(L))\
+		if(length(L[K]) > 1)\
+			L[K] -= I;\
+		else\
+			L -= K;\
+			if(length(L) == 0)\
+				del(L);\
+
+
+
 //Sets the value of a key in an assoc list
 #define LAZYSET(L,K,V) if(!L) { L = list(); } L[K] = V;
 

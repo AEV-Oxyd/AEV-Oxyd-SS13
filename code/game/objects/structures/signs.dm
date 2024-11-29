@@ -5,6 +5,7 @@
 	density = FALSE
 	layer = SIGN_LAYER
 	volumeClass = ITEM_SIZE_NORMAL
+	atomFlags = AF_WALL_MOUNTED
 
 /obj/structure/sign/attackby(obj/item/tool as obj, mob/user as mob)	//deconstruction
 	if(istype(tool, /obj/item/tool/screwdriver) && !istype(src, /obj/structure/sign/double))

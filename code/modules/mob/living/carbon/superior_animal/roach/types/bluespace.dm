@@ -68,7 +68,7 @@
 		return FALSE
 	. = ..()
 
-/mob/living/carbon/superior_animal/roach/bluespace/bullet_act(obj/item/projectile/P, def_zone)
+/mob/living/carbon/superior_animal/roach/bluespace/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
 	if(prob(change_tele_to_mob))
 		var/source = src
 		if(target_mob)

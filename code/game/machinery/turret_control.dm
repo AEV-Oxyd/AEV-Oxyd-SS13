@@ -13,6 +13,7 @@
 	icon_state = "control_standby"
 	anchored = TRUE
 	density = FALSE
+	atomFlags = AF_WALL_MOUNTED
 	var/enabled = 0
 	var/lethal = 0
 	var/locked = 1

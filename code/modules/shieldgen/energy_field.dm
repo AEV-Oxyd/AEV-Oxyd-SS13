@@ -27,7 +27,7 @@
 	Stress(0.5 + target_power / 100)
 	return 0
 
-/obj/effect/energy_field/bullet_act(var/obj/item/projectile/Proj)
+/obj/effect/energy_field/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	Stress(Proj.get_structure_damage() / 10)
 
 /obj/effect/energy_field/proc/Stress(var/severity)

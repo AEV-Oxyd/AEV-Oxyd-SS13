@@ -162,9 +162,11 @@
 	desc = "A lighting fixture."
 	anchored = TRUE
 	layer = WALL_OBJ_LAYER
+	hitbox = /datum/hitboxDatum/atom/fixtureLightTube
 	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 20
+	atomFlags = AF_WALL_MOUNTED
 	power_channel = STATIC_LIGHT //Lights are calc'd via area so they dont need to be in the machine list
 	var/on = FALSE					// 1 if on, 0 if off
 	var/on_gs = 0
@@ -189,6 +191,7 @@
 	name = "floorlight fixture"
 	base_state = "floortube"
 	icon_state = "floortube1"
+	atomFlags = parent_type::atomFlags & ~AF_WALL_MOUNTED
 	layer = 2.5
 
 /obj/machinery/light/small
@@ -198,6 +201,7 @@
 	brightness_range = 3
 	brightness_power = 1
 	desc = "A small lighting fixture."
+	hitbox = /datum/hitboxDatum/atom/fixtureBulb
 	light_type = /obj/item/light/bulb
 
 /obj/machinery/light/small/autoattach

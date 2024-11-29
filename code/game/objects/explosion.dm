@@ -154,11 +154,11 @@ proc/fragment_explosion(var/turf/epicenter, var/range, var/f_type, var/f_amount 
 	if(!epicenter || !f_type)
 		return
 
-	var/list/target_turfs = getcircle(epicenter, range)
-	var/fragments_per_projectile = f_amount/target_turfs.len //This is rounded but only later
-	for(var/turf/T in target_turfs)
-		//sleep(0)
+	var/fragments_per_projectile = round(3.14*range*range)
+	var/list/launchedList = list()
+	for(var/turf/T in orange(range, epicenter))
 		var/obj/item/projectile/bullet/pellet/fragment/P = new f_type(epicenter)
+
 		P.PrepareForLaunch()
 
 		if (!isnull(f_damage))
@@ -167,14 +167,23 @@ proc/fragment_explosion(var/turf/epicenter, var/range, var/f_type, var/f_amount 
 		P.range_step = f_step
 
 		P.shot_from = epicenter
-
-		P.launch(T)
+		P.atomFlags = AF_IGNORE_ON_BULLETSCAN|AF_EXPLOSION_IGNORANT
+		/// has to be exxagerate due to how far the turfs are
+		P.launch(T, zStart = LEVEL_LYING ,zOffset = rand(LEVEL_LYING+5, LEVEL_CHEST))
+		launchedList.Add(P)
 
 		//Some of the fragments will hit mobs in the same turf
 		if (prob(same_turf_hit_chance))
 			for(var/mob/living/M in epicenter)
 				P.attack_mob(M, 0, 100)
+	/// 3 ticks should be enough
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(removeFlags), launchedList.Copy(), AF_IGNORE_ON_BULLETSCAN | AF_EXPLOSION_IGNORANT), SSbullets.wait * 3)
 
+/proc/removeFlags(list/targets, flagsToRemove)
+	for(var/atom/thing as anything in targets)
+		if(QDELETED(thing))
+			continue
+		thing.atomFlags &= ~flagsToRemove
 
 // This is made to mimic the explosion that would happen when something gets pierced by a bullet ( a tank by a anti-armor shell , a armoured car by an .60 AMR,  etc, creates flying shrapnel on the other side!)
 proc/fragment_explosion_angled(atom/epicenter, turf/origin , projectile_type, projectile_amount)
@@ -184,9 +193,13 @@ proc/fragment_explosion_angled(atom/epicenter, turf/origin , projectile_type, pr
 	while(proj_amount)
 		proj_amount--
 		var/obj/item/projectile/pew_thingie = new projectile_type(epicenter)
+		var/turf/chosen = pick_n_take(hittable_turfs)
+		var/angle = ATAN2(chosen.y - epicenter.y, chosen.x - epicenter.x)
+		pew_thingie.pixel_x = 8 * sin(angle)
+		pew_thingie.pixel_y = 8 * cos(angle)
 		pew_thingie.firer = epicenter
 		pew_thingie.PrepareForLaunch()
-		pew_thingie.launch(pick(hittable_turfs))
+		pew_thingie.launch(chosen)
 
 //Generic proc for spread of any projectile type.
 proc/projectile_explosion(turf/epicenter, range, p_type, p_amount = 10, list/p_damage = list())

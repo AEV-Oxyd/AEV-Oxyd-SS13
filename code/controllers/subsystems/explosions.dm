@@ -9,6 +9,9 @@
 #define HASH_MODULO (world.maxx + world.maxx*world.maxy)
 #define EXPLO_HASH(x,y) (round((x+y*world.maxx)%HASH_MODULO))
 
+/// the max length of the visuals list , used for queueing deletions in a efficient manner
+#define EXPLOSION_VIS_LEN 500
+
 /*
 A subsystem for handling explosions in a tick-based manner
 Basic functioning
@@ -49,12 +52,18 @@ SUBSYSTEM_DEF(explosions)
 	priority = FIRE_PRIORITY_EXPLOSIONS
 	init_order = INIT_ORDER_EXPLOSIONS
 	flags = SS_KEEP_TIMING
-	var/list/explode_queue = list()
-	var/list/current_run = list()
-	var/list/throwing_queue = list()
+	var/list/explode_queue
+	var/list/current_run
+	var/list/throwing_queue
 	var/list/available_hash_lists
+	var/list/visualsToDelete
+	var/visualIndex = 0
 
 /datum/controller/subsystem/explosions/Initialize(timeoftheworld)
+	explode_queue = list()
+	current_run = list()
+	throwing_queue = list()
+	visualsToDelete = new /list(EXPLOSION_VIS_LEN)
 	// Each hashed list is extremly huge , as it stands today each one would be
 	// 0.250~ MB(roughly 2 million bits)
 	// As long as this doesnt go over 12 MB , it should be fine as it still fits in CPU caches
@@ -113,7 +122,7 @@ SUBSYSTEM_DEF(explosions)
 				target_power -= target.explosion_act(target_power, explodey) + explodey.falloff
 				if(explodey.flags & EFLAG_HALVEFALLOFF)
 					target_power /= 2
-				new /obj/effect/explosion_fire(target)
+				visualsToDelete[(visualIndex++) * (visualIndex<EXPLOSION_VIS_LEN) + 1] = new /obj/effect/explosion_fire(target)
 				if(target_power < EXPLOSION_MINIMUM_THRESHOLD)
 					continue
 				// Run these first so the ones coming from below/above don't get calculated first.
@@ -182,6 +191,9 @@ SUBSYSTEM_DEF(explosions)
 			explodey.current_turf_queue = explodey.turf_queue.Copy()
 			explodey.turf_queue = list()
 			current_run -= explodey
+	QDEL_LIST_IN(visualsToDelete, 0.5 SECONDS)
+	visualsToDelete = new /list(EXPLOSION_VIS_LEN)
+	visualIndex = 0
 	current_run = explode_queue.Copy()
 
 
@@ -197,12 +209,11 @@ SUBSYSTEM_DEF(explosions)
 /turf/explosion_act(target_power, explosion_handler/handler)
 	var/power_reduction = 0
 	for(var/atom/movable/thing as anything in contents)
-		if(QDELETED(handler))
-			break
-		if(thing.simulated)
-			power_reduction += thing.explosion_act(target_power, handler)
-			if(!QDELETED(thing) && isobj(thing) && !thing.anchored)
-				thing.throw_at(get_turf_away_from_target_simple(src, islist(handler.epicenter ? handler.epicenter[1] : handler.epicenter)), round(target_power / 30))
+		if(thing.atomFlags & AF_EXPLOSION_IGNORANT)
+			continue
+		power_reduction += thing.explosion_act(target_power, handler)
+		if(!QDELETED(thing) && isobj(thing) && !thing.anchored)
+			thing.throw_at(get_turf_away_from_target_simple(src, islist(handler.epicenter ? handler.epicenter[1] : handler.epicenter)), round(target_power / 30))
 	var/turf/to_propagate = GetAbove(src)
 	if(to_propagate && target_power - EXPLOSION_ZTRANSFER_MINIMUM_THRESHOLD > EXPLOSION_ZTRANSFER_MINIMUM_THRESHOLD)
 		to_propagate.take_damage(target_power - EXPLOSION_ZTRANSFER_MINIMUM_THRESHOLD, BLAST)

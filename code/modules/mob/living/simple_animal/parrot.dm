@@ -246,7 +246,7 @@
 	return
 
 //Bullets
-/mob/living/simple_animal/parrot/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/simple_animal/parrot/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	..()
 	if(!stat && !client)
 		if(parrot_state == PARROT_PERCH)

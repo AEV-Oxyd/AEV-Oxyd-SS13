@@ -458,7 +458,7 @@
 ********************/
 
 //Bullets which hit a blob will keep going on through if they kill it
-/obj/effect/blob/bullet_act(var/obj/item/projectile/Proj)
+/obj/effect/blob/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	if(!Proj)
 		return
 

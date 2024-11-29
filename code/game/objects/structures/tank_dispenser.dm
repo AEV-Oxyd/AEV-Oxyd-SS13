@@ -9,6 +9,7 @@
 	layer = BELOW_OBJ_LAYER
 	spawn_tags = SPAWN_TAG_STRUCTURE_COMMON
 	rarity_value = 50
+	hitbox = /datum/hitboxDatum/atom/tankDispenser
 	var/oxygentanks = 10
 	var/plasmatanks = 10
 	var/list/oxytanks = list()	//sorry for the similar var names

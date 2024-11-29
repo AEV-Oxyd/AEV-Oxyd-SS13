@@ -13,6 +13,8 @@ There are important things regarding this file:
  * Scrap ammunition has less armor divisor and more recoil without impacting raw damage.
 */
 //Low-caliber pistols and SMGs .35
+
+
 /obj/item/projectile/bullet/pistol
 	name = ".35 caliber bullet"
 	/// 24 with wound mult
@@ -27,6 +29,7 @@ There are important things regarding this file:
 	penetrating = 2
 	recoil = 3
 	matter = list(MATERIAL_STEEL = 0.05)
+
 
 /obj/item/projectile/bullet/pistol/hv
 	armor_divisor = 1.3

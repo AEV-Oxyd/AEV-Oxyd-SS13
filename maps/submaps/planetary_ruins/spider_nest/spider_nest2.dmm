@@ -121,7 +121,8 @@
 "F" = (
 /obj/effect/spider/stickyweb,
 /obj/structure/fireaxecabinet{
-	pixel_x = -32
+	pixel_x = -32;
+	dir = 4
 	},
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/simulated/floor/tiled/white/danger,

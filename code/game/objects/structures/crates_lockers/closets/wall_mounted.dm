@@ -5,6 +5,7 @@
 	icon_state = "wall-locker"
 	anchored = TRUE
 	wall_mounted = TRUE //This handles density in closets.dm
+	atomFlags = AF_WALL_MOUNTED
 
 
 /obj/structure/closet/wall_mounted/emcloset

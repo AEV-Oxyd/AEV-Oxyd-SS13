@@ -13,6 +13,10 @@
 	var/corporation
 	var/heat = 0
 
+/obj/Initialize()
+	. = ..()
+
+
 /// Used for calculating weight, return value will set the atom's weight
 /obj/getWeight()
 	var/w = initial(weight)

@@ -62,7 +62,7 @@
 /area/space)
 "aw" = (
 /obj/machinery/light{
-	dir = 8;
+	dir = 4;
 	icon_state = "tube1";
 	pixel_y = 0
 	},
@@ -165,9 +165,7 @@
 /turf/simulated/floor/holofloor/tiled/dark,
 /area/holodeck/source/industrial_arena)
 "cF" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small,
 /turf/simulated/open/holonofloor,
 /area/space)
 "cK" = (
@@ -312,9 +310,7 @@
 /area/centcom/evac)
 "dZ" = (
 /obj/structure/table/woodentable,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light,
 /turf/simulated/floor/tiled/dark/gray_platform,
 /area/centcom/evac)
 "ea" = (
@@ -349,7 +345,7 @@
 /area/space)
 "eg" = (
 /obj/machinery/light{
-	dir = 8;
+	dir = 4;
 	icon_state = "tube1";
 	pixel_y = 0
 	},
@@ -1614,8 +1610,10 @@
 	},
 /area/centcom/merc_base)
 "hM" = (
-/obj/structure/sign/faction/neotheology_cross,
-/turf/simulated/wall/r_wall,
+/obj/structure/sign/faction/neotheology_cross{
+	pixel_x = 32
+	},
+/turf/simulated/floor/carpet/bcarpet,
 /area/centcom/evac)
 "hN" = (
 /obj/effect/window_lwall_spawn/smartspawn,
@@ -1789,7 +1787,9 @@
 	frequency = 1331;
 	id_tag = "vox_west_vent"
 	},
-/obj/machinery/light/small,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/simulated/shuttle/plating,
 /area/skipjack_station/start)
 "ix" = (
@@ -1843,12 +1843,12 @@
 	},
 /area/centcom/merc_base)
 "iH" = (
-/obj/machinery/button/remote/blast_door{
+/obj/structure/table/reinforced,
+/obj/machinery/button/remote/blast_door/id_card/table{
 	id = "syndieshutters";
 	name = "remote shutter control";
 	req_access = list(150)
 	},
-/obj/structure/table/reinforced,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
@@ -1874,7 +1874,9 @@
 	frequency = 1331;
 	id_tag = "vox_east_vent"
 	},
-/obj/machinery/light/small,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/simulated/shuttle/plating,
 /area/skipjack_station/start)
 "iL" = (
@@ -1924,7 +1926,9 @@
 "iV" = (
 /obj/structure/computerframe,
 /obj/machinery/light{
-	dir = 4
+	dir = 8;
+	icon_state = "tube1";
+	pixel_y = 0
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
@@ -1958,12 +1962,14 @@
 /turf/simulated/floor/tiled/dark,
 /area/centcom/evac)
 "jf" = (
-/obj/machinery/light,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/dark,
 /area/centcom/evac)
 "jg" = (
 /obj/machinery/light{
-	dir = 8;
+	dir = 4;
 	icon_state = "tube1";
 	pixel_y = 0
 	},
@@ -1984,7 +1990,9 @@
 	},
 /area/centcom/merc_base)
 "jk" = (
-/obj/machinery/light,
+/obj/machinery/light{
+	dir = 1
+	},
 /obj/item/device/radio/intercom/syndicate{
 	dir = 1;
 	pixel_y = -22
@@ -2057,9 +2065,7 @@
 /turf/space,
 /area/centcom/evac)
 "jA" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light,
 /obj/structure/table/standard,
 /obj/item/toy/figure/serbian,
 /turf/simulated/shuttle/floor{
@@ -2108,7 +2114,7 @@
 	pixel_x = -25
 	},
 /obj/machinery/light{
-	dir = 8;
+	dir = 4;
 	icon_state = "tube1";
 	pixel_y = 0
 	},
@@ -2210,9 +2216,7 @@
 	pixel_x = 0;
 	pixel_y = 28
 	},
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor7"
 	},
@@ -2329,9 +2333,7 @@
 	pixel_x = 8;
 	pixel_y = 25
 	},
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
@@ -2636,7 +2638,9 @@
 	name = "suit closet"
 	},
 /obj/machinery/light{
-	dir = 4
+	dir = 8;
+	icon_state = "tube1";
+	pixel_y = 0
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
@@ -2672,7 +2676,7 @@
 "lc" = (
 /obj/machinery/sleeper,
 /obj/machinery/light{
-	dir = 8;
+	dir = 4;
 	icon_state = "tube1";
 	pixel_y = 0
 	},
@@ -2706,7 +2710,7 @@
 /area/holodeck/source/texas)
 "lh" = (
 /obj/machinery/light{
-	dir = 8;
+	dir = 4;
 	icon_state = "tube1";
 	pixel_y = 0
 	},
@@ -2719,13 +2723,11 @@
 	},
 /area/shuttle/mercenary)
 "li" = (
-/obj/machinery/light{
-	dir = 4
+/obj/structure/sign/faction/neotheology_cross{
+	pixel_y = -32
 	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor6"
-	},
-/area/shuttle/mercenary)
+/turf/simulated/floor/tiled/dark/golden,
+/area/centcom/evac)
 "lj" = (
 /obj/machinery/chem_master,
 /turf/unsimulated/floor{
@@ -2831,7 +2833,9 @@
 /area/shuttle/mercenary)
 "lC" = (
 /obj/machinery/light{
-	dir = 4
+	dir = 8;
+	icon_state = "tube1";
+	pixel_y = 0
 	},
 /obj/item/device/radio/intercom/syndicate{
 	dir = 8;
@@ -2854,7 +2858,7 @@
 /area/centcom/raider_base)
 "lE" = (
 /obj/machinery/light{
-	dir = 8;
+	dir = 4;
 	icon_state = "tube1";
 	pixel_y = 0
 	},
@@ -2943,7 +2947,9 @@
 	pixel_x = 32
 	},
 /obj/machinery/light{
-	dir = 4
+	dir = 8;
+	icon_state = "tube1";
+	pixel_y = 0
 	},
 /obj/structure/reagent_dispensers/watertank/huge,
 /turf/simulated/shuttle/floor{
@@ -2978,7 +2984,7 @@
 "lW" = (
 /obj/structure/table/standard,
 /obj/machinery/light/small{
-	dir = 8
+	dir = 4
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
@@ -3822,13 +3828,15 @@
 	},
 /area/skipjack_station/start)
 "oY" = (
-/obj/machinery/button/remote/blast_door{
-	id = "skipjackshutters";
-	name = "remote shutter control";
-	req_access = list(150)
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1";
+	pixel_y = 0
 	},
-/turf/simulated/wall/voxshuttle,
-/area/skipjack_station/start)
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
+	},
+/area/shuttle/mercenary)
 "oZ" = (
 /obj/machinery/airlock_sensor{
 	frequency = 1331;
@@ -3853,7 +3861,7 @@
 /area/skipjack_station/start)
 "pd" = (
 /obj/machinery/light/small{
-	dir = 8
+	dir = 4
 	},
 /obj/machinery/suit_storage_unit/merc,
 /turf/simulated/shuttle/floor{
@@ -3870,7 +3878,14 @@
 /area/skipjack_station/start)
 "pg" = (
 /obj/machinery/light/small{
-	dir = 4
+	dir = 8
+	},
+/obj/machinery/button/remote/blast_door{
+	id = "skipjackshutters";
+	name = "remote shutter control";
+	req_access = list(150);
+	pixel_x = 0;
+	pixel_y = 24
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
@@ -3965,7 +3980,7 @@
 "pB" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/machinery/light/small{
-	dir = 4
+	dir = 8
 	},
 /turf/simulated/shuttle/plating,
 /area/skipjack_station/start)
@@ -3982,7 +3997,7 @@
 /obj/item/clothing/shoes/magboots,
 /obj/item/clothing/mask/breath,
 /obj/machinery/light/small{
-	dir = 8
+	dir = 4
 	},
 /turf/simulated/shuttle/plating,
 /area/skipjack_station/start)
@@ -4007,7 +4022,7 @@
 /obj/structure/table/steel,
 /obj/machinery/recharger,
 /obj/machinery/light/small{
-	dir = 4
+	dir = 8
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
@@ -4041,7 +4056,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small{
-	dir = 8
+	dir = 4
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
@@ -4058,7 +4073,7 @@
 	dir = 8
 	},
 /obj/machinery/light/small{
-	dir = 4
+	dir = 8
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
@@ -4093,9 +4108,7 @@
 	},
 /area/skipjack_station/start)
 "pZ" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor7"
 	},
@@ -4124,9 +4137,7 @@
 /area/skipjack_station/start)
 "qe" = (
 /obj/machinery/body_scanconsole,
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
@@ -4191,7 +4202,9 @@
 	},
 /area/skipjack_station/start)
 "qr" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
@@ -4218,7 +4231,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small{
-	dir = 8
+	dir = 4
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor7"
@@ -4250,8 +4263,11 @@
 /turf/space,
 /area/space)
 "qI" = (
-/turf/space,
-/area/space)
+/obj/structure/sign/faction/neotheology_cross{
+	pixel_y = 32
+	},
+/turf/simulated/floor/tiled/dark/golden,
+/area/centcom/evac)
 "qX" = (
 /obj/structure/table/rack,
 /obj/item/gun/launcher/spikethrower,
@@ -4275,7 +4291,7 @@
 /area/centcom/merc_base)
 "rt" = (
 /obj/machinery/light/small{
-	dir = 8
+	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/shuttle/floor{
@@ -4286,9 +4302,7 @@
 /turf/simulated/floor/carpet,
 /area/centcom/pirate_base)
 "rz" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light,
 /turf/simulated/floor/holofloor/tiled/dark,
 /area/space)
 "rE" = (
@@ -4359,7 +4373,9 @@
 /area/holodeck/source/industrial)
 "sA" = (
 /obj/machinery/light{
-	dir = 4
+	dir = 8;
+	icon_state = "tube1";
+	pixel_y = 0
 	},
 /obj/structure/closet,
 /obj/item/clothing/suit/space/void/riggedvoidsuit,
@@ -4506,7 +4522,7 @@
 /obj/item/storage/belt/utility/full,
 /obj/item/tool/multitool,
 /obj/machinery/light{
-	dir = 8;
+	dir = 4;
 	icon_state = "tube1";
 	pixel_y = 0
 	},
@@ -4615,7 +4631,7 @@
 	amount = 10
 	},
 /obj/machinery/light/small{
-	dir = 8
+	dir = 4
 	},
 /obj/item/beartrap,
 /obj/item/beartrap,
@@ -4811,7 +4827,9 @@
 "wu" = (
 /obj/structure/closet,
 /obj/machinery/light{
-	dir = 4
+	dir = 8;
+	icon_state = "tube1";
+	pixel_y = 0
 	},
 /obj/item/storage/deferred/rations,
 /turf/simulated/shuttle/floor{
@@ -5395,7 +5413,7 @@
 /area/holodeck/source/industrial_arena)
 "Cx" = (
 /obj/machinery/light/small{
-	dir = 8
+	dir = 4
 	},
 /turf/simulated/open/holonofloor,
 /area/space)
@@ -5705,7 +5723,9 @@
 /area/holodeck/source/wireframe)
 "Gl" = (
 /obj/machinery/light{
-	dir = 4
+	dir = 4;
+	icon_state = "tube1";
+	pixel_y = 0
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
@@ -5967,7 +5987,9 @@
 /turf/simulated/floor/holofloor/tiled/dark,
 /area/holodeck/source/industrial)
 "Jx" = (
-/obj/machinery/light,
+/obj/machinery/light{
+	dir = 1
+	},
 /obj/structure/bed/chair/custom/holochair{
 	dir = 8
 	},
@@ -6014,7 +6036,7 @@
 	pixel_y = 9
 	},
 /obj/machinery/light{
-	dir = 8;
+	dir = 4;
 	icon_state = "tube1";
 	pixel_y = 0
 	},
@@ -6036,7 +6058,7 @@
 	pixel_y = 3
 	},
 /obj/machinery/light/small{
-	dir = 4
+	dir = 8
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
@@ -6102,7 +6124,9 @@
 	},
 /area/centcom/merc_base)
 "Kr" = (
-/obj/machinery/light,
+/obj/machinery/light{
+	dir = 1
+	},
 /obj/effect/floor_decal/industrial/danger,
 /obj/effect/floor_decal/industrial/danger{
 	dir = 1
@@ -6160,9 +6184,7 @@
 /turf/simulated/floor/holofloor/reinforced,
 /area/holodeck/source/off)
 "KZ" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light,
 /turf/simulated/floor/holofloor/tiled/bar_dance,
 /area/space)
 "Lb" = (
@@ -6479,7 +6501,9 @@
 	products = list(/obj/item/device/assembly/prox_sensor=5,/obj/item/device/assembly/signaler=4,/obj/item/device/assembly/infra=4,/obj/item/device/assembly/prox_sensor=4,/obj/item/handcuffs=8,/obj/item/device/flash=4,/obj/item/clothing/glasses/sunglasses=4)
 	},
 /obj/machinery/light{
-	dir = 4
+	dir = 8;
+	icon_state = "tube1";
+	pixel_y = 0
 	},
 /obj/structure/sign/faction/serbian{
 	pixel_y = 32
@@ -6513,7 +6537,9 @@
 /turf/simulated/shuttle/plating,
 /area/shuttle/pirate)
 "Or" = (
-/obj/machinery/light,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor/holofloor/tiled/bar_light,
 /area/space)
 "Ot" = (
@@ -6655,7 +6681,7 @@
 /obj/structure/bed,
 /obj/item/bedsheet/green,
 /obj/machinery/light/small{
-	dir = 4
+	dir = 8
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
@@ -6692,7 +6718,9 @@
 /area/space)
 "Qw" = (
 /obj/machinery/light{
-	dir = 4
+	dir = 8;
+	icon_state = "tube1";
+	pixel_y = 0
 	},
 /obj/effect/floor_decal/industrial/danger{
 	dir = 1
@@ -7060,7 +7088,9 @@
 /area/skipjack_station/start)
 "Ug" = (
 /obj/machinery/light{
-	dir = 4
+	dir = 8;
+	icon_state = "tube1";
+	pixel_y = 0
 	},
 /turf/simulated/floor/holofloor/tiled/bar_light,
 /area/space)
@@ -7117,7 +7147,9 @@
 	},
 /obj/item/reagent_containers/syringe,
 /obj/machinery/light{
-	dir = 4
+	dir = 8;
+	icon_state = "tube1";
+	pixel_y = 0
 	},
 /obj/item/reagent_containers/syringe/spaceacillin,
 /obj/item/reagent_containers/syringe/spaceacillin,
@@ -7367,7 +7399,9 @@
 /area/skipjack_station/start)
 "XU" = (
 /obj/machinery/light{
-	dir = 4
+	dir = 8;
+	icon_state = "tube1";
+	pixel_y = 0
 	},
 /obj/structure/table/steel,
 /obj/item/storage/fancy/crayons,
@@ -7766,7 +7800,7 @@ aa
 aa
 aa
 aa
-qI
+aa
 "}
 (2,1,1) = {"
 aa
@@ -15547,15 +15581,15 @@ ho
 ho
 ho
 ho
-dj
-dn
-dn
-hZ
-hZ
-hZ
-dn
-dn
 dX
+dn
+dn
+hZ
+hZ
+hZ
+dn
+dn
+dj
 ho
 ho
 ho
@@ -15748,8 +15782,8 @@ at
 at
 at
 at
-hM
-cN
+ho
+qI
 dn
 dn
 hZ
@@ -15757,8 +15791,8 @@ hZ
 hZ
 dn
 dn
-cN
-hM
+li
+ho
 at
 at
 at
@@ -15817,7 +15851,7 @@ pz
 pz
 pH
 pH
-pW
+qi
 qk
 qo
 aa
@@ -16754,25 +16788,25 @@ aa
 aa
 aa
 ho
-aE
-cq
-cq
-cq
-ek
-cN
-dn
-dn
-hZ
-hZ
-hZ
-dn
-dn
-cN
-ek
-cq
-cq
-cq
 ec
+cq
+cq
+cq
+ek
+cN
+dn
+dn
+hZ
+hZ
+hZ
+dn
+dn
+cN
+ek
+cq
+cq
+cq
+aE
 ho
 aa
 aa
@@ -16960,8 +16994,8 @@ bI
 bI
 bI
 bI
-hM
-cN
+ho
+qI
 do
 dL
 hZ
@@ -16969,8 +17003,8 @@ hZ
 hZ
 dL
 dT
-cN
-hM
+li
+ho
 bI
 bI
 bI
@@ -17163,7 +17197,7 @@ ho
 ho
 ho
 ho
-dj
+dX
 do
 dL
 hZ
@@ -17171,7 +17205,7 @@ hZ
 hZ
 dL
 dT
-dX
+dj
 ho
 ho
 ho
@@ -17631,7 +17665,7 @@ pl
 et
 pl
 pl
-pD
+pl
 pl
 pl
 pR
@@ -18031,7 +18065,7 @@ aa
 aa
 aa
 hN
-oY
+oM
 pg
 pl
 pl
@@ -18374,8 +18408,8 @@ ho
 ho
 ho
 ho
-hM
-cN
+ho
+qI
 dn
 dn
 hZ
@@ -18383,8 +18417,8 @@ hZ
 hZ
 dn
 dn
-cN
-hM
+li
+ho
 ho
 ho
 ho
@@ -18580,9 +18614,9 @@ ho
 dk
 dn
 dn
+hM
 hZ
-hZ
-hZ
+hM
 dn
 dn
 XJ
@@ -18782,9 +18816,9 @@ ho
 ho
 dK
 ho
-hM
+ho
 ek
-hM
+ho
 ho
 dU
 ho
@@ -19453,7 +19487,7 @@ pz
 pz
 pz
 Lv
-qi
+pW
 qk
 qo
 aa
@@ -30310,7 +30344,7 @@ iU
 iJ
 kf
 iq
-kA
+oY
 iJ
 iJ
 iJ
@@ -30719,7 +30753,7 @@ iJ
 iJ
 iJ
 iJ
-li
+kA
 iJ
 iJ
 iJ
@@ -33094,7 +33128,7 @@ sO
 sO
 sO
 sO
-DS
+Gl
 vG
 jT
 sc
@@ -33498,7 +33532,7 @@ sO
 sO
 sO
 sO
-Gl
+DS
 vG
 jT
 tv

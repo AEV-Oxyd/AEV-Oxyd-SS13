@@ -22,6 +22,7 @@
 	anchored = TRUE
 	density = TRUE
 	layer = LOW_OBJ_LAYER //This allows disposal bins to be underneath tables
+	hitbox = /datum/hitboxDatum/disposalUnit
 	var/datum/gas_mixture/air_contents	// internal reservoir
 	var/mode = DISPOSALS_CHARGING
 	var/flush = 0	// true if flush handle is pulled
@@ -660,7 +661,7 @@
 	var/pipe_dir = 0		// bitmask of pipe directions
 	dir = 0				// dir will contain dominant direction for junction pipes
 	health = 10 	// health points 0-10
-	explosion_coverage = 0
+	explosionCoverage = 0
 	layer = 2.3			// slightly lower than wires and other pipes
 	var/base_icon_state	// initial icon state on map
 	var/sortType = list()
@@ -671,6 +672,8 @@
 		base_icon_state = icon_state
 		return
 
+/obj/structure/disposalpipe/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
+	return PROJECTILE_CONTINUE
 
 	// pipe is deleted
 	// ensure if holder is present, it is expelled
@@ -836,7 +839,7 @@
 	// test health for brokenness
 /obj/structure/disposalpipe/take_damage(damage)
 	. = health - damage < 0 ? damage - (damage - health) : damage
-	. *= explosion_coverage
+	. *= explosionCoverage
 	health -= damage
 	if(health <= 0)
 		broken(FALSE)

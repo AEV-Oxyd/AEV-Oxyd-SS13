@@ -156,9 +156,9 @@ var/list/despised = list()
 	if((M.a_intent == I_HELP) && (M in tolerated))
 		if(prob(15)) say("PRRRR")
 
-/mob/living/simple_animal/iriska/bullet_act(var/obj/item/projectile/proj)
+/mob/living/simple_animal/iriska/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	. = ..()
-	despise(proj.firer)
+	despise(Proj.firer)
 
 /mob/living/simple_animal/iriska/hitby(atom/movable/AM)
 	. = ..()

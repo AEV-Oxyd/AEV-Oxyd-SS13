@@ -6,7 +6,7 @@
 	desc = "Cats really don't like these things."
 	density = FALSE
 	anchored = TRUE
-
+	hitbox = /datum/hitboxDatum/turf/floor
 
 /obj/structure/catwalk/New()
 	..()

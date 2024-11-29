@@ -9,6 +9,7 @@
 	matter = list(MATERIAL_STEEL = 10)
 	//bad_type = /obj/structure/closet
 	spawn_tags = SPAWN_TAG_CLOSET
+	hitbox = /datum/hitboxDatum/atom/closet
 	var/locked = FALSE
 	var/broken = FALSE
 	var/horizontal = FALSE
@@ -330,7 +331,7 @@
 	if(health <= 0)
 		qdel(src)
 
-/obj/structure/closet/bullet_act(obj/item/projectile/Proj)
+/obj/structure/closet/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	var/proj_damage = Proj.get_structure_damage()
 	if(!proj_damage)
 		return

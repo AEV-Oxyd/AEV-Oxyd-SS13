@@ -50,6 +50,9 @@ see multiz/movement.dm for some info.
 
 	var/tmp/list/climbers = list()
 
+/turf/simulated/open/take_damage(target_power, damage_type)
+	return TRUE
+
 /turf/simulated/open/New()
 	icon_state = "transparentclickable"
 	..()
@@ -106,16 +109,6 @@ see multiz/movement.dm for some info.
 	return
 
 /turf/simulated/open/fallThrough(var/atom/movable/mover)
-
-	// If the target is open space or a shadow, the projectile traverses down
-	if( config.z_level_shooting && istype(mover,/obj/item/projectile) )
-		var/obj/item/projectile/P = mover
-		if(isnull(P.height) && ( istype(P.original, /turf/simulated/open) || (istype(mover, /mob/shadow)) ) && get_dist(P.starting, P.original) <= get_dist(P.starting, src))
-			P.Move(below) // We want proc/Enter to get called on the turf, so we can't use forceMove()
-			P.trajectory.loc_z = below.z
-			P.bumped = FALSE
-			P.height = HEIGHT_LOW // We are shooting from above, this protects windows from damage
-			return // We are done here
 
 	for(var/atom/A in contents)
 		if(A.can_prevent_fall(FALSE, mover))

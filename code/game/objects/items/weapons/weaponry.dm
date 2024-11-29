@@ -91,7 +91,7 @@
 		countdown--
 		return
 
-/obj/effect/energy_net/bullet_act(var/obj/item/projectile/Proj)
+/obj/effect/energy_net/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	health -= Proj.get_structure_damage()
 	healthcheck()
 	return 0

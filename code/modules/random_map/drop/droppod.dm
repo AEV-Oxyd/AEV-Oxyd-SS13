@@ -117,7 +117,7 @@
 	// Splatter anything under us that survived the explosion.
 	if(value != SD_EMPTY_TILE && T.contents.len)
 		for(var/atom/movable/AM in T)
-			if(AM.simulated && !isobserver(AM))
+			if(!isobserver(AM))
 				AM.explosion_act(700, null)
 
 	// Also spawn doors and loot.

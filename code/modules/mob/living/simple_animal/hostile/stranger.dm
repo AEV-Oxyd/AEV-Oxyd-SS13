@@ -95,7 +95,7 @@
 		return FALSE
 	. = ..()
 
-/mob/living/simple_animal/hostile/stranger/bullet_act(obj/item/projectile/P, def_zone)
+/mob/living/simple_animal/hostile/stranger/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
 	if(prob(prob_tele))
 		var/source = src
 		if(target_mob)

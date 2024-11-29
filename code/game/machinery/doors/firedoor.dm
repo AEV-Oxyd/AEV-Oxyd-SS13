@@ -22,6 +22,7 @@
 	description_info = "Can be deconstructed by welding closed, screwing and crowbaring the circuits out."
 	icon_state = "door_open"
 	req_one_access = list(access_atmospherics, access_engine_equip, access_medical_equip)
+	hitbox = /datum/hitboxDatum/turf/door
 	opacity = FALSE
 	density = FALSE
 	layer = BELOW_OPEN_DOOR_LAYER
@@ -258,11 +259,13 @@
 			use_power(360)
 
 	if(checkAlarmed())
-		spawn(150)
-			if(checkAlarmed())
-				close()
+		addtimer(CALLBACK(src, PROC_REF(tryClose)), 15 SECONDS)
 
 	return ..()
+
+/obj/machinery/door/firedoor/proc/tryClose()
+	if(checkAlarmed())
+		close()
 
 /obj/machinery/door/firedoor/do_animate(animation)
 	switch(animation)

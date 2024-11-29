@@ -248,7 +248,7 @@
 
 /datum/inventory_slot/in_backpack/can_equip(obj/item/I, mob/living/carbon/human/owner, disable_warning)
 	var/obj/item/storage/back = owner.get_equipped_item(slot_back)
-	return istype(back) && back.can_be_inserted(src,1)
+	return istype(back) && back.can_be_inserted(I,1)
 
 
 /datum/inventory_slot/accessory

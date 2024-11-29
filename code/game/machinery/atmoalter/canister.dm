@@ -7,6 +7,7 @@
 	maxHealth = 100
 	flags = CONDUCT
 	volumeClass = ITEM_SIZE_HUGE
+	hitbox = /datum/hitboxDatum/atom/atmosphericCanister
 
 	var/valve_open = 0
 	var/release_pressure = ONE_ATMOSPHERE
@@ -233,7 +234,7 @@ update_flag
 		return GM.return_pressure()
 	return 0
 
-/obj/machinery/portable_atmospherics/canister/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/portable_atmospherics/canister/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	if(Proj.get_structure_damage())
 		src.health -= round(Proj.get_structure_damage() / 2)
 		healthcheck()

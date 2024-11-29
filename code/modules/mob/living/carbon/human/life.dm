@@ -839,8 +839,7 @@
 				if(client || sleeping > 3)
 					AdjustSleeping(-1)
 			if( prob(2) && health)
-				spawn(0)
-					emote("snore")
+				emote("snore")
 		//CONSCIOUS
 		else
 			stat = CONSCIOUS

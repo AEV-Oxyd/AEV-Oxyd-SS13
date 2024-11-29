@@ -277,9 +277,8 @@ var/list/turret_icons
 		stat &= ~NOPOWER
 		update_icon()
 	else
-		spawn(rand(0, 15))
-			stat |= NOPOWER
-			update_icon()
+		stat |= NOPOWER
+		update_icon()
 
 
 /obj/machinery/porta_turret/attackby(obj/item/I, mob/user)
@@ -472,7 +471,7 @@ var/list/turret_icons
 	if(health <= 0)
 		die()	//the death process :(
 
-/obj/machinery/porta_turret/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/porta_turret/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	var/damage = Proj.get_structure_damage()
 
 	if(!damage)
@@ -573,10 +572,10 @@ var/list/turret_icons
 	if(L.stat && !emagged)		//if the perp is dead/dying, no need to bother really
 		return TURRET_NOT_TARGET	//move onto next potential victim!
 
-	if(get_dist(src, L) > 7)	//if it's too far away, why bother?
+	if(get_dist(src, L) > 12)	//if it's too far away, why bother?
 		return TURRET_NOT_TARGET
 
-	if(!check_trajectory(L, src))	//check if we have true line of sight
+	if(!check_trajectory(list(x,y,z), list(L.x, L.y, L.z),null,null, L))	//check if we have true line of sight
 		return TURRET_NOT_TARGET
 
 	if(emagged)		// If emagged not even the dead get a rest

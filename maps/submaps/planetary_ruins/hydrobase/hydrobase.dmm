@@ -111,7 +111,7 @@
 "as" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "east bump";
 	pixel_x = 24
 	},
@@ -367,7 +367,7 @@
 /area/map_template/hydrobase/station/growD)
 "bc" = (
 /obj/machinery/power/apc{
-	dir = 2;
+	dir = 1;
 	name = "south bump";
 	pixel_y = -24
 	},
@@ -785,7 +785,7 @@
 "cc" = (
 /obj/structure/cable/yellow,
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	icon_state = "apc0";
 	pixel_x = 25
 	},
@@ -1061,7 +1061,7 @@
 /area/map_template/hydrobase/station/growC)
 "cS" = (
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	icon_state = "apc0";
 	pixel_x = 25
 	},
@@ -1651,7 +1651,7 @@
 /area/map_template/hydrobase/station/processing)
 "eq" = (
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "east bump";
 	pixel_x = 24
 	},
@@ -1818,7 +1818,7 @@
 	tag_interior_door = "solars_inner"
 	},
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	icon_state = "apc0";
 	pixel_x = 0;
 	pixel_y = 25
@@ -1957,7 +1957,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	icon_state = "apc0";
 	pixel_x = 25
 	},
@@ -1967,7 +1967,7 @@
 /area/map_template/hydrobase/station/growB)
 "eS" = (
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	icon_state = "apc0";
 	pixel_x = -25
 	},
@@ -2284,7 +2284,7 @@
 /area/map_template/hydrobase/station/growA)
 "fM" = (
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "west bump";
 	pixel_x = -24
 	},
@@ -2315,7 +2315,7 @@
 "fP" = (
 /obj/machinery/washing_machine,
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 2;
 	icon_state = "apc0";
 	pixel_x = 0;
 	pixel_y = 25
@@ -2608,7 +2608,7 @@
 	pixel_y = 25
 	},
 /obj/machinery/power/apc{
-	dir = 8;
+	dir = 4;
 	name = "west bump";
 	pixel_x = -24
 	},

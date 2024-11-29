@@ -9,7 +9,7 @@
 	flags = ON_BORDER
 	maxHealth = 20
 	health = 20
-	explosion_coverage = 1
+	explosionCoverage = 1
 	var/resistance = RESISTANCE_FLIMSY	//Incoming damage is reduced by this flat amount before being subtracted from health. Defines found in code\__defines\weapons.dm
 	var/maximal_heat = T0C + 100 		// Maximal heat before this window begins taking damage from fire
 	var/damage_per_fire_tick = 2 		// Amount of damage per fire tick. Regular windows are not fireproof so they might as well break quickly.
@@ -67,7 +67,7 @@
 /obj/structure/window/take_damage(damage = 0)
 	var/initialhealth = health
 	. = health - (damage * (1 - silicate / 200) - resistance) < 0 ? damage - (damage - health) : damage
-	. *= explosion_coverage
+	. *= explosionCoverage
 	damage = damage * (1 - silicate / 200) // up to 50% damage resistance
 	damage -= resistance // then flat resistance from material
 
@@ -146,32 +146,6 @@
 			new /obj/item/stack/rods(loc)
 	qdel(src)
 	return
-
-
-/obj/structure/window/bullet_act(var/obj/item/projectile/Proj)
-
-	if(config.z_level_shooting && Proj.height)
-		if(Proj.height == HEIGHT_LOW)// Bullet is too low
-			return PROJECTILE_STOP
-		else if(Proj.height == HEIGHT_HIGH) // Guaranteed hit
-			var/proj_damage = Proj.get_structure_damage()
-			if(proj_damage)
-				hit(proj_damage)
-			..()
-			return PROJECTILE_STOP
-
-	. = PROJECTILE_CONTINUE
-	var/targetzone = check_zone(Proj.def_zone)
-	if(targetzone in list(BP_CHEST, BP_HEAD, BP_L_ARM, BP_R_ARM))
-		var/proj_damage = Proj.get_structure_damage()
-		if(proj_damage)
-			hit(proj_damage)
-		..()
-		if(!QDELETED(src))
-			return PROJECTILE_STOP
-
-	return PROJECTILE_STOP
-
 
 //TODO: Make full windows a separate type of window.
 //Once a full window, it will always be a full window, so there's no point
@@ -552,21 +526,6 @@ proc/end_grab_onto(mob/living/user, mob/living/target)
 	if(!is_fulltile())
 		icon_state = "[basestate]"
 		return
-	/*
-	var/list/dirs = list()
-	if(anchored)
-		for(var/obj/structure/window/W in orange(src,1))
-			if(W.anchored && W.density && W.type == src.type && W.is_fulltile()) //Only counts anchored, not-destroyed fill-tile windows.
-				dirs += get_dir(src, W)
-
-	for(var/turf/simulated/wall/T in RANGE_TURFS(1, src) - src)
-		var/T_dir = get_dir(src, T)
-		dirs |= T_dir
-		if(propagate)
-			spawn(0)
-				T.update_connections()
-				T.update_icon()
-	*/
 	//Since fulltile windows can't exist without an underlying wall, we will just copy connections from our wall
 	var/list/connections = list("0", "0", "0", "0")
 	var/obj/structure/low_wall/LW = (locate(/obj/structure/low_wall) in loc)
@@ -591,6 +550,7 @@ proc/end_grab_onto(mob/living/user, mob/living/target)
 	desc = "It looks thin and flimsy. A few knocks with... anything, really should shatter it."
 	icon_state = "window"
 	basestate = "window"
+	hitbox = /datum/hitboxDatum/atom/window/directional
 	glasstype = /obj/item/stack/material/glass
 	maximal_heat = T0C + 200	// Was 100. Spaceship windows surely surpass coffee pots.
 	damage_per_fire_tick = 3	// Was 2. Made weaker than rglass per tick.
@@ -601,6 +561,7 @@ proc/end_grab_onto(mob/living/user, mob/living/target)
 	dir = SOUTH|EAST
 	icon = 'icons/obj/structures/windows.dmi'
 	icon_state = "fwindow"
+	hitbox = /datum/hitboxDatum/turf/window
 	alpha = 120
 	maxHealth = 40
 	resistance = RESISTANCE_FLIMSY
@@ -610,6 +571,7 @@ proc/end_grab_onto(mob/living/user, mob/living/target)
 	name = "plasma window"
 	desc = "A borosilicate alloy window. It seems to be quite strong."
 
+	hitbox = /datum/hitboxDatum/atom/window/directional
 	icon_state = "plasmawindow"
 	shardtype = /obj/item/material/shard/plasma
 	glasstype = /obj/item/stack/material/glass/plasmaglass
@@ -622,6 +584,7 @@ proc/end_grab_onto(mob/living/user, mob/living/target)
 	dir = SOUTH|EAST
 	icon = 'icons/obj/structures/windows.dmi'
 	basestate = "pwindow"
+	hitbox = /datum/hitboxDatum/turf/window
 	icon_state = "plasmawindow_mask"
 	alpha = 150
 	maxHealth = 200
@@ -633,6 +596,7 @@ proc/end_grab_onto(mob/living/user, mob/living/target)
 	desc = "It looks rather strong. Might take a few good hits to shatter it."
 	icon_state = "rwindow"
 	basestate = "rwindow"
+	hitbox = /datum/hitboxDatum/atom/window/directional
 	reinf = 1
 	maximal_heat = T0C + 750	// Fused quartz.
 	damage_per_fire_tick = 2
@@ -652,6 +616,7 @@ proc/end_grab_onto(mob/living/user, mob/living/target)
 	dir = SOUTH|EAST
 	icon = 'icons/obj/structures/windows.dmi'
 	icon_state = "fwindow"
+	hitbox = /datum/hitboxDatum/turf/window
 	alpha = 150
 	maxHealth = 80
 	resistance = RESISTANCE_FRAGILE
@@ -662,6 +627,7 @@ proc/end_grab_onto(mob/living/user, mob/living/target)
 	desc = "A borosilicate alloy window, with rods supporting it. It seems to be very strong."
 	basestate = "plasmarwindow"
 	icon_state = "plasmarwindow"
+	hitbox = /datum/hitboxDatum/atom/window/directional
 	shardtype = /obj/item/material/shard/plasma
 	glasstype = /obj/item/stack/material/glass/plasmarglass
 	maximal_heat = T0C + 5453 // Safe use temperature at 6000 kelvin.
@@ -671,6 +637,7 @@ proc/end_grab_onto(mob/living/user, mob/living/target)
 
 /obj/structure/window/reinforced/plasma/full
 	dir = SOUTH|EAST
+	hitbox = /datum/hitboxDatum/turf/window
 	icon = 'icons/obj/structures/windows.dmi'
 	basestate = "rpwindow"
 	icon_state = "plasmarwindow_mask"
@@ -683,12 +650,14 @@ proc/end_grab_onto(mob/living/user, mob/living/target)
 	name = "tinted window"
 	desc = "It looks rather strong and opaque. Might take a few good hits to shatter it."
 	icon_state = "twindow"
+	hitbox = /datum/hitboxDatum/atom/window/directional
 	basestate = "twindow"
 	opacity = 1
 
 /obj/structure/window/reinforced/tinted/frosted
 	name = "frosted window"
 	desc = "It looks rather strong and frosted over. Looks like it might take a few less hits then a normal reinforced window."
+	hitbox = /datum/hitboxDatum/atom/window/directional
 	icon_state = "fwindow"
 	basestate = "fwindow"
 
@@ -698,6 +667,7 @@ proc/end_grab_onto(mob/living/user, mob/living/target)
 	icon = 'icons/obj/podwindows.dmi'
 	icon_state = "window"
 	basestate = "window"
+	hitbox = /datum/hitboxDatum/turf/window
 	maxHealth = 300
 	resistance = RESISTANCE_IMPROVED
 	reinf = 1
@@ -706,12 +676,13 @@ proc/end_grab_onto(mob/living/user, mob/living/target)
 
 /obj/structure/window/reinforced/polarized
 	name = "electrochromic window"
-
+	hitbox = /datum/hitboxDatum/atom/window/directional
 	desc = "Adjusts its tint with voltage. Might take a few good hits to shatter it."
 	var/id
 
 /obj/structure/window/reinforced/polarized/full
 	dir = SOUTH|EAST
+	hitbox = /datum/hitboxDatum/turf/window
 	icon = 'icons/obj/structures/windows.dmi'
 	icon_state = "fwindow"
 	flags = null

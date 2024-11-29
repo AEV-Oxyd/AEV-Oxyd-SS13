@@ -40,6 +40,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on
 	use_power = IDLE_POWER_USE
 	icon_state = "map_scrubber_on"
+	hitbox = /datum/hitboxDatum/atom/atmosphericVentScrubber
 
 /obj/machinery/atmospherics/unary/vent_scrubber/Initialize(mapload, d)
 	. = ..()

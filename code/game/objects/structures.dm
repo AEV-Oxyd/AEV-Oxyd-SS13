@@ -1,3 +1,24 @@
+/**
+ * Global list for storing the blocking levels for all structures
+ * format is list(type = number) or list(type = list(list(minimum,maximum), list(minimum,maximum)))
+ * if its not meant to be continous
+ */
+/*
+#define LEVEL_BELOW -1
+#define LEVEL_TURF -0.7
+#define LEVEL_LYING -0.5
+#define LEVEL_LOWWALL 0
+#define LEVEL_TABLE 0.2
+#define LEVEL_HEAD 0.7
+#define LEVEL_ABOVE 1
+*/
+
+/**
+ * Any projectile under this height will be blocked by this structure. Can be a list if its not meant to be continous
+ * List format is list(list(minimum, maximum), list(minimum, maximum))
+ * Normal format is just the number.
+ * Blocking lists are stored in the global list GLOB.structureBlockingLevels.
+ */
 /obj/structure
 	icon = 'icons/obj/structures.dmi'
 	volumeClass = ITEM_SIZE_GARGANTUAN
@@ -7,7 +28,7 @@
 	bad_type = /obj/structure
 	var/health = 100
 	var/maxHealth = 100
-	var/explosion_coverage = 0
+	var/explosionCoverage = 0
 	var/climbable
 	var/breakable
 	var/parts
@@ -23,13 +44,14 @@
 /obj/structure/proc/take_damage(damage)
 	// Blocked amount
 	. = health - damage < 0 ? damage - (damage - health) : damage
-	. *= explosion_coverage
+	. *= explosionCoverage
 	health -= damage
 	if(health < 0)
 		qdel(src)
 	return
 
-
+/obj/structure/proc/check_cover(obj/item/projectile/P, turf/from)
+	return TRUE
 
 /**
  * An overridable proc used by SSfalling to determine whether if the object deals
@@ -76,6 +98,13 @@
 /obj/structure/explosion_act(target_power, explosion_handler/handler)
 	var/absorbed = take_damage(target_power)
 	return absorbed
+
+/obj/structure/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
+	. = ..()
+	take_damage(P.get_structure_damage())
+	if(QDELETED(src))
+		return PROJECTILE_CONTINUE
+	return PROJECTILE_STOP
 
 /obj/structure/New()
 	..()

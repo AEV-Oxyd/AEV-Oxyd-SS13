@@ -3,6 +3,8 @@
 	desc = "A small wall mounted cabinet designed to hold a fire extinguisher."
 	icon = 'icons/obj/closet.dmi'
 	icon_state = "extinguisher_closed"
+	hitbox = /datum/hitboxDatum/atom/fireExtinguisherCabinet
+	atomFlags = AF_WALL_MOUNTED
 	anchored = TRUE
 	density = FALSE
 	var/obj/item/extinguisher/has_extinguisher

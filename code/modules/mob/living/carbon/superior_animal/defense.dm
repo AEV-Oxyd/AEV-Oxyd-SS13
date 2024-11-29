@@ -20,7 +20,7 @@
 
 	check_AI_act()
 
-/mob/living/carbon/superior_animal/bullet_act(obj/item/projectile/P, def_zone)
+/mob/living/carbon/superior_animal/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
 	. = ..()
 	updatehealth()
 

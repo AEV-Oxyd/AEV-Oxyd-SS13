@@ -9,15 +9,19 @@
 	layer            = LIGHTING_LAYER
 	invisibility     = INVISIBILITY_LIGHTING
 
-	simulated = FALSE
 	anchored = TRUE
 
 	blend_mode       = BLEND_OVERLAY
 
 	weight = 0
 
+	atomFlags = AF_IGNORE_ON_BULLETSCAN | AF_EXPLOSION_IGNORANT
+
 	var/needs_update = FALSE
 
+/// More efficient to have the proc return bullet_continue ,avoiding another check for every object on a turf SPCR 2024
+/atom/movable/lighting_overlay/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
+	return PROJECTILE_CONTINUE
 
 /atom/movable/lighting_overlay/New(var/atom/loc, var/no_update = FALSE)
 	. = ..()

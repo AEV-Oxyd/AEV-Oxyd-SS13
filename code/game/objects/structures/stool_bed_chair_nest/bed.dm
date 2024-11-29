@@ -14,6 +14,7 @@
 	description_info = "Can be used as a support to climb up by looking up and clicking on a free tile that is not blocked by a railing"
 	icon_state = "bed"
 	anchored = TRUE
+	hitbox = /datum/hitboxDatum/atom/bed
 	var/material/material
 	var/material/padding_material
 	var/base_icon = "bed"

@@ -2,6 +2,7 @@
 	name = "rack"
 	desc = "Different from the medieval version."
 	icon = 'icons/obj/objects.dmi'
+	hitbox = /datum/hitboxDatum/atom/storageRack
 	icon_state = "rack"
 	can_plate = 0
 	can_reinforce = 0
@@ -25,6 +26,7 @@
 	name = "shelf"
 	desc = "For showing off your collections of dust, electronics, the heads of your enemies and tools."
 	icon_state = "shelf"
+	hitbox = /datum/hitboxDatum/atom/storageShelf
 
 
 

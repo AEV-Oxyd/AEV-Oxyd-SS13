@@ -8,8 +8,14 @@
 	volumeClass = ITEM_SIZE_BULKY
 	canhear_range = 2
 	flags = CONDUCT | NOBLOODY
+	hitbox = /datum/hitboxDatum/atom/intercom
+	atomFlags = AF_WALL_MOUNTED
 	var/number = 0
 	var/area/linked_area
+
+/// For internal stuff not meant to wall mount
+/obj/item/device/radio/intercom/internal
+	atomFlags = parent_type::atomFlags & ~AF_WALL_MOUNTED
 
 /obj/item/device/radio/intercom/custom
 	name = "ship intercom (Custom)"

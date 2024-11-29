@@ -13,6 +13,8 @@
 	var/pressuremin = 0
 	var/pressuremax = 10 * ONE_ATMOSPHERE
 
+	hitbox = /datum/hitboxDatum/atom/atmosphericPump
+
 	volume = 1000
 
 	power_rating = 7500 //7500 W ~ 10 HP

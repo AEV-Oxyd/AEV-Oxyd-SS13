@@ -10,6 +10,11 @@
 	layer = LATTICE_LAYER //under pipes
 	//	flags = CONDUCT
 
+/// This would be too bad if it was actually always blocking(and not really make sense for players.) SPCR 2024
+/obj/structure/lattice/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
+	return PROJECTILE_CONTINUE
+
+
 /obj/structure/lattice/Initialize()
 	. = ..()
 ///// Z-Level Stuff

@@ -43,6 +43,7 @@ var/list/possible_cable_coil_colours = list(
 	icon_state = "0-1"
 	health = 20
 	maxHealth = 20
+	hitbox = /datum/hitboxDatum/atom/polygon/powerCable
 	var/d1 = 0
 	var/d2 = 1
 	color = COLOR_RED_LIGHT

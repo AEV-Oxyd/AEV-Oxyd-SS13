@@ -265,7 +265,7 @@
 			if(CATAPULT_SINGLE)
 				if(!locked)
 					var/atom/movable/AM = target
-					if(!istype(AM) || AM.anchored || !AM.simulated)
+					if(!istype(AM) || AM.anchored)
 						to_chat(user, SPAN_NOTICE("Unable to lock on [target]."))
 						return
 					locked = AM
@@ -292,7 +292,7 @@
 				else
 					atoms = orange(target,3)
 				for(var/atom/movable/A in atoms)
-					if(A.anchored || !A.simulated) continue
+					if(A.anchored) continue
 					var/dist = 5-get_dist(A,target)
 					A.throw_at(get_edge_target_turf(A,get_dir(target, A)),dist,0.7)
 

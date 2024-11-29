@@ -100,7 +100,7 @@
 			A = null
 			while(LAZYLEN(other_atoms))
 				var/atom/picked = pick_n_take(other_atoms)
-				if(istype(picked) && picked.simulated)
+				if(istype(picked))
 					A = picked
 					break
 			if(!A)

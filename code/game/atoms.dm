@@ -15,20 +15,19 @@
 	var/last_bumped = 0
 	var/pass_flags = 0
 	var/throwpass = 0
-	var/simulated = TRUE //filter for actions - used by lighting overlays
 	var/fluorescent // Shows up under a UV light.
 	var/allow_spin = TRUE // prevents thrown atoms from spinning when disabled on thrown or target
 	var/used_now = FALSE //For tools system, check for it should forbid to work on atom for more than one user at time
 
 
-	var/atomFlags = null
+	var/atomFlags = 0
 
 	///Chemistry.
 	var/reagent_flags = NONE
 	var/datum/reagents/reagents
 
-	//Detective Work, used for the duplicate data points kept in the scanners
-	var/list/original_atom
+	/// Holds the hitbox datum if theres any
+	var/datum/hitboxDatum/hitbox
 
 	var/auto_init = TRUE
 
@@ -45,8 +44,89 @@
 	  */
 	var/list/atom_colours
 
+	var/list/attached
+
+/// Attaches the argument(thing) to src
+/atom/proc/attachGameAtom(atom/thing, attachmentFlagsSupport, attachmentFlagsAttachable)
+	ASSLADD(attached, attachmentFlagsSupport | ATFS_SUPPORTER, thing)
+	ASSLADD(thing.attached, attachmentFlagsAttachable | ATFA_ATTACHED , src)
+	afterAttach(thing, TRUE, attachmentFlagsSupport, attachmentFlagsAttachable)
+	thing.afterAttach(src, FALSE, attachmentFlagsSupport, attachmentFlagsAttachable)
+	return TRUE
+
+/// Detaches the argument(thing) from src
+/atom/proc/detachGameAtom(atom/thing)
+	if(!(thing in attached))
+		return -1
+	afterDetach(thing, TRUE, attached[thing], thing.attached[src])
+	thing.afterDetach(src, FALSE ,attached[thing], thing.attached[src])
+	ASSLREMOVE(attached ,thing)
+	ASSLREMOVE(thing.attached, src)
+	return TRUE
+
+/*
+/atom/proc/attach(atom/thing, attachmentFlagsSupport, attachmentFlagsAttachable)
+	if(!istype(thing))
+		return FALSE
+	if(!length(attached))
+		attached = list()
+	attached[thing] = attachmentFlagsSupport | ATFS_SUPPORTER
+	thing.attached[src] = attachmentFlagsAttachable | ATFA_ATTACHED
+	afterAttach(thing, TRUE, attachmentFlagsSupport, attachmentFlagsAttachable)
+	thing.afterAttach(src, FALSE, attachmentFlagsSupport, attachmentFlagsAttachable)
+	return TRUE
+
+/atom/proc/detach(atom/thing)
+	if(!(thing in attached))
+		return -1
+	if(length(attached) == 1)
+		del(attached)
+	else
+		attached -= thing
+	if(src in thing.attached)
+		if(length(thing.attached > 1))
+			thing.attached -= src
+		else
+			del(thing.attached)
+	afterDetach(thing, TRUE)
+	thing.afterDetach(src, FALSE)
+	return TRUE
+*/
+
+/atom/proc/afterAttach(atom/thing, isSupporter, attachmentFlagsSupport, attachmentFlagsAttachable)
+	if(isSupporter)
+	else
+		if(attachmentFlagsAttachable & ATFA_CENTER_ON_SUPPORTER)
+			atomFlags |= AF_HITBOX_OFFSET_BY_ATTACHMENT | AF_IGNORE_ON_BULLETSCAN
+	return
+
+/atom/proc/afterDetach(atom/thing, isSupporter, attachmentFlagsSupport, attachmentFlagsAttachable)
+	if(isSupporter)
+	else
+		if(attachmentFlagsAttachable & ATFA_CENTER_ON_SUPPORTER)
+			atomFlags &= ~(AF_HITBOX_OFFSET_BY_ATTACHMENT | AF_IGNORE_ON_BULLETSCAN)
+	return
+
+/atom/getAimingLevel(atom/shooter, defZone)
+	if(atomFlags & AF_PASS_AIMING_LEVEL)
+		if(isliving(shooter))
+			return shooter.getAimingLevel(shooter, defZone)
+	if(hitbox)
+		return hitbox.getAimingLevel(shooter, defZone, src)
+	else
+		return ..()
+
 /atom/proc/update_icon()
 	return
+
+/atom/proc/getAimingLevel(atom/shooter,defZone)
+	if(isliving(shooter))
+		var/mob/living/carbon/human/hoomie = shooter
+		if(!istype(hoomie))
+			return HBF_NOLEVEL
+		else
+			return hoomie.getAimingLevel(hoomie, hoomie.targeted_organ)
+	return HBF_NOLEVEL
 
 /atom/proc/getWeight()
 	return initial(weight)
@@ -148,6 +228,12 @@
 
 	update_plane()
 
+	hitbox = getHitbox(hitbox)
+	#ifdef BULLETDEBUG
+	if(hitbox)
+		GLOB.initVis += src
+	#endif
+
 	if(preloaded_reagents)
 		if(!reagents)
 			var/volume = 0
@@ -192,7 +278,9 @@
 	if(statverbs)
 		statverbs.Cut()
 
-		//post_buckle_mob(.)
+	for(var/atom/thing as anything in attached)
+		detachGameAtom(thing)
+
 	if(reagents)
 		QDEL_NULL(reagents)
 
@@ -267,9 +355,12 @@
 	return
 
 
-/atom/proc/bullet_act(obj/item/projectile/P, def_zone)
+/atom/proc/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
 	P.on_hit(src, def_zone)
-	. = FALSE
+	#ifdef BULLETDEBUG
+	message_admins("Bullet stopped by [src]")
+	#endif
+	. = PROJECTILE_STOP
 
 /atom/proc/block_bullet(mob/user, var/obj/item/projectile/damage_source, def_zone)
 	return 0
@@ -670,8 +761,6 @@ its easier to just keep the beam vertical.
 			this.icon_state = "vomittox_[pick(1, 4)]"
 
 /atom/proc/clean_blood()
-	if(!simulated)
-		return
 	fluorescent = 0
 	if(istype(blood_DNA, /list))
 		blood_DNA = null
@@ -822,7 +911,7 @@ its easier to just keep the beam vertical.
 	return
 
 //Bullethole shit.
-/atom/proc/create_bullethole(var/obj/item/projectile/Proj)
+/atom/proc/create_bullethole(obj/item/projectile/Proj, defZone, hitboxFlags)
 	var/p_x = Proj.p_x + rand(-8,8) // really ugly way of coding "sometimes offset Proj.p_x!"
 	var/p_y = Proj.p_y + rand(-8,8) // Used for bulletholes
 	var/obj/effect/overlay/bmark/BM = new(src)

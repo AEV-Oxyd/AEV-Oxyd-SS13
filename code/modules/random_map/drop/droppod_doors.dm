@@ -57,12 +57,8 @@
 
 	// Destroy turf contents.
 	for(var/obj/O in origin)
-		if(!O.simulated)
-			continue
 		qdel(O) //crunch
 	for(var/obj/O in T)
-		if(!O.simulated)
-			continue
 		qdel(O) //crunch
 
 	// Hurl the mobs away.

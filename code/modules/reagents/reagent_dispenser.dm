@@ -80,6 +80,7 @@
 	name = "water tank"
 	desc = "A water tank. It is used to store high amounts of water."
 	icon_state = "watertank"
+	hitbox = /datum/hitboxDatum/atom/reagentTank
 	amount_per_transfer_from_this = 10
 	volume = 1500
 	starting_reagent = "water"
@@ -108,6 +109,7 @@
 	desc = "A tank full of industrial welding fuel. Do not consume."
 	description_antag = "Can have an assembly with a igniter attached for detonation upon a trigger. Can also use a screwdriver to leak fuel when dragged"
 	icon = 'icons/obj/objects.dmi'
+	hitbox = /datum/hitboxDatum/atom/reagentTank
 	icon_state = "weldtank"
 	amount_per_transfer_from_this = 10
 	volume = 500
@@ -191,14 +193,12 @@
 	return ..()
 
 
-/obj/structure/reagent_dispensers/fueltank/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/reagent_dispensers/fueltank/bullet_act(obj/item/projectile/Proj, defZone, hitboxFlags)
 	if(Proj.get_structure_damage())
 		if(istype(Proj.firer))
 			message_admins("[key_name_admin(Proj.firer)] shot fueltank at [loc.loc.name] ([loc.x],[loc.y],[loc.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[loc.x];Y=[loc.y];Z=[loc.z]'>JMP</a>).")
 			log_game("[key_name(Proj.firer)] shot fueltank at [loc.loc.name] ([loc.x],[loc.y],[loc.z]).")
 
-		if(!istype(Proj ,/obj/item/projectile/beam/lastertag) && !istype(Proj ,/obj/item/projectile/beam/practice) )
-			explode()
 /obj/structure/reagent_dispensers/fueltank/explosion_act(target_power, explosion_handler/handle)
 	if(target_power > health)
 		explode()

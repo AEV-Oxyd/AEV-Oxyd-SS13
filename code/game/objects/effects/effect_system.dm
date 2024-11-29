@@ -6,9 +6,13 @@ would spawn and follow the beaker, even if it is carried or thrown.
 */
 
 /obj/effect
+	atomFlags = AF_IGNORE_ON_BULLETSCAN | AF_EXPLOSION_IGNORANT
 	var/random_rotation = 0 //If 1, pick a random cardinal direction. if 2, pick a randomised angle
 	var/random_offset = 0
 	weight = 0
+
+/obj/effect/bullet_act(obj/item/projectile/P, def_zone, hitboxFlags)
+	return PROJECTILE_CONTINUE
 
 /obj/effect/effect
 	name = "effect"

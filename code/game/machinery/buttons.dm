@@ -3,6 +3,8 @@
 	icon = 'icons/obj/machines/buttons.dmi'
 	icon_state = "launcher0"
 	desc = "A remote control switch for something."
+	hitbox = /datum/hitboxDatum/atom/button
+	atomFlags = AF_WALL_MOUNTED
 	var/id = null
 	var/active = 0
 	var/operating = 0
@@ -190,6 +192,7 @@
 		if(_door_functions & BOLTS)
 			wifi_sender.activate("lock")
 	operating = 0
+
 
 #undef OPEN
 #undef IDSCAN

@@ -38,7 +38,6 @@
 	alpha = 120
 	anchored = TRUE
 	unacidable = 1
-	simulated = FALSE
 	invisibility = 0 // 101
 
 	var/status = CAVE_CLOSED  // Status of the cave generator
